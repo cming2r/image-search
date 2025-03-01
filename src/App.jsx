@@ -2,25 +2,23 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [inputUrl, setInputUrl] = useState(''); // 貼上的圖片網址
-  const [uploadedUrl, setUploadedUrl] = useState(''); // 上傳後的圖片網址
-  const [status, setStatus] = useState(''); // 顯示狀態訊息
+  const [url, setUrl] = useState('');
+  const [uploadedUrl, setUploadedUrl] = useState('');
+  const [status, setStatus] = useState('');
 
-  // 搜尋功能
   const search = (engine) => {
-    const url = inputUrl || uploadedUrl;
-    if (!url) {
-      setStatus('請輸入圖片網址或上傳圖片！');
+    const finalUrl = url || uploadedUrl;
+    if (!finalUrl) {
+      setStatus('請輸入網址或上傳圖片！');
       return;
     }
     if (engine === 'google') {
-      window.open(`https://www.google.com/searchbyimage?&image_url=${url}`, '_blank');
+      window.open(`https://www.google.com/searchbyimage?&image_url=${finalUrl}`);
     } else if (engine === 'bing') {
-      window.open(`https://www.bing.com/images/search?view=detailv2&mediaurl=${url}`, '_blank');
+      window.open(`https://www.bing.com/images/search?view=detailv2&mediaurl=${finalUrl}`);
     }
   };
 
-  // 上傳圖片到 Workers
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -47,19 +45,24 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div style={{ textAlign: 'center', padding: '50px' }}>
       <h1>圖片搜尋工具</h1>
       <input
         type="text"
         placeholder="貼上圖片網址"
-        value={inputUrl}
-        onChange={(e) => setInputUrl(e.target.value)}
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        style={{ width: '300px', padding: '5px', margin: '10px' }}
       />
-      <input type="file" accept="image/*" onChange={handleUpload} />
-      <div className="buttons">
-        <button onClick={() => search('google')}>Google 搜尋</button>
-        <button onClick={() => search('bing')}>Bing 搜尋</button>
-      </div>
+      <br />
+      <input type="file" accept="image/*" onChange={handleUpload} style={{ margin: '10px' }} />
+      <br />
+      <button onClick={() => search('google')} style={{ padding: '5px 10px', margin: '5px' }}>
+        Google 搜尋
+      </button>
+      <button onClick={() => search('bing')} style={{ padding: '5px 10px', margin: '5px' }}>
+        Bing 搜尋
+      </button>
       <p>{status}</p>
     </div>
   );
