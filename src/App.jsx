@@ -28,7 +28,7 @@ function App() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('/upload', { // 這裡先用相對路徑，後面會綁定 Workers
+      const response = await fetch('https://image-search-worker.cming2ring.workers.dev/upload', { // 這裡先用相對路徑，後面會綁定 Workers
         method: 'POST',
         body: formData,
       });
