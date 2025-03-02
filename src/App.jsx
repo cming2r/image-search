@@ -28,7 +28,7 @@ function App() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('https://你的WORKERS_URL.workers.dev/upload', {
+      const response = await fetch('/upload', { // 這裡先用相對路徑，後面會綁定 Workers
         method: 'POST',
         body: formData,
       });
