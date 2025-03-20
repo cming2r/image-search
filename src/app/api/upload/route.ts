@@ -40,7 +40,6 @@ export async function POST(req: Request) {
     const blob = await put(uniqueFileName, file, {
       access: 'public',
       contentType: file.type,
-      // cacheControl: 'public, max-age=31536000, immutable', // 1年快取，因為URL是唯一的
     });
     
     return NextResponse.json({

@@ -13,9 +13,15 @@ const ImageForm: FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUrlInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    setImageUrl(e.target.value);
+    const url = e.target.value;
+    setImageUrl(url);
     // 清除先前的錯誤
     setError('');
+    
+    // 如果URL看起來有效，顯示預覽（但不設定為最終的uploadedImageUrl）
+    if (url && url.match(/^https?:\/\/[^\s$.?#].[^\s]*$/i)) {
+      // 僅設置URL，但不標記為"已上傳"，需點擊搜索按鈕
+    }
   };
 
   const handleSubmitUrl = (e: FormEvent<HTMLFormElement>): void => {
@@ -201,16 +207,17 @@ const ImageForm: FC = () => {
             </div>
             
             {/* 右側圖片預覽區塊 */}
-            {uploadedImageUrl && (
+            {(uploadedImageUrl || imageUrl) && (
               <div className="md:w-[40%] mt-6 md:mt-0">
                 <p className="text-gray-700 mb-2">圖片預覽</p>
                 <div className="border rounded p-2 bg-gray-50 flex justify-center">
                   <div className="relative w-full h-32">
                     <Image
-                      src={uploadedImageUrl}
+                      src={uploadedImageUrl || imageUrl}
                       alt="搜尋圖片"
                       fill
                       style={{ objectFit: 'contain' }}
+                      unoptimized={activeTab === 'url' && !uploadedImageUrl}
                     />
                   </div>
                 </div>
@@ -250,16 +257,17 @@ const ImageForm: FC = () => {
             </div>
             
             {/* 右側圖片預覽區塊 */}
-            {uploadedImageUrl && (
+            {(uploadedImageUrl || imageUrl) && (
               <div className="md:w-[40%] mt-6 md:mt-0">
                 <p className="text-gray-700 mb-2">圖片預覽</p>
                 <div className="border rounded p-2 bg-gray-50 flex justify-center">
                   <div className="relative w-full h-32">
                     <Image
-                      src={uploadedImageUrl}
+                      src={uploadedImageUrl || imageUrl}
                       alt="搜尋圖片"
                       fill
                       style={{ objectFit: 'contain' }}
+                      unoptimized={true}
                     />
                   </div>
                 </div>
