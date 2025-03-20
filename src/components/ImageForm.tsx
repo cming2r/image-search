@@ -169,7 +169,7 @@ const ImageForm: FC = () => {
                   id="imageUrl"
                   value={imageUrl}
                   onChange={handleUrlInput}
-                  placeholder="https://vvmg.cc/image.jpg"
+                  placeholder="https://fyimg.com/image.jpg"
                   className="block w-full text-gray-700 border border-gray-300 rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -244,7 +244,7 @@ const ImageForm: FC = () => {
                   ref={fileInputRef}
                   className="block w-full text-gray-700 border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <p className="text-gray-500 text-xs mt-1">支援 JPG, PNG, GIF 等格式，最大5MB</p>
+                <p className="text-gray-500 text-xs mt-1">支援 JPG, PNG, WEBP 等格式，最大5MB</p>
               </div>
               <button
                 type="button"
