@@ -207,17 +207,17 @@ const ImageForm: FC = () => {
             </div>
             
             {/* 右側圖片預覽區塊 */}
-            {(uploadedImageUrl || imageUrl) && (
+            {uploadedImageUrl && (
               <div className="md:w-[40%] mt-6 md:mt-0">
                 <p className="text-gray-700 mb-2">圖片預覽</p>
                 <div className="border rounded p-2 bg-gray-50 flex justify-center">
                   <div className="relative w-full h-32">
                     <Image
-                      src={uploadedImageUrl || imageUrl}
+                      src={uploadedImageUrl}
                       alt="搜尋圖片"
                       fill
                       style={{ objectFit: 'contain' }}
-                      unoptimized={activeTab === 'url' && !uploadedImageUrl}
+                      unoptimized={true}
                     />
                   </div>
                 </div>
