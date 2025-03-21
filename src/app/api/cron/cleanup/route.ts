@@ -10,24 +10,35 @@ interface BlobWithContentType {
 
 // 驗證請求是否來自 Vercel Cron
 function validateCronRequest(request: Request): boolean {
-  // 在生產環境中，需要驗證 authorization header
-  // Vercel Cron Jobs 會發送一個包含認證 token 的頭部
+  // 檢查請求頭部
   const authHeader = request.headers.get('authorization');
   
-  if (process.env.NODE_ENV === 'production') {
-    // 檢查 authorization header 格式
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return false;
-    }
-    
-    // 驗證 token 是否正確
-    // 使用環境變數中的 CRON_SECRET 來驗證
+  // 驗證方法 1: 檢查 Authorization header
+  if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
-    return token === process.env.CRON_SECRET;
+    if (token === process.env.CRON_SECRET) {
+      return true;
+    }
+  }
+  
+  // 驗證方法 2: 檢查 Vercel 內部 header
+  const cronHeader = request.headers.get('x-vercel-cron');
+  if (cronHeader === '1') {
+    return true;
+  }
+  
+  // 驗證方法 3: 檢查 User-Agent
+  const userAgent = request.headers.get('user-agent');
+  if (userAgent && userAgent.includes('vercel-cron')) {
+    return true;
   }
   
   // 開發環境中放寬限制
-  return true;
+  if (process.env.NODE_ENV !== 'production') {
+    return true;
+  }
+  
+  return false;
 }
 
 // 設定路由處理函數
@@ -35,6 +46,13 @@ export async function GET(request: Request) {
   try {
     // 驗證請求
     if (!validateCronRequest(request)) {
+      // 記錄更多信息以幫助調試
+      console.warn('未授權的 cron 請求:', {
+        headers: Object.fromEntries([...request.headers.entries()]),
+        url: request.url,
+        method: request.method
+      });
+      
       return NextResponse.json(
         { error: '未授權的請求' },
         { status: 401 }
