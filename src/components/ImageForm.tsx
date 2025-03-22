@@ -24,7 +24,7 @@ const ImageForm: FC = () => {
     }
   };
 
-  const handleSubmitUrl = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmitUrl = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     
     // 基本的URL驗證
@@ -40,9 +40,19 @@ const ImageForm: FC = () => {
       return;
     }
     
-    // 此處我們將用戶輸入的URL直接設為搜尋用URL
-    setUploadedImageUrl(imageUrl);
-    setError('');
+    setIsLoading(true);
+    
+    try {
+      // 此處我們將用戶輸入的URL直接設為搜尋用URL
+      setUploadedImageUrl(imageUrl);
+      setError('');
+      
+      // 注意：我們不再在此處保存URL，而是在用戶點擊搜尋按鈕時才記錄
+    } catch (error) {
+      console.error('處理URL錯誤:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {

@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useState, ReactElement } from 'react';
+import { saveSearchRecord, getDeviceType } from '@/lib/supabase';
 
 interface SearchButtonProps {
   imageUrl: string;
@@ -25,6 +26,32 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
     setTimeout(() => {
       setShowWarning(false);
     }, 3000);
+  };
+  
+  // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
+  const handleSearch = async (engineUrl: string, engineName: string): Promise<boolean> => {
+    if (!imageUrl) return false;
+    
+    try {
+      // 獲取設備類型
+      const deviceType = getDeviceType();
+      
+      // 靜默保存詳細搜尋記錄到Supabase
+      await saveSearchRecord({
+        image_url: imageUrl,
+        search_engine: engineName,
+        device_type: deviceType
+      });
+      
+      // 成功或失敗都繼續打開鏈接
+      return true;
+    } catch (error) {
+      // 只在控制台記錄錯誤，不顯示給用戶
+      console.error('保存搜尋記錄失敗:', error);
+      
+      // 即使保存失敗，仍允許打開連結
+      return true;
+    }
   };
   
   // 搜尋引擎的圖片搜尋URL結構
@@ -103,6 +130,8 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
     );
   }
 
+  // 已移除顯示保存狀態的提示訊息函數
+
   return (
     <div className="mt-4">
       <p className="text-gray-600 text-center mb-2">選擇搜尋引擎進行圖片搜尋</p>
@@ -113,6 +142,29 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
             href={engine.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => {
+              // 左鍵點擊處理
+              e.preventDefault(); // 先阻止默認事件
+              
+              // 立即打開鏈接，不等待數據保存
+              window.open(engine.url, '_blank');
+              
+              // 後台異步記錄搜尋，不阻塞用戶體驗
+              handleSearch(engine.url, engine.name)
+                .catch(err => console.error('記錄搜尋失敗:', err));
+              
+              return false; // 阻止默認事件
+            }}
+            onAuxClick={(e) => {
+              // 處理中鍵點擊 (e.button === 1)
+              if (e.button === 1) {
+                // 不阻止默認行為，讓瀏覽器自行處理中鍵點擊
+                
+                // 後台異步記錄搜尋，不阻塞用戶體驗
+                handleSearch(engine.url, engine.name)
+                  .catch(err => console.error('記錄搜尋失敗:', err));
+              }
+            }}
             className={`block w-full md:w-auto md:flex-1 ${engine.bgColor} ${engine.hoverColor} text-white px-4 py-3 rounded flex items-center justify-center transition-colors mb-3 md:mb-0`}
           >
             {engine.icon}
@@ -120,6 +172,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
           </a>
         ))}
       </div>
+      {/* 移除狀態顯示 */}
     </div>
   );
 };

@@ -42,6 +42,8 @@ export async function POST(req: Request) {
       contentType: file.type,
     });
     
+    // 注意：我們不再在上傳時保存URL，而是在用戶點擊搜尋按鈕時記錄
+    
     return NextResponse.json({
       url: blob.url,
       success: true
