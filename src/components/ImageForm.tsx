@@ -12,15 +12,29 @@ const ImageForm: FC = () => {
   const [activeTab, setActiveTab] = useState<'url' | 'upload'>('url'); // 'url' 或 'upload'
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 檢查輸入的URL是否有效的圖片URL
+  const isValidImageUrl = (url: string): boolean => {
+    if (!url) return false;
+    
+    // 檢查URL格式
+    const urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
+    if (!urlPattern.test(url)) return false;
+    
+    // 檢查URL是否以常見圖片格式結尾
+    const imageExtensionPattern = /\.(jpe?g|png|gif|bmp|webp|svg|heic|heif|tiff?|avif)(\?.*)?$/i;
+    return imageExtensionPattern.test(url);
+  };
+
   const handleUrlInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const url = e.target.value;
     setImageUrl(url);
+    
     // 清除先前的錯誤
     setError('');
     
-    // 如果URL看起來有效，顯示預覽（但不設定為最終的uploadedImageUrl）
-    if (url && url.match(/^https?:\/\/[^\s$.?#].[^\s]*$/i)) {
-      // 僅設置URL，但不標記為"已上傳"，需點擊搜索按鈕
+    // 如果URL不是空的但格式無效，顯示錯誤提示
+    if (url && !isValidImageUrl(url)) {
+      setError('請輸入有效的圖片URL');
     }
   };
 
@@ -33,10 +47,9 @@ const ImageForm: FC = () => {
       return;
     }
     
-    // 檢查是否為圖片URL (簡單檢查)
-    const urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
-    if (!urlPattern.test(imageUrl)) {
-      setError('請輸入有效的URL');
+    // 檢查是否為有效的圖片URL（包括格式和擴展名）
+    if (!isValidImageUrl(imageUrl)) {
+      setError('請輸入有效的圖片URL');
       return;
     }
     
@@ -179,9 +192,12 @@ const ImageForm: FC = () => {
                   id="imageUrl"
                   value={imageUrl}
                   onChange={handleUrlInput}
-                  placeholder="https://fyimg.com/image.jpg"
-                  className="block w-full text-gray-700 border border-gray-300 rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="https://example.com/image.jpg"
+                  className={`block w-full text-gray-700 border ${error ? 'border-red-500' : 'border-gray-300'} rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 />
+                <p className="text-gray-500 text-xs mt-1">
+                  URL必須以 .jpg、.png、.webp 等常見圖片格式結尾
+                </p>
               </div>
               <div className="flex space-x-3">
                 <button

@@ -30,7 +30,11 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
   
   // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
   const handleSearch = async (engineUrl: string, engineName: string): Promise<boolean> => {
-    if (!imageUrl) return false;
+    // 再次驗證URL的有效性
+    if (!isValidImageUrl(imageUrl)) {
+      console.error('無效的圖片URL');
+      return false;
+    }
     
     try {
       // 獲取設備類型
@@ -105,8 +109,21 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
     }
   ];
 
-  // 如果沒有圖片URL，則返回禁用的按鈕
-  if (!imageUrl) {
+  // 檢查輸入的URL是否有效的圖片URL
+  const isValidImageUrl = (url: string): boolean => {
+    if (!url) return false;
+    
+    // 檢查URL格式
+    const urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
+    if (!urlPattern.test(url)) return false;
+    
+    // 檢查URL是否以常見圖片格式結尾
+    const imageExtensionPattern = /\.(jpe?g|png|gif|bmp|webp|svg|heic|heif|tiff?|avif)(\?.*)?$/i;
+    return imageExtensionPattern.test(url);
+  };
+
+  // 如果沒有有效的圖片URL，則返回禁用的按鈕
+  if (!isValidImageUrl(imageUrl)) {
     return (
       <div className="mt-4">
         <p className={`${showWarning ? 'text-red-500 font-medium' : 'text-gray-500'} text-center mb-2`}>
@@ -146,7 +163,17 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
               // 左鍵點擊處理
               e.preventDefault(); // 先阻止默認事件
               
-              // 立即打開鏈接，不等待數據保存
+              // 再次驗證URL有效性
+              if (!isValidImageUrl(imageUrl)) {
+                // 如果URL無效，顯示警告
+                setShowWarning(true);
+                setTimeout(() => {
+                  setShowWarning(false);
+                }, 3000);
+                return false;
+              }
+              
+              // URL有效，立即打開鏈接，不等待數據保存
               window.open(engine.url, '_blank');
               
               // 後台異步記錄搜尋，不阻塞用戶體驗
@@ -158,9 +185,18 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
             onAuxClick={(e) => {
               // 處理中鍵點擊 (e.button === 1)
               if (e.button === 1) {
-                // 不阻止默認行為，讓瀏覽器自行處理中鍵點擊
+                // 先驗證URL有效性
+                if (!isValidImageUrl(imageUrl)) {
+                  // 無效URL，阻止默認行為並顯示警告
+                  e.preventDefault();
+                  setShowWarning(true);
+                  setTimeout(() => {
+                    setShowWarning(false);
+                  }, 3000);
+                  return false;
+                }
                 
-                // 後台異步記錄搜尋，不阻塞用戶體驗
+                // URL有效，異步記錄搜尋，不阻塞默認行為
                 handleSearch(engine.url, engine.name)
                   .catch(err => console.error('記錄搜尋失敗:', err));
               }
