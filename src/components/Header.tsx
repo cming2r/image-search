@@ -13,7 +13,7 @@ const Header: FC = () => {
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center max-w-5xl mx-auto">
           <Link href="/" className="text-xl font-bold text-blue-600 flex items-center" onClick={handleLogoClick}>
             <span className="mr-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -22,12 +22,12 @@ const Header: FC = () => {
             </span>
             以圖搜圖
           </Link>
-          <nav>
-            <ul className="flex space-x-6">
+          <nav className="ml-6">
+            <ul className="flex space-x-4">
               <li>
-                <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors" onClick={handleLogoClick}>
-                  首頁
-                </Link>
+                <a href="https://vvrl.cc" className="text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  縮網址服務
+                </a>
               </li>
             </ul>
           </nav>
