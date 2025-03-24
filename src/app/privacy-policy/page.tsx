@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '../schema';
-import Script from 'next/script';
+import { generateBreadcrumbSchema, generateWebPageSchema } from '../lib/schema';
+import { SchemaMarkupGroup } from '../components/SchemaMarkup';
 
 // 使用外部定義的metadata - metadata.ts
 
@@ -19,11 +19,7 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Script
-        id="privacy-policy-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
-      />
+      <SchemaMarkupGroup schemas={schemas} id="privacy-policy-schema" />
       <Header />
       <main className="flex-grow">
         <div className="container mx-auto max-w-4xl px-4 py-8">

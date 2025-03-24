@@ -3,7 +3,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { baseMetadata } from "./metadata";
-import { generateSchemaMarkup, generateFAQSchema } from "./schema";
+import { generateSchemaMarkup, generateFAQSchema } from "./lib/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,18 +25,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateSchemaMarkup()),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateFAQSchema()),
-          }}
-        />
+        {/* 全站共用的結構化數據已移至SchemaMarkup組件，在各頁面中使用 */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
         {children}

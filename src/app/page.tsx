@@ -1,20 +1,18 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageForm from "@/components/ImageForm";
-import { generateBreadcrumbSchema } from "./schema";
-import Script from "next/script";
+import { generateBreadcrumbSchema, generateSchemaMarkup, generateFAQSchema } from "./lib/schema";
+import { SchemaMarkupGroup } from "./components/SchemaMarkup";
 
 export default function Home() {
-  // 首頁的麵包屑結構化數據
+  // 網站的所有結構化數據
+  const webAppSchema = generateSchemaMarkup();
   const breadcrumbSchema = generateBreadcrumbSchema();
+  const faqSchema = generateFAQSchema();
 
   return (
     <>
-      <Script
-        id="homepage-breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <SchemaMarkupGroup schemas={[webAppSchema, breadcrumbSchema, faqSchema]} id="homepage-schema" />
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
