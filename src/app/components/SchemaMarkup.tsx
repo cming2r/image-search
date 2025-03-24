@@ -4,7 +4,7 @@ import Script from 'next/script';
 import { ReactNode } from 'react';
 
 interface SchemaMarkupProps {
-  schema: any | any[]; // 支援單個schema或schema陣列
+  schema: unknown | unknown[]; // 支援單個schema或schema陣列
   id?: string;
 }
 
@@ -40,6 +40,6 @@ export default function SchemaMarkup({ schema, id = 'schema-markup' }: SchemaMar
  *   ]}
  * />
  */
-export function SchemaMarkupGroup({ schemas, id = 'schema-group' }: { schemas: any[], id?: string }): ReactNode {
+export function SchemaMarkupGroup({ schemas, id = 'schema-group' }: { schemas: unknown[], id?: string }): ReactNode {
   return <SchemaMarkup schema={schemas} id={id} />;
 }

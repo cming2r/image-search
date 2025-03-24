@@ -3,7 +3,6 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { baseMetadata } from "./metadata";
-import { generateSchemaMarkup, generateFAQSchema } from "./lib/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

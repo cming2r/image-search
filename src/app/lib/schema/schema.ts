@@ -1,6 +1,6 @@
 // 定義 Schema.org 類型
 
-interface WebApplicationSchema {
+export interface WebApplicationSchema {
   '@context': string;
   '@type': string;
   name: string;
@@ -27,7 +27,7 @@ interface WebApplicationSchema {
   };
 }
 
-interface WebPageSchema {
+export interface WebPageSchema {
   '@context': string;
   '@type': string;
   name: string;
@@ -41,7 +41,7 @@ interface WebPageSchema {
   };
 }
 
-interface BreadcrumbSchema {
+export interface BreadcrumbSchema {
   '@context': string;
   '@type': string;
   itemListElement: Array<{
@@ -52,7 +52,7 @@ interface BreadcrumbSchema {
   }>;
 }
 
-interface FAQSchema {
+export interface FAQSchema {
   '@context': string;
   '@type': string;
   mainEntity: Array<{
