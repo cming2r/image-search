@@ -27,6 +27,20 @@ interface WebApplicationSchema {
   };
 }
 
+interface WebPageSchema {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  dateModified?: string;
+  author?: {
+    '@type': string;
+    name: string;
+  };
+}
+
 interface BreadcrumbSchema {
   '@context': string;
   '@type': string;
@@ -57,7 +71,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
     '@type': 'WebApplication',
     name: '圖片搜尋工具',
     url: process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com',
-    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等搜尋引擎搜索相似圖片',
+    description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、TinEye等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
     offers: {
@@ -80,18 +94,49 @@ export function generateSchemaMarkup(): WebApplicationSchema {
   };
 }
 
-export function generateBreadcrumbSchema(): BreadcrumbSchema {
+export function generateBreadcrumbSchema(path?: string, pageName?: string): BreadcrumbSchema {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
+  const itemListElement = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首頁',
+      item: baseUrl,
+    },
+  ];
+
+  // 如果有提供路徑和頁面名稱，則添加到麵包屑
+  if (path && pageName) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: pageName,
+      item: `${baseUrl}${path}`,
+    });
+  }
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: '首頁',
-        item: process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com',
-      },
-    ],
+    itemListElement,
+  };
+}
+
+export function generateWebPageSchema(path: string, title: string, description: string): WebPageSchema {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description: description,
+    url: `${baseUrl}${path}`,
+    datePublished: '2025-01-01',
+    dateModified: '2025-01-01',
+    author: {
+      '@type': 'Organization',
+      name: '圖片搜尋工具團隊',
+    },
   };
 }
 
@@ -122,6 +167,14 @@ export function generateFAQSchema(): FAQSchema {
         acceptedAnswer: {
           '@type': 'Answer',
           text: '本工具支持多種流行的圖片搜尋引擎，包括Google圖片搜尋、Bing圖片搜尋、TinEye以及SauceNAO等。您可以根據需要選擇最適合的搜尋引擎。',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '這個工具是否支援手機搜尋？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '是的，本工具完全支援手機搜尋，包括iPhone和Android設備。您可以通過手機瀏覽器訪問網站並上傳圖片進行搜尋。',
         },
       },
     ],

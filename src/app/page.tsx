@@ -1,10 +1,20 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageForm from "@/components/ImageForm";
+import { generateBreadcrumbSchema } from "./schema";
+import Script from "next/script";
 
 export default function Home() {
+  // 首頁的麵包屑結構化數據
+  const breadcrumbSchema = generateBreadcrumbSchema();
+
   return (
     <>
+      <Script
+        id="homepage-breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">

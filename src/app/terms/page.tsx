@@ -1,15 +1,29 @@
-import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { generateBreadcrumbSchema, generateWebPageSchema } from '../schema';
+import Script from 'next/script';
 
-export const metadata: Metadata = {
-  title: '使用條款 - fyimg.com',
-  description: 'fyimg.com 的使用條款與服務協議',
-};
+// 使用外部定義的metadata - metadata.ts
 
 export default function Terms() {
+  // 生成JSON-LD結構化數據
+  const breadcrumbSchema = generateBreadcrumbSchema('/terms', '使用條款');
+  const webPageSchema = generateWebPageSchema(
+    '/terms',
+    '使用條款 - fyimg.com',
+    '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。'
+  );
+
+  // 合併schema為一個數組
+  const schemas = [breadcrumbSchema, webPageSchema];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Script
+        id="terms-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+      />
       <Header />
       <main className="flex-grow">
         <div className="container mx-auto max-w-4xl px-4 py-8">

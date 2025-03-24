@@ -3,7 +3,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { baseMetadata } from "./metadata";
-import { generateSchemaMarkup, generateBreadcrumbSchema, generateFAQSchema } from "./schema";
+import { generateSchemaMarkup, generateFAQSchema } from "./schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +29,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(generateSchemaMarkup()),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateBreadcrumbSchema()),
           }}
         />
         <script

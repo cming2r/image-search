@@ -2,18 +2,16 @@ import { Metadata } from 'next';
 
 export const baseMetadata: Metadata = {
   title: {
-    default: '圖片搜尋工具 | 使用Google、Bing等引擎搜索圖片',
+    default: '以圖搜圖 - 圖片搜尋工具 | fyimg',
     template: '%s | 圖片搜尋工具',
   },
-  description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等多個搜尋引擎進行反向圖片搜尋',
+  description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等進行反向圖片搜尋，並且支援手機iphone搜圖。',
   keywords: [
-    '圖片搜尋',
+    '以圖搜圖',
     '反向圖片搜尋',
     'Google圖片',
-    'Bing圖片',
-    'TinEye圖片',
     'SauceNAO',
-    '以圖搜圖',
+    '手機搜圖',
   ],
   authors: [{ name: '圖片搜尋工具團隊' }],
   creator: '圖片搜尋工具團隊',
@@ -28,8 +26,8 @@ export const baseMetadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: '圖片搜尋工具 | 使用多引擎進行反向圖片搜尋',
-    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等進行反向圖片搜尋',
+    title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
+    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     url: process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com',
     siteName: '圖片搜尋工具',
     images: [
@@ -45,8 +43,8 @@ export const baseMetadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '圖片搜尋工具 | 多引擎反向圖片搜尋',
-    description: '上傳圖片或輸入圖片網址，一鍵使用多個搜尋引擎進行反向圖片搜尋',
+    title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
+    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     creator: '@imagetool',
     images: ['/og-image.png'],
   },
@@ -64,12 +62,5 @@ export const baseMetadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
-  },
-  verification: {
-    google: 'google-site-verification-code',
-    yandex: 'yandex-verification-code',
-    other: {
-      bing: 'bing-verification-code',
-    },
   },
 };

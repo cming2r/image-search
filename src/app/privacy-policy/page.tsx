@@ -1,15 +1,29 @@
-import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { generateBreadcrumbSchema, generateWebPageSchema } from '../schema';
+import Script from 'next/script';
 
-export const metadata: Metadata = {
-  title: '隱私權政策 - fyimg.com',
-  description: 'fyimg.com 的隱私權政策',
-};
+// 使用外部定義的metadata - metadata.ts
 
 export default function PrivacyPolicy() {
+  // 生成JSON-LD結構化數據
+  const breadcrumbSchema = generateBreadcrumbSchema('/privacy-policy', '隱私權政策');
+  const webPageSchema = generateWebPageSchema(
+    '/privacy-policy',
+    '隱私權政策 - fyimg.com',
+    '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。'
+  );
+
+  // 合併schema為一個數組
+  const schemas = [breadcrumbSchema, webPageSchema];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Script
+        id="privacy-policy-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+      />
       <Header />
       <main className="flex-grow">
         <div className="container mx-auto max-w-4xl px-4 py-8">
