@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageForm from "@/components/ImageForm";
-import { generateBreadcrumbSchema, generateSchemaMarkup, generateFAQSchema } from "./lib/schema";
-import { SchemaMarkupGroup } from "./components/SchemaMarkup";
+import { generateBreadcrumbSchema, generateSchemaMarkup, generateFAQSchema } from "@/lib/schema";
+import { SchemaMarkupGroup } from "@/components/SchemaMarkup";
 
 export default function Home() {
   // 網站的所有結構化數據

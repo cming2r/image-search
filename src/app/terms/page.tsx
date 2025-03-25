@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '../lib/schema';
-import { SchemaMarkupGroup } from '../components/SchemaMarkup';
+import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
+import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
 // 使用外部定義的metadata - metadata.ts
 
