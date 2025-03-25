@@ -1,21 +1,21 @@
+import { getBaseUrl, getFullUrl } from '@/lib/utils';
+
 export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
-  
   const staticRoutes = [
     {
-      url: `${baseUrl}`,
+      url: getBaseUrl(),
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/privacy-policy`,
+      url: getFullUrl('/privacy-policy'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/terms`,
+      url: getFullUrl('/terms'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

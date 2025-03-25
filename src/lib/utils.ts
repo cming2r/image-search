@@ -1,4 +1,23 @@
 /**
+ * 獲取網站基礎 URL
+ * 在開發環境和生產環境中保持一致的 URL 格式
+ */
+export const getBaseUrl = (): string => {
+  return process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
+};
+
+/**
+ * 根據相對路徑生成完整 URL
+ * @param path 相對路徑，例如 '/about'
+ */
+export const getFullUrl = (path: string = '/'): string => {
+  const baseUrl = getBaseUrl();
+  // 確保 path 以 / 開頭，避免路徑拼接錯誤
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${normalizedPath}`;
+};
+
+/**
  * 生成搜尋引擎的圖片搜尋URL
  * @param {string} engine - 搜尋引擎名稱
  * @param {string} imageUrl - 圖片URL

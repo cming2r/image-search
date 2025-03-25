@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { getBaseUrl } from '@/lib/utils';
 
 export const baseMetadata: Metadata = {
   title: {
@@ -21,14 +22,14 @@ export const baseMetadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com'),
+  metadataBase: new URL(getBaseUrl()),
   alternates: {
-    canonical: '/',
+    canonical: getBaseUrl(),
   },
   openGraph: {
     title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、TinEye等進行反向圖片搜尋，並且支援手機iphone搜圖。',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com',
+    url: getBaseUrl(),
     siteName: '圖片搜尋工具',
     images: [
       {

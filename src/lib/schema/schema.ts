@@ -1,4 +1,5 @@
 // 定義 Schema.org 類型
+import { getBaseUrl, getFullUrl } from '../utils';
 
 export interface WebApplicationSchema {
   '@context': string;
@@ -66,11 +67,13 @@ export interface FAQSchema {
 }
 
 export function generateSchemaMarkup(): WebApplicationSchema {
+  const baseUrl = getBaseUrl();
+  
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: '圖片搜尋工具',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com',
+    url: baseUrl,
     description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、TinEye等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
@@ -87,7 +90,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com'}?q={search_term_string}`,
+        urlTemplate: `${baseUrl}?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -95,7 +98,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
 }
 
 export function generateBreadcrumbSchema(path?: string, pageName?: string): BreadcrumbSchema {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
+  const baseUrl = getBaseUrl();
   const itemListElement = [
     {
       '@type': 'ListItem',
@@ -111,7 +114,7 @@ export function generateBreadcrumbSchema(path?: string, pageName?: string): Brea
       '@type': 'ListItem',
       position: 2,
       name: pageName,
-      item: `${baseUrl}${path}`,
+      item: getFullUrl(path),
     });
   }
 
@@ -123,14 +126,12 @@ export function generateBreadcrumbSchema(path?: string, pageName?: string): Brea
 }
 
 export function generateWebPageSchema(path: string, title: string, description: string): WebPageSchema {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com';
-  
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: title,
     description: description,
-    url: `${baseUrl}${path}`,
+    url: getFullUrl(path),
     datePublished: '2025-01-01',
     dateModified: '2025-01-01',
     author: {

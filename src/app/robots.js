@@ -1,3 +1,5 @@
+import { getFullUrl } from '@/lib/utils';
+
 export default function robots() {
   return {
     rules: {
@@ -5,6 +7,6 @@ export default function robots() {
       allow: '/',
       disallow: ['/api/*', '/admin/*'],
     },
-    sitemap: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://fyimg.com'}/sitemap.xml`,
+    sitemap: getFullUrl('/sitemap.xml'),
   };
 }
