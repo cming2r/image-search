@@ -8,7 +8,18 @@ export default function sitemap() {
       changeFrequency: 'daily',
       priority: 1.0,
     },
-    // 如果有其他靜態頁面，可以在這裡添加
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }
   ];
 
   return [...staticRoutes];
