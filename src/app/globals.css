@@ -17,4 +17,27 @@
   body {
     @apply bg-background text-foreground font-sans flex flex-col min-h-screen;
   }
+  
+  /* 全局標題樣式 */
+  h1 {
+    @apply text-3xl font-bold mb-3;
+  }
+  
+  h2 {
+    @apply text-xl font-semibold mb-4;
+  }
+  
+  p {
+    @apply text-gray-700;
+  }
+}
+
+/* 針對標題容器的樣式 */
+.title-container {
+  @apply text-center mb-10;
+}
+
+/* 針對內容區塊的樣式 */
+.content-section {
+  @apply mt-8 bg-white p-6 rounded-lg shadow-sm mb-8;
 }

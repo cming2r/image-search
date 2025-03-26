@@ -19,7 +19,12 @@ const Header: FC = () => {
             以圖搜圖
           </Link>
           <nav className="ml-6">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-6">
+              <li>
+                <Link href="/date" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  日期計算器
+                </Link>
+              </li>
               <li>
                 <a href="https://vvrl.cc" className="text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
                   縮網址服務

@@ -141,43 +141,93 @@ export function generateWebPageSchema(path: string, title: string, description: 
   };
 }
 
-export function generateFAQSchema(): FAQSchema {
+export function generateFAQSchema(type?: 'image' | 'date'): FAQSchema {
+  // 圖片搜尋相關 FAQ
+  const imageFAQs = [
+    {
+      '@type': 'Question',
+      name: '什麼是反向圖片搜尋？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '反向圖片搜尋是一種使用圖片作為搜尋輸入（而不是文字）的搜尋方式。通過上傳圖片或提供圖片的URL，搜尋引擎會找到與該圖片相似或相關的其他圖片和網頁。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '如何使用這個工具搜尋圖片？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '您可以通過兩種方式使用本工具：1) 直接輸入圖片的網址，然後點擊"搜尋此圖片"；2) 上傳您本地電腦上的圖片文件。之後選擇您想使用的搜尋引擎（如Google、Bing、TinEye等）進行搜尋。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '這個工具支持哪些搜尋引擎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '本工具支持多種流行的圖片搜尋引擎，包括Google圖片搜尋、Bing圖片搜尋、TinEye以及SauceNAO等。您可以根據需要選擇最適合的搜尋引擎。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '這個工具是否支援手機搜尋？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '是的，本工具完全支援手機搜尋，包括iPhone和Android設備。您可以通過手機瀏覽器訪問網站並上傳圖片進行搜尋。',
+      },
+    },
+  ];
+
+  // 日期計算器相關 FAQ
+  const dateFAQs = [
+    {
+      '@type': 'Question',
+      name: '什麼是日曆天？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '日曆天是指專案開始到結束的實際天數，包含了工作日、週末以及法定假日。它反映了專案所占用的時間，與工作天不同，日曆天計算包含所有日期，不考慮是否為工作日。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '如何計算兩個日期之間的日曆天數？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '使用我們的日期計算器，選擇「日期相減」選項，然後輸入起始日期和結束日期，系統將自動計算出這兩個日期之間的天數差距。例如，若專案於3月1日開始，並於3月31日結束，則日曆天數為30天。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '日曆天和工作天有什麼區別？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '日曆天包含所有的日期（包括周末和法定假日），而工作天則只計算實際工作日，不包含週末及法定假日。例如，一個為期7天的專案可能只有5個工作天，因為其中包含了週末。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '如何使用日期計算器進行日期加減計算？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '選擇「日期加天數」選項，輸入起始日期和要加減的天數（可為正數或負數），系統將自動計算出結果日期。例如，若從2025年3月15日加上10天，結果將顯示為2025年3月25日。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '日曆天計算在專案管理中有什麼應用？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '日曆天計算用於專案時程管理，有助於：1) 專案進度追蹤：比較實際與計劃時間；2) 資源分配與優化：合理安排人力和物力；3) 風險管理：識別可能導致延遲的因素，如節假日安排等。',
+      },
+    },
+  ];
+
+  // 根據類型返回相應的 FAQ
+  const mainEntity = type === 'date' ? dateFAQs : imageFAQs;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: '什麼是反向圖片搜尋？',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: '反向圖片搜尋是一種使用圖片作為搜尋輸入（而不是文字）的搜尋方式。通過上傳圖片或提供圖片的URL，搜尋引擎會找到與該圖片相似或相關的其他圖片和網頁。',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '如何使用這個工具搜尋圖片？',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: '您可以通過兩種方式使用本工具：1) 直接輸入圖片的網址，然後點擊"搜尋此圖片"；2) 上傳您本地電腦上的圖片文件。之後選擇您想使用的搜尋引擎（如Google、Bing、TinEye等）進行搜尋。',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '這個工具支持哪些搜尋引擎？',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: '本工具支持多種流行的圖片搜尋引擎，包括Google圖片搜尋、Bing圖片搜尋、TinEye以及SauceNAO等。您可以根據需要選擇最適合的搜尋引擎。',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '這個工具是否支援手機搜尋？',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: '是的，本工具完全支援手機搜尋，包括iPhone和Android設備。您可以通過手機瀏覽器訪問網站並上傳圖片進行搜尋。',
-        },
-      },
-    ],
+    mainEntity,
   };
 }

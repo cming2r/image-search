@@ -8,7 +8,7 @@ export default function Home() {
   // 網站的所有結構化數據
   const webAppSchema = generateSchemaMarkup();
   const breadcrumbSchema = generateBreadcrumbSchema();
-  const faqSchema = generateFAQSchema();
+  const faqSchema = generateFAQSchema('image');
 
   return (
     <>
@@ -17,8 +17,8 @@ export default function Home() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold mb-3">圖片搜尋工具</h1>
-            <p className="text-gray-600">
+            <h1>圖片搜尋工具</h1>
+            <p>
               輸入圖片網址或上傳圖片，使用各大搜尋引擎查找相似圖片
             </p>
           </div>
@@ -26,7 +26,7 @@ export default function Home() {
           <ImageForm />
 
           <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">如何使用此工具？</h2>
+            <h2>如何使用此工具？</h2>
             <ol className="list-decimal pl-5 space-y-2">
               <li>輸入圖片的網址，或是點擊「上傳圖片」按鈕選擇本地圖片</li>
               <li>系統會將上傳的圖片轉換為可搜尋的網址</li>
@@ -36,7 +36,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">什麼是以圖搜圖？</h2>
+            <h2>什麼是以圖搜圖？</h2>
             <p className="text-gray-700 mb-4">
               以圖搜圖又稱反向圖像搜索 （Reverse Image
               Search），是一種搜尋引擎功能，可以上傳圖像檔案或圖片連結網址來搜尋與該圖像、照片相關的結果或查找圖片來源。

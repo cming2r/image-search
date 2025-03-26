@@ -9,16 +9,22 @@ export default function sitemap() {
       priority: 1.0,
     },
     {
+      url: getFullUrl('/date'),
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: getFullUrl('/privacy-policy'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: getFullUrl('/terms'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     }
   ];
 
