@@ -37,37 +37,37 @@ export default function Home() {
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
             <h2>什麼是以圖搜圖？</h2>
-            <p className="text-gray-700 mb-4">
+            <p>
               以圖搜圖又稱反向圖像搜索 （Reverse Image
               Search），是一種搜尋引擎功能，可以上傳圖像檔案或圖片連結網址來搜尋與該圖像、照片相關的結果或查找圖片來源。
               本站整合Google、Bing等以圖搜圖網站，可以在android、iphone上等app手機以圖搜圖使用。
             </p>
-            <p className="text-gray-700 mb-4">
+            <p>
               例如可以搜索該圖片更高的解析度、用被裁減過的圖像去搜尋完整版的圖片、同一個人像以圖搜圖、或者搜索圖片的類似版本（如同一套裝扮不同姿勢、或者同一個場景不同天氣）。
             </p>
-            <p className="text-gray-700">
+            <p>
               想要在網路上找類似的圖片嗎？本網站工具使個人或工作使用的圖像搜索變得超級快速和容易。只需上傳圖片或輸入圖片
               URL，就能搜尋出類似的圖片。
             </p>
           </div>
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">Google 圖片以圖搜圖</h2>
-            <p className="text-gray-700 mb-4">
+          <h2>Google 圖片以圖搜圖</h2>
+            <p>
               Google（Alphabet）成立於1998
               年，目前為市場上市值前五大的公司，僅次於蘋果、微軟等科技巨頭，其營收來源有一半為搜尋服務（Google
               Search），可見谷歌其搜尋引擎在網際網路的影響力。
             </p>
-            <p className="text-gray-700 mb-4">
+            <p>
               Google 搜尋以超過 70%
               的全球市場占比，無疑是地球上最受歡迎的搜索引擎。在手機搜尋方面，Google
               囊括了 85% 的搜尋流量。
             </p>
-            <p className="text-gray-700 mb-4">
+            <p>
               Google Search by Image
               也可以搜尋無版權的圖像，能為設計師、創作者提供免費且免版權的圖片。
             </p>
-            <p className="text-gray-700">
+            <p>
               Google Image Search
               是使用最廣泛的圖片搜索引擎之一，以其龐大的圖片索引和提供相關結果的能力而聞名。
               它提供了各種過濾器來細化搜索結果，例如大小、顏色、類型和時間。
@@ -77,20 +77,20 @@ export default function Home() {
           </div>
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">
+          <h2>
               Microsoft Bing 微軟必應以圖搜圖
             </h2>
-            <p className="text-gray-700 mb-4">
+            <p>
               Microsoft Bing
               推出於2009年，由微軟公司推出的搜尋引擎，並於2020年由原名稱 Bing
               冠上公司名稱更名為 Microsoft
               Bing（微軟必應），目前為全球​​第二大搜索引擎。
             </p>
-            <p className="text-gray-700 mb-4">
+            <p>
               Bing
               的圖像搜索特點是可以搜尋高分辨率圖像，若想要讓網站或產品頁面擁有高質量的視覺效果，Bing的以圖搜圖功能可能會派上用場。
             </p>
-            <p className="text-gray-700">
+            <p>
               Bing Image Search 是微軟的圖像搜索引擎，集成到 Bing 搜索引擎中。
               Bing Image Search
               提供了一個乾淨有序的界面，帶有大小、顏色、樣式和佈局的過濾器。
@@ -100,8 +100,8 @@ export default function Home() {
           </div>
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
-            <h2 className="text-xl font-semibold mb-4">TinEye</h2>
-            <p className="text-gray-700">
+          <h2>TinEye</h2>
+            <p>
               TinEye
               是一個專注於圖像識別的搜尋引擎，其特點是能夠精確找出圖片的確切匹配，而不僅僅是類似的圖片。TinEye
               特別適合用於：追蹤圖片在網路上的使用情況、查找圖片的最早出現時間、尋找更高解析度的版本，以及確認圖片是否為原創或被修改過。對於版權所有者和創作者而言，TinEye
@@ -110,8 +110,8 @@ export default function Home() {
           </div>
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
-            <h2 className="text-xl font-semibold mb-4">SauceNAO</h2>
-            <p className="text-gray-700">
+            <h2>SauceNAO</h2>
+            <p>
               SauceNAO
               堪稱是目前最為全面的二次元圖片搜尋引擎。它的資料庫涵蓋了諸如推特、Pixiv
               和 niconico 靜畫等眾多知名圖庫網站。使用

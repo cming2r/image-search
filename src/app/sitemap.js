@@ -18,13 +18,13 @@ export default function sitemap() {
       url: getFullUrl('/privacy-policy'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.3,
     },
     {
       url: getFullUrl('/terms'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.3,
     }
   ];
 

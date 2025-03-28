@@ -287,7 +287,7 @@ export default function DateCalculator() {
           {/* 說明區 */}
           <div className="content-section">
             <h2>關於日期計算器</h2>
-            <p className="mb-3">
+            <p>
               本工具提供兩種常用日期計算功能：
             </p>
             <ul className="list-disc pl-6 mb-3">
@@ -303,35 +303,35 @@ export default function DateCalculator() {
           {/* 日曆天說明區 */}
           <div className="content-section">
             <h2>日曆天的定義與計算方式</h2>
-            <p className="mb-3">
+            <p>
               日曆天是指專案開始到結束的實際天數，包含了工作日、週末以及法定假日。它反映了專案所占用的時間。
             </p>
-            <p className="mb-3">
+            <p>
               日曆天的計算方式相對簡單，只需將專案開始日期與結束日期之間的差異天數相加即可。
             </p>
-            <p className="mb-3">
+            <p>
               例如，若專案於3月1日開始，並於3月2日結束，則日曆天數為1天。
             </p>
-            <p className="mb-3">
+            <p>
               例如，若專案於3月1日開始，並於3月31日結束，則日曆天數為30天。
             </p>
             
-            <h2 className="mt-6">日曆天與工作天(工期)的差異</h2>
-            <p className="mb-3">
+            <h2>日曆天與工作天(工期)的差異</h2>
+            <p>
               工作是指完成專案所需的工作日數，不包含週末及法定假日。它反映了團隊實際投入專案的時間。
             </p>
-            <p className="mb-3">
+            <p>
               由於日曆天包含了非工作日，因此工作天通常會小於日曆天數。假設專案日曆天數為31天，其中22天為需要工作日，則工作日為22天。
             </p>
             
-            <h2 className="mt-6">日曆天數與工期管理的應用</h2>
+            <h2>日曆天數與工期管理的應用</h2>
             <ul className="list-disc pl-6 mb-3">
               <li className="mb-2"><strong>專案進度追蹤：</strong>通過日曆天數與工期的對比，項目經理可以掌握專案的實際進度。若日曆天數大幅超過預期工期，則表明專案可能存在延遲風險，需要採取措施加以應對。</li>
               <li className="mb-2"><strong>資源分配與優化：</strong>根據日曆天數與工期，項目經理可以合理分配團隊資源，並優化工作安排。例如，在節假日前夕，可以適當增加人力，以確保關鍵任務的按時完成。</li>
               <li className="mb-2"><strong>風險管理：</strong>日曆天計算有助於識別並管理專案風險。例如，若關鍵材料的交付日期恰好遇到長假，則可能導致專案延遲。項目經理需要提前識別此類風險，並制定應對措施。</li>
             </ul>
             
-            <h2 className="mt-6">日曆天計算的注意事項</h2>
+            <h2>日曆天計算的注意事項</h2>
             <ul className="list-disc pl-6 mb-3">
               <li className="mb-2"><strong>考慮時差因素：</strong>若專案涉及跨時區合作，則需要在日曆天計算中考慮時差因素。不同時區的假日安排可能有所不同，需要進行協調以確保順暢的溝通與協作。</li>
               <li className="mb-2"><strong>彈性調整：</strong>雖然日曆天計算提供了一個時間管理的框架，但在實踐中仍需保持一定的彈性。針對突發事件或變更請求，項目經理需要及時調整日曆天安排，以確保專案的順利進行。</li>
