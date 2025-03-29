@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
-          <div className="text-center mb-10">
+          <div className="text-center mb-6">
             <h1>圖片搜尋工具</h1>
             <p>
               輸入圖片網址或上傳圖片，使用各大搜尋引擎查找相似圖片
@@ -27,7 +27,7 @@ export default function Home() {
 
           <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
             <h2>如何使用此工具？</h2>
-            <ol className="list-decimal pl-5 space-y-2">
+            <ol>
               <li>輸入圖片的網址，或是點擊「上傳圖片」按鈕選擇本地圖片</li>
               <li>系統會將上傳的圖片轉換為可搜尋的網址</li>
               <li>點擊「Google」、「Bing」等按鈕，跳轉至對應的搜索引擎</li>

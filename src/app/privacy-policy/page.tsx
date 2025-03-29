@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
 
             <h2>1. 我們收集的資訊</h2>
             <p>我們可能會收集以下類型的資訊：</p>
-            <ul className="list-disc pl-6 mb-4">
+            <ul>
               <li>使用者提供的資訊：當您上傳圖片或輸入圖片網址時，我們會接收並處理這些內容。</li>
               <li>自動收集的資訊：我們可能會收集您的 IP 地址、瀏覽器類型、設備資訊、使用時間等技術資料，以優化網站功能和使用者體驗。</li>
               <li>儲存的圖片資料：上傳的圖片會被轉換為網址並儲存在我們的伺服器，以便進行後續的圖片搜尋。</li>
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
 
             <h2>2. 資訊的使用方式</h2>
             <p>我們收集的資訊將用於以下目的：</p>
-            <ul className="list-disc pl-6 mb-4">
+            <ul>
               <li>提供核心服務：將您輸入的圖片網址或上傳的圖片傳送至第三方搜尋引擎（例如 Google 圖片搜尋、Bing 圖片搜尋）進行搜尋。</li>
               <li>改善服務：分析使用模式以提升網站效能和使用者體驗。</li>
               <li>技術運作：確保網站正常運行並處理後端邏輯。</li>
@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
             </p>
 
             <h2>4. 資料儲存與安全</h2>
-            <ul className="list-disc pl-6 mb-4">
+            <ul>
               <li>儲存：上傳的圖片會儲存在我們的雲端伺服器中，並生成臨時網址以供搜尋使用。我們不會永久儲存您的圖片，資料將在上傳後30天內自動刪除。</li>
               <li>安全：我們採取合理的安全措施（例如加密和存取控制）保護您的資料，但無法保證絕對安全。如發生資料外洩，我們將依法通知您。</li>
               <li>國際資料傳輸：我們的伺服器可能位於您所在國家/地區以外的地方。使用我們的服務，即表示您同意將資料傳輸至這些地區。</li>
@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
 
             <h2>5. 您的權利</h2>
             <p>您有權：</p>
-            <ul className="list-disc pl-6 mb-4">
+            <ul>
               <li>要求存取我們持有的您的個人資料。</li>
               <li>要求更正或刪除您的資料（若適用）。</li>
               <li>隨時停止使用本網站服務。</li>
@@ -75,7 +75,7 @@ export default function PrivacyPolicy() {
             <p>
               我們使用的 Cookie 類型包括：
             </p>
-            <ul className="list-disc pl-6 mb-4">
+            <ul>
               <li>必要性 Cookie：維持網站基本功能所需。</li>
               <li>分析性 Cookie：幫助我們了解網站使用模式，改善服務。</li>
               <li>功能性 Cookie：記住您的偏好設定，提供更個人化的體驗。</li>

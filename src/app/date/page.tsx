@@ -81,7 +81,12 @@ export default function DateCalculator() {
       const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
       const weekday = weekdays[start.getDay()];
       
-      setResult(`${start.toISOString().split('T')[0]}（${weekday}）`);
+      // 格式化日期為 yyyy/MM/dd
+      const year = start.getFullYear();
+      const month = String(start.getMonth() + 1).padStart(2, '0');
+      const day = String(start.getDate()).padStart(2, '0');
+      
+      setResult(`${year}/${month}/${day}（${weekday}）`);
     }
   }, [startDate, days]);
 
@@ -112,7 +117,7 @@ export default function DateCalculator() {
       <SchemaMarkupGroup schemas={[breadcrumbSchema, webPageSchema, faqSchema]} id="date-calculator-schema" />
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
-        <section className="max-w-lg mx-auto">
+        <section className="max-w-3xl mx-auto">
           {/* 標題區 */}
           <div className="title-container">
             <h1>日期計算器</h1>
@@ -149,17 +154,17 @@ export default function DateCalculator() {
               activeTab === 'addDays' ? 'block' : 'hidden'
             }`}
           >
-            <div className="mb-4">
+            <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">起始日期：</label>
+                  <label className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                    className="flex-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                     style={dateInputStyle}
                   />
                   <button
@@ -178,7 +183,7 @@ export default function DateCalculator() {
               
               <div className="flex items-center mb-4">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">天數：</label>
+                  <label className="text-lg font-medium">天數：</label>
                 </div>
                 <div className="flex-1">
                   <input
@@ -191,11 +196,12 @@ export default function DateCalculator() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                   />
                 </div>
+                <div className='w-12'></div>
               </div>
               
               <div className="flex items-center">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">計算結果：</label>
+                  <label className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
                   <input
@@ -205,6 +211,7 @@ export default function DateCalculator() {
                     className="w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
                   />
                 </div>
+                <div className='w-12'></div>
               </div>
             </div>
           </div>
@@ -215,10 +222,10 @@ export default function DateCalculator() {
               activeTab === 'subtractDates' ? 'block' : 'hidden'
             }`}
           >
-            <div className="mb-4">
+            <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">起始日期：</label>
+                  <label className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
@@ -244,7 +251,7 @@ export default function DateCalculator() {
               
               <div className="flex items-center mb-4">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">結束日期：</label>
+                  <label className="text-lg font-medium">結束日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
@@ -270,7 +277,7 @@ export default function DateCalculator() {
               
               <div className="flex items-center">
                 <div className="w-28 text-right pr-4">
-                  <label className="font-medium">計算結果：</label>
+                  <label className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
                   <input
@@ -280,6 +287,7 @@ export default function DateCalculator() {
                     className="w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
                   />
                 </div>
+                <div className='w-12'></div>
               </div>
             </div>
           </div>
@@ -290,7 +298,7 @@ export default function DateCalculator() {
             <p>
               本工具提供兩種常用日期計算功能：
             </p>
-            <ul className="list-disc pl-6 mb-3">
+            <ul>
               <li>計算兩個日期之間的天數差距</li>
               <li>從指定日期加上或減去天數</li>
             </ul>
@@ -325,7 +333,7 @@ export default function DateCalculator() {
             </p>
             
             <h2>日曆天數與工期管理的應用</h2>
-            <ul className="list-disc pl-6 mb-3">
+            <ul>
               <li className="mb-2"><strong>專案進度追蹤：</strong>通過日曆天數與工期的對比，項目經理可以掌握專案的實際進度。若日曆天數大幅超過預期工期，則表明專案可能存在延遲風險，需要採取措施加以應對。</li>
               <li className="mb-2"><strong>資源分配與優化：</strong>根據日曆天數與工期，項目經理可以合理分配團隊資源，並優化工作安排。例如，在節假日前夕，可以適當增加人力，以確保關鍵任務的按時完成。</li>
               <li className="mb-2"><strong>風險管理：</strong>日曆天計算有助於識別並管理專案風險。例如，若關鍵材料的交付日期恰好遇到長假，則可能導致專案延遲。項目經理需要提前識別此類風險，並制定應對措施。</li>
