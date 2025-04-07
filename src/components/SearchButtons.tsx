@@ -70,7 +70,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
         <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
           <Image 
             src="/images/google.svg" 
-            alt="Google" 
+            alt="" 
             width={20} 
             height={20} 
             className="filter brightness-0 invert" 
@@ -88,7 +88,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
         <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
           <Image 
             src="/images/bing.svg" 
-            alt="Bing" 
+            alt="" 
             width={14} 
             height={20} 
             className="filter brightness-0 invert" 
@@ -106,7 +106,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
         <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
           <Image 
             src="/images/yandex.svg" 
-            alt="Yandex" 
+            alt="" 
             width={20} 
             height={20} 
             className="filter brightness-0 invert" 
@@ -124,7 +124,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
         <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
           <Image 
             src="/images/SauceNAO.png" 
-            alt="SauceNAO" 
+            alt="" 
             width={20} 
             height={20} 
             className="filter brightness-0 invert" 

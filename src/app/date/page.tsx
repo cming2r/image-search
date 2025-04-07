@@ -157,10 +157,11 @@ export default function DateCalculator() {
             <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">起始日期：</label>
+                  <label htmlFor="start-date" className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
+                    id="start-date"
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
@@ -183,10 +184,11 @@ export default function DateCalculator() {
               
               <div className="flex items-center mb-4">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">天數：</label>
+                  <label htmlFor="days-input" className="text-lg font-medium">天數：</label>
                 </div>
                 <div className="flex-1">
                   <input
+                    id="days-input"
                     type="number"
                     min="-999"
                     max="999"
@@ -201,14 +203,15 @@ export default function DateCalculator() {
               
               <div className="flex items-center">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">計算結果：</label>
+                  <label htmlFor="result-display" className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
                   <input
+                    id="result-display"
                     type="text"
                     value={result}
                     readOnly
-                    className="text-lg w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
+                    className="text-lg w-full px-3 py-2 border border-red-500 rounded-md text-red-600 text-center"
                   />
                 </div>
                 <div className='w-12'></div>
@@ -225,10 +228,11 @@ export default function DateCalculator() {
             <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">起始日期：</label>
+                  <label htmlFor="start-date2" className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
+                    id="start-date2"
                     type="date"
                     value={startDate2}
                     onChange={(e) => setStartDate2(e.target.value)}
@@ -251,10 +255,11 @@ export default function DateCalculator() {
               
               <div className="flex items-center mb-4">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">結束日期：</label>
+                  <label htmlFor="end-date" className="text-lg font-medium">結束日期：</label>
                 </div>
                 <div className="flex-1 flex">
                   <input
+                    id="end-date"
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
@@ -277,14 +282,15 @@ export default function DateCalculator() {
               
               <div className="flex items-center">
                 <div className="w-32 text-right pr-4">
-                  <label className="text-lg font-medium">計算結果：</label>
+                  <label htmlFor="days-diff" className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
                   <input
+                    id="days-diff"
                     type="text"
                     value={daysDiff}
                     readOnly
-                    className="text-lg w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
+                    className="text-lg w-full px-3 py-2 border border-red-500 rounded-md text-red-600 text-center"
                   />
                 </div>
                 <div className='w-12'></div>

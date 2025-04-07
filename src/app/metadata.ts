@@ -23,9 +23,6 @@ export const baseMetadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL(getBaseUrl()),
-  alternates: {
-    canonical: getFullUrl('/'),
-  },
   openGraph: {
     title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
