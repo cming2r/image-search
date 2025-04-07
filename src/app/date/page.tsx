@@ -128,7 +128,7 @@ export default function DateCalculator() {
           <div className="flex gap-0.5 mb-4">
             <button 
               onClick={() => setActiveTab('addDays')}
-              className={`flex-1 py-2.5 px-4 ${
+              className={`text-lg flex-1 py-2.5 px-4 ${
                 activeTab === 'addDays' 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-200 text-gray-700'
@@ -138,7 +138,7 @@ export default function DateCalculator() {
             </button>
             <button 
               onClick={() => setActiveTab('subtractDates')}
-              className={`flex-1 py-2.5 px-4 ${
+              className={`text-lg flex-1 py-2.5 px-4 ${
                 activeTab === 'subtractDates' 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-200 text-gray-700'
@@ -156,7 +156,7 @@ export default function DateCalculator() {
           >
             <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
@@ -164,7 +164,7 @@ export default function DateCalculator() {
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="flex-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                    className="text-lg flex-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                     style={dateInputStyle}
                   />
                   <button
@@ -182,7 +182,7 @@ export default function DateCalculator() {
               </div>
               
               <div className="flex items-center mb-4">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">天數：</label>
                 </div>
                 <div className="flex-1">
@@ -193,14 +193,14 @@ export default function DateCalculator() {
                     step="1"
                     value={daysInput}
                     onChange={handleDaysChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                    className="text-lg w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                   />
                 </div>
                 <div className='w-12'></div>
               </div>
               
               <div className="flex items-center">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
@@ -208,7 +208,7 @@ export default function DateCalculator() {
                     type="text"
                     value={result}
                     readOnly
-                    className="w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
+                    className="text-lg w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
                   />
                 </div>
                 <div className='w-12'></div>
@@ -224,7 +224,7 @@ export default function DateCalculator() {
           >
             <div className="mb-4 max-w-lg mx-auto">
               <div className="flex items-center mb-4">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">起始日期：</label>
                 </div>
                 <div className="flex-1 flex">
@@ -232,7 +232,7 @@ export default function DateCalculator() {
                     type="date"
                     value={startDate2}
                     onChange={(e) => setStartDate2(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                    className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                     style={dateInputStyle}
                   />
                   <button
@@ -250,7 +250,7 @@ export default function DateCalculator() {
               </div>
               
               <div className="flex items-center mb-4">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">結束日期：</label>
                 </div>
                 <div className="flex-1 flex">
@@ -258,7 +258,7 @@ export default function DateCalculator() {
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                    className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
                     style={dateInputStyle}
                   />
                   <button
@@ -276,7 +276,7 @@ export default function DateCalculator() {
               </div>
               
               <div className="flex items-center">
-                <div className="w-28 text-right pr-4">
+                <div className="w-32 text-right pr-4">
                   <label className="text-lg font-medium">計算結果：</label>
                 </div>
                 <div className="flex-1">
@@ -284,7 +284,7 @@ export default function DateCalculator() {
                     type="text"
                     value={daysDiff}
                     readOnly
-                    className="w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
+                    className="text-lg w-full px-3 py-2 border border-red-400 rounded-md text-red-500 text-center"
                   />
                 </div>
                 <div className='w-12'></div>

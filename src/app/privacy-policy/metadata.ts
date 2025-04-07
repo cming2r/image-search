@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: '隱私權政策 - fyimg.com',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
     type: 'website',
     locale: 'zh_TW',
-    url: '/privacy-policy',
+    url: getFullUrl('/privacy-policy'),
     siteName: '圖片搜尋工具',
     images: [
       {
@@ -26,6 +27,6 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: '/privacy-policy',
+    canonical: getFullUrl('/privacy-policy'),
   },
 };

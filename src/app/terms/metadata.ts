@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: '使用條款 - fyimg.com',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     description: '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
     type: 'website',
     locale: 'zh_TW',
-    url: '/terms',
+    url: getFullUrl('/terms'),
     siteName: '圖片搜尋工具',
     images: [
       {
@@ -26,6 +27,6 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: '/terms',
+    canonical: getFullUrl('/terms'),
   },
 };

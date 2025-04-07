@@ -34,7 +34,7 @@ export function generateSearchUrl(engine: string, imageUrl: string): string {
     case "bing":
       return `https://www.bing.com/images/search?view=detailv2&iss=sbi&form=SBIHMP&sbisrc=UrlPaste&q=imgurl:${encodedUrl}`;
     case "yandex":
-      return `https://yandex.com/images/search?rpt=imageview&url=${encodedUrl}`;
+      return `https://ya.ru/images/search?rpt=imageview&url=${encodedUrl}`;
     case "tineye":
       return `https://tineye.com/search?url=${encodedUrl}`;
     default:

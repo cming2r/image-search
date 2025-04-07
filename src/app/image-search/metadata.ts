@@ -1,35 +1,16 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { getFullUrl } from '@/lib/utils';
 
-export const baseMetadata: Metadata = {
-  title: {
-    default: '以圖搜圖 - 圖片搜尋工具 | fyimg',
-    template: '%s | 圖片搜尋工具',
-  },
+export const metadata: Metadata = {
+  title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
   description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
-  keywords: [
-    '以圖搜圖',
-    '反向圖片搜尋',
-    'Google圖片',
-    'SauceNAO',
-    '手機搜圖',
-  ],
-  authors: [{ name: '圖片搜尋工具團隊' }],
-  creator: '圖片搜尋工具團隊',
-  publisher: '圖片搜尋工具',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL(getBaseUrl()),
   alternates: {
-    canonical: getFullUrl('/'),
+    canonical: getFullUrl('/image-search'),
   },
   openGraph: {
     title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
-    url: getFullUrl('/'),
+    url: getFullUrl('/image-search'),
     siteName: '圖片搜尋工具',
     images: [
       {
@@ -48,20 +29,5 @@ export const baseMetadata: Metadata = {
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     creator: '@imagetool',
     images: ['/og-image.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  icons: {
-    icon: '/favicon.ico',
-    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
   },
 };

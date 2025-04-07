@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
 
             <h2>3. 第三方服務</h2>
             <p>
-              為了提供圖片搜尋功能，我們會將圖片網址或上傳的圖片傳送至第三方搜尋引擎（例如 Google、Bing、TinEye 和 SauceNAO）。
+              為了提供圖片搜尋功能，我們會將圖片網址或上傳的圖片傳送至第三方搜尋引擎（例如 Google、Bing、Yandex 和 SauceNAO）。
               這些第三方服務有其各自的隱私政策，我們建議您查閱它們的條款以了解其資料處理方式。我們對第三方如何使用您的資料不承擔責任。
             </p>
 

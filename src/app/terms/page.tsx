@@ -55,7 +55,7 @@ export default function Terms() {
 
             <h2>4. 第三方搜尋引擎</h2>
             <p>
-              本網站依賴 Google 圖片搜尋、Bing 圖片搜尋、TinEye、SauceNAO 等第三方服務提供搜尋結果。
+              本網站依賴 Google 圖片搜尋、Bing 圖片搜尋、Yandex、SauceNAO 等第三方服務提供搜尋結果。
               我們無法控制這些服務的運作或結果，且不對其內容負責。使用這些第三方服務時，您亦受其服務條款約束。
             </p>
 

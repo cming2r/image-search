@@ -5,7 +5,13 @@ export default function sitemap() {
     {
       url: getBaseUrl(),
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: getFullUrl('/image-search'),
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
       priority: 1.0,
     },
     {

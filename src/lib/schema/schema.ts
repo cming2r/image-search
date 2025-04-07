@@ -74,7 +74,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
     '@type': 'WebApplication',
     name: '圖片搜尋工具',
     url: baseUrl,
-    description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、TinEye等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
+    description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、Yandex等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
     offers: {
@@ -157,7 +157,7 @@ export function generateFAQSchema(type?: 'image' | 'date'): FAQSchema {
       name: '如何使用這個工具搜尋圖片？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '您可以通過兩種方式使用本工具：1) 直接輸入圖片的網址，然後點擊"搜尋此圖片"；2) 上傳您本地電腦上的圖片文件。之後選擇您想使用的搜尋引擎（如Google、Bing、TinEye等）進行搜尋。',
+        text: '您可以通過兩種方式使用本工具：1) 直接輸入圖片的網址，然後點擊"搜尋此圖片"；2) 上傳您本地電腦上的圖片文件。之後選擇您想使用的搜尋引擎（如Google、Bing、Yandex等）進行搜尋。',
       },
     },
     {
@@ -165,7 +165,7 @@ export function generateFAQSchema(type?: 'image' | 'date'): FAQSchema {
       name: '這個工具支持哪些搜尋引擎？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '本工具支持多種流行的圖片搜尋引擎，包括Google圖片搜尋、Bing圖片搜尋、TinEye以及SauceNAO等。您可以根據需要選擇最適合的搜尋引擎。',
+        text: '本工具支持多種流行的圖片搜尋引擎，包括Google圖片搜尋、Bing圖片搜尋、Yandex以及SauceNAO等。您可以根據需要選擇最適合的搜尋引擎。',
       },
     },
     {

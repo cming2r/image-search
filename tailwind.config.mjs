@@ -17,6 +17,10 @@ const config = {
         secondary: 'var(--secondary)',
         border: 'var(--border-color)',
       },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        mono: ['var(--font-mono)'],
+      },
     },
   },
   plugins: [

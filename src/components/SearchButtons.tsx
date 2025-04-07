@@ -98,15 +98,15 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
       )
     },
     {
-      name: 'TinEye',
-      url: `https://tineye.com/search?url=${encodeURIComponent(imageUrl)}`,
-      bgColor: 'bg-purple-500',
-      hoverColor: 'hover:bg-purple-600',
+      name: 'Yandex',
+      url: `https://ya.ru/images/search?rpt=imageview&url=${encodeURIComponent(imageUrl)}`,
+      bgColor: 'bg-red-500',
+      hoverColor: 'hover:bg-red-600',
       icon: (
         <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
           <Image 
-            src="/images/tineye.png" 
-            alt="TinEye" 
+            src="/images/yandex.svg" 
+            alt="Yandex" 
             width={20} 
             height={20} 
             className="filter brightness-0 invert" 
