@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState, useRef, ChangeEvent, FormEvent } from 'react';
+import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import SearchButtons from './SearchButtons';
 
@@ -11,6 +11,7 @@ const ImageForm: FC = () => {
   const [error, setError] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'url' | 'upload'>('url'); // 'url' 或 'upload'
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadContainerRef = useRef<HTMLDivElement>(null);
 
   // 檢查輸入的URL是否有效的圖片URL
   const isValidImageUrl = (url: string): boolean => {
@@ -68,10 +69,7 @@ const ImageForm: FC = () => {
     }
   };
 
-  const handleUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    
+  const processFile = useCallback(async (file: File): Promise<void> => {
     // 檢查文件是否為圖片
     if (!file.type.startsWith('image/')) {
       setError('請上傳圖片文件');
@@ -120,6 +118,13 @@ const ImageForm: FC = () => {
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  const handleUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    await processFile(file);
   };
 
   const handleReset = (): void => {
@@ -130,6 +135,34 @@ const ImageForm: FC = () => {
       fileInputRef.current.value = '';
     }
   };
+
+  // 貼上圖片處理
+  const handlePaste = useCallback(async (e: ClipboardEvent) => {
+    if (activeTab !== 'upload') return;
+    
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const file = items[i].getAsFile();
+        if (file) {
+          await processFile(file);
+          break;
+        }
+      }
+    }
+  }, [activeTab, processFile]);
+
+  // 在組件掛載時添加事件監聽器，卸載時移除
+  useEffect(() => {
+    // 監聽貼上事件
+    document.addEventListener('paste', handlePaste);
+    
+    return () => {
+      document.removeEventListener('paste', handlePaste);
+    };
+  }, [activeTab, handlePaste]); // 依賴於 activeTab 和 handlePaste
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
@@ -262,13 +295,68 @@ const ImageForm: FC = () => {
                 <label htmlFor="imageUpload" className="block text-gray-700 mb-2">
                   選擇圖片
                 </label>
+                <div 
+                  ref={uploadContainerRef}
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-blue-500 transition-colors cursor-pointer bg-gray-50"
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onDragEnter={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onDragLeave={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                      const file = e.dataTransfer.files[0];
+                      
+                      // 觸發與 handleUpload 相同的邏輯
+                      if (!file.type.startsWith('image/')) {
+                        setError('請上傳圖片文件');
+                        return;
+                      }
+                      
+                      if (file.size > 5 * 1024 * 1024) {
+                        setError('圖片大小不能超過5MB');
+                        return;
+                      }
+                      
+                      // 設置 input 的 files
+                      if (fileInputRef.current) {
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        fileInputRef.current.files = dataTransfer.files;
+                        
+                        // 手動處理上傳
+                        handleUpload({ target: { files: dataTransfer.files }} as ChangeEvent<HTMLInputElement>);
+                      }
+                    }
+                  }}
+                >
+                  <div className="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p className="mt-1 text-sm text-gray-600">
+                      拖曳圖片到這裡 、 ctrl+V 貼上 或 <span className="text-blue-500 font-medium">點擊上傳</span>
+                    </p>
+                  </div>
+                </div>
                 <input
                   type="file"
                   id="imageUpload"
                   accept="image/*"
                   onChange={handleUpload}
                   ref={fileInputRef}
-                  className="block w-full text-gray-700 border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="hidden"
                 />
                 <p className="text-gray-500 text-base mt-1">支援 JPG, PNG, WEBP 等格式，最大5MB</p>
               </div>

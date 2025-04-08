@@ -3,8 +3,8 @@ import { getBaseUrl, getFullUrl } from '@/lib/utils';
 
 export const baseMetadata: Metadata = {
   title: {
-    default: '以圖搜圖 - 圖片搜尋工具 | fyimg',
-    template: '%s | 圖片搜尋工具',
+    default: 'fyimg',
+    template: '%s - fyimg',
   },
   description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
   keywords: [
@@ -24,7 +24,7 @@ export const baseMetadata: Metadata = {
   },
   metadataBase: new URL(getBaseUrl()),
   openGraph: {
-    title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
+    title: 'Home - fyimg',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     url: getFullUrl('/'),
     siteName: '圖片搜尋工具',
@@ -41,7 +41,7 @@ export const baseMetadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '以圖搜圖 - 圖片搜尋工具 | fyimg',
+    title: 'Home - fyimg',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     creator: '@imagetool',
     images: ['/og-image.png'],

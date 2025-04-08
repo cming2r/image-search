@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: '使用條款 - fyimg.com',
+  title: '使用條款 - fyimg',
   description: '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
   openGraph: {
-    title: '使用條款 - 以圖搜圖工具 | fyimg.com',
+    title: '使用條款 - fyimg',
     description: '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
     type: 'website',
     locale: 'zh_TW',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '使用條款 - 以圖搜圖工具 | fyimg.com',
+    title: '使用條款 - fyimg',
     description: '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
     images: ['/og-image.png'],
   },
