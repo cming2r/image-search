@@ -28,6 +28,9 @@ const Footer: FC = () => {
             <p className="footer-text">Copyright &copy; {currentYear} - fyimg.com</p>
           </div>
           <div className="md:w-1/3 flex justify-center md:justify-end mt-2 md:mt-0 space-x-4">
+            <Link href="/contact" className="text-blue-600 hover:underline">
+              聯絡我們
+            </Link>
             <Link href="/privacy-policy" className="text-blue-600 hover:underline">
               隱私權政策
             </Link>
