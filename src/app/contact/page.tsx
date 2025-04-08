@@ -189,9 +189,7 @@ export default function Contact() {
 
           <div className="mt-10 bg-gray-50 p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">其他聯絡方式</h2>
-            <p className="mb-2">
-              <strong>電子郵件：</strong> <a href="mailto:support@fyimg.com" className="text-blue-600 hover:underline">support@fyimg.com</a>
-            </p>
+
             <p>
               我們將在收到您的訊息後1-2個工作日內回覆。感謝您的耐心等待。
             </p>
