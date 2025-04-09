@@ -68,3 +68,25 @@ input[type="date"]::-webkit-datetime-edit {
   justify-content: center;
   width: 100%;
 }
+
+/* 下拉選單懸停延遲 */
+.header-dropdown-menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: visibility 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.group:hover .header-dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+/* 增加下拉選單留出的時間，避免快速消失 */
+.header-dropdown-menu:hover {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}

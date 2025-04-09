@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 // 簡單的防抖函數
@@ -14,6 +14,7 @@ function debounce(func: () => void, wait: number) {
 
 const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dateDropdownRef = useRef<HTMLLIElement>(null);
   
   // 切換選單狀態
   const toggleMenu = () => {
@@ -24,6 +25,8 @@ const Header: FC = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+  
+  // 由於我們使用CSS hover實現下拉，不再需要這些Toggle函數和監聽器
   
   // 監聽螢幕寬度變化，使用防抖優化性能
   useEffect(() => {
@@ -98,10 +101,44 @@ const Header: FC = () => {
           {/* 桌面版選單 */}
           <nav className="hidden md:flex items-center ml-6">
             <ul className="flex space-x-6">
-              <li>
-                <Link href="/date" className="text-lg text-gray-600 hover:text-blue-600 transition-colors">
+              <li className="relative group" ref={dateDropdownRef}>
+                <Link href="/date"
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                >
                   日期計算器
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </Link>
+                
+                {/* 下拉選單 - 使用全局CSS類實現延遲效果 */}
+                <div 
+                  className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
+                  role="menu"
+                >
+                  <Link 
+                    href="/date" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    日期計算器
+                  </Link>
+                  <Link 
+                    href="/due-date-calculator" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    預產期計算器
+                  </Link>
+                </div>
               </li>
               <li>
                 <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
@@ -139,13 +176,51 @@ const Header: FC = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/date" 
-                  className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                  onClick={closeMenu}
-                >
-                  日期計算器
-                </Link>
+                <div className="flex w-full items-center justify-between">
+                  <Link
+                    href="/date"
+                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    日期計算器
+                  </Link>
+                  <button
+                    className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => {
+                      // 展開子選單實現方式
+                      const subMenu = document.getElementById('date-submenu');
+                      if (subMenu) {
+                        subMenu.classList.toggle('hidden');
+                      }
+                    }}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="date-submenu" className="hidden pl-4 bg-gray-50">
+                  <Link 
+                    href="/date" 
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    日期計算器
+                  </Link>
+                  <Link 
+                    href="/due-date-calculator" 
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    預產期計算器
+                  </Link>
+                </div>
               </li>
               <li>
                 <a 

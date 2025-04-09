@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: '日期計算器 - fyimg',
+  title: '日期計算器 - 日曆天數計算 ｜ fyimg',
   description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
   openGraph: {
-    title: '日期計算器 - fyimg',
+    title: '日期計算器 - 日曆天數計算 ｜ fyimg',
     description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
     type: 'website',
     locale: 'zh_TW',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '日期計算器 - fyimg',
+    title: '日期計算器 - 日曆天數計算 ｜ fyimg',
     description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
     images: ['/images/og-date.png'],
   },

@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: '聯絡我們 - fyimg',
+  title: '聯絡我們 ｜ fyimg',
   description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
   openGraph: {
-    title: '聯絡我們 - fyimg',
+    title: '聯絡我們 ｜ fyimg',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
     type: 'website',
     locale: 'zh_TW',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '聯絡我們 - fyimg',
+    title: '聯絡我們 ｜ fyimg',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
     images: ['/og-image.png'],
   },

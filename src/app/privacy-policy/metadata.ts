@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: '隱私權政策 - fyimg',
+  title: '隱私權政策 ｜ fyimg',
   description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
   openGraph: {
-    title: '隱私權政策 - fyimg',
+    title: '隱私權政策 ｜ fyimg',
     description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
     type: 'website',
     locale: 'zh_TW',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '隱私權政策 - fyimg',
+    title: '隱私權政策 ｜ fyimg',
     description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
     images: ['/og-image.png'],
   },
