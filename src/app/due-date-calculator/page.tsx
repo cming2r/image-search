@@ -51,16 +51,17 @@ export default function DueDateCalculator() {
     return { weeks, days };
   }, [lastPeriodDate]);
   
+  // 共享懷孕週數狀態
+  const [currentPregnancyData, setCurrentPregnancyData] = useState<{weeks: number, days: number} | null>(null);
+  
   // 更新週數標記函數
   const updateWeekMarker = useCallback(() => {
     if (!lastPeriodDate) return;
     
-    const pregnancy = calculateWeeksAndDays(new Date());
+    // 使用共享的懷孕週數數據
+    if (!currentPregnancyData) return;
     
-    if (!pregnancy) return;
-    
-    let weeks = pregnancy.weeks;
-    // 不使用days變數以避免未使用變數警告
+    let weeks = currentPregnancyData.weeks;
     
     // 限制週數範圍在0-40週之間
     weeks = Math.min(Math.max(weeks, 0), 40);
@@ -82,7 +83,7 @@ export default function DueDateCalculator() {
       text.setAttribute('x', position.toString());
       text.textContent = `👶${weeks}週`;
     }
-  }, [lastPeriodDate, calculateWeeksAndDays]);
+  }, [lastPeriodDate, currentPregnancyData]);
 
   // 檢查是否為今天
   const isToday = useCallback((date: Date) => {
@@ -143,7 +144,7 @@ export default function DueDateCalculator() {
     }
   }, []);
   
-  // 更新結果
+  // 更新結果 - 計算和顯示預產期和懷孕週數
   useEffect(() => {
     if (!lastPeriodDate) {
       setResultSection(false);
@@ -158,15 +159,20 @@ export default function DueDateCalculator() {
     setEddDisplay(formatLocalDate(edd));
 
     const currentPregnancy = calculateWeeksAndDays(new Date());
+    
     setCurrentWeeksDisplay(
       currentPregnancy 
         ? `${currentPregnancy.weeks} 週 ${currentPregnancy.days} 天` 
         : '0 週 0 天'
     );
     
-    // 更新週數標記
-    updateWeekMarker();
-  }, [lastPeriodDate, formatLocalDate, calculateWeeksAndDays, updateWeekMarker]);
+    // 只在初始載入或日期變更時才更新共享狀態
+    if (currentPregnancy) {
+      setCurrentPregnancyData(currentPregnancy);
+    }
+    
+  // 移除 currentPregnancyData 從依賴數組 - 防止循環更新
+  }, [lastPeriodDate, formatLocalDate, calculateWeeksAndDays]);
 
   // 更新日曆
   const updateCalendar = useCallback(() => {
@@ -317,31 +323,37 @@ export default function DueDateCalculator() {
     setMonth(new Date());
   }, [setMonth]);
   
-  // 更新日曆與週數標記
+  // 只更新日曆，不處理週數標記
   useEffect(() => {
     updateCalendar();
-    
-    // 設置預設週數為4週 - 在組件載入時設置初始標記位置
-    const defaultWeeks = 4;
-    const startX = 50;   // 0週的X座標
-    const endX = 750;    // 40週的X座標
-    const defaultPosition = startX + (endX - startX) * (defaultWeeks / 40);
-    
-    const line = document.getElementById('weekMarkerLine');
-    const circle = document.getElementById('weekMarkerCircle');
-    const text = document.getElementById('weekMarkerText');
-    
-    if (line && circle && text) {
-      line.setAttribute('x1', defaultPosition.toString());
-      line.setAttribute('x2', defaultPosition.toString());
-      circle.setAttribute('cx', defaultPosition.toString());
-      text.setAttribute('x', defaultPosition.toString());
-      text.textContent = `👶${defaultWeeks}週`;
+  }, [updateCalendar]);
+  
+  // 單獨處理週數標記更新
+  useEffect(() => {
+    if (currentPregnancyData) {
+      updateWeekMarker();
+    } else {
+      // 如果還沒有懷孕數據，則設置一個初始值
+      const defaultWeeks = 4;
+      
+      // 計算顯示位置
+      const startX = 50;   // 0週的X座標
+      const endX = 750;    // 40週的X座標
+      const position = startX + (endX - startX) * (defaultWeeks / 40);
+      
+      const line = document.getElementById('weekMarkerLine');
+      const circle = document.getElementById('weekMarkerCircle');
+      const text = document.getElementById('weekMarkerText');
+      
+      if (line && circle && text) {
+        line.setAttribute('x1', position.toString());
+        line.setAttribute('x2', position.toString());
+        circle.setAttribute('cx', position.toString());
+        text.setAttribute('x', position.toString());
+        text.textContent = `👶${defaultWeeks}週`;
+      }
     }
-    
-    // 之後根據日期更新
-    updateWeekMarker();
-  }, [updateCalendar, updateWeekMarker]);
+  }, [currentPregnancyData, updateWeekMarker]);
   
   return (
     <div className="flex flex-col min-h-screen">
