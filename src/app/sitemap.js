@@ -21,6 +21,18 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: getFullUrl('/due-date-calculator'),
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: getFullUrl('/contact'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
+    {
       url: getFullUrl('/privacy-policy'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
