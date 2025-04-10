@@ -1,9 +1,47 @@
+import { Metadata } from 'next';
+import { getFullUrl } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
-// 使用外部定義的metadata - metadata.ts
+export const metadata: Metadata = {
+  title: '使用條款 ｜ fyimg',
+  description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
+  
+  // OpenGraph標籤設定
+  openGraph: {
+    title: '使用條款 ｜ fyimg',
+    description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
+    type: 'website',
+    locale: 'zh_TW',
+    url: getFullUrl('/terms'),
+    siteName: 'fyimg',
+    images: [
+      {
+        url: getFullUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'fyimg使用條款',
+      },
+    ],
+  },
+  
+  // Twitter卡片設定
+  twitter: {
+    card: 'summary_large_image',
+    title: '使用條款 ｜ fyimg',
+    description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
+    creator: '@fyimg',
+    images: [getFullUrl('/og-image.png')],
+  },
+  
+  // 確保其他必要的元數據
+  keywords: '使用條款, 服務條款, 用戶協議, 法律聲明, 版權聲明',
+  alternates: {
+    canonical: getFullUrl('/terms'),
+  },
+};
 
 export default function Terms() {
   // 生成JSON-LD結構化數據
@@ -98,7 +136,7 @@ export default function Terms() {
 
             <h2>12. 聯絡我們</h2>
             <p>
-              如有任何關於使用條款的問題或疑問，請聯繫我們：support@fyimg.com
+              如有任何關於使用條款的問題或疑問，請<a href="/contact" className="text-blue-600 hover:underline">聯繫我們</a>。
             </p>
 
             <div className="mt-12 p-4 bg-gray-100 rounded text-center text-gray-600">

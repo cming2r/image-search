@@ -6,11 +6,6 @@ export const metadata: Metadata = {
   title: '聯絡我們 ｜ fyimg',
   description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
   
-  // 基本配置
-  alternates: {
-    canonical: getFullUrl('/contact'),
-  },
-  
   // OpenGraph標籤設定
   openGraph: {
     title: '聯絡我們 ｜ fyimg',
@@ -38,9 +33,22 @@ export const metadata: Metadata = {
     images: [getFullUrl('/og-image.png')],
   },
   
+  // 基本配置
+  alternates: {
+    canonical: getFullUrl('/contact'),
+  },
+  
   // 確保其他必要的元數據
   keywords: '聯絡我們, 客戶服務, 意見反饋, 問題諮詢, fyimg客服',
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
 };
+
+export default function ContactLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return children;
+}
