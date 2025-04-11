@@ -2,6 +2,7 @@
 
 import { FC, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // 簡單的防抖函數
 function debounce(func: () => void, wait: number) {
@@ -53,13 +54,11 @@ const Header: FC = () => {
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center max-w-5xl mx-auto">
-          <Link href="/image-search" className="text-xl font-bold text-blue-600 flex items-center" onClick={closeMenu}>
+          <Link href="/" className="text-xl font-bold text-blue-600 flex items-center" onClick={closeMenu}>
             <span className="mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+              <Image src="/favicon.ico" alt="" width={30} height={30} />
             </span>
-            <span className="hidden sm:inline">fyimg - 以圖搜圖</span>
+            <span className="hidden sm:inline">fyimg</span>
             <span className="sm:hidden">fyimg</span>
           </Link>
           
@@ -101,6 +100,18 @@ const Header: FC = () => {
           {/* 桌面版選單 */}
           <nav className="hidden md:flex items-center ml-6">
             <ul className="flex space-x-6">
+              <li>
+                <Link href="/image-search"
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+                >
+                  <span className="mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  以圖搜圖
+                </Link>
+              </li>
               <li className="relative group" ref={dateDropdownRef}>
                 <Link href="/date"
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
@@ -169,9 +180,14 @@ const Header: FC = () => {
               <li>
                 <Link 
                   href="/image-search" 
-                  className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                  className="flex items-center px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                   onClick={closeMenu}
                 >
+                  <span className="mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </span>
                   以圖搜圖
                 </Link>
               </li>

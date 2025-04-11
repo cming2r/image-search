@@ -169,7 +169,12 @@ export default function DueDateCalculator() {
     const calendarEl = document.getElementById('calendar');
     if (!calendarEl) return;
     
-    calendarEl.innerHTML = '';
+    // 先設置一個載入狀態，保留空間避免佈局偏移
+    if (calendarEl.children.length === 0) {
+      calendarEl.innerHTML = '<div class="col-span-7 text-center py-16">載入日曆中...</div>';
+    } else {
+      calendarEl.innerHTML = '';
+    }
     
     // 添加星期標題
     const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
@@ -318,32 +323,33 @@ export default function DueDateCalculator() {
     updateCalendar();
   }, [updateCalendar]);
   
-  // 單獨處理週數標記更新
+  // 初始化週數標記
   useEffect(() => {
-    if (currentPregnancyData) {
-      updateWeekMarker();
-    } else {
-      // 如果還沒有懷孕數據，則設置一個初始值
-      const defaultWeeks = 4;
+    // 即使沒有數據也先創建標記，避免佈局偏移
+    const defaultWeeks = currentPregnancyData ? currentPregnancyData.weeks : 4;
+    
+    // 計算顯示位置
+    const startX = 50;   // 0週的X座標
+    const endX = 750;    // 40週的X座標
+    const position = startX + (endX - startX) * (defaultWeeks / 40);
+    
+    const line = document.getElementById('weekMarkerLine');
+    const circle = document.getElementById('weekMarkerCircle');
+    const text = document.getElementById('weekMarkerText');
+    
+    if (line && circle && text) {
+      line.setAttribute('x1', position.toString());
+      line.setAttribute('x2', position.toString());
+      circle.setAttribute('cx', position.toString());
+      text.setAttribute('x', position.toString());
+      text.textContent = `👶${defaultWeeks}週`;
       
-      // 計算顯示位置
-      const startX = 50;   // 0週的X座標
-      const endX = 750;    // 40週的X座標
-      const position = startX + (endX - startX) * (defaultWeeks / 40);
-      
-      const line = document.getElementById('weekMarkerLine');
-      const circle = document.getElementById('weekMarkerCircle');
-      const text = document.getElementById('weekMarkerText');
-      
-      if (line && circle && text) {
-        line.setAttribute('x1', position.toString());
-        line.setAttribute('x2', position.toString());
-        circle.setAttribute('cx', position.toString());
-        text.setAttribute('x', position.toString());
-        text.textContent = `👶${defaultWeeks}週`;
-      }
+      // 確保標記可見
+      line.style.display = 'block';
+      circle.style.display = 'block';
+      text.style.display = 'block';
     }
-  }, [currentPregnancyData, updateWeekMarker]);
+  }, [currentPregnancyData]);
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -430,7 +436,7 @@ export default function DueDateCalculator() {
                         id="goToLMP"
                         onClick={handleGoToLMP}
                         aria-label="前往最後一次月經日期"
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                       >
                         LMP
                       </button>
@@ -438,7 +444,7 @@ export default function DueDateCalculator() {
                         id="goToToday"
                         onClick={handleGoToToday}
                         aria-label="前往今日"
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                       >
                         Now
                       </button>
@@ -446,14 +452,14 @@ export default function DueDateCalculator() {
                         id="goToEDC"
                         onClick={handleGoToEDC}
                         aria-label="前往預產期"
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                       >
                         EDD
                       </button>
                     </div>
                   </div>
                   
-                  <div id="calendar" className="grid grid-cols-7 text-center"></div>
+                  <div id="calendar" className="grid grid-cols-7 text-center min-h-[300px]"></div>
                 </div>
               </div>
             </div>
@@ -645,7 +651,7 @@ export default function DueDateCalculator() {
               在懷孕期間，產前定期檢查可以幫助診斷孕婦和寶寶的健康，及時發現問題（如果出現的話），並預防分娩過程中的併發症。
             </p>
             <p>
-              根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline" aria-label="美國婦女健康辦公室網站，將在新視窗開啟">美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)</a>的建議，正常產檢的頻率為：
+              根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:underline font-semibold underline" aria-label="美國婦女健康辦公室網站，將在新視窗開啟">美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)</a>的建議，正常產檢的頻率為：
             </p>
             <ul className="mb-2">
               <li>第4週到第28週期間，每月一次</li>
@@ -658,7 +664,7 @@ export default function DueDateCalculator() {
             
             <h2>高風險妊娠的孕婦</h2>
             <p>
-              「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests#6" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline " aria-label="美國婦女健康辦公室(OWH)網站，將在新視窗開啟">美國婦女健康辦公室(OWH)</a>，以下因素可能會增加懷孕期間出現問題的風險：
+              「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests#6" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:underline font-semibold underline" aria-label="美國婦女健康辦公室(OWH)網站，將在新視窗開啟">美國婦女健康辦公室(OWH)</a>，以下因素可能會增加懷孕期間出現問題的風險：
             </p>
             <ul className="mb-2">
               <li>年齡過小或超過35歲</li>
