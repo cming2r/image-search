@@ -18,6 +18,18 @@ export const getFullUrl = (path: string = '/'): string => {
 };
 
 /**
+ * 為URL添加版本參數，幫助社交媒體平台刷新緩存
+ * @param url 原始URL
+ * @returns 添加版本參數的URL
+ */
+export const getVersionedImageUrl = (url: string): string => {
+  // 使用當前日期作為版本號，每天自動更新
+  const version = new Date().toISOString().split('T')[0].replace(/-/g, '');
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}v=${version}`;
+};
+
+/**
  * 生成搜尋引擎的圖片搜尋URL
  * @param {string} engine - 搜尋引擎名稱
  * @param {string} imageUrl - 圖片URL

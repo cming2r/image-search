@@ -1,15 +1,22 @@
 import { Metadata } from 'next';
-import { getFullUrl } from '@/lib/utils';
+import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
+// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
+const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
+
 export const metadata: Metadata = {
+  metadataBase: new URL(getBaseUrl()),
   title: '隱私權政策 ｜ fyimg',
   description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
   
-  // OpenGraph標籤設定
+  // 基本HTML標籤 - 有些平台會先讀取這些
+  viewport: 'width=device-width, initial-scale=1',
+  
+  // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
     title: '隱私權政策 ｜ fyimg',
     description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
@@ -19,21 +26,23 @@ export const metadata: Metadata = {
     siteName: 'fyimg',
     images: [
       {
-        url: getFullUrl('/og-image.png'),
+        url: imageUrl,
         width: 1200,
         height: 630,
         alt: 'fyimg隱私權政策',
+        type: 'image/png', // 指定圖片MIME類型增強兼容性
       },
     ],
   },
   
-  // Twitter卡片設定
+  // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
     title: '隱私權政策 ｜ fyimg',
     description: '了解fyimg.com如何收集、使用和保護您的個人資料。我們重視用戶隱私，確保資料安全是我們的首要任務。',
     creator: '@fyimg',
-    images: [getFullUrl('/og-image.png')],
+    site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
+    images: [imageUrl],
   },
   
   // 確保其他必要的元數據

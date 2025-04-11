@@ -72,7 +72,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: '圖片搜尋工具',
+    name: 'fyimg 圖片搜尋工具',
     url: baseUrl,
     description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、Yandex等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
     applicationCategory: 'UtilityApplication',
@@ -84,7 +84,7 @@ export function generateSchemaMarkup(): WebApplicationSchema {
     },
     author: {
       '@type': 'Organization',
-      name: '圖片搜尋工具團隊',
+      name: 'fyimg',
     },
     potentialAction: {
       '@type': 'SearchAction',
@@ -136,7 +136,7 @@ export function generateWebPageSchema(path: string, title: string, description: 
     dateModified: '2025-01-01',
     author: {
       '@type': 'Organization',
-      name: '圖片搜尋工具團隊',
+      name: 'fyimg',
     },
   };
 }

@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
+
+// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
+const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title: '聯絡我們 ｜ fyimg',
   description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
   
-  // OpenGraph標籤設定
+  // 基本HTML標籤 - 有些平台會先讀取這些
+  viewport: 'width=device-width, initial-scale=1',
+  
+  // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
     title: '聯絡我們 ｜ fyimg',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
@@ -16,21 +22,23 @@ export const metadata: Metadata = {
     siteName: 'fyimg',
     images: [
       {
-        url: getFullUrl('/og-image.png'),
+        url: imageUrl,
         width: 1200,
         height: 630,
         alt: 'fyimg聯絡我們',
+        type: 'image/png', // 指定圖片MIME類型增強兼容性
       },
     ],
   },
   
-  // Twitter卡片設定
+  // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
     title: '聯絡我們 ｜ fyimg',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
     creator: '@fyimg',
-    images: [getFullUrl('/og-image.png')],
+    site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
+    images: [imageUrl],
   },
   
   // 基本配置
