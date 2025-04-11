@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
+import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema } from '@/lib/schema';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-date.png'));
@@ -8,9 +9,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title: '日期計算器 - 日曆天數計算 ｜ fyimg',
   description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
-  
-  // 基本HTML標籤 - 有些平台會先讀取這些
-  viewport: 'width=device-width, initial-scale=1',
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
@@ -49,13 +47,40 @@ export const metadata: Metadata = {
   keywords: '日期計算器, 日曆天, 日期差距計算, 工作天計算, 專案管理, 工期計算, 時程規劃',
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
-  publisher: 'fyimg',
+  publisher: 'fyimg'
 };
+
+// 生成結構化數據函數
+function generateSchemaJsonLd() {
+  try {
+    const breadcrumbSchema = generateBreadcrumbSchema('/date', '日期計算器');
+    const webPageSchema = generateWebPageSchema(
+      '/date',
+      '日期計算器 | 日曆天計算工具 - fyimg.com',
+      '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。'
+    );
+    const faqSchema = generateFAQSchema('date');
+    
+    return JSON.stringify([breadcrumbSchema, webPageSchema, faqSchema]);
+  } catch (error) {
+    console.error('Error generating Schema JSON-LD:', error);
+    return JSON.stringify({}); // 返回空對象避免渲染錯誤
+  }
+}
 
 export default function DateLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children;
+  return (
+    <>
+      {/* 使用標準script標籤添加JSON-LD結構化數據 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: generateSchemaJsonLd() }}
+      />
+      {children}
+    </>
+  );
 }

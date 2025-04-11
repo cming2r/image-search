@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <head>
-        {/* 全站共用的結構化數據已移至SchemaMarkup組件，在各頁面中使用 */}
+        {/* 全站共用的基礎設定，特定頁面的結構化數據在各自的layout.tsx中使用script標籤實現 */}
       </head>
       <body suppressHydrationWarning>
         {children}

@@ -1,156 +1,85 @@
-import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
-import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
-
-// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
-const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
-
-export const metadata: Metadata = {
-  metadataBase: new URL(getBaseUrl()),
-  title: '使用條款 ｜ fyimg',
-  description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
-  
-  // 基本HTML標籤 - 有些平台會先讀取這些
-  viewport: 'width=device-width, initial-scale=1',
-  
-  // OpenGraph標籤設定 - 對Telegram尤其重要
-  openGraph: {
-    title: '使用條款 ｜ fyimg',
-    description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
-    type: 'website',
-    locale: 'zh_TW',
-    url: getFullUrl('/terms'),
-    siteName: 'fyimg',
-    images: [
-      {
-        url: imageUrl,
-        width: 1200,
-        height: 630,
-        alt: 'fyimg使用條款',
-        type: 'image/png', // 指定圖片MIME類型增強兼容性
-      },
-    ],
-  },
-  
-  // Twitter卡片設定 - 為X.com平台優化
-  twitter: {
-    card: 'summary_large_image',
-    title: '使用條款 ｜ fyimg',
-    description: '使用fyimg.com服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。',
-    creator: '@fyimg',
-    site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
-    images: [imageUrl],
-  },
-  
-  // 確保其他必要的元數據
-  keywords: '使用條款, 服務條款, 用戶協議, 法律聲明, 版權聲明',
-  alternates: {
-    canonical: getFullUrl('/terms'),
-  },
-};
 
 export default function Terms() {
-  // 生成JSON-LD結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/terms', '使用條款');
-  const webPageSchema = generateWebPageSchema(
-    '/terms',
-    '使用條款 - fyimg.com',
-    '使用fyimg.com圖片搜尋服務前請閱讀我們的服務條款。了解用戶權利與責任，以及我們提供的服務內容與限制。'
-  );
-
-  // 合併schema為一個數組
-  const schemas = [breadcrumbSchema, webPageSchema];
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SchemaMarkupGroup schemas={schemas} id="terms-schema" />
       <Header />
-      <main className="flex-grow">
-        <div className="container mx-auto max-w-4xl px-4 py-8">
-          <h1>使用條款</h1>
-
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">服務條款</h1>
+          
           <div className="prose prose-lg max-w-none">
+            <p>最後更新日期：2023年1月1日</p>
+            
+            <h2>1. 接受條款</h2>
             <p>
-              歡迎使用 fyimg.com（以下簡稱「我們」或「本網站」）。在使用本網站之前，請仔細閱讀以下服務條款（以下簡稱「本條款」）。
-              當您訪問或使用本網站時，即表示您同意受本條款約束。如不同意，請勿使用本網站。
+              歡迎使用 fyimg.com（以下簡稱&quot;本網站&quot;）。通過訪問或使用本網站，您同意受這些條款和條件的約束。如果您不同意這些條款的任何部分，請不要使用本網站。
             </p>
-
-            <h2>1. 服務內容</h2>
-            <p>本網站提供以下功能：</p>
+            
+            <h2>2. 服務描述</h2>
+            <p>
+              本網站提供各種在線工具和服務，包括但不限於圖片搜尋、日期計算器等功能。這些服務可能會不時更改，恕不另行通知。
+            </p>
+            
+            <h2>3. 使用限制</h2>
+            <p>
+              您同意僅將本網站用於合法目的，並以符合所有適用法律和法規的方式使用。您不得：
+            </p>
             <ul>
-              <li>輸入圖片網址並使用第三方搜尋引擎（例如 Google 圖片搜尋、Bing 圖片搜尋）進行搜尋。</li>
-              <li>上傳圖片，圖片將轉換為網址並儲存至我們的伺服器，以便進行搜尋。</li>
-              <li>所有搜尋結果由第三方搜尋引擎提供，我們僅作為中介平台。</li>
+              <li>使用本網站進行欺詐、非法或未經授權的活動</li>
+              <li>上傳或傳輸任何含有病毒、惡意代碼或其他有害內容的資料</li>
+              <li>嘗試干擾或破壞本網站的正常運作</li>
+              <li>收集或儲存本網站其他用戶的個人資料</li>
+              <li>規避、禁用或以其他方式干擾本網站的安全相關功能</li>
             </ul>
-
-            <h2 >2. 使用者責任</h2>
-            <ul>
-              <li>合法使用：您承諾僅上傳或輸入合法、不侵犯他人權利（包括版權、隱私權等）的圖片或網址。</li>
-              <li>禁止行為：不得使用本網站進行非法活動、上傳違法內容、散布不適當內容或試圖破壞網站運作。</li>
-              <li>內容責任：您對上傳或輸入的內容負完全責任，我們不對其準確性或合法性承擔責任。</li>
-            </ul>
-
-            <h2>3. 服務限制</h2>
-            <ul>
-              <li>我們保留隨時修改、中止或終止服務的權利，無需事先通知。</li>
-              <li>本網站依「現狀」提供，不保證服務無錯誤或不中斷。</li>
-              <li>我們可能設置使用限制，包括每日上傳圖片數量上限或檔案大小限制。</li>
-            </ul>
-
-            <h2>4. 第三方搜尋引擎</h2>
+            
+            <h2>4. 智慧財產權</h2>
             <p>
-              本網站依賴 Google 圖片搜尋、Bing 圖片搜尋、Yandex、SauceNAO 等第三方服務提供搜尋結果。
-              我們無法控制這些服務的運作或結果，且不對其內容負責。使用這些第三方服務時，您亦受其服務條款約束。
+              本網站及其內容（包括但不限於文字、圖形、標誌、圖標、圖像、音頻剪輯、數據編輯和軟件）均為 fyimg 或其內容供應商所有，受國際版權、商標、專利和其他知識產權法律的保護。
             </p>
-
-            <h2>5. 智慧財產權</h2>
-            <ul>
-              <li>我們的權利：本網站的程式碼、設計及技術屬於 fyimg.com 或其授權方所有。</li>
-              <li>您的權利：您保留上傳圖片的相關權利，但授予我們有限的許可，以處理並傳送圖片至第三方搜尋引擎。</li>
-            </ul>
-
-            <h2>6. 責任限制</h2>
             <p>
-              在法律允許的最大範圍內，我們不對因使用本網站導致的任何直接或間接損害（包括資料遺失、搜尋結果不準確、業務中斷等）承擔責任。
-              使用本網站所得到的任何資訊或材料完全由使用者自行承擔風險。
+              未經明確許可，您不得複製、修改、發布、傳輸、分發、銷售、展示或以其他方式利用本網站的任何內容。
             </p>
-
-            <h2>7. 終止服務</h2>
+            
+            <h2>5. 隱私政策</h2>
             <p>
-              若您違反本條款，我們有權隨時終止您的使用權限，無需通知。終止後，本條款中有關責任限制、智慧財產權等條款仍將繼續有效。
+              我們重視您的隱私。請參閱我們的<a href="/privacy-policy" className="text-blue-600 hover:underline">隱私政策</a>，了解有關我們如何收集、使用和保護您的個人資料的更多信息。
             </p>
-
-            <h2>8. 適用法律</h2>
+            
+            <h2>6. 免責聲明</h2>
             <p>
-              若有任何爭議，應先透過友好協商解決；若協商不成，則應提交至本地有管轄權的法院解決。
+              本網站及其內容按&quot;現狀&quot;提供，不提供任何形式的保證。fyimg 不保證本網站將無錯誤或不間斷運行，也不保證其服務將滿足您的要求或期望。
             </p>
-
-            <h2>9. 條款變更</h2>
             <p>
-              我們可能不時更新本條款，任何變更將於本頁面公佈，並更新生效日期。繼續使用本網站即表示您接受更新後的條款。
+              fyimg 不對使用本網站或其服務可能產生的任何直接、間接、附帶、特殊或後果性損害負責。
             </p>
-
-            <h2>10. 服務使用費用</h2>
+            
+            <h2>7. 第三方鏈接</h2>
             <p>
-              本網站目前提供的所有服務均為免費。我們保留未來引入付費功能或進階服務的權利，並將在實施前提供明確通知。
+              本網站可能包含指向第三方網站或服務的鏈接。這些鏈接僅為便利用戶而提供，並不意味著 fyimg 認可這些第三方網站或服務。fyimg 對這些第三方網站或服務的內容、隱私政策或做法不負責任。
             </p>
-
-            <h2>11. 完整協議</h2>
+            
+            <h2>8. 修改條款</h2>
             <p>
-              本使用條款構成您與我們之間關於使用本網站的完整協議，並取代任何先前有關網站使用的協議或理解。如本條款的任何部分被認定為無效或不可執行，其餘條款仍具完整效力。
+              fyimg 保留隨時修改這些條款的權利。修改後的條款將在本網站上發布時立即生效。您繼續使用本網站將被視為接受修改後的條款。
             </p>
-
-            <h2>12. 聯絡我們</h2>
+            
+            <h2>9. 終止</h2>
             <p>
-              如有任何關於使用條款的問題或疑問，請<a href="/contact" className="text-blue-600 hover:underline">聯繫我們</a>。
+              fyimg 保留因任何原因隨時終止或限制您訪問本網站的權利，恕不另行通知。
             </p>
-
-            <div className="mt-12 p-4 bg-gray-100 rounded text-center text-gray-600">
-              <p>生效日期：2025年1月1日</p>
-            </div>
+            
+            <h2>10. 適用法律</h2>
+            <p>
+              這些條款及您對本網站的使用受台灣法律管轄，不考慮法律衝突原則。
+            </p>
+            
+            <h2>11. 聯絡我們</h2>
+            <p>
+              如果您對這些條款有任何問題或意見，請通過<a href="/contact" className="text-blue-600 hover:underline">聯絡頁面</a>與我們聯繫。
+            </p>
           </div>
         </div>
       </main>

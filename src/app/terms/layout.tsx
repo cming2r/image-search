@@ -7,48 +7,44 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '聯絡我們 ｜ fyimg',
-  description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+  title: '服務條款 ｜ fyimg',
+  description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
   
-  // 基本HTML標籤 - 有些平台會先讀取這些
-  viewport: 'width=device-width, initial-scale=1',
-  
-  // OpenGraph標籤設定 - 對Telegram尤其重要
+  // OpenGraph標籤設定
   openGraph: {
-    title: '聯絡我們 ｜ fyimg',
-    description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+    title: '服務條款 ｜ fyimg',
+    description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
     type: 'website',
     locale: 'zh_TW',
-    url: getFullUrl('/contact'),
+    url: getFullUrl('/terms'),
     siteName: 'fyimg',
     images: [
       {
         url: imageUrl,
         width: 1200,
         height: 630,
-        alt: 'fyimg聯絡我們',
-        type: 'image/png', // 指定圖片MIME類型增強兼容性
+        alt: 'fyimg服務條款',
+        type: 'image/png',
       },
     ],
   },
   
-  // Twitter卡片設定 - 為X.com平台優化
+  // Twitter卡片設定
   twitter: {
     card: 'summary_large_image',
-    title: '聯絡我們 ｜ fyimg',
-    description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+    title: '服務條款 ｜ fyimg',
+    description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
     creator: '@fyimg',
-    site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
+    site: '@fyimg',
     images: [imageUrl],
   },
   
-  // 基本配置
+  // 其他metadata
   alternates: {
-    canonical: getFullUrl('/contact'),
+    canonical: getFullUrl('/terms'),
   },
   
-  // 確保其他必要的元數據
-  keywords: '聯絡我們, 客戶服務, 意見反饋, 問題諮詢, fyimg客服',
+  keywords: '服務條款, 使用條款, fyimg, 法律條款',
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
@@ -57,11 +53,11 @@ export const metadata: Metadata = {
 // 生成結構化數據函數
 function generateSchemaJsonLd() {
   try {
-    const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
+    const breadcrumbSchema = generateBreadcrumbSchema('/terms', '服務條款');
     const webPageSchema = generateWebPageSchema(
-      '/contact',
-      '聯絡我們 ｜ fyimg',
-      '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。'
+      '/terms',
+      '服務條款 ｜ fyimg',
+      'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。'
     );
     
     return JSON.stringify([breadcrumbSchema, webPageSchema]);
@@ -71,7 +67,7 @@ function generateSchemaJsonLd() {
   }
 }
 
-export default function ContactLayout({
+export default function TermsLayout({
   children,
 }: {
   children: React.ReactNode

@@ -3,8 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema } from '@/lib/schema';
-import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
 export default function DueDateCalculator() {
   const [lastPeriodDate, setLastPeriodDate] = useState<string>('');
@@ -13,14 +11,6 @@ export default function DueDateCalculator() {
   const [eddDisplay, setEddDisplay] = useState<string>('');
   const [currentWeeksDisplay, setCurrentWeeksDisplay] = useState<string>('');
   
-  // 生成結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', '預產期計算器');
-  const webPageSchema = generateWebPageSchema(
-    '/due-date-calculator',
-    '預產期計算器 | 懷孕週數計算工具 - fyimg.com',
-    '免費線上預產期計算工具，計算懷孕週數、預產日期，並提供懷孕日曆。輸入最後一次月經日期，立即獲得精確的預產期和懷孕週數資訊。'
-  );
-  const faqSchema = generateFAQSchema('duedate');
 
   // 格式化日期為本地格式
   const formatLocalDate = useCallback((date: Date) => {
@@ -357,7 +347,6 @@ export default function DueDateCalculator() {
   
   return (
     <div className="flex flex-col min-h-screen">
-      <SchemaMarkupGroup schemas={[breadcrumbSchema, webPageSchema, faqSchema]} id="duedate-calculator-schema" />
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
@@ -372,7 +361,7 @@ export default function DueDateCalculator() {
               <div className="p-6 flex flex-col gap-6">
                 <div className="grid grid-cols-1 gap-4">
                   <div className="p-2 px-4 bg-gray-50 rounded-lg flex items-center justify-center">
-                    <p className="m-0 mr-4 whitespace-nowrap text-center">最後一次經期的第一天：</p>
+                    <label htmlFor="lastPeriodDate" className="m-0 mr-4 whitespace-nowrap text-center">最後一次經期的第一天：</label>
                     <input
                       type="date"
                       id="lastPeriodDate"
@@ -417,18 +406,20 @@ export default function DueDateCalculator() {
                       <button 
                         id="prevMonth" 
                         onClick={handlePrevMonth}
+                        aria-label="上個月"
                         className="p-0.5 bg-transparent border-none cursor-pointer flex items-center justify-center text-gray-500 hover:text-black transition-colors"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                       </button>
                       <button 
                         id="nextMonth"
                         onClick={handleNextMonth}
+                        aria-label="下個月"
                         className="p-0.5 bg-transparent border-none cursor-pointer flex items-center justify-center text-gray-500 hover:text-black transition-colors"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                       </button>
@@ -438,21 +429,24 @@ export default function DueDateCalculator() {
                       <button 
                         id="goToLMP"
                         onClick={handleGoToLMP}
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs text-gray-500 transition-all hover:bg-gray-200"
+                        aria-label="前往最後一次月經日期"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
                       >
                         LMP
                       </button>
                       <button 
                         id="goToToday"
                         onClick={handleGoToToday}
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs text-gray-500 transition-all hover:bg-gray-200"
+                        aria-label="前往今日"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
                       >
                         Now
                       </button>
                       <button 
                         id="goToEDC"
                         onClick={handleGoToEDC}
-                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs text-gray-500 transition-all hover:bg-gray-200"
+                        aria-label="前往預產期"
+                        className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs transition-all hover:bg-gray-200"
                       >
                         EDD
                       </button>
@@ -651,7 +645,7 @@ export default function DueDateCalculator() {
               在懷孕期間，產前定期檢查可以幫助診斷孕婦和寶寶的健康，及時發現問題（如果出現的話），並預防分娩過程中的併發症。
             </p>
             <p>
-              根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)</a>的建議，正常產檢的頻率為：
+              根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline" aria-label="美國婦女健康辦公室網站，將在新視窗開啟">美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)</a>的建議，正常產檢的頻率為：
             </p>
             <ul className="mb-2">
               <li>第4週到第28週期間，每月一次</li>
@@ -664,7 +658,7 @@ export default function DueDateCalculator() {
             
             <h2>高風險妊娠的孕婦</h2>
             <p>
-              「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests#6" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">美國婦女健康辦公室(OWH)</a>，以下因素可能會增加懷孕期間出現問題的風險：
+              「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據<a href="https://womenshealth.gov/pregnancy/youre-pregnant-now-what/prenatal-care-and-tests#6" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline " aria-label="美國婦女健康辦公室(OWH)網站，將在新視窗開啟">美國婦女健康辦公室(OWH)</a>，以下因素可能會增加懷孕期間出現問題的風險：
             </p>
             <ul className="mb-2">
               <li>年齡過小或超過35歲</li>

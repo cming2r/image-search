@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
+import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema } from '@/lib/schema';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-due-date-calculator.webp'));
@@ -53,10 +54,37 @@ export const metadata: Metadata = {
   publisher: 'fyimg',
 };
 
+// 生成結構化數據函數
+function generateSchemaJsonLd() {
+  try {
+    const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', '預產期計算器');
+    const webPageSchema = generateWebPageSchema(
+      '/due-date-calculator',
+      '預產期計算器 | 懷孕週數計算工具 - fyimg.com',
+      '免費線上預產期計算工具，計算懷孕週數、預產日期，並提供懷孕日曆。輸入最後一次月經日期，立即獲得精確的預產期和懷孕週數資訊。'
+    );
+    const faqSchema = generateFAQSchema('duedate');
+    
+    return JSON.stringify([breadcrumbSchema, webPageSchema, faqSchema]);
+  } catch (error) {
+    console.error('Error generating Schema JSON-LD:', error);
+    return JSON.stringify({}); // 返回空對象避免渲染錯誤
+  }
+}
+
 export default function DueDateLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children;
+  return (
+    <>
+      {/* 使用標準script標籤添加JSON-LD結構化數據 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: generateSchemaJsonLd() }}
+      />
+      {children}
+    </>
+  );
 }

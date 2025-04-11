@@ -4,8 +4,6 @@ import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
-import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
 // 定義表單資料的型別
 interface ContactFormData {
@@ -99,20 +97,9 @@ export default function Contact() {
     }
   };
 
-  // 生成JSON-LD結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
-  const webPageSchema = generateWebPageSchema(
-    '/contact',
-    '聯絡我們 - fyimg',
-    '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。'
-  );
-
-  // 合併schema為一個數組
-  const schemas = [breadcrumbSchema, webPageSchema];
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SchemaMarkupGroup schemas={schemas} id="contact-schema" />
       <Header />
       <main className="flex-grow">
         <div className="container mx-auto max-w-4xl px-4 py-8">

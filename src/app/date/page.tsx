@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema } from '@/lib/schema';
-import { SchemaMarkupGroup } from '@/components/SchemaMarkup';
 
 // 定義全域 CSS 樣式
 const dateInputStyle = {
@@ -29,14 +27,6 @@ export default function DateCalculator() {
   // 顯示面板的狀態
   const [activeTab, setActiveTab] = useState<'addDays' | 'subtractDates'>('addDays');
 
-  // 生成結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/date', '日期計算器');
-  const webPageSchema = generateWebPageSchema(
-    '/date',
-    '日期計算器 | 日曆天計算工具 - fyimg.com',
-    '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。'
-  );
-  const faqSchema = generateFAQSchema('date');
 
   // 初始化日期
   useEffect(() => {
@@ -114,7 +104,6 @@ export default function DateCalculator() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SchemaMarkupGroup schemas={[breadcrumbSchema, webPageSchema, faqSchema]} id="date-calculator-schema" />
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
