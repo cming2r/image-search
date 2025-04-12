@@ -15,6 +15,7 @@ export interface SearchRecord {
   country_code?: string;  // ISO 3166-1 Alpha-2 國家代碼
   browser?: string;
   os?: string;
+  ip_address?: string;  // 用戶IP地址
 }
 
 // 獲取用戶設備類型
@@ -65,17 +66,20 @@ export function getUserAgentInfo() {
 // 創建保存搜尋記錄的函數
 export async function saveSearchRecord(record: SearchRecord) {
   try {
-    // 嘗試獲取國家代碼 (ISO 3166-1 Alpha-2)
+    // 嘗試獲取IP信息和國家代碼 (ISO 3166-1 Alpha-2)
     let countryCode = 'XX'; // 未知國家的備用代碼
+    let ipAddress = '0.0.0.0'; // 未知IP的備用值
     try {
       const response = await fetch('https://ipapi.co/json/');
       if (response.ok) {
         const data = await response.json();
         // 使用ISO 3166-1 Alpha-2國家代碼
         countryCode = data.country || 'XX';
+        // 獲取IP地址
+        ipAddress = data.ip || '0.0.0.0';
       }
     } catch (error) {
-      console.error('獲取國家信息失敗:', error);
+      console.error('獲取IP和國家信息失敗:', error);
     }
 
     // 獲取用戶代理信息（只取瀏覽器和操作系統，不儲存完整user_agent）
@@ -91,6 +95,7 @@ export async function saveSearchRecord(record: SearchRecord) {
           country_code: countryCode,
           browser: browser,
           os: os,
+          ip_address: ipAddress,
           searched_at: new Date().toISOString()
         }
       ]);
