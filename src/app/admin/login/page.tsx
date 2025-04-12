@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientForBrowser } from '@/lib/supabase';
 
@@ -11,6 +11,18 @@ export default function LoginPage() {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [countdown, setCountdown] = useState<number | null>(null);
   const supabase = createClientForBrowser();
+  
+  // 處理登出並跳轉 - 必須在使用前定義
+  const handleLogoutAndRedirect = useCallback(async () => {
+    try {
+      await supabase.auth.signOut();
+      window.location.href = '/'; // 重定向到首頁
+    } catch (err) {
+      console.log('登出失敗:', err);
+      // 即使登出失敗，仍然嘗試跳轉到首頁
+      window.location.href = '/';
+    }
+  }, [supabase.auth]);
 
   // 檢查查詢參數中的錯誤
   useEffect(() => {
@@ -88,7 +100,7 @@ export default function LoginPage() {
     }, 1000);
     
     return () => clearTimeout(timer);
-  }, [countdown]);
+  }, [countdown, handleLogoutAndRedirect]);
 
   // 處理登入
   const handleLogin = async () => {
@@ -132,17 +144,6 @@ export default function LoginPage() {
     }
   };
 
-  // 處理登出並跳轉
-  const handleLogoutAndRedirect = async () => {
-    try {
-      await supabase.auth.signOut();
-      window.location.href = '/'; // 重定向到首頁
-    } catch (err) {
-      console.log('登出失敗:', err);
-      // 即使登出失敗，仍然嘗試跳轉到首頁
-      window.location.href = '/';
-    }
-  };
 
   // 處理手動登出
   const handleLogout = async () => {
@@ -231,10 +232,6 @@ export default function LoginPage() {
         <div className="mt-4 text-sm text-center space-y-2">
           <p className="text-gray-500">
             只有管理員帳戶可以訪問管理頁面
-          </p>
-          <p className="text-gray-400 text-xs">
-            注意：登入時可能顯示「Google hasn't verified this app」的警告，這是因為應用處於開發測試階段。
-            請點選「進階」選項，然後選擇「前往網站（不安全）」繼續登入流程。
           </p>
         </div>
       </div>
