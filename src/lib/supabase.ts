@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 
 // 從環境變數獲取Supabase URL和匿名密鑰
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -6,6 +7,34 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 // 創建Supabase客戶端實例
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// 創建瀏覽器端Supabase客戶端實例 (支援Auth功能)
+export function createClientForBrowser() {
+  return createBrowserClient(
+    supabaseUrl,
+    supabaseAnonKey
+  );
+}
+
+// 檢查用戶是否為管理員
+export async function isAdmin(userId: string | undefined) {
+  if (!userId) return false;
+  
+  // 通過檢查特定的管理員表或標記來確定用戶是否為管理員
+  // 這裡我們使用簡單的白名單方式，將來可以改為資料庫查詢
+  const adminEmails = process.env.ADMIN_EMAILS?.split(',') || [];
+  
+  // 獲取用戶資料
+  const { data: userData, error } = await supabase
+    .from('users')
+    .select('email')
+    .eq('id', userId)
+    .single();
+    
+  if (error || !userData) return false;
+  
+  return adminEmails.includes(userData.email);
+}
 
 // 定義搜索記錄接口
 export interface SearchRecord {
