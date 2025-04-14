@@ -7,7 +7,7 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '聯絡我們 ｜ fyimg',
+  title: '聯絡我們',
   description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
   
   // 基本HTML標籤 - 有些平台會先讀取這些
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '聯絡我們 ｜ fyimg',
+    title: '聯絡我們',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
     type: 'website',
     locale: 'zh_TW',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '聯絡我們 ｜ fyimg',
+    title: '聯絡我們',
     description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
@@ -60,7 +60,7 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
     const webPageSchema = generateWebPageSchema(
       '/contact',
-      '聯絡我們 ｜ fyimg',
+      '聯絡我們',
       '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。'
     );
     

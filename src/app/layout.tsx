@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title: {
     default: 'fyimg',
-    template: '%s | fyimg',
+    template: '%s ｜ fyimg',
   },
   description: 'fyimg提供多種實用工具，包括圖片搜尋、日期計算、到期日計算等線上免費功能，幫助您提高工作效率。',
   icons: {

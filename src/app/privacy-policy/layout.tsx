@@ -7,12 +7,12 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '隱私政策 ｜ fyimg',
+  title: '隱私政策',
   description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
   
   // OpenGraph標籤設定
   openGraph: {
-    title: '隱私政策 ｜ fyimg',
+    title: '隱私政策',
     description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
     type: 'website',
     locale: 'zh_TW',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定
   twitter: {
     card: 'summary_large_image',
-    title: '隱私政策 ｜ fyimg',
+    title: '隱私政策',
     description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
     creator: '@fyimg',
     site: '@fyimg',
@@ -56,7 +56,7 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/privacy-policy', '隱私政策');
     const webPageSchema = generateWebPageSchema(
       '/privacy-policy',
-      '隱私政策 ｜ fyimg',
+      '隱私政策',
       'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。'
     );
     

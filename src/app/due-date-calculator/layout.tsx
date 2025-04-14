@@ -7,7 +7,7 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-due-date-calculator
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '預產期計算器 - 懷孕週數計算工具 ｜ fyimg',
+  title: '預產期計算器 - 懷孕週數計算工具',
   description: '懷孕預產期的計算方法及孕期照護重點。說明內格萊氏法則的計算原理，並依三個孕期階段列出飲食、運動、睡眠等注意事項，協助準媽媽掌握孕期保健要點，平安度過懷孕過程。',
   
   // 基本HTML標籤 - 有些平台會先讀取這些
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '預產期計算器 - 懷孕週數計算工具 ｜ fyimg',
+    title: '預產期計算器 - 懷孕週數計算工具',
     description: '懷孕預產期的計算方法及孕期照護重點。說明內格萊氏法則的計算原理，並依三個孕期階段列出飲食、運動、睡眠等注意事項，協助準媽媽掌握孕期保健要點，平安度過懷孕過程。',
     type: 'website',
     locale: 'zh_TW',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '預產期計算器 - 懷孕週數計算工具 ｜ fyimg',
+    title: '預產期計算器 - 懷孕週數計算工具',
     description: '懷孕預產期的計算方法及孕期照護重點。說明內格萊氏法則的計算原理，並依三個孕期階段列出飲食、運動、睡眠等注意事項，協助準媽媽掌握孕期保健要點，平安度過懷孕過程。',
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
@@ -60,7 +60,7 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', '預產期計算器');
     const webPageSchema = generateWebPageSchema(
       '/due-date-calculator',
-      '預產期計算器 | 懷孕週數計算工具 - fyimg.com',
+      '預產期計算器 - 懷孕週數計算工具',
       '免費線上預產期計算工具，計算懷孕週數、預產日期，並提供懷孕日曆。輸入最後一次月經日期，立即獲得精確的預產期和懷孕週數資訊。'
     );
     const faqSchema = generateFAQSchema('duedate');

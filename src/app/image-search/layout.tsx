@@ -7,12 +7,12 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋 ｜ fyimg',
+  title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
   description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋 ｜ fyimg',
+    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     type: 'website',
     locale: 'zh_TW',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋 ｜ fyimg',
+    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
     description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示

@@ -7,12 +7,12 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '服務條款 ｜ fyimg',
+  title: '服務條款',
   description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
   
   // OpenGraph標籤設定
   openGraph: {
-    title: '服務條款 ｜ fyimg',
+    title: '服務條款',
     description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
     type: 'website',
     locale: 'zh_TW',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定
   twitter: {
     card: 'summary_large_image',
-    title: '服務條款 ｜ fyimg',
+    title: '服務條款',
     description: 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。',
     creator: '@fyimg',
     site: '@fyimg',
@@ -56,7 +56,7 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/terms', '服務條款');
     const webPageSchema = generateWebPageSchema(
       '/terms',
-      '服務條款 ｜ fyimg',
+      '服務條款',
       'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。'
     );
     

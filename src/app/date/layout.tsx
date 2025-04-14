@@ -7,12 +7,12 @@ const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-date.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '日期計算器 - 日曆天數計算 ｜ fyimg',
+  title: '日期計算器 - 日曆天數計算',
   description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '日期計算器 - 日曆天數計算 ｜ fyimg',
+    title: '日期計算器 - 日曆天數計算',
     description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
     type: 'website',
     locale: 'zh_TW',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '日期計算器 - 日曆天數計算 ｜ fyimg',
+    title: '日期計算器 - 日曆天數計算',
     description: '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。',
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
@@ -56,7 +56,7 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/date', '日期計算器');
     const webPageSchema = generateWebPageSchema(
       '/date',
-      '日期計算器 | 日曆天計算工具 - fyimg.com',
+      '日期計算器 - 日曆天計算工具',
       '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。'
     );
     const faqSchema = generateFAQSchema('date');
