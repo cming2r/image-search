@@ -2,18 +2,22 @@ import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 
+// 定義通用標題和描述
+const title = '隱私政策';
+const description = 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。';
+
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '隱私政策',
-  description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
+  title,
+  description,
   
   // OpenGraph標籤設定
   openGraph: {
-    title: '隱私政策',
-    description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
+    title,
+    description,
     type: 'website',
     locale: 'zh_TW',
     url: getFullUrl('/privacy-policy'),
@@ -32,8 +36,8 @@ export const metadata: Metadata = {
   // Twitter卡片設定
   twitter: {
     card: 'summary_large_image',
-    title: '隱私政策',
-    description: 'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。',
+    title,
+    description,
     creator: '@fyimg',
     site: '@fyimg',
     images: [imageUrl],
@@ -56,8 +60,8 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/privacy-policy', '隱私政策');
     const webPageSchema = generateWebPageSchema(
       '/privacy-policy',
-      '隱私政策',
-      'fyimg 的隱私政策。了解我們如何收集、使用和保護您的個人資訊。'
+      title,
+      description
     );
     
     return JSON.stringify([breadcrumbSchema, webPageSchema]);

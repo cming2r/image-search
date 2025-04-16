@@ -2,21 +2,25 @@ import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 
+// 定義通用標題和描述
+const title = '聯絡我們';
+const description = '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。';
+
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '聯絡我們',
-  description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+  title,
+  description,
   
   // 基本HTML標籤 - 有些平台會先讀取這些
   viewport: 'width=device-width, initial-scale=1',
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '聯絡我們',
-    description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+    title,
+    description,
     type: 'website',
     locale: 'zh_TW',
     url: getFullUrl('/contact'),
@@ -35,8 +39,8 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '聯絡我們',
-    description: '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。',
+    title,
+    description,
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
     images: [imageUrl],
@@ -60,8 +64,8 @@ function generateSchemaJsonLd() {
     const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
     const webPageSchema = generateWebPageSchema(
       '/contact',
-      '聯絡我們',
-      '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。'
+      title,
+      description
     );
     
     return JSON.stringify([breadcrumbSchema, webPageSchema]);

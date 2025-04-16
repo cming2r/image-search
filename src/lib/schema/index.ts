@@ -3,5 +3,6 @@ export {
   generateSchemaMarkup,
   generateBreadcrumbSchema,
   generateWebPageSchema,
+  generateArticleSchema,
   generateFAQSchema
 } from './schema';

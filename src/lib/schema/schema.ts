@@ -42,6 +42,134 @@ export interface WebPageSchema {
   };
 }
 
+export interface ArticleSchema {
+  '@context': string;
+  '@type': string;
+  '@id'?: string;
+  headline: string;
+  description: string;
+  url: string;
+  name?: string;
+  image: string | Array<string> | {
+    '@type': string;
+    '@id'?: string;
+    url: string;
+    width?: number;
+    height?: number;
+    caption?: string;
+    inLanguage?: string;
+  };
+  datePublished: string;
+  dateModified: string;
+  author: {
+    '@type': string;
+    '@id'?: string;
+    name: string;
+    url?: string;
+    image?: {
+      '@type': string;
+      '@id'?: string;
+      url: string;
+      caption?: string;
+    };
+    inLanguage?: string;
+    sameAs?: string | string[];
+    logo?: {
+      '@type': string;
+      '@id'?: string;
+      url: string;
+      contentUrl?: string;
+      caption?: string;
+      inLanguage?: string;
+    };
+    worksFor?: {
+      '@type': string;
+      '@id'?: string;
+      name: string;
+      logo?: {
+        '@type': string;
+        '@id'?: string;
+        url: string;
+        contentUrl?: string;
+        caption?: string;
+        inLanguage?: string;
+      };
+    };
+  };
+  publisher: {
+    '@type': string;
+    '@id'?: string;
+    name: string;
+    logo?: {
+      '@type': string;
+      '@id'?: string;
+      url: string;
+      contentUrl?: string;
+      width?: number;
+      height?: number;
+      caption?: string;
+      inLanguage?: string;
+    };
+  };
+  inLanguage?: string;
+  isPartOf?: {
+    '@type': string;
+    '@id'?: string;
+    url?: string;
+    name?: string;
+  };
+  mainEntityOfPage: {
+    '@type': string;
+    '@id': string;
+    url?: string;
+    name?: string;
+    datePublished?: string;
+    dateModified?: string;
+    isPartOf?: {
+      '@type': string;
+      '@id'?: string;
+      url?: string;
+      name?: string;
+      publisher?: {
+        '@type': string;
+        '@id'?: string;
+        name: string;
+        logo?: {
+          '@type': string;
+          '@id'?: string;
+          url: string;
+          contentUrl?: string;
+          caption?: string;
+          inLanguage?: string;
+        };
+      };
+      inLanguage?: string;
+    };
+    inLanguage?: string;
+    primaryImageOfPage?: {
+      '@type': string;
+      '@id'?: string;
+      url: string;
+      width?: number;
+      height?: number;
+      inLanguage?: string;
+    };
+    breadcrumb?: {
+      '@type': string;
+      '@id'?: string;
+      itemListElement: Array<{
+        '@type': string;
+        position: number;
+        item: {
+          '@type': string;
+          '@id'?: string;
+          name: string;
+        };
+      }>;
+    };
+  };
+}
+
 export interface BreadcrumbSchema {
   '@context': string;
   '@type': string;
@@ -138,6 +266,151 @@ export function generateWebPageSchema(path: string, title: string, description: 
       '@type': 'Organization',
       name: 'fyimg',
     },
+  };
+}
+
+export function generateArticleSchema(
+  path: string, 
+  title: string, 
+  description: string, 
+  imageUrl: string,
+  datePublished: string = '2025-01-01',
+  dateModified: string = '2025-01-01',
+  language: string = 'zh-TW'
+): ArticleSchema {
+  const fullUrl = getFullUrl(path);
+  const baseUrl = getBaseUrl();
+  const richSnippetId = `${fullUrl}#richSnippet`;
+  const webpageId = `${fullUrl}#webpage`;
+  const websiteId = `${baseUrl}#website`;
+  const organizationId = `${baseUrl}#organization`;
+  const logoId = `${baseUrl}#logo`;
+  const breadcrumbId = `${fullUrl}#breadcrumb`;
+  const pathSegments = path.split('/').filter(Boolean);
+  
+  // 準備麵包屑項目
+  const breadcrumbItems = [];
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: 1,
+    item: {
+      '@type': 'Thing',
+      '@id': baseUrl,
+      name: '首頁'
+    }
+  });
+  
+  if (pathSegments.length > 0) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'Thing',
+        '@id': fullUrl,
+        name: pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() + 
+              pathSegments[pathSegments.length - 1].slice(1).replace(/-/g, ' ')
+      }
+    });
+  }
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': richSnippetId,
+    headline: title,
+    description: description,
+    url: fullUrl,
+    name: title,
+    image: {
+      '@type': 'ImageObject',
+      '@id': imageUrl,
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+      caption: title,
+      inLanguage: language
+    },
+    datePublished: datePublished,
+    dateModified: dateModified,
+    inLanguage: language,
+    author: {
+      '@type': 'Organization',
+      '@id': `${baseUrl}/about/#organization`,
+      name: 'fyimg',
+      url: baseUrl,
+      sameAs: baseUrl,
+      logo: {
+        '@type': 'ImageObject',
+        '@id': logoId,
+        url: getFullUrl('/og-image.png'),
+        contentUrl: getFullUrl('/og-image.png'),
+        caption: 'fyimg',
+        inLanguage: language
+      }
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: 'fyimg',
+      logo: {
+        '@type': 'ImageObject',
+        '@id': logoId,
+        url: getFullUrl('/og-image.png'),
+        contentUrl: getFullUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        caption: 'fyimg',
+        inLanguage: language
+      }
+    },
+    isPartOf: {
+      '@type': 'WebPage',
+      '@id': webpageId,
+      url: fullUrl,
+      name: title
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': webpageId,
+      url: fullUrl,
+      name: title,
+      datePublished: datePublished,
+      dateModified: dateModified,
+      isPartOf: {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        url: baseUrl,
+        name: 'fyimg',
+        publisher: {
+          '@type': 'Organization',
+          '@id': organizationId,
+          name: 'fyimg',
+          logo: {
+            '@type': 'ImageObject',
+            '@id': logoId,
+            url: getFullUrl('/og-image.png'),
+            contentUrl: getFullUrl('/og-image.png'),
+            caption: 'fyimg',
+            inLanguage: language
+          }
+        },
+        inLanguage: language
+      },
+      inLanguage: language,
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        '@id': imageUrl,
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        inLanguage: language
+      },
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        '@id': breadcrumbId,
+        itemListElement: breadcrumbItems
+      }
+    }
   };
 }
 

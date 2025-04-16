@@ -1,19 +1,23 @@
 import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateSchemaMarkup, generateFAQSchema } from '@/lib/schema';
+import { generateBreadcrumbSchema, generateSchemaMarkup, generateFAQSchema, generateArticleSchema } from '@/lib/schema';
+
+// 定義通用標題和描述
+const title = '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋';
+const description = '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
-  description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
+  title,
+  description,
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
-    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
+    title,
+    description,
     type: 'website',
     locale: 'zh_TW',
     url: getFullUrl('/image-search'),
@@ -32,8 +36,8 @@ export const metadata: Metadata = {
   // Twitter卡片設定 - 為X.com平台優化
   twitter: {
     card: 'summary_large_image',
-    title: '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋',
-    description: '上傳圖片或輸入圖片網址，一鍵使用Google、Bing、Yandex等進行反向圖片搜尋，並且支援手機iphone搜圖。',
+    title,
+    description,
     creator: '@fyimg',
     site: '@fyimg',  // 添加站點標籤增強Twitter卡片顯示
     images: [imageUrl],
@@ -50,10 +54,21 @@ export const metadata: Metadata = {
 function generateSchemaJsonLd() {
   try {
     const webAppSchema = generateSchemaMarkup();
-    const breadcrumbSchema = generateBreadcrumbSchema();
+    const breadcrumbSchema = generateBreadcrumbSchema('/image-search', '圖片搜尋');
     const faqSchema = generateFAQSchema('image');
     
-    return JSON.stringify([webAppSchema, breadcrumbSchema, faqSchema]);
+    // 添加豐富的 Article Schema
+    const articleSchema = generateArticleSchema(
+      '/image-search',
+      title,
+      description,
+      imageUrl,
+      '2025-01-01',  // 發布日期
+      '2025-01-15',  // 修改日期
+      'zh-TW'        // 語言
+    );
+    
+    return JSON.stringify([webAppSchema, breadcrumbSchema, faqSchema, articleSchema]);
   } catch (error) {
     console.error('Error generating Schema JSON-LD:', error);
     return JSON.stringify({}); // 返回空對象避免渲染錯誤
