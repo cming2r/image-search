@@ -44,11 +44,10 @@ export default function GiftExchangeWheel() {
       
       // 創建活動數據
       const eventData = {
-        eventId: randomId,
-        eventName: '交換禮物活動',
-        totalParticipants: participants.length,
+        code: randomId,
+        participantCount: participants.length,
         participantNames: participants,
-        assignments: [] // 初始時沒有分配
+        results: [] // 初始時沒有結果
       };
 
       // 發送到API
@@ -65,7 +64,7 @@ export default function GiftExchangeWheel() {
       }
 
       // 顯示成功訊息
-      console.log(`活動創建成功，ID: ${randomId}`);
+      console.log(`活動創建成功，代碼: ${randomId}`);
       
       // 導航到活動頁面 - 使用replace而不是push可以避免返回按鈕返回到表單頁面
       router.replace(`/gift-exchange/${randomId}`);

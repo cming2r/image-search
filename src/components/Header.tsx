@@ -17,7 +17,7 @@ function debounce(func: () => void, wait: number) {
 const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const dateDropdownRef = useRef<HTMLLIElement>(null);
+  const dateDropdownRef = useRef<HTMLDivElement>(null);
   const supabase = createClientForBrowser();
   
   // 切換選單狀態
@@ -95,15 +95,77 @@ const Header: FC = () => {
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center max-w-5xl mx-auto">
-          <Link href="/" className="text-xl font-bold text-blue-600 flex items-center" onClick={closeMenu}>
-            <span className="mr-2">
-              <Image src="/favicon.ico" alt="" width={30} height={30} />
-            </span>
-            <span className="hidden sm:inline">fyimg</span>
-            <span className="sm:hidden">fyimg</span>
-          </Link>
+        <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
+          {/* 左側 Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="text-xl font-bold text-blue-600 flex items-center" onClick={closeMenu}>
+              <span className="mr-2">
+                <Image src="/favicon.ico" alt="" width={30} height={30} />
+              </span>
+              <span className="hidden sm:inline">fyimg</span>
+              <span className="sm:hidden">fyimg</span>
+            </Link>
+          </div>
           
+          {/* 中間的導航菜單 */}
+          <nav className="hidden md:flex items-center justify-center flex-grow mx-8">
+            <div className="flex space-x-8">
+              <Link href="/image-search"
+                className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+              >
+                <span className="mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </span>
+                以圖搜圖
+              </Link>
+              <div className="relative group" ref={dateDropdownRef}>
+                <Link href="/date"
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                >
+                  日期計算器
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Link>
+                
+                {/* 下拉選單 - 使用全局CSS類實現延遲效果 */}
+                <div 
+                  className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
+                  role="menu"
+                >
+                  <Link 
+                    href="/date" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    日期計算器
+                  </Link>
+                  <Link 
+                    href="/due-date-calculator" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    預產期計算器
+                  </Link>
+                </div>
+              </div>
+              <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                縮網址服務
+              </a>
+            </div>
+          </nav>
+          
+          {/* 右側功能區 */}
           <div className="flex items-center">
             {/* 聯絡我們圖標 - 手機版放在選單按鈕左邊 */}
             <Link 
@@ -177,73 +239,11 @@ const Header: FC = () => {
                 )}
               </svg>
             </button>
-          </div>
-          
-          {/* 桌面版選單 */}
-          <nav className="hidden md:flex items-center ml-6">
-            <ul className="flex space-x-6">
-              <li>
-                <Link href="/image-search"
-                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
-                >
-                  <span className="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </span>
-                  以圖搜圖
-                </Link>
-              </li>
-              <li className="relative group" ref={dateDropdownRef}>
-                <Link href="/date"
-                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
-                  日期計算器
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </Link>
-                
-                {/* 下拉選單 - 使用全局CSS類實現延遲效果 */}
-                <div 
-                  className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
-                  role="menu"
-                >
-                  <Link 
-                    href="/date" 
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                    role="menuitem"
-                  >
-                    日期計算器
-                  </Link>
-                  <Link 
-                    href="/due-date-calculator" 
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                    role="menuitem"
-                  >
-                    預產期計算器
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
-                  縮網址服務
-                </a>
-              </li>
-            </ul>
             
             {/* 聯絡我們圖標 - 桌面版放在最右邊 */}
             <Link 
               href="/contact" 
-              className="ml-6 text-gray-600 hover:text-blue-600 transition-colors"
+              className="hidden md:block text-gray-600 hover:text-blue-600 transition-colors"
               aria-label="聯絡我們"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -251,12 +251,12 @@ const Header: FC = () => {
               </svg>
             </Link>
             
-            {/* 登入狀態 Google 圖標和登出按鈕 */}
+            {/* 登入狀態 Google 圖標和登出按鈕 - 桌面版 */}
             {isLoggedIn && (
               <>
                 <Link 
                   href="/admin" 
-                  className="ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
+                  className="hidden md:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
                   aria-label="管理頁面"
                   title="管理頁面"
                 >
@@ -280,7 +280,7 @@ const Header: FC = () => {
                       console.error('登出失敗:', err);
                     }
                   }}
-                  className="ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
+                  className="hidden md:block ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
                   aria-label="登出"
                   title="登出"
                 >
@@ -290,7 +290,7 @@ const Header: FC = () => {
                 </button>
               </>
             )}
-          </nav>
+          </div>
         </div>
         
         {/* 行動版下拉選單 */}

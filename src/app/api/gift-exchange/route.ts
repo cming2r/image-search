@@ -7,10 +7,9 @@ export async function POST(request: Request) {
     console.log('收到資料:', JSON.stringify(data));
     
     // 必要的欄位驗證
-    if (!data.eventId || !data.eventName || !data.participantNames) {
+    if (!data.code || !data.participantNames) {
       console.log('缺少必要欄位:', { 
-        hasEventId: !!data.eventId, 
-        hasEventName: !!data.eventName, 
+        hasCode: !!data.code, 
         hasParticipantNames: !!data.participantNames 
       });
       return NextResponse.json(
@@ -19,16 +18,15 @@ export async function POST(request: Request) {
       );
     }
     
-    // 確保assignments存在，如果不存在則設為空陣列
-    const assignments = data.assignments || [];
+    // 初始化結果列表為空陣列
+    const results = data.results || [];
     
     // 格式化數據以符合資料庫需求
     const insertData = {
-      event_id: data.eventId,
-      event_name: data.eventName,
-      total_participants: data.totalParticipants || data.participantNames.length,
+      code: data.code,
+      participant_count: data.participantCount || data.participantNames.length,
       participant_names: Array.isArray(data.participantNames) ? data.participantNames : [],
-      assignments_list: assignments
+      results: results
       // created_at 欄位由 Supabase 自動處理
     };
     
@@ -54,7 +52,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: '交換禮物活動已建立',
-      eventId: data.eventId,
+      code: data.code,
       data: insertedData
     });
 
@@ -67,14 +65,75 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PATCH(request: Request) {
+  try {
+    const data = await request.json();
+    const { code, result } = data;
+    
+    if (!code || !result) {
+      return NextResponse.json(
+        { error: '缺少必要欄位 code 或 result' },
+        { status: 400 }
+      );
+    }
+    
+    // 先獲取現有的活動數據
+    const { data: existingData, error: fetchError } = await supabase
+      .from('gift_exchange_wheel')
+      .select('results')
+      .eq('code', code)
+      .single();
+      
+    if (fetchError) {
+      console.error('獲取活動數據錯誤:', fetchError);
+      return NextResponse.json(
+        { error: `獲取活動數據失敗: ${fetchError.message || fetchError.code}` },
+        { status: 500 }
+      );
+    }
+    
+    // 將新結果添加到結果列表中
+    const currentResults = existingData?.results || [];
+    const updatedResults = [...currentResults, result];
+    
+    // 更新資料庫
+    const { data: updatedData, error: updateError } = await supabase
+      .from('gift_exchange_wheel')
+      .update({ results: updatedResults })
+      .eq('code', code)
+      .select();
+      
+    if (updateError) {
+      console.error('更新活動結果錯誤:', updateError);
+      return NextResponse.json(
+        { error: `更新活動結果失敗: ${updateError.message || updateError.code}` },
+        { status: 500 }
+      );
+    }
+    
+    return NextResponse.json({
+      success: true,
+      message: '活動結果已更新',
+      data: updatedData
+    });
+    
+  } catch (error) {
+    console.error('API錯誤:', error);
+    return NextResponse.json(
+      { error: '處理請求時發生錯誤: ' + (error instanceof Error ? error.message : String(error)) },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const eventId = searchParams.get('eventId');
+    const code = searchParams.get('code');
 
-    if (!eventId) {
+    if (!code) {
       return NextResponse.json(
-        { error: '缺少活動ID' },
+        { error: '缺少活動代碼' },
         { status: 400 }
       );
     }
@@ -83,7 +142,7 @@ export async function GET(request: Request) {
     const { data: eventData, error: eventError } = await supabase
       .from('gift_exchange_wheel')
       .select('*')
-      .eq('event_id', eventId)
+      .eq('code', code)
       .single();
 
     if (eventError) {

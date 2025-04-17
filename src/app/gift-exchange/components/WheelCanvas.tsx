@@ -51,7 +51,9 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
       
       // 設置結果並通知父組件
       setResult(resultIndex);
-      onSpin(items[resultIndex]);
+      
+      // 確保使用clientSegments而不是原始items，以保持一致性
+      onSpin(clientSegments[resultIndex]);
       
       setSpinning(false);
     }, 5000);
