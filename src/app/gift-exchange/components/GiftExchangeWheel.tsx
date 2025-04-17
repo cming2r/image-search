@@ -6,24 +6,30 @@ import { useRouter } from 'next/navigation';
 export default function GiftExchangeWheel() {
   const [participants, setParticipants] = useState<string[]>([]);
   const [newParticipant, setNewParticipant] = useState('');
-  const [quickAddCount, setQuickAddCount] = useState<number>(0);
+  const [quickAddCount, setQuickAddCount] = useState<number>(6);
   const router = useRouter();
 
-  // 添加單一參與者
+  // 添加參與者（支持空格分隔多個名字）
   const addParticipant = () => {
     if (!newParticipant.trim()) return;
     
-    setParticipants(prev => [...prev, newParticipant.trim()]);
-    setNewParticipant('');
+    // 按空格分隔輸入，處理多個名字
+    const names = newParticipant.split(/\s+/).filter(name => name.trim() !== '');
+    
+    if (names.length > 0) {
+      setParticipants(prev => [...prev, ...names]);
+      setNewParticipant('');
+    }
   };
 
   // 快速添加指定數量的參與者
   const quickAddParticipants = () => {
     if (!quickAddCount || quickAddCount <= 0) return;
     
+    // 創建數字參與者
     const newParticipants = Array.from({ length: quickAddCount }, (_, i) => `${i + 1}`);
     setParticipants(prev => [...prev, ...newParticipants]);
-    setQuickAddCount(0);
+    setQuickAddCount(6);
   };
 
   // 移除參與者
@@ -88,7 +94,14 @@ export default function GiftExchangeWheel() {
             type="text"
             value={newParticipant}
             onChange={(e) => setNewParticipant(e.target.value)}
-            placeholder="輸入參與者姓名"
+            onKeyDown={(e) => {
+              // 只在沒有正在進行中文輸入時處理 Enter 鍵
+              if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+                addParticipant();
+              }
+            }}
+            placeholder="輸入參與者姓名 (空格分隔多人)"
             className="flex-1 px-3 py-2 border rounded"
           />
           <button 
@@ -100,14 +113,15 @@ export default function GiftExchangeWheel() {
         </div>
         
         {/* 快速添加指定數量 */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 justify-end">
           <input
             type="number"
             min="1"
             value={quickAddCount || ''}
             onChange={(e) => setQuickAddCount(parseInt(e.target.value) || 0)}
-            placeholder="快速添加人數"
-            className="flex-1 px-3 py-2 border rounded"
+            placeholder="人數"
+            className="w-24 px-3 py-2 border rounded text-center"
+            title="輸入人數 (預設 6 人)"
           />
           <button 
             onClick={quickAddParticipants}
@@ -117,10 +131,12 @@ export default function GiftExchangeWheel() {
           </button>
         </div>
         
-        {/* 參與者列表 */}
-        {participants.length > 0 && (
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">目前參與者 ({participants.length}人):</h3>
+        {/* 參與者列表 - 無論是否有參與者都顯示 */}
+        <div className="mb-6">
+          <h3 className="font-medium mb-2">目前參與者 ({participants.length}人):</h3>
+          {participants.length === 0 ? (
+            <div className="text-gray-500 italic">尚未添加參與者</div>
+          ) : (
             <div className="flex flex-wrap gap-2">
               {participants.map((participant, index) => (
                 <div 
@@ -137,8 +153,8 @@ export default function GiftExchangeWheel() {
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
         
         {/* 開始抽籤按鈕 */}
         <button

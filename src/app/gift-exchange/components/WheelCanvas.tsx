@@ -13,22 +13,33 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const [rotation, setRotation] = useState(0);
   const [segments, setSegments] = useState(items.length || 6); // 使用項目數量或預設 6 個窗格
   const [clientSegments, setClientSegments] = useState<string[]>([]); // 客戶端渲染的窗格數據
+  const [disabled, setDisabled] = useState(false); // 新增禁用狀態，防止連續點擊
 
-  // 確保窗格數據僅在客戶端計算，並隨機排序
+  // 初始設置輪盤參數，或者在 items 變化時更新
   useEffect(() => {
-    // 使用項目數量設置段數（至少2個段）
-    const itemCount = Math.max(items.length, 2);
-    setSegments(itemCount);
-    
-    // 隨機排序項目
-    const shuffledItems = [...items].sort(() => Math.random() - 0.5);
-    
-    // 使用隨機排序後的項目作為顯示內容
-    setClientSegments(shuffledItems);
-  }, [items]);
-
+    if (items.length > 0) {
+      // 輪盤項目已更新
+      const itemCount = Math.max(items.length, 2);
+      setSegments(itemCount);
+      
+      // 只有當輪盤未旋轉且未禁用時才更新客戶端段落
+      if (!spinning && !disabled) {
+        setClientSegments([...items]);
+      }
+    }
+  }, [items, spinning, disabled]);
+  
   const spinWheel = () => {
-    if (spinning) return;
+    if (spinning || disabled) return;
+    
+    // 禁用按鈕，防止連續點擊
+    setDisabled(true);
+    
+    // 開始旋轉輪盤
+    startSpinning();
+  };
+  
+  const startSpinning = () => {
     setSpinning(true);
     setResult(null);
     
@@ -56,6 +67,23 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
       onSpin(clientSegments[resultIndex]);
       
       setSpinning(false);
+      
+      // 等待3秒後重置轉盤
+      setTimeout(() => {
+        // 重置轉盤準備下一輪
+        
+        // 重置內部狀態
+        setResult(null);
+        setRotation(0);
+        
+        // 重置內部狀態和啟用按鈕
+        setDisabled(false);
+        
+        // 直接通知父組件更新參與者列表
+        if (typeof onSpin === 'function') {
+          onSpin("__UPDATE_WHEEL__");
+        }
+      }, 3000);
     }, 5000);
   };
 
@@ -75,7 +103,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   ];
 
   // 格式化浮點數，固定 2 位小數
-  const round = (num: number) => Number(num.toFixed(2));
+  const round = (num: number) => parseFloat(num.toFixed(2));
 
   // 沒有項目時顯示提示
   if (items.length === 0) {
@@ -136,12 +164,12 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
       <div className="flex flex-col items-center gap-2">
         <button
           onClick={spinWheel}
-          disabled={spinning}
+          disabled={spinning || disabled}
           className={`px-6 py-3 text-white rounded-lg ${
-            spinning ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+            spinning || disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
-          {spinning ? '轉動中...' : '轉動轉盤'}
+          {spinning ? '轉動中...' : disabled ? '準備中...' : '轉動轉盤'}
         </button>
         
         {result !== null && !spinning && (

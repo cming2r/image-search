@@ -414,7 +414,7 @@ export function generateArticleSchema(
   };
 }
 
-export function generateFAQSchema(type?: 'image' | 'date' | 'duedate'): FAQSchema {
+export function generateFAQSchema(type?: 'image' | 'date' | 'duedate' | 'giftexchange'): FAQSchema {
   // 圖片搜尋相關 FAQ
   const imageFAQs = [
     {
@@ -447,6 +447,50 @@ export function generateFAQSchema(type?: 'image' | 'date' | 'duedate'): FAQSchem
       acceptedAnswer: {
         '@type': 'Answer',
         text: '是的，本工具完全支援手機搜尋，包括iPhone和Android設備。您可以通過手機瀏覽器訪問網站並上傳圖片進行搜尋。',
+      },
+    },
+  ];
+
+  // 禮物交換轉盤相關 FAQ
+  const giftExchangeFAQs = [
+    {
+      '@type': 'Question',
+      name: '什麼是交換禮物抽籤？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '交換禮物抽籤是一種活動組織方式，參與者通過隨機抽籤決定要送禮物給誰。每個人既是送禮者也是收禮者，這種方式能確保公平性並增加活動的趣味性。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '如何使用這個交換禮物抽籤工具？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '使用方法簡單：1) 輸入所有參與者的名字；2) 點擊「開始抽籤」創建一個禮物交換活動；3) 使用轉盤抽出收禮物和送禮物的人；4) 系統自動記錄每次抽籤結果；5) 可以通過連結分享活動給所有參與者。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '交換禮物抽籤需要收費嗎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '不需要，我們的交換禮物抽籤工具完全免費。無需註冊或提供個人資料，任何人都可以直接在網站上使用所有功能。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '轉盤的結果是隨機的嗎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '是的，我們的轉盤使用標準的隨機算法，確保每次轉動都是完全隨機的，沒有任何人為操作可能。轉盤的動畫效果增加了趣味性，但最終結果是公平且隨機的。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '如何分享我的禮物交換活動？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '創建活動後，系統會生成一個唯一的活動代碼和活動連結。您可以通過點擊分享圖標直接複製連結，然後通過社交媒體、即時通訊軟件或電子郵件分享給所有參與者。',
       },
     },
   ];
@@ -545,6 +589,8 @@ export function generateFAQSchema(type?: 'image' | 'date' | 'duedate'): FAQSchem
     mainEntity = dateFAQs;
   } else if (type === 'duedate') {
     mainEntity = duedateFAQs;
+  } else if (type === 'giftexchange') {
+    mainEntity = giftExchangeFAQs;
   } else {
     mainEntity = imageFAQs;
   }

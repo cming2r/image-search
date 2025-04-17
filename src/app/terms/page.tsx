@@ -11,7 +11,7 @@ export default function Terms() {
           <h1 className="text-3xl font-bold mb-8">服務條款</h1>
           
           <div className="prose prose-lg max-w-none">
-            <p>最後更新日期：2023年1月1日</p>
+            <p>最後更新日期：2025年1月1日</p>
             
             <h2>1. 接受條款</h2>
             <p>

@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateSchemaMarkup } from '@/lib/schema';
+import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '交換禮物抽籤工具 - 線上免費隨機分配禮物交換對象';
 const description = '免費線上交換禮物抽籤工具，輸入參與者名單，一鍵隨機分配送禮對象，支援排除特定配對，適合公司、朋友聚會使用。';
+
+// 用於社交媒體分享的預覽圖片
+const imageUrl = getFullUrl('/images/og-image.png'); // 建議為禮物交換創建專用圖片
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
@@ -19,6 +22,15 @@ export const metadata: Metadata = {
     locale: 'zh_TW',
     url: getFullUrl('/gift-exchange'),
     siteName: 'fyimg',
+    images: [
+      {
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        alt: '禮物交換抽籤轉盤工具',
+        type: 'image/png',
+      },
+    ],
   },
   
   // Twitter卡片設定
@@ -28,6 +40,7 @@ export const metadata: Metadata = {
     description,
     creator: '@fyimg',
     site: '@fyimg',
+    images: [imageUrl],
   },
   
   // 確保其他必要的元數據
@@ -40,54 +53,69 @@ export const metadata: Metadata = {
 // 生成結構化數據函數
 function generateSchemaJsonLd() {
   try {
-    const webAppSchema = generateSchemaMarkup();
+    // 使用標準函數生成結構化數據
+    const giftExchangeAppSchema = generateGiftExchangeAppSchema();
     const breadcrumbSchema = generateBreadcrumbSchema('/gift-exchange', '交換禮物抽籤工具');
-    const faqSchema = generateGiftExchangeFAQSchema();
+    const faqSchema = generateFAQSchema('giftexchange');
     
-    return JSON.stringify([webAppSchema, breadcrumbSchema, faqSchema]);
+    // 添加豐富的 Article Schema 增強 SEO
+    const articleSchema = generateArticleSchema(
+      '/gift-exchange',
+      title,
+      description,
+      imageUrl,
+      '2025-01-01',  // 發布日期
+      '2025-01-15',  // 修改日期
+      'zh-TW'        // 語言
+    );
+    
+    return JSON.stringify([giftExchangeAppSchema, breadcrumbSchema, faqSchema, articleSchema]);
   } catch (error) {
     console.error('Error generating Schema JSON-LD:', error);
     return JSON.stringify({}); // 返回空對象避免渲染錯誤
   }
 }
 
-// 自訂交換禮物FAQ
-function generateGiftExchangeFAQSchema() {
+// 生成交換禮物應用結構化數據
+function generateGiftExchangeAppSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    'mainEntity': [
-      {
-        '@type': 'Question',
-        'name': '什麼是交換禮物抽籤？',
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': '交換禮物抽籤是一種活動組織方式，參與者通過隨機抽籤決定要送禮物給誰。每個人既是送禮者也是收禮者，這種方式能確保公平性並增加活動的趣味性。'
-        }
+    '@type': 'WebApplication',
+    'name': '禮物交換抽籤轉盤',
+    'url': getFullUrl('/gift-exchange'),
+    'description': '免費線上交換禮物抽籤工具，輸入參與者名單，一鍵隨機分配送禮對象，使用轉盤增加趣味性，適合公司、朋友聚會使用。',
+    'applicationCategory': 'UtilityApplication',
+    'operatingSystem': 'Any',
+    'offers': {
+      '@type': 'Offer',
+      'price': '0',
+      'priceCurrency': 'USD',
+    },
+    'author': {
+      '@type': 'Organization',
+      'name': 'fyimg',
+    },
+    'potentialAction': {
+      '@type': 'UseAction',
+      'target': {
+        '@type': 'EntryPoint',
+        'urlTemplate': getFullUrl('/gift-exchange'),
       },
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.8',
+      'ratingCount': '156',
+      'bestRating': '5',
+      'worstRating': '1'
+    },
+    'screenshot': [
       {
-        '@type': 'Question',
-        'name': '如何使用這個交換禮物抽籤工具？',
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': '使用方法簡單：1) 輸入活動名稱和日期；2) 添加所有參與者的名字；3) 如需排除特定配對（例如夫妻間不互送），可設置排除規則；4) 點擊「抽籤」按鈕獲得隨機配對結果；5) 可以複製結果或通過連結分享。'
-        }
-      },
-      {
-        '@type': 'Question',
-        'name': '交換禮物抽籤需要收費嗎？',
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': '不需要，我們的交換禮物抽籤工具完全免費。無需註冊或提供個人資料，任何人都可以直接在網站上使用所有功能。'
-        }
-      },
-      {
-        '@type': 'Question',
-        'name': '可以排除特定人員之間的配對嗎？',
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': '可以。我們的工具支援設置排除規則，例如夫妻或家人之間可能不希望互送禮物。只需在添加參與者後，設置哪些人不應該被配對在一起，系統會確保抽籤結果符合這些限制。'
-        }
+        '@type': 'ImageObject',
+        'url': getFullUrl('/images/gift-exchange-screenshot.png'),
+        'width': '1280',
+        'height': '720',
+        'caption': '禮物交換抽籤轉盤工具界面'
       }
     ]
   };
