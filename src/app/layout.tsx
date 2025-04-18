@@ -2,7 +2,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
-import { getBaseUrl } from "@/lib/utils";
+import { getBaseUrl, getFullUrl } from "@/lib/utils";
 
 // 簡化的基礎元數據，僅包含通用設置
 export const metadata: Metadata = {
@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
+  },
+  // 設置主頁的 canonical URL
+  alternates: {
+    canonical: getFullUrl('/'),
   },
 };
 

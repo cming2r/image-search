@@ -9,6 +9,14 @@ const description = 'fyimg 的隱私政策。了解我們如何收集、使用�
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
+// 預先生成結構化數據
+const breadcrumbSchema = generateBreadcrumbSchema('/privacy-policy', '隱私政策');
+const webPageSchema = generateWebPageSchema(
+  '/privacy-policy',
+  title,
+  description
+);
+
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title,
@@ -52,38 +60,20 @@ export const metadata: Metadata = {
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
-};
-
-// 生成結構化數據函數
-function generateSchemaJsonLd() {
-  try {
-    const breadcrumbSchema = generateBreadcrumbSchema('/privacy-policy', '隱私政策');
-    const webPageSchema = generateWebPageSchema(
-      '/privacy-policy',
-      title,
-      description
-    );
-    
-    return JSON.stringify([breadcrumbSchema, webPageSchema]);
-  } catch (error) {
-    console.error('Error generating Schema JSON-LD:', error);
-    return JSON.stringify({}); // 返回空對象避免渲染錯誤
+  
+  // 直接在 metadata 中添加結構化數據 (JSON-LD)
+  other: {
+    'application/ld+json': [
+      JSON.stringify(breadcrumbSchema),
+      JSON.stringify(webPageSchema)
+    ]
   }
-}
+};
 
 export default function PrivacyPolicyLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <>
-      {/* 使用標準script標籤添加JSON-LD結構化數據 */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: generateSchemaJsonLd() }}
-      />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

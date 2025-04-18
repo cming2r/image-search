@@ -88,7 +88,7 @@ export default function GiftExchange() {
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
                 <h3 className="text-lg font-medium text-blue-700">如何確保轉盤結果的公平性？</h3>
                 <p className="mt-2">
-                  我們的轉盤使用加密級隨機算法（Fisher-Yates洗牌算法），確保每次轉動結果都完全隨機且不可預測。
+                  我們的轉盤使用Fisher-Yates洗牌算法，確保每次轉動結果都完全隨機且不可預測。
                   轉盤動畫效果不僅增加趣味性，還能讓所有參與者親眼見證抽籤過程的透明度，避免任何疑慮。
                   系統還支持「隨機分佈參與者順序」選項，進一步增強公平性。
                 </p>
@@ -98,7 +98,7 @@ export default function GiftExchange() {
                 <h3 className="text-lg font-medium text-blue-700">如何設置和管理禮物價格範圍？</h3>
                 <p className="mt-2">
                   雖然系統本身不直接設置價格限制，但建議在創建活動時與參與者溝通並達成一致的預算範圍。
-                  常見的做法是在開始前商定一個適合所有人的價格區間（例如100-200元），然後可以在活動分享頁面的描述中標明這一信息。
+                  常見的做法是在開始前商定一個適合所有人的價格區間（例如200或500元）。
                   這能確保所有人的禮物價值相近，避免尷尬情況，讓交換體驗更加公平愉快。
                 </p>
               </div>
@@ -108,7 +108,7 @@ export default function GiftExchange() {
                 <p className="mt-2">
                   所有抽籤結果會自動與您的活動代碼關聯並暫時保存。活動完成後，
                   您可以在結果頁面查看完整的配對清單。同時，系統提供方便的分享功能，您只需點擊分享按鈕，
-                  即可通過各種通訊工具（如Line、WhatsApp或郵件）將活動連結發送給所有參與者。
+                  即可將活動連結發送給所有參與者。
                   所有數據會在活動結束一段時間後自動清理，確保您的隱私安全。
                 </p>
               </div>

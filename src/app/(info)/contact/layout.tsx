@@ -9,6 +9,14 @@ const description = '如有任何問題或建議，請通過聯絡表單與我�
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
 
+// 預先生成結構化數據
+const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
+const webPageSchema = generateWebPageSchema(
+  '/contact',
+  title,
+  description
+);
+
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title,
@@ -56,38 +64,20 @@ export const metadata: Metadata = {
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
-};
-
-// 生成結構化數據函數
-function generateSchemaJsonLd() {
-  try {
-    const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');
-    const webPageSchema = generateWebPageSchema(
-      '/contact',
-      title,
-      description
-    );
-    
-    return JSON.stringify([breadcrumbSchema, webPageSchema]);
-  } catch (error) {
-    console.error('Error generating Schema JSON-LD:', error);
-    return JSON.stringify({}); // 返回空對象避免渲染錯誤
+  
+  // 直接在 metadata 中添加結構化數據 (JSON-LD)
+  other: {
+    'application/ld+json': [
+      JSON.stringify(breadcrumbSchema),
+      JSON.stringify(webPageSchema)
+    ]
   }
-}
+};
 
 export default function ContactLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <>
-      {/* 使用標準script標籤添加JSON-LD結構化數據 */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: generateSchemaJsonLd() }}
-      />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

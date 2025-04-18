@@ -159,6 +159,37 @@ const Header: FC = () => {
                   </Link>
                 </div>
               </div>
+              <div className="relative group">
+                <button
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  其他線上工具
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                <div 
+                  className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
+                  role="menu"
+                >
+                  <Link 
+                    href="/gift-exchange" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    交換禮物抽籤
+                  </Link>
+                </div>
+              </div>
               <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
                 縮網址服務
               </a>
@@ -357,6 +388,44 @@ const Header: FC = () => {
                     onClick={closeMenu}
                   >
                     預產期計算器
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div className="flex w-full items-center justify-between">
+                  <button
+                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                  >
+                    其他線上工具
+                  </button>
+                  <button
+                    className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => {
+                      // 展開子選單實現方式
+                      const subMenu = document.getElementById('tools-submenu');
+                      if (subMenu) {
+                        subMenu.classList.toggle('hidden');
+                      }
+                    }}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="tools-submenu" className="hidden pl-4 bg-gray-50">
+                  <Link 
+                    href="/gift-exchange" 
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    交換禮物抽籤
                   </Link>
                 </div>
               </li>
