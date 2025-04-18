@@ -342,7 +342,8 @@ export function generateWebPageSchema(
   imageUrl?: string, 
   language: string = 'zh-TW', 
   datePublished: string = '2025-01-01T00:00:00+08:00',
-  dateModified: string = '2025-01-01T00:00:00+08:00'
+  dateModified: string = '2025-01-01T00:00:00+08:00',
+  removeBreadcrumb: boolean = false
 ): WebPageSchema {
   const fullUrl = getFullUrl(path);
   const baseUrl = getBaseUrl();
@@ -398,11 +399,14 @@ export function generateWebPageSchema(
       inLanguage: language
     };
     
-    schema.breadcrumb = {
-      '@type': 'BreadcrumbList',
-      '@id': `${fullUrl}#breadcrumb`,
-      itemListElement: breadcrumbItems
-    };
+    // 只有在不移除breadcrumb時才添加
+    if (!removeBreadcrumb) {
+      schema.breadcrumb = {
+        '@type': 'BreadcrumbList',
+        '@id': `${fullUrl}#breadcrumb`,
+        itemListElement: breadcrumbItems
+      };
+    }
     
     schema.isPartOf = {
       '@type': 'WebSite',

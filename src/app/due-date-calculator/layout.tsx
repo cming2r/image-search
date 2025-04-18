@@ -15,6 +15,7 @@ const language = 'zh-TW';  // 語言
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', '預產期計算器');
+// 設置removeBreadcrumb=true來避免重複的麵包屑
 const webPageSchema = generateWebPageSchema(
   '/due-date-calculator',
   title,
@@ -22,7 +23,8 @@ const webPageSchema = generateWebPageSchema(
   imageUrl,        // 提供圖片URL
   language,        // 語言
   datePublished,   // 發布日期
-  dateModified     // 修改日期
+  dateModified,    // 修改日期
+  true             // 移除breadcrumb以避免重複
 );
 const faqSchema = generateFAQSchema('duedate');
 const articleSchema = generateArticleSchema(
@@ -94,6 +96,12 @@ export const viewport: Viewport = {
   initialScale: 1
 };
 
+// 將評分相關內容集成到應用 schema 中，而不是拆分為單獨的項目
+const integratedAppSchema = {
+  ...appSchema,
+  // 已有 aggregateRating
+};
+
 export default function DueDateLayout({
   children,
 }: {
@@ -120,7 +128,7 @@ export default function DueDateLayout({
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(integratedAppSchema) }}
       />
       {children}
     </>
