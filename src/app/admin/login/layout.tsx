@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { getFullUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: '管理後台登入',

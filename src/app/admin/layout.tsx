@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { getFullUrl } from '@/lib/utils';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
