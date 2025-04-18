@@ -87,17 +87,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
-  
-  // 直接在 metadata 中添加結構化數據 (JSON-LD)
-  other: {
-    'application/ld+json': [
-      JSON.stringify(breadcrumbSchema),
-      JSON.stringify(webPageSchema),
-      JSON.stringify(faqSchema),
-      JSON.stringify(articleSchema),
-      JSON.stringify(appSchema)
-    ]
-  }
 };
 
 export const viewport: Viewport = {
@@ -110,5 +99,30 @@ export default function DueDateLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {/* 使用標準腳本標籤添加 JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
+      {children}
+    </>
+  );
 }
