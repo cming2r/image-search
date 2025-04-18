@@ -47,6 +47,48 @@ export interface WebPageSchema {
     '@type': string;
     name: string;
   };
+  primaryImageOfPage?: {
+    '@type': string;
+    '@id'?: string;
+    url: string;
+    width?: number;
+    height?: number;
+    inLanguage?: string;
+  };
+  breadcrumb?: {
+    '@type': string;
+    '@id'?: string;
+    itemListElement: Array<{
+      '@type': string;
+      position: number;
+      item: {
+        '@type': string;
+        '@id'?: string;
+        name: string;
+      };
+    }>;
+  };
+  isPartOf?: {
+    '@type': string;
+    '@id'?: string;
+    url?: string;
+    name?: string;
+    publisher?: {
+      '@type': string;
+      '@id'?: string;
+      name: string;
+      logo?: {
+        '@type': string;
+        '@id'?: string;
+        url: string;
+        contentUrl?: string;
+        caption?: string;
+        inLanguage?: string;
+      };
+    };
+    inLanguage?: string;
+  };
+  inLanguage?: string;
 }
 
 export interface ArticleSchema {
@@ -201,16 +243,23 @@ export interface FAQSchema {
   }>;
 }
 
-export function generateSchemaMarkup(): WebApplicationSchema {
-  const baseUrl = getBaseUrl();
+export function generateWebApplicationSchema(
+  path: string,
+  name: string,
+  description: string,
+  applicationCategory: string = 'UtilityApplication',
+  ratingValue: string = '4.8',
+  ratingCount: string = '150',
+): WebApplicationSchema {
+  const url = getFullUrl(path);
   
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'fyimg 圖片搜尋工具',
-    url: baseUrl,
-    description: '一款免費的圖片搜尋工具，支援上傳圖片或輸入圖片網址，使用Google、Bing、Yandex等多種引擎進行反向圖片搜尋，適用於手機和桌面設備。',
-    applicationCategory: 'UtilityApplication',
+    name,
+    url,
+    description,
+    applicationCategory,
     operatingSystem: 'Any',
     offers: {
       '@type': 'Offer',
@@ -225,10 +274,17 @@ export function generateSchemaMarkup(): WebApplicationSchema {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${baseUrl}?q={search_term_string}`,
+        urlTemplate: `${url}?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue,
+      ratingCount,
+      bestRating: '5',
+      worstRating: '1'
+    }
   };
 }
 
@@ -243,13 +299,32 @@ export function generateBreadcrumbSchema(path?: string, pageName?: string): Brea
     },
   ];
 
-  // 如果有提供路徑和頁面名稱，則添加到麵包屑
-  if (path && pageName) {
-    itemListElement.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: pageName,
-      item: getFullUrl(path),
+  if (path) {
+    // 分割路徑並過濾空段
+    const pathSegments = path.split('/').filter(Boolean);
+    let currentUrl = baseUrl;
+    
+    // 處理多層路徑
+    pathSegments.forEach((segment, index) => {
+      currentUrl += `/${segment}`;
+      
+      // 處理路徑段名稱
+      let segmentName;
+      if (index === pathSegments.length - 1 && pageName) {
+        // 如果是最後一段，優先使用提供的pageName
+        segmentName = pageName;
+      } else {
+        // 將連字符轉為空格，並大寫首字母
+        segmentName = segment.charAt(0).toUpperCase() + 
+                     segment.slice(1).replace(/-/g, ' ');
+      }
+      
+      itemListElement.push({
+        '@type': 'ListItem',
+        position: index + 2, // 首頁是位置1，所以從2開始
+        name: segmentName,
+        item: currentUrl,
+      });
     });
   }
 
@@ -260,20 +335,92 @@ export function generateBreadcrumbSchema(path?: string, pageName?: string): Brea
   };
 }
 
-export function generateWebPageSchema(path: string, title: string, description: string): WebPageSchema {
-  return {
+export function generateWebPageSchema(
+  path: string, 
+  title: string, 
+  description: string, 
+  imageUrl?: string, 
+  language: string = 'zh-TW', 
+  datePublished: string = '2025-01-01T00:00:00+08:00',
+  dateModified: string = '2025-01-01T00:00:00+08:00'
+): WebPageSchema {
+  const fullUrl = getFullUrl(path);
+  const baseUrl = getBaseUrl();
+  const pathSegments = path.split('/').filter(Boolean);
+  
+  // 準備麵包屑項目
+  const breadcrumbItems = [];
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: 1,
+    item: {
+      '@type': 'Thing',
+      '@id': baseUrl,
+      name: '首頁'
+    }
+  });
+  
+  if (pathSegments.length > 0) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'Thing',
+        '@id': fullUrl,
+        name: pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() + 
+              pathSegments[pathSegments.length - 1].slice(1).replace(/-/g, ' ')
+      }
+    });
+  }
+
+  const schema: WebPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: title,
     description: description,
-    url: getFullUrl(path),
-    datePublished: '2025-01-01T00:00:00+08:00',
-    dateModified: '2025-01-01T00:00:00+08:00',
+    url: fullUrl,
+    datePublished: datePublished,
+    dateModified: dateModified,
     author: {
       '@type': 'Organization',
       name: 'fyimg',
     },
   };
+
+  // 如果提供了圖片URL，添加primaryImageOfPage和其他豐富屬性
+  if (imageUrl) {
+    schema.primaryImageOfPage = {
+      '@type': 'ImageObject',
+      '@id': imageUrl,
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+      inLanguage: language
+    };
+    
+    schema.breadcrumb = {
+      '@type': 'BreadcrumbList',
+      '@id': `${fullUrl}#breadcrumb`,
+      itemListElement: breadcrumbItems
+    };
+    
+    schema.isPartOf = {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}#website`,
+      url: baseUrl,
+      name: 'fyimg',
+      publisher: {
+        '@type': 'Organization',
+        '@id': `${baseUrl}#organization`,
+        name: 'fyimg',
+      },
+      inLanguage: language
+    };
+    
+    schema.inLanguage = language;
+  }
+
+  return schema;
 }
 
 export function generateArticleSchema(
@@ -289,13 +436,10 @@ export function generateArticleSchema(
   const baseUrl = getBaseUrl();
   const richSnippetId = `${fullUrl}#richSnippet`;
   const webpageId = `${fullUrl}#webpage`;
-  const websiteId = `${baseUrl}#website`;
-  const organizationId = `${baseUrl}#organization`;
-  const logoId = `${baseUrl}#logo`;
-  const breadcrumbId = `${fullUrl}#breadcrumb`;
   const pathSegments = path.split('/').filter(Boolean);
   
-  // 準備麵包屑項目
+  // 準備麵包屑項目 - 這些項目不再在ArticleSchema中使用，
+  // 因為現在我們將這些數據放在WebPageSchema中
   const breadcrumbItems = [];
   breadcrumbItems.push({
     '@type': 'ListItem',
@@ -348,7 +492,7 @@ export function generateArticleSchema(
       sameAs: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        '@id': logoId,
+        '@id': `${baseUrl}#logo`,
         url: getFullUrl('/og-image.png'),
         contentUrl: getFullUrl('/og-image.png'),
         caption: 'fyimg',
@@ -357,11 +501,11 @@ export function generateArticleSchema(
     },
     publisher: {
       '@type': 'Organization',
-      '@id': organizationId,
+      '@id': `${baseUrl}#organization`,
       name: 'fyimg',
       logo: {
         '@type': 'ImageObject',
-        '@id': logoId,
+        '@id': `${baseUrl}#logo`,
         url: getFullUrl('/og-image.png'),
         contentUrl: getFullUrl('/og-image.png'),
         width: 1200,
@@ -379,44 +523,7 @@ export function generateArticleSchema(
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': webpageId,
-      url: fullUrl,
-      name: title,
-      datePublished: datePublished,
-      dateModified: dateModified,
-      isPartOf: {
-        '@type': 'WebSite',
-        '@id': websiteId,
-        url: baseUrl,
-        name: 'fyimg',
-        publisher: {
-          '@type': 'Organization',
-          '@id': organizationId,
-          name: 'fyimg',
-          logo: {
-            '@type': 'ImageObject',
-            '@id': logoId,
-            url: getFullUrl('/og-image.png'),
-            contentUrl: getFullUrl('/og-image.png'),
-            caption: 'fyimg',
-            inLanguage: language
-          }
-        },
-        inLanguage: language
-      },
-      inLanguage: language,
-      primaryImageOfPage: {
-        '@type': 'ImageObject',
-        '@id': imageUrl,
-        url: imageUrl,
-        width: 1200,
-        height: 630,
-        inLanguage: language
-      },
-      breadcrumb: {
-        '@type': 'BreadcrumbList',
-        '@id': breadcrumbId,
-        itemListElement: breadcrumbItems
-      }
+      url: fullUrl
     }
   };
 }

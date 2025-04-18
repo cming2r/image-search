@@ -24,12 +24,10 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定
   openGraph: {
-    title,
+    title: `${title} ｜ fyimg`, // 與網站標題模板保持一致
     description,
-    type: 'website',
-    locale: 'zh_TW',
+    // type, locale, siteName由根布局繼承
     url: getFullUrl('/privacy-policy'),
-    siteName: 'fyimg',
     images: [
       {
         url: imageUrl,

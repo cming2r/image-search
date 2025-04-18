@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema } from '@/lib/schema';
+import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
+import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '交換禮物抽籤線上工具';
@@ -9,12 +9,20 @@ const description = '免費線上交換禮物抽籤工具，輸入參與者名�
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-gift-exchange.png'));
 
+// 從Git歷史獲取頁面日期
+const { created: datePublished, modified: dateModified } = getPageDates('src/app/gift-exchange/page.tsx');
+const language = 'zh-TW';  // 語言
+
 // 準備 JSON-LD 數據
 const breadcrumbSchema = generateBreadcrumbSchema('/gift-exchange', '交換禮物抽籤工具');
 const webPageSchema = generateWebPageSchema(
   '/gift-exchange',
   title,
-  description
+  description,
+  imageUrl,        // 提供圖片URL
+  language,        // 語言
+  datePublished,   // 發布日期
+  dateModified     // 修改日期
 );
 const faqSchema = generateFAQSchema('giftexchange');
 const articleSchema = generateArticleSchema(
@@ -22,9 +30,19 @@ const articleSchema = generateArticleSchema(
   title,
   description,
   imageUrl,
-  '2025-01-01T00:00:00+08:00',  // 發布日期 (ISO 8601 格式帶時區)
-  '2025-01-15T00:00:00+08:00',  // 修改日期 (ISO 8601 格式帶時區)
-  'zh-TW'        // 語言
+  datePublished,   // 發布日期
+  dateModified,    // 修改日期
+  language         // 語言
+);
+
+// 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
+const appSchema = generateWebApplicationSchema(
+  '/gift-exchange',           // 路徑
+  '交換禮物抽籤工具',         // 應用名稱
+  description,                // 使用上面定義的描述
+  'UtilityApplication',       // 應用類別
+  '4.9',                      // 評分值
+  '125'                       // 評分數量
 );
 
 export const metadata: Metadata = {
@@ -34,12 +52,10 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定
   openGraph: {
-    title,
+    title: `${title} ｜ fyimg`, // 與網站標題模板保持一致
     description,
-    type: 'website',
-    locale: 'zh_TW',
+    // type, locale, siteName由根布局繼承
     url: getFullUrl('/gift-exchange'),
-    siteName: 'fyimg',
     images: [
       {
         url: imageUrl,
@@ -67,7 +83,7 @@ export const metadata: Metadata = {
   },
   
   // 確保其他必要的元數據
-  keywords: '交換禮物, 抽籤工具, 禮物交換, 聖誕節抽籤, 抽禮物, 交換禮物排除, 禮物配對',
+  keywords: '交換禮物, 抽籤工具, 聖誕節抽籤, 抽禮物, 禮物配對',
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
@@ -78,7 +94,8 @@ export const metadata: Metadata = {
       JSON.stringify(breadcrumbSchema),
       JSON.stringify(webPageSchema),
       JSON.stringify(faqSchema),
-      JSON.stringify(articleSchema)
+      JSON.stringify(articleSchema),
+      JSON.stringify(appSchema)
     ]
   }
 };

@@ -2,12 +2,14 @@
   "name": "image-search",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/update-git-dates.mjs && next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "update-dates": "node scripts/update-git-dates.mjs"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
@@ -34,7 +36,10 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "glob": "^10.4.5",
     "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "shelljs": "^0.8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }

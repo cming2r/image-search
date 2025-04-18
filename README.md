@@ -1,14 +1,17 @@
 # 圖片搜尋工具
 
-這個專案是一個圖片搜尋工具，允許用戶通過URL或上傳圖片，使用各種圖片搜尋引擎搜尋相似圖片。
+這個專案是一個多功能工具集，包含圖片搜尋、日期計算器、預產期計算等多種實用工具。
 
 ## 功能
 
-- 支援輸入圖片URL
-- 支援上傳本地圖片（最大5MB）
-- 支援Google、Bing、TinEye和SauceNAO等圖片搜尋引擎
-- 使用Vercel Blob儲存上傳的圖片
-- 使用Supabase記錄搜尋歷史
+- **圖片搜尋**：支援輸入圖片URL和上傳本地圖片（最大5MB）
+- **多引擎搜尋**：支援Google、Bing、Yandex和SauceNAO等圖片搜尋引擎
+- **日期計算器**：計算兩個日期之間的差距，或從特定日期加減天數
+- **預產期計算器**：根據最後一次月經日期計算預產期
+- **交換禮物抽籤**：隨機分配交換禮物的參與者
+- **自動SEO優化**：基於Git提交歷史自動生成頁面結構化數據
+- **使用Vercel Blob儲存**：安全高效儲存上傳的圖片
+- **Supabase記錄**：追蹤搜尋歷史和使用情況
 
 ## 開始使用
 
@@ -39,7 +42,13 @@ CRON_SECRET=your-secure-cron-secret
 4. 安裝依賴並啟動開發服務器
 
 ```bash
+# 安裝依賴
 npm install
+
+# 更新Git歷史日期（用於SEO）
+npm run update-dates
+
+# 啟動開發服務器
 npm run dev
 ```
 
@@ -76,6 +85,29 @@ CREATE POLICY "允許插入" ON image_searches FOR INSERT TO authenticated WITH 
 
 3. 從Supabase專案設置中獲取URL和匿名密鑰，填入`.env.local`文件中
 
+## 結構化數據自動化
+
+應用使用Git提交歷史自動生成每個頁面的創建和修改日期，用於SEO優化。
+
+### 工作原理
+
+1. `src/lib/utils.ts` 中的 `getPageDates` 函數可以獲取任何頁面的首次提交和最後修改日期
+2. 頁面的 Layout 組件使用這些日期來生成準確的結構化數據
+3. 構建前，`scripts/update-git-dates.js` 會自動更新 `FILE_DATES` 對象
+
+### 添加新頁面
+
+要將新頁面加入自動日期系統：
+
+1. 將頁面路徑添加到 `scripts/update-git-dates.js` 的 `FILES_TO_TRACK` 數組
+2. 執行 `npm run update-dates` 更新日期數據
+3. 在頁面的 layout.tsx 中使用 `getPageDates` 函數獲取日期
+
+```typescript
+// 從Git歷史獲取頁面日期
+const { created: datePublished, modified: dateModified } = getPageDates('src/app/your-page-path/page.tsx');
+```
+
 ## 技術棧
 
 - [Next.js](https://nextjs.org/) 
@@ -85,12 +117,17 @@ CREATE POLICY "允許插入" ON image_searches FOR INSERT TO authenticated WITH 
 - [Vercel Blob](https://vercel.com/docs/blob)
 - [Supabase](https://supabase.com/)
 - [UUID](https://www.npmjs.com/package/uuid)
+- [ShellJS](https://www.npmjs.com/package/shelljs) - 用於Git歷史日期自動化
 
 ## 部署
 
 此專案可以輕鬆部署到Vercel：
 
 ```bash
+# 構建（包含自動更新頁面日期）
+npm run build
+
+# 部署到Vercel
 vercel
 ```
 

@@ -25,6 +25,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: getFullUrl('/'),
   },
+  // 默認搜索引擎行為設置 - 對所有公開頁面適用
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    },
+  },
+  // 全局OpenGraph基本設置
+  openGraph: {
+    type: 'website',
+    locale: 'zh_TW',
+    siteName: 'fyimg', // 全局設置品牌名稱
+  },
 };
 
 export default function RootLayout({

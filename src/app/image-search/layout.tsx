@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema } from '@/lib/schema';
+import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
+import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '以圖搜圖 - 支援iphone手機及多個引擎圖片搜尋';
@@ -9,12 +9,20 @@ const description = '上傳圖片或輸入圖片網址，一鍵使用Google、Bi
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-image-search.png'));
 
+// 從Git歷史獲取頁面日期，直接使用路由路徑
+const { created: datePublished, modified: dateModified } = getPageDates('/image-search');
+const language = 'zh-TW';  // 語言
+
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/image-search', '圖片搜尋');
 const webPageSchema = generateWebPageSchema(
   '/image-search',
   title,
-  description
+  description,
+  imageUrl,        // 提供圖片URL，以便WebPageSchema包含完整信息
+  language,        // 語言
+  datePublished,   // 發布日期
+  dateModified     // 修改日期
 );
 const faqSchema = generateFAQSchema('image');
 const articleSchema = generateArticleSchema(
@@ -22,9 +30,19 @@ const articleSchema = generateArticleSchema(
   title,
   description,
   imageUrl,
-  '2025-01-01T00:00:00+08:00',  // 發布日期 (ISO 8601 格式帶時區)
-  '2025-01-15T00:00:00+08:00',  // 修改日期 (ISO 8601 格式帶時區)
-  'zh-TW'        // 語言
+  datePublished,   // 發布日期
+  dateModified,    // 修改日期
+  language         // 語言
+);
+
+// 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
+const appSchema = generateWebApplicationSchema(
+  '/image-search',            // 路徑
+  '以圖搜圖工具',             // 應用名稱
+  description,                // 使用上面定義的描述
+  'UtilityApplication',       // 應用類別
+  '4.8',                      // 評分值
+  '176'                       // 評分數量
 );
 
 export const metadata: Metadata = {
@@ -34,12 +52,10 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title,
+    title: `${title} ｜ fyimg`, // 與網站標題模板保持一致
     description,
-    type: 'website',
-    locale: 'zh_TW',
+    // type, locale, siteName由根布局繼承
     url: getFullUrl('/image-search'),
-    siteName: 'fyimg',
     images: [
       {
         url: imageUrl,
@@ -66,8 +82,10 @@ export const metadata: Metadata = {
     canonical: getFullUrl('/image-search'),
   },
   
+  // 注意：robots設置由根布局繼承，無需在每個頁面重複設置
+  
   // 確保其他必要的元數據
-  keywords: '以圖搜圖, 反向圖片搜尋, Google圖片搜尋, Bing圖片搜尋, Yandex圖片搜尋, 手機搜圖, iPhone圖片搜尋',
+  keywords: '以圖搜圖, 反向圖片搜尋, Google圖片搜尋, 手機搜圖, iPhone圖片搜尋',
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
@@ -78,7 +96,8 @@ export const metadata: Metadata = {
       JSON.stringify(breadcrumbSchema),
       JSON.stringify(webPageSchema),
       JSON.stringify(faqSchema),
-      JSON.stringify(articleSchema)
+      JSON.stringify(articleSchema),
+      JSON.stringify(appSchema)
     ]
   }
 };

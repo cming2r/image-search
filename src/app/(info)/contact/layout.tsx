@@ -27,12 +27,10 @@ export const metadata: Metadata = {
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
-    title,
+    title: `${title} ｜ fyimg`, // 與網站標題模板保持一致
     description,
-    type: 'website',
-    locale: 'zh_TW',
+    // type, locale, siteName由根布局繼承
     url: getFullUrl('/contact'),
-    siteName: 'fyimg',
     images: [
       {
         url: imageUrl,
