@@ -36,7 +36,7 @@ const articleSchema = generateArticleSchema(
 );
 
 // 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
-const appSchema = generateWebApplicationSchema(
+const webApplicationSchema = generateWebApplicationSchema(
   '/gift-exchange',           // 路徑
   '交換禮物抽籤工具',         // 應用名稱
   description,                // 使用上面定義的描述
@@ -88,16 +88,7 @@ export const metadata: Metadata = {
   creator: 'fyimg團隊',
   publisher: 'fyimg',
   
-  // 直接在 metadata 中添加結構化數據 (JSON-LD)
-  other: {
-    'application/ld+json': [
-      JSON.stringify(breadcrumbSchema),
-      JSON.stringify(webPageSchema),
-      JSON.stringify(faqSchema),
-      JSON.stringify(articleSchema),
-      JSON.stringify(appSchema)
-    ]
-  }
+  // 結構化數據改為使用 script 標籤插入，移除 metadata.other
 };
 
 export default function GiftExchangeLayout({
@@ -105,5 +96,30 @@ export default function GiftExchangeLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {/* 使用標準腳本標籤添加 JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+      />
+      {children}
+    </>
+  );
 }

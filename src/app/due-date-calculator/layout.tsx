@@ -38,7 +38,7 @@ const articleSchema = generateArticleSchema(
 );
 
 // 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
-const appSchema = generateWebApplicationSchema(
+const webApplicationSchema = generateWebApplicationSchema(
   '/due-date-calculator',     // 路徑
   '預產期計算器',             // 應用名稱
   description,                // 使用上面定義的描述
@@ -96,11 +96,7 @@ export const viewport: Viewport = {
   initialScale: 1
 };
 
-// 將評分相關內容集成到應用 schema 中，而不是拆分為單獨的項目
-const integratedAppSchema = {
-  ...appSchema,
-  // 已有 aggregateRating
-};
+// appSchema 已經是使用 generateWebApplicationSchema 生成的完整 Schema
 
 export default function DueDateLayout({
   children,
@@ -128,7 +124,7 @@ export default function DueDateLayout({
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(integratedAppSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
       />
       {children}
     </>
