@@ -26,6 +26,13 @@ export interface WebApplicationSchema {
     };
     'query-input': string;
   };
+  aggregateRating?: {
+    '@type': string;
+    ratingValue: string;
+    ratingCount: string;
+    bestRating: string;
+    worstRating: string;
+  };
 }
 
 export interface WebPageSchema {
@@ -260,8 +267,8 @@ export function generateWebPageSchema(path: string, title: string, description: 
     name: title,
     description: description,
     url: getFullUrl(path),
-    datePublished: '2025-01-01',
-    dateModified: '2025-01-01',
+    datePublished: '2025-01-01T00:00:00+08:00',
+    dateModified: '2025-01-01T00:00:00+08:00',
     author: {
       '@type': 'Organization',
       name: 'fyimg',
@@ -274,8 +281,8 @@ export function generateArticleSchema(
   title: string, 
   description: string, 
   imageUrl: string,
-  datePublished: string = '2025-01-01',
-  dateModified: string = '2025-01-01',
+  datePublished: string = '2025-01-01T00:00:00+08:00',
+  dateModified: string = '2025-01-01T00:00:00+08:00',
   language: string = 'zh-TW'
 ): ArticleSchema {
   const fullUrl = getFullUrl(path);

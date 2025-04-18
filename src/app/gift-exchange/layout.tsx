@@ -3,7 +3,7 @@ import { getBaseUrl, getFullUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
-const title = '交換禮物抽籤工具 - 線上免費隨機分配禮物交換對象';
+const title = '交換禮物抽籤線上工具';
 const description = '免費線上交換禮物抽籤工具，輸入參與者名單，一鍵隨機分配送禮對象，支援排除特定配對，適合公司、朋友聚會使用。';
 
 // 用於社交媒體分享的預覽圖片
@@ -64,8 +64,8 @@ function generateSchemaJsonLd() {
       title,
       description,
       imageUrl,
-      '2025-01-01',  // 發布日期
-      '2025-01-15',  // 修改日期
+      '2025-01-01T00:00:00+08:00',  // 發布日期 (ISO 8601 格式帶時區)
+      '2025-01-15T00:00:00+08:00',  // 修改日期 (ISO 8601 格式帶時區)
       'zh-TW'        // 語言
     );
     

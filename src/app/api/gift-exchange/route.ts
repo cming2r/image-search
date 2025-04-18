@@ -27,8 +27,12 @@ export async function POST(request: Request) {
       participant_count: data.participantCount || data.participantNames.length,
       participant_names: Array.isArray(data.participantNames) ? data.participantNames : [],
       results: results
+      // 不要包含資料庫中不存在的欄位
       // created_at 欄位由 Supabase 自動處理
     };
+    
+    // 保存選項到服務器內存，但不存入資料庫中不存在的欄位
+    const showResultsDirectly = data.showResultsDirectly === true;
     
     console.log('準備插入數據:', JSON.stringify(insertData));
 
@@ -48,12 +52,13 @@ export async function POST(request: Request) {
 
     console.log('活動建立成功!', insertedData);
 
-    // 回傳成功結果
+    // 回傳成功結果，包含前端需要但數據庫中沒有的選項
     return NextResponse.json({
       success: true,
       message: '交換禮物活動已建立',
       code: data.code,
-      data: insertedData
+      data: insertedData,
+      showResultsDirectly: showResultsDirectly // 傳回前端使用，雖然不存入資料庫
     });
 
   } catch (error) {

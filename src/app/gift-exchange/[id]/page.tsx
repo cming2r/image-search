@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Toast from '@/components/Toast';
 import WheelCanvas from '../components/WheelCanvas';
 
 interface GiftExchangeData {
@@ -11,6 +13,7 @@ interface GiftExchangeData {
   participant_count: number;
   participant_names: string[];
   results?: string[];
+  show_results_directly?: boolean;
 }
 
 export default function GiftExchangeEvent() {
@@ -23,6 +26,7 @@ export default function GiftExchangeEvent() {
   const [wheelParticipants, setWheelParticipants] = useState<string[]>([]);
   const [shareLink, setShareLink] = useState<string>('');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [toast, setToast] = useState({ visible: false, message: '', type: 'success' as 'success' | 'error' | 'info' | 'warning' });
 
   // 讀取活動數據
   useEffect(() => {
@@ -37,6 +41,10 @@ export default function GiftExchangeEvent() {
         const data = await response.json();
         setEventData(data);
         
+        // 從URL查詢參數獲取showResults選項
+        const searchParams = new URLSearchParams(window.location.search);
+        const showDirectly = searchParams.get('showResults') === '1';
+        
         // 計算剩餘參與者的輔助函數
         const getRemaining = (data: GiftExchangeData) => {
           if (data.results && data.results.length > 0) {
@@ -49,8 +57,38 @@ export default function GiftExchangeEvent() {
           return data.participant_names || [];
         };
         
-        // 設置輪盤參與者列表
-        setWheelParticipants(getRemaining(data));
+        // 如果已經設置為直接顯示結果，並且結果為空，
+        // 那麼自動生成結果（環形配對）
+        if (showDirectly && (!data.results || data.results.length === 0)) {
+          // 創建一個從頭到尾的配對（環形）
+          const autoResults = [...data.participant_names];
+          
+          // 發送 PATCH 請求，一次性添加所有結果
+          for (const participant of autoResults) {
+            await fetch('/api/gift-exchange', {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                code: code,
+                result: participant
+              }),
+            });
+          }
+          
+          // 重新獲取數據以獲取更新後的結果
+          const refreshResponse = await fetch(`/api/gift-exchange?code=${code}`);
+          if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            setEventData(refreshData);
+            // 設置空的輪盤參與者（因為所有人都已經配對完成）
+            setWheelParticipants([]);
+          }
+        } else {
+          // 否則，正常設置輪盤參與者列表
+          setWheelParticipants(getRemaining(data));
+        }
       } catch {
         // 記錄獲取活動數據錯誤
         setError('無法加載活動數據，請確認連結是否正確');
@@ -73,10 +111,20 @@ export default function GiftExchangeEvent() {
   const copyShareLink = () => {
     navigator.clipboard.writeText(shareLink)
       .then(() => {
-        alert('已複製連結');
+        // 顯示成功提示，不使用 alert
+        setToast({
+          visible: true,
+          message: '已複製連結',
+          type: 'success'
+        });
       })
       .catch(() => {
-        // 複製連結失敗處理
+        // 複製連結失敗顯示錯誤提示
+        setToast({
+          visible: true,
+          message: '複製連結失敗',
+          type: 'error'
+        });
       });
   };
 
@@ -107,10 +155,19 @@ export default function GiftExchangeEvent() {
   return (
     <>
       <Header />
+      {/* 通知提示 */}
+      <Toast 
+        message={toast.message}
+        isVisible={toast.visible}
+        type={toast.type}
+        onClose={() => setToast(prev => ({ ...prev, visible: false }))}
+        position="top-center"
+        duration={2000}
+      />
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-6">
-            <h1>禮物交換活動</h1>
+            <h1>交換禮物抽籤</h1>
             <div className="flex items-center justify-center mt-3 text-sm">
               <div className="flex items-center">
                 <span className="text-gray-500">活動代碼:</span>
@@ -138,7 +195,13 @@ export default function GiftExchangeEvent() {
                           text: `禮物交換活動 - 代碼: ${eventData.code}`,
                           url: shareLink
                         }).catch(() => {
-                          // 分享失敗處理
+                          // 分享失敗時嘗試複製
+                          copyShareLink();
+                          setToast({
+                            visible: true,
+                            message: '系統分享失敗，已複製連結',
+                            type: 'info'
+                          });
                         });
                       } else {
                         copyShareLink();
@@ -168,8 +231,9 @@ export default function GiftExchangeEvent() {
               </div>
             </div>
             
-            {wheelParticipants.length > 0 ? (
+            {wheelParticipants.length > 0 || (eventData?.results && eventData.results.length === eventData.participant_names.length) ? (
               <>
+                {wheelParticipants.length > 0 && (
                 <div className="max-w-md mx-auto mb-4">
                   
                   <WheelCanvas 
@@ -245,6 +309,37 @@ export default function GiftExchangeEvent() {
                           
                           // 保存結果但不立即更新輪盤參與者列表
                           // 輪盤會維持當前狀態，直到收到 __UPDATE_WHEEL__ 信號才更新
+                          
+                          // 判斷是否只剩下最後兩個人
+                          if (wheelParticipants.length === 2) {
+                            // 這是倒數第二個人被抽出，還剩一個人，自動添加最後一個人
+                            setTimeout(async () => {
+                              // 獲取剩下的最後一個人
+                              const lastPerson = wheelParticipants.find(p => p !== selectedItem);
+                              if (lastPerson) {
+                                // 發送 PATCH 請求，將最後一個人添加到結果中
+                                await fetch('/api/gift-exchange', {
+                                  method: 'PATCH',
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                  body: JSON.stringify({
+                                    code: code,
+                                    result: lastPerson
+                                  }),
+                                });
+                                
+                                // 刷新數據獲取完整結果
+                                const finalResponse = await fetch(`/api/gift-exchange?code=${code}`);
+                                if (finalResponse.ok) {
+                                  const finalData = await finalResponse.json();
+                                  setEventData(finalData);
+                                  // 清空輪盤參與者，因為已經全部抽完
+                                  setWheelParticipants([]);
+                                }
+                              }
+                            }, 3000); // 等待輪盤動畫完成後執行
+                          }
                         } else {
                           // 結果更新失敗
                         }
@@ -254,11 +349,34 @@ export default function GiftExchangeEvent() {
                     }}
                   />
                 </div>
+                )}
                 
-                {/* 結果窗格 */}
-                {eventData?.results && eventData.results.length > 0 && (
+                {/* 最終結果窗格 - 完成所有抽籤時展示 */}
+                {eventData?.results && eventData.participant_names.length === eventData.results.length && (
+                  <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg shadow-sm">
+                    <h3 className="text-lg font-medium mb-3 text-green-700">抽籤已完成！最終結果</h3>
+                    <div className="space-y-3">
+                      {eventData.results.map((result, index) => {
+                        // 獲取此人要送禮物給誰
+                        const resultsArray = eventData.results || [];
+                        const giftRecipient = resultsArray[(index + 1) % resultsArray.length];
+                        
+                        return (
+                          <div key={`final-result-${index}`} className="py-2 flex items-center gap-2 bg-white p-3 rounded-md">
+                            <span className="font-medium text-gray-700">{result}</span>
+                            <span className="text-gray-400">送禮物給</span>
+                            <span className="font-medium text-gray-700">{giftRecipient}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                
+                {/* 進行中結果窗格 - 尚未完成所有抽籤時顯示 */}
+                {eventData?.results && eventData.results.length > 0 && eventData.participant_names.length > eventData.results.length && (
                   <div className="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <h3 className="text-lg font-medium mb-3">抽籤結果記錄</h3>
+                    <h3 className="text-lg font-medium mb-3">抽籤結果記錄 ({eventData.results.length}/{eventData.participant_names.length})</h3>
                     <div className="space-y-2">
                       {eventData.results.map((result, index) => {
                         // 獲取下一個結果（如果有）
@@ -284,6 +402,15 @@ export default function GiftExchangeEvent() {
                 <p className="mt-2">請返回主頁添加參與者</p>
               </div>
             )}
+          </div>
+          {/* 返回按鈕 */}
+          <div className="mt-8 text-center">
+            <Link 
+              href="/gift-exchange" 
+              className="inline-flex items-center justify-center px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
+            >
+              返回主頁
+            </Link>
           </div>
         </section>
       </main>

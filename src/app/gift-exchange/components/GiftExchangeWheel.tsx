@@ -1,13 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function GiftExchangeWheel() {
+  // 初始為空數組，避免服務器/客戶端水合問題
   const [participants, setParticipants] = useState<string[]>([]);
   const [newParticipant, setNewParticipant] = useState('');
   const [quickAddCount, setQuickAddCount] = useState<number>(6);
   const router = useRouter();
+  
+  // 使用 useEffect 在客戶端掛載後讀取 localStorage
+  useEffect(() => {
+    try {
+      const savedParticipants = localStorage.getItem('giftExchangeParticipants');
+      if (savedParticipants) {
+        setParticipants(JSON.parse(savedParticipants));
+      }
+    } catch (error) {
+      console.error('Error loading participants from localStorage:', error);
+    }
+  }, []);
+
+  // 更新參與者列表並保存到localStorage
+  const updateParticipants = (newList: string[]) => {
+    setParticipants(newList);
+    // 只在客戶端執行時存儲到localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('giftExchangeParticipants', JSON.stringify(newList));
+    }
+  };
 
   // 添加參與者（支持空格分隔多個名字）
   const addParticipant = () => {
@@ -17,7 +39,8 @@ export default function GiftExchangeWheel() {
     const names = newParticipant.split(/\s+/).filter(name => name.trim() !== '');
     
     if (names.length > 0) {
-      setParticipants(prev => [...prev, ...names]);
+      const updatedList = [...participants, ...names];
+      updateParticipants(updatedList);
       setNewParticipant('');
     }
   };
@@ -28,13 +51,15 @@ export default function GiftExchangeWheel() {
     
     // 創建數字參與者
     const newParticipants = Array.from({ length: quickAddCount }, (_, i) => `${i + 1}`);
-    setParticipants(prev => [...prev, ...newParticipants]);
+    const updatedList = [...participants, ...newParticipants];
+    updateParticipants(updatedList);
     setQuickAddCount(6);
   };
 
   // 移除參與者
   const removeParticipant = (index: number) => {
-    setParticipants(prev => prev.filter((_, i) => i !== index));
+    const updatedList = participants.filter((_, i) => i !== index);
+    updateParticipants(updatedList);
   };
 
   // 開始抽籤，創建新活動
@@ -48,12 +73,33 @@ export default function GiftExchangeWheel() {
       // 生成隨機4位代碼
       const randomId = Math.random().toString(36).substring(2, 6);
       
-      // 創建活動數據
+      // 取得選項狀態
+      const randomizeOrder = document.getElementById('randomize-order') as HTMLInputElement;
+      const showResultsDirectly = document.getElementById('show-results-directly') as HTMLInputElement;
+      
+      // 準備參與者名單，如果需要隨機順序則打亂
+      const participantNames = [...participants];
+      if (randomizeOrder && randomizeOrder.checked) {
+        // 使用 Fisher-Yates 洗牌算法隨機排序
+        for (let i = participantNames.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [participantNames[i], participantNames[j]] = [participantNames[j], participantNames[i]];
+        }
+      }
+      
+      // 如果直接顯示結果，則提前生成結果數組
+      let results: string[] = [];
+      if (showResultsDirectly && showResultsDirectly.checked) {
+        // 創建環狀配對（每個人送禮物給下一個人，最後一個送給第一個）
+        results = [...participantNames];
+      }
+      
+      // 創建活動數據 - 只包含數據庫有的欄位
       const eventData = {
         code: randomId,
-        participantCount: participants.length,
-        participantNames: participants,
-        results: [] // 初始時沒有結果
+        participantCount: participantNames.length,
+        participantNames: participantNames,
+        results: results // 如果需要直接顯示結果，這裡會包含預生成的結果
       };
 
       // 發送到API
@@ -72,8 +118,12 @@ export default function GiftExchangeWheel() {
       // 顯示成功訊息
       console.log(`活動創建成功，代碼: ${randomId}`);
       
-      // 導航到活動頁面 - 使用replace而不是push可以避免返回按鈕返回到表單頁面
-      router.replace(`/gift-exchange/${randomId}`);
+      // 獲取勾選框值
+      const isShowResultsDirectly = showResultsDirectly && showResultsDirectly.checked;
+      
+      // 導航到活動頁面 - 使用push而不是replace，這樣能保留瀏覽歷史
+      // 將選項作為查詢參數傳遞，而不是存入數據庫
+      router.push(`/gift-exchange/${randomId}?showResults=${isShowResultsDirectly ? 1 : 0}`);
     } catch (error) {
       console.error('開始抽籤錯誤:', error);
       // 顯示更詳細的錯誤訊息
@@ -119,6 +169,12 @@ export default function GiftExchangeWheel() {
             min="1"
             value={quickAddCount || ''}
             onChange={(e) => setQuickAddCount(parseInt(e.target.value) || 0)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                quickAddParticipants();
+              }
+            }}
             placeholder="人數"
             className="w-24 px-3 py-2 border rounded text-center"
             title="輸入人數 (預設 6 人)"
@@ -133,7 +189,17 @@ export default function GiftExchangeWheel() {
         
         {/* 參與者列表 - 無論是否有參與者都顯示 */}
         <div className="mb-6">
-          <h3 className="font-medium mb-2">目前參與者 ({participants.length}人):</h3>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="font-medium">目前參與者 ({participants.length}人):</h3>
+            {participants.length > 0 && (
+              <button
+                onClick={() => updateParticipants([])}
+                className="text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded border border-red-200 hover:border-red-400"
+              >
+                清除全部
+              </button>
+            )}
+          </div>
           {participants.length === 0 ? (
             <div className="text-gray-500 italic">尚未添加參與者</div>
           ) : (
@@ -154,6 +220,26 @@ export default function GiftExchangeWheel() {
               ))}
             </div>
           )}
+        </div>
+        {/* 附加選項 */}
+        <div className="flex flex-wrap gap-4 mb-4">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              id="randomize-order"
+              className="w-4 h-4 accent-blue-600"
+            />
+            <span className="text-gray-700">隨機分佈參與者順序</span>
+          </label>
+          
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              id="show-results-directly"
+              className="w-4 h-4 accent-blue-600"
+            />
+            <span className="text-gray-700">直接顯示最終結果</span>
+          </label>
         </div>
         
         {/* 開始抽籤按鈕 */}
