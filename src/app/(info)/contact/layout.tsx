@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 
@@ -21,9 +21,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title,
   description,
-  
-  // 基本HTML標籤 - 有些平台會先讀取這些
-  viewport: 'width=device-width, initial-scale=1',
   
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
@@ -70,6 +67,11 @@ export const metadata: Metadata = {
       JSON.stringify(webPageSchema)
     ]
   }
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 };
 
 export default function ContactLayout({

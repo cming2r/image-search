@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
 
@@ -50,9 +50,6 @@ export const metadata: Metadata = {
   title,
   description,
   
-  // 基本HTML標籤 - 有些平台會先讀取這些
-  viewport: 'width=device-width, initial-scale=1',
-  
   // OpenGraph標籤設定 - 對Telegram尤其重要
   openGraph: {
     title: `${title} ｜ fyimg`, // 與網站標題模板保持一致
@@ -101,6 +98,11 @@ export const metadata: Metadata = {
       JSON.stringify(appSchema)
     ]
   }
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 };
 
 export default function DueDateLayout({
