@@ -15,6 +15,7 @@ const language = 'zh-TW';  // 語言
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/date', '日期計算器');
+// 設置removeBreadcrumb=true來避免重複的麵包屑
 const webPageSchema = generateWebPageSchema(
   '/date',
   title,
@@ -22,7 +23,8 @@ const webPageSchema = generateWebPageSchema(
   imageUrl,        // 提供圖片URL
   language,        // 語言
   datePublished,   // 發布日期
-  dateModified     // 修改日期
+  dateModified,    // 修改日期
+  true             // 移除breadcrumb以避免重複
 );
 const faqSchema = generateFAQSchema('date');
 const articleSchema = generateArticleSchema(

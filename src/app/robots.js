@@ -7,10 +7,8 @@ export default function robots() {
         userAgent: '*',
         allow: '/', // 允許根路徑和所有未明確禁止的頁面
         disallow: [
-          '/api',    // 禁止API根路徑
-          '/api/*',  // 禁止所有API端點
-          '/admin',   // 禁止根管理頁面
-          '/admin/*', // 禁止所有管理子頁面
+          '/api/',    // 禁止API路徑及其所有子路徑
+          '/admin/',  // 禁止管理頁面及其所有子路徑
           '/gift-exchange/*', // 禁止動態子路徑
         ],
       }

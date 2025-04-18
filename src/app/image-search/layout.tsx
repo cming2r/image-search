@@ -15,6 +15,7 @@ const language = 'zh-TW';  // 語言
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/image-search', '圖片搜尋');
+// 設置removeBreadcrumb=true來避免重複的麵包屑
 const webPageSchema = generateWebPageSchema(
   '/image-search',
   title,
@@ -22,7 +23,8 @@ const webPageSchema = generateWebPageSchema(
   imageUrl,        // 提供圖片URL，以便WebPageSchema包含完整信息
   language,        // 語言
   datePublished,   // 發布日期
-  dateModified     // 修改日期
+  dateModified,    // 修改日期
+  true             // 移除breadcrumb以避免重複
 );
 const faqSchema = generateFAQSchema('image');
 const articleSchema = generateArticleSchema(
