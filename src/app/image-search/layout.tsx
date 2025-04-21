@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
 import { 
   generateBreadcrumbSchema, 
-  generateWebPageSchema, 
   generateFAQSchema, 
   generateArticleSchema, 
   generateWebApplicationSchema 
@@ -22,16 +21,7 @@ const language = 'zh-TW';
 
 // 結構化數據生成
 const breadcrumbSchema = generateBreadcrumbSchema('/image-search', '以圖搜圖');
-const webPageSchema = generateWebPageSchema(
-  '/image-search',
-  title,
-  description,
-  imageUrl,
-  language,
-  datePublished,
-  dateModified,
-  true  // 避免重複的麵包屑
-);
+// webPageSchema 已移除
 // 生成FAQ Schema
 const faqSchema = generateFAQSchema([
   {
@@ -190,10 +180,6 @@ export default function ImageSearchLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
       <script
         type="application/ld+json"

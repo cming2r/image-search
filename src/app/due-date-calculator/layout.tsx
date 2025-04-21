@@ -1,6 +1,6 @@
 import { Metadata, Viewport } from 'next';
 import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateWebPageSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
+import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '預產期計算器 - 懷孕週數計算工具';
@@ -15,17 +15,7 @@ const language = 'zh-TW';  // 語言
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', '預產期計算器');
-// 設置removeBreadcrumb=true來避免重複的麵包屑
-const webPageSchema = generateWebPageSchema(
-  '/due-date-calculator',
-  title,
-  description,
-  imageUrl,        // 提供圖片URL
-  language,        // 語言
-  datePublished,   // 發布日期
-  dateModified,    // 修改日期
-  true             // 移除breadcrumb以避免重複
-);
+// webPageSchema 已移除
 // 生成FAQ Schema
 const faqSchema = generateFAQSchema([
   {
@@ -167,10 +157,6 @@ export default function DueDateLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
       <script
         type="application/ld+json"
