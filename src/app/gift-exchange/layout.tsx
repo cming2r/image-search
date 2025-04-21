@@ -26,7 +26,65 @@ const webPageSchema = generateWebPageSchema(
   dateModified,    // 修改日期
   true             // 移除breadcrumb以避免重複
 );
-const faqSchema = generateFAQSchema('giftexchange');
+// 生成FAQ Schema
+const faqSchema = generateFAQSchema([
+  {
+    '@type': 'Question',
+    name: '什麼是交換禮物抽籤？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '交換禮物抽籤是一種活動組織方式，參與者通過隨機抽籤決定要送禮物給誰。每個人既是送禮者也是收禮者，這種方式能確保公平性並增加活動的趣味性。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '如何使用這個交換禮物抽籤工具？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '使用方法簡單：1) 輸入所有參與者的名字；2) 點擊「開始抽籤」創建一個禮物交換活動；3) 使用轉盤抽出收禮物和送禮物的人；4) 系統自動記錄每次抽籤結果；5) 可以通過連結分享活動給所有參與者。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '交換禮物抽籤需要收費嗎？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '不需要，我們的交換禮物抽籤工具完全免費。無需註冊或提供個人資料，任何人都可以直接在網站上使用所有功能。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '轉盤的結果是隨機的嗎？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '是的，我們的轉盤使用標準的隨機算法，確保每次轉動都是完全隨機的，沒有任何人為操作可能。轉盤的動畫效果增加了趣味性，但最終結果是公平且隨機的。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '如何分享我的禮物交換活動？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '創建活動後，系統會生成一個唯一的活動代碼和活動連結。您可以通過點擊分享圖標直接複製連結，然後通過社交媒體、即時通訊軟件或電子郵件分享給所有參與者。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '可以設定自己不要抽到特定的人嗎？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '目前我們的基本版本不支持這個功能，但我們正在開發進階設置，將允許用戶設定排除規則。在特殊情況下，例如想避免家庭成員互抽，您可以先將參與者分組，每組單獨進行抽籤，然後手動合併結果。'
+    }
+  },
+  {
+    '@type': 'Question',
+    name: '有辦法在聚會現場一起使用這個工具嗎？',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: '是的！這個工具非常適合聚會現場使用。您可以將手機或平板連接到大螢幕，讓所有人一起觀看轉盤動畫。直接顯示結果的功能也很適合提前準備禮物，而「隨機分佈參與者順序」選項增加了更多驚喜感。'
+    }
+  }
+]);
 const articleSchema = generateArticleSchema(
   '/gift-exchange',
   title,
