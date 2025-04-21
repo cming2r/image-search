@@ -59,13 +59,7 @@ export const metadata: Metadata = {
   creator: 'fyimg團隊',
   publisher: 'fyimg',
   
-  // 直接在 metadata 中添加結構化數據 (JSON-LD)
-  other: {
-    'application/ld+json': [
-      JSON.stringify(breadcrumbSchema),
-      JSON.stringify(webPageSchema)
-    ]
-  }
+  // 結構化數據現在使用script標籤直接添加到layout中
 };
 
 export default function PrivacyPolicyLayout({
@@ -73,5 +67,18 @@ export default function PrivacyPolicyLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {/* 使用標準腳本標籤添加 JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      {children}
+    </>
+  );
 }
