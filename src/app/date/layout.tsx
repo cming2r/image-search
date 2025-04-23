@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
+import { getBaseUrl, getFullUrl, getPageDates } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, generateWebApplicationSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
@@ -7,8 +7,8 @@ const title = '日期計算器 - 日曆天數計算';
 const description = '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。';
 const keywords = ['日期計算器', '日曆天', '工作天計算', '工期計算', '時程規劃'];
 
-// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
-const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-date.png'));
+// 預覽圖片
+const imageUrl = getFullUrl('/images/og-date.png');
 
 // 從Git歷史獲取頁面日期
 const { created: datePublished, modified: dateModified } = getPageDates('src/app/date/page.tsx');

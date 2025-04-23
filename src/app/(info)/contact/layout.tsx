@@ -1,13 +1,13 @@
 import { Metadata, Viewport } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
+import { getBaseUrl, getFullUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '聯絡我們';
 const description = '如有任何問題或建議，請通過聯絡表單與我們聯繫。我們會盡快回覆您的訊息。';
 
-// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
-const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
+// 預覽圖片
+const imageUrl = getFullUrl('/og-image.png');
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/contact', '聯絡我們');

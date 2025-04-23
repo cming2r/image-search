@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
+import { getBaseUrl, getFullUrl, getPageDates } from '@/lib/utils';
 import { 
   generateBreadcrumbSchema, 
   generateFAQSchema, 
@@ -12,8 +12,8 @@ const title = '以圖搜圖 - 圖像搜尋工具';
 const description = '以圖搜圖工具透過上傳圖片或輸入URL，一鍵使用Google、Bing、Yandex和SauceNAO進行反向圖像搜尋，支援電腦、iphone手機和平板等所有裝置。';
 const keywords = ['以圖搜圖', '反向圖片搜尋', 'iphone手機以圖搜圖'];
 
-// 社交媒體分享圖片（使用版本控制URL防止快取問題）
-const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-image-search.png'));
+// 社交媒體分享圖片
+const imageUrl = getFullUrl('/images/og-image-search.png');
 
 // 從Git歷史取得頁面發布與更新日期
 const { created: datePublished, modified: dateModified } = getPageDates('src/app/image-search/page.tsx');

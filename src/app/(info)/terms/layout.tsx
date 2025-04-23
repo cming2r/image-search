@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
-import { getBaseUrl, getFullUrl, getVersionedImageUrl } from '@/lib/utils';
+import { getBaseUrl, getFullUrl } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 
 // 定義通用標題和描述
 const title = '服務條款';
 const description = 'fyimg 的服務條款。使用本網站即表示您同意遵守這些條款。';
 
-// 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
-const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
+// 預覽圖片
+const imageUrl = getFullUrl('/og-image.png');
 
 // 預先生成結構化數據
 const breadcrumbSchema = generateBreadcrumbSchema('/terms', '服務條款');

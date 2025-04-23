@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getFullUrl, getVersionedImageUrl, getPageDates } from '@/lib/utils';
+import { getFullUrl, getPageDates } from '@/lib/utils';
 import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 // 準備結構化數據所需的變數
 const title = 'fyimg - 免費線上工具';
 const description = 'fyimg網站提供圖片搜尋、日期計算器、預產期計算以及交換禮物抽籤等多種免費實用工具，幫助您提高工作與生活效率。';
-const imageUrl = getVersionedImageUrl(getFullUrl('/og-image.png'));
+const imageUrl = getFullUrl('/og-image.png');
 const { created: datePublished, modified: dateModified } = getPageDates('src/app/page.tsx');
 const language = 'zh-TW';
 
