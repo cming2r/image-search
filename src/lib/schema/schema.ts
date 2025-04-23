@@ -1,6 +1,37 @@
 // 定義 Schema.org 類型
 import { getBaseUrl, getFullUrl } from '../utils';
 
+// 通用的 Person author 常量
+export const AUTHOR = {
+  '@type': 'Person',
+  '@id': `${getBaseUrl()}/about/#author`,
+  name: 'fyimg 編輯團隊',
+  url: getBaseUrl(),
+  image: {
+    '@type': 'ImageObject',
+    '@id': `${getBaseUrl()}#authorImage`,
+    url: getFullUrl('/og-image.png'),
+    width: 1200,
+    height: 630,
+    caption: 'fyimg 編輯團隊'
+  }
+};
+
+// 通用的 Organization publisher 常量
+export const PUBLISHER = {
+  '@type': 'Organization',
+  '@id': `${getBaseUrl()}#organization`,
+  name: 'fyimg',
+  logo: {
+    '@type': 'ImageObject',
+    '@id': `${getBaseUrl()}#logo`,
+    url: getFullUrl('/og-image.png'),
+    width: 1200,
+    height: 630,
+    caption: 'fyimg'
+  }
+};
+
 export interface WebApplicationSchema {
   '@context': string;
   '@type': string;
@@ -19,20 +50,7 @@ export interface WebApplicationSchema {
     validFrom?: string;
     priceValidUntil?: string;
   };
-  author: {
-    '@type': string;
-    '@id'?: string;
-    name: string;
-    url?: string;
-    logo?: {
-      '@type': string;
-      '@id'?: string;
-      url: string;
-      width?: number;
-      height?: number;
-      caption?: string;
-    };
-  };
+  author: typeof AUTHOR;
   aggregateRating?: {
     '@type': string;
     ratingValue: string;
@@ -50,10 +68,7 @@ export interface WebPageSchema {
   url: string;
   datePublished?: string;
   dateModified?: string;
-  author?: {
-    '@type': string;
-    name: string;
-  };
+  author?: typeof AUTHOR;
   primaryImageOfPage?: {
     '@type': string;
     '@id'?: string;
@@ -80,19 +95,7 @@ export interface WebPageSchema {
     '@id'?: string;
     url?: string;
     name?: string;
-    publisher?: {
-      '@type': string;
-      '@id'?: string;
-      name: string;
-      logo?: {
-        '@type': string;
-        '@id'?: string;
-        url: string;
-        contentUrl?: string;
-        caption?: string;
-        inLanguage?: string;
-      };
-    };
+    publisher?: typeof PUBLISHER;
     inLanguage?: string;
   };
   inLanguage?: string;
@@ -116,36 +119,10 @@ export interface ArticleSchema {
   };
   datePublished: string;
   dateModified: string;
-  keywords?: string;
+  keywords?: string[];
   wordCount?: number;
-  author: {
-    '@type': string;
-    '@id'?: string;
-    name: string;
-    url?: string;
-    image?: {
-      '@type': string;
-      '@id'?: string;
-      url: string;
-      caption?: string;
-    };
-    jobTitle?: string;
-    description?: string;
-    sameAs?: string[];
-  };
-  publisher: {
-    '@type': string;
-    '@id'?: string;
-    name: string;
-    logo?: {
-      '@type': string;
-      '@id'?: string;
-      url: string;
-      width?: number;
-      height?: number;
-      caption?: string;
-    };
-  };
+  author: typeof AUTHOR;
+  publisher: typeof PUBLISHER;
   inLanguage?: string;
   mainEntityOfPage: {
     '@type': string;
@@ -232,20 +209,7 @@ export function generateWebApplicationSchema(
       validFrom: validFrom,
       priceValidUntil: '2030-12-31T23:59:59Z'
     },
-    author: {
-      '@type': 'Organization',
-      '@id': `${getBaseUrl()}#organization`,
-      name: 'fyimg',
-      url: getBaseUrl(),
-      logo: {
-        '@type': 'ImageObject',
-        '@id': `${getBaseUrl()}#logo`,
-        url: getFullUrl('/og-image.png'),
-        width: 1200,
-        height: 630,
-        caption: 'fyimg'
-      }
-    },
+    author: AUTHOR,
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue,
@@ -350,10 +314,7 @@ export function generateWebPageSchema(
     url: fullUrl,
     datePublished: datePublished,
     dateModified: dateModified,
-    author: {
-      '@type': 'Organization',
-      name: 'fyimg',
-    },
+    author: AUTHOR,
   };
 
   // 如果提供了圖片URL，添加primaryImageOfPage和其他豐富屬性
@@ -381,11 +342,7 @@ export function generateWebPageSchema(
       '@id': `${baseUrl}#website`,
       url: baseUrl,
       name: 'fyimg',
-      publisher: {
-        '@type': 'Organization',
-        '@id': `${baseUrl}#organization`,
-        name: 'fyimg',
-      },
+      publisher: PUBLISHER,
       inLanguage: language
     };
     
@@ -403,7 +360,7 @@ export function generateArticleSchema(
   datePublished: string = '2025-01-01T00:00:00+08:00',
   dateModified: string = '2025-01-01T00:00:00+08:00',
   language: string = 'zh-TW',
-  keywords: string = '',
+  keywords: string[] = [],
   wordCount?: number
 ): ArticleSchema {
   const fullUrl = getFullUrl(path);
@@ -459,25 +416,8 @@ export function generateArticleSchema(
     inLanguage: language,
     keywords: keywords,
     wordCount: wordCount,
-    author: {
-      '@type': 'Person',
-      '@id': `${baseUrl}/about/#author`,
-      name: 'fyimg 編輯團隊',
-      url: baseUrl
-    },
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${baseUrl}#organization`,
-      name: 'fyimg',
-      logo: {
-        '@type': 'ImageObject',
-        '@id': `${baseUrl}#logo`,
-        url: getFullUrl('/og-image.png'),
-        width: 1200,
-        height: 630,
-        caption: 'fyimg'
-      }
-    },
+    author: AUTHOR,
+    publisher: PUBLISHER,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': webpageId,

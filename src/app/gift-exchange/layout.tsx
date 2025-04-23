@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, gen
 // 定義通用標題和描述
 const title = '交換禮物抽籤線上工具';
 const description = '免費線上交換禮物抽籤工具，輸入參與者名單，一鍵隨機分配送禮對象，支援排除特定配對，適合公司、朋友聚會使用。';
-const keywords = '交換禮物, 抽籤工具, 聖誕節抽籤, 抽禮物, 禮物配對';
+const keywords = ['交換禮物', '抽籤工具', '聖誕節抽籤', '抽禮物', '禮物配對'];
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-gift-exchange.png'));
