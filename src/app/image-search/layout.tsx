@@ -16,7 +16,7 @@ const keywords = '以圖搜圖, 反向圖片搜尋, iphone手機以圖搜圖';
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-image-search.png'));
 
 // 從Git歷史取得頁面發布與更新日期
-const { created: datePublished, modified: dateModified } = getPageDates('/image-search');
+const { created: datePublished, modified: dateModified } = getPageDates('src/app/image-search/page.tsx');
 const language = 'zh-TW';
 
 // 結構化數據生成
@@ -104,15 +104,19 @@ const articleSchema = generateArticleSchema(
   imageUrl,
   datePublished,
   dateModified,
-  language
+  language,
+  keywords,        // 關鍵字
+  3200             // 字數統計 (估計值)
 );
 const webApplicationSchema = generateWebApplicationSchema(
   '/image-search',
   '以圖搜圖多引擎搜尋工具',
   description,
-  'UtilityApplication',
+  'SearchApplication',
   '4.9',           // 更新的評分值
-  '212'            // 更新的評分數量
+  '212',           // 更新的評分數量
+  datePublished,   // 使用頁面發布日期作為有效日期起點
+  language         // 頁面語言
 );
 
 // Next.js 元數據配置
@@ -164,7 +168,6 @@ export const metadata: Metadata = {
  * 
  * 包含多種結構化數據以優化搜索引擎理解和索引:
  * - BreadcrumbSchema: 提供頁面導航層次結構
- * - WebPageSchema: 描述頁面基本信息
  * - FAQSchema: 增強搜尋結果顯示常見問題
  * - ArticleSchema: 標記內容為資訊性文章
  * - WebApplicationSchema: 標識工具功能性質

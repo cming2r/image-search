@@ -5,6 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, gen
 // 定義通用標題和描述
 const title = '預產期計算器 - 懷孕週數計算工具';
 const description = '懷孕預產期的計算方法及孕期照護重點。說明內格萊氏法則的計算原理，並依三個孕期階段列出飲食、運動、睡眠等注意事項，協助準媽媽掌握孕期保健要點，平安度過懷孕過程。';
+const keywords = '預產期計算器, 懷孕週數, 內格萊氏法則, 孕期照護, 孕婦保健';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-due-date-calculator.webp'));
@@ -82,7 +83,9 @@ const articleSchema = generateArticleSchema(
   imageUrl,
   datePublished,   // 發布日期
   dateModified,    // 修改日期
-  language         // 語言
+  language,        // 語言
+  keywords,        // 關鍵字
+  2000             // 字數統計 (估計值)
 );
 
 // 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
@@ -92,7 +95,9 @@ const webApplicationSchema = generateWebApplicationSchema(
   description,                // 使用上面定義的描述
   'HealthApplication',        // 應用類別 - 使用健康類別
   '4.9',                      // 評分值
-  '185'                       // 評分數量
+  '185',                      // 評分數量
+  datePublished,              // 使用頁面發布日期作為有效日期起點
+  language                    // 頁面語言
 );
 
 export const metadata: Metadata = {
@@ -133,7 +138,7 @@ export const metadata: Metadata = {
   },
   
   // 確保其他必要的元數據
-  keywords: '預產期計算器, 懷孕週數, 內格萊氏法則, 孕期照護, 孕婦保健',
+  keywords,
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',

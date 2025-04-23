@@ -5,6 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, gen
 // 定義通用標題和描述
 const title = '交換禮物抽籤線上工具';
 const description = '免費線上交換禮物抽籤工具，輸入參與者名單，一鍵隨機分配送禮對象，支援排除特定配對，適合公司、朋友聚會使用。';
+const keywords = '交換禮物, 抽籤工具, 聖誕節抽籤, 抽禮物, 禮物配對';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-gift-exchange.png'));
@@ -82,7 +83,9 @@ const articleSchema = generateArticleSchema(
   imageUrl,
   datePublished,   // 發布日期
   dateModified,    // 修改日期
-  language         // 語言
+  language,        // 語言
+  keywords,        // 關鍵字
+  1500             // 字數統計 (估計值)
 );
 
 // 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
@@ -90,9 +93,11 @@ const webApplicationSchema = generateWebApplicationSchema(
   '/gift-exchange',           // 路徑
   '交換禮物抽籤工具',         // 應用名稱
   description,                // 使用上面定義的描述
-  'UtilityApplication',       // 應用類別
+  'ToolApplication',          // 應用類別
   '4.9',                      // 評分值
-  '125'                       // 評分數量
+  '125',                      // 評分數量
+  datePublished,              // 使用頁面發布日期作為有效日期起點
+  language                    // 頁面語言
 );
 
 export const metadata: Metadata = {
@@ -133,7 +138,7 @@ export const metadata: Metadata = {
   },
   
   // 確保其他必要的元數據
-  keywords: '交換禮物, 抽籤工具, 聖誕節抽籤, 抽禮物, 禮物配對',
+  keywords,
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',

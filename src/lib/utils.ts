@@ -162,9 +162,24 @@ export const FILE_DATES: Record<string, GitDates> = {
  */
 export function getPageDates(
   pathOrRoute: string,
-  fallbackCreated: string = "2025-01-01T00:00:00+08:00",
-  fallbackModified: string = "2025-01-15T00:00:00+08:00",
+  fallbackCreated: string = "2025-01-01T00:00:00Z",
+  fallbackModified: string = "2025-01-15T00:00:00Z",
 ): GitDates {
+  // 特定頁面的固定創建日期 - 這些不會被構建過程改變
+  const fixedCreatedDates: Record<string, string> = {
+    "src/app/image-search/page.tsx": "2025-04-07 21:30:32 +0800",
+    "src/app/page.tsx": "2025-03-20 21:37:52 +0800",
+    "src/app/due-date-calculator/page.tsx": "2025-04-09 23:50:15 +0800",
+    "src/app/date/page.tsx": "2025-03-27 00:21:15 +0800",
+    "src/app/gift-exchange/page.tsx": "2025-04-17 01:10:09 +0800",
+    "src/app/admin/page.tsx": "2025-04-13 00:15:22 +0800",
+    "src/app/gift-exchange/[id]/page.tsx": "2025-04-17 01:10:09 +0800",
+    "src/app/admin/login/page.tsx": "2025-04-13 00:15:22 +0800",
+    "src/app/(info)/terms/page.tsx": "2025-04-18 11:45:48 +0800",
+    "src/app/(info)/privacy-policy/page.tsx": "2025-04-18 11:45:48 +0800",
+    "src/app/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800"
+  };
+  
   // 嘗試規範化路徑
   const normalizedPath = pathOrRoute.startsWith("/")
     ? pathOrRoute
@@ -174,14 +189,37 @@ export function getPageDates(
   if (FILE_DATES[normalizedPath]) {
     // 提取創建和修改日期，不返回routePath屬性
     const { created, modified } = FILE_DATES[normalizedPath];
-    return { created, modified };
+    
+    // 如果是固定創建日期的頁面，使用固定的創建日期
+    const finalCreated = fixedCreatedDates[pathOrRoute] || created;
+    
+    return { 
+      created: formatDateToISO(finalCreated), 
+      modified: formatDateToISO(modified) 
+    };
   }
 
   // 方法2：嘗試將路徑作為路由路徑與routePath屬性匹配
   for (const key in FILE_DATES) {
     if (FILE_DATES[key].routePath === normalizedPath) {
       const { created, modified } = FILE_DATES[key];
-      return { created, modified };
+      
+      // 檢查是否有與當前路由對應的文件路徑
+      let matchingFilePath = null;
+      for (const fixedPath in fixedCreatedDates) {
+        if (FILE_DATES[`/${fixedPath}`]?.routePath === normalizedPath) {
+          matchingFilePath = fixedPath;
+          break;
+        }
+      }
+      
+      // 如果找到匹配的固定日期，使用它
+      const finalCreated = matchingFilePath ? fixedCreatedDates[matchingFilePath] : created;
+      
+      return { 
+        created: formatDateToISO(finalCreated), 
+        modified: formatDateToISO(modified) 
+      };
     }
   }
 
@@ -195,7 +233,17 @@ export function getPageDates(
 
     if (FILE_DATES[routeAsFilePath]) {
       const { created, modified } = FILE_DATES[routeAsFilePath];
-      return { created, modified };
+      
+      // 構建對應的非絕對路徑格式，用於檢查固定日期
+      const nonAbsolutePath = routeAsFilePath.substring(1);  // 移除開頭的斜線
+      
+      // 檢查是否為固定創建日期的頁面
+      const finalCreated = fixedCreatedDates[nonAbsolutePath] || created;
+      
+      return { 
+        created: formatDateToISO(finalCreated), 
+        modified: formatDateToISO(modified) 
+      };
     }
   }
 
@@ -209,7 +257,17 @@ export function getPageDates(
 
     if (FILE_DATES[pageFilePath]) {
       const { created, modified } = FILE_DATES[pageFilePath];
-      return { created, modified };
+      
+      // 構建對應的非絕對路徑格式，用於檢查固定日期
+      const nonAbsolutePath = pageFilePath.substring(1);  // 移除開頭的斜線
+      
+      // 檢查是否為固定創建日期的頁面
+      const finalCreated = fixedCreatedDates[nonAbsolutePath] || created;
+      
+      return { 
+        created: formatDateToISO(finalCreated), 
+        modified: formatDateToISO(modified) 
+      };
     }
   }
 
@@ -219,4 +277,36 @@ export function getPageDates(
     created: fallbackCreated,
     modified: fallbackModified,
   };
+}
+
+/**
+ * 將日期格式標準化為ISO 8601格式，並轉換為UTC時間
+ * @param dateStr 日期字符串，可能是多種格式
+ * @returns 標準化的UTC時間ISO字符串
+ */
+function formatDateToISO(dateStr: string): string {
+  try {
+    // 處理特殊格式，如 "2025-04-12 00:21:30 +0800"
+    if (dateStr.includes(" +")) {
+      const date = new Date(dateStr.replace(" +", "+"));
+      return date.toISOString(); // 轉換為UTC時間的ISO格式
+    }
+    
+    // 如果已經是ISO格式（包括時區信息）
+    if (dateStr.includes("T") && (dateStr.includes("Z") || dateStr.includes("+"))) {
+      const date = new Date(dateStr);
+      return date.toISOString(); // 轉換為UTC時間的ISO格式
+    }
+    
+    // 對於其他格式，盡力解析
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+    return date.toISOString();
+  } catch (error) {
+    console.error(`日期格式轉換錯誤: ${dateStr}`, error);
+    // 返回原始字符串，以防解析失敗
+    return dateStr;
+  }
 }

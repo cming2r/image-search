@@ -9,22 +9,29 @@ export interface WebApplicationSchema {
   description: string;
   applicationCategory: string;
   operatingSystem: string;
+  inLanguage?: string;
   offers: {
     '@type': string;
     price: string;
     priceCurrency: string;
+    availability: string;
+    url: string;
+    validFrom?: string;
+    priceValidUntil?: string;
   };
   author: {
     '@type': string;
+    '@id'?: string;
     name: string;
-  };
-  potentialAction: {
-    '@type': string;
-    target: {
+    url?: string;
+    logo?: {
       '@type': string;
-      urlTemplate: string;
+      '@id'?: string;
+      url: string;
+      width?: number;
+      height?: number;
+      caption?: string;
     };
-    'query-input': string;
   };
   aggregateRating?: {
     '@type': string;
@@ -106,10 +113,11 @@ export interface ArticleSchema {
     width?: number;
     height?: number;
     caption?: string;
-    inLanguage?: string;
   };
   datePublished: string;
   dateModified: string;
+  keywords?: string;
+  wordCount?: number;
   author: {
     '@type': string;
     '@id'?: string;
@@ -121,29 +129,9 @@ export interface ArticleSchema {
       url: string;
       caption?: string;
     };
-    inLanguage?: string;
-    sameAs?: string | string[];
-    logo?: {
-      '@type': string;
-      '@id'?: string;
-      url: string;
-      contentUrl?: string;
-      caption?: string;
-      inLanguage?: string;
-    };
-    worksFor?: {
-      '@type': string;
-      '@id'?: string;
-      name: string;
-      logo?: {
-        '@type': string;
-        '@id'?: string;
-        url: string;
-        contentUrl?: string;
-        caption?: string;
-        inLanguage?: string;
-      };
-    };
+    jobTitle?: string;
+    description?: string;
+    sameAs?: string[];
   };
   publisher: {
     '@type': string;
@@ -153,20 +141,12 @@ export interface ArticleSchema {
       '@type': string;
       '@id'?: string;
       url: string;
-      contentUrl?: string;
       width?: number;
       height?: number;
       caption?: string;
-      inLanguage?: string;
     };
   };
   inLanguage?: string;
-  isPartOf?: {
-    '@type': string;
-    '@id'?: string;
-    url?: string;
-    name?: string;
-  };
   mainEntityOfPage: {
     '@type': string;
     '@id': string;
@@ -174,26 +154,6 @@ export interface ArticleSchema {
     name?: string;
     datePublished?: string;
     dateModified?: string;
-    isPartOf?: {
-      '@type': string;
-      '@id'?: string;
-      url?: string;
-      name?: string;
-      publisher?: {
-        '@type': string;
-        '@id'?: string;
-        name: string;
-        logo?: {
-          '@type': string;
-          '@id'?: string;
-          url: string;
-          contentUrl?: string;
-          caption?: string;
-          inLanguage?: string;
-        };
-      };
-      inLanguage?: string;
-    };
     inLanguage?: string;
     primaryImageOfPage?: {
       '@type': string;
@@ -201,7 +161,6 @@ export interface ArticleSchema {
       url: string;
       width?: number;
       height?: number;
-      inLanguage?: string;
     };
     breadcrumb?: {
       '@type': string;
@@ -250,6 +209,8 @@ export function generateWebApplicationSchema(
   applicationCategory: string = 'UtilityApplication',
   ratingValue: string = '4.8',
   ratingCount: string = '150',
+  validFrom: string = '2025-01-01T00:00:00Z',
+  language: string = 'zh-TW',
 ): WebApplicationSchema {
   const url = getFullUrl(path);
   
@@ -260,23 +221,30 @@ export function generateWebApplicationSchema(
     url,
     description,
     applicationCategory,
-    operatingSystem: 'Any',
+    operatingSystem: 'Windows, macOS, iOS, Android, Web',
+    inLanguage: language,
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: url,
+      validFrom: validFrom,
+      priceValidUntil: '2030-12-31T23:59:59Z'
     },
     author: {
       '@type': 'Organization',
+      '@id': `${getBaseUrl()}#organization`,
       name: 'fyimg',
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${url}?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
+      url: getBaseUrl(),
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${getBaseUrl()}#logo`,
+        url: getFullUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        caption: 'fyimg'
+      }
     },
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -434,7 +402,9 @@ export function generateArticleSchema(
   imageUrl: string,
   datePublished: string = '2025-01-01T00:00:00+08:00',
   dateModified: string = '2025-01-01T00:00:00+08:00',
-  language: string = 'zh-TW'
+  language: string = 'zh-TW',
+  keywords: string = '',
+  wordCount?: number
 ): ArticleSchema {
   const fullUrl = getFullUrl(path);
   const baseUrl = getBaseUrl();
@@ -482,26 +452,18 @@ export function generateArticleSchema(
       url: imageUrl,
       width: 1200,
       height: 630,
-      caption: title,
-      inLanguage: language
+      caption: title
     },
     datePublished: datePublished,
     dateModified: dateModified,
     inLanguage: language,
+    keywords: keywords,
+    wordCount: wordCount,
     author: {
-      '@type': 'Organization',
-      '@id': `${baseUrl}/about/#organization`,
-      name: 'fyimg',
-      url: baseUrl,
-      sameAs: baseUrl,
-      logo: {
-        '@type': 'ImageObject',
-        '@id': `${baseUrl}#logo`,
-        url: getFullUrl('/og-image.png'),
-        contentUrl: getFullUrl('/og-image.png'),
-        caption: 'fyimg',
-        inLanguage: language
-      }
+      '@type': 'Person',
+      '@id': `${baseUrl}/about/#author`,
+      name: 'fyimg 編輯團隊',
+      url: baseUrl
     },
     publisher: {
       '@type': 'Organization',
@@ -511,23 +473,16 @@ export function generateArticleSchema(
         '@type': 'ImageObject',
         '@id': `${baseUrl}#logo`,
         url: getFullUrl('/og-image.png'),
-        contentUrl: getFullUrl('/og-image.png'),
         width: 1200,
         height: 630,
-        caption: 'fyimg',
-        inLanguage: language
+        caption: 'fyimg'
       }
-    },
-    isPartOf: {
-      '@type': 'WebPage',
-      '@id': webpageId,
-      url: fullUrl,
-      name: title
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': webpageId,
-      url: fullUrl
+      url: fullUrl,
+      name: title
     }
   };
 }

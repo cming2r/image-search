@@ -5,6 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema, gen
 // 定義通用標題和描述
 const title = '日期計算器 - 日曆天數計算';
 const description = '免費線上日期計算工具，可計算兩個日期之間的差距、日曆天數計算，以及從指定日期加減天數。適用於專案管理、工期規劃及日程安排。';
+const keywords = '日期計算器, 日曆天, 工作天計算, 工期計算, 時程規劃';
 
 // 確保預覽圖片會使用版本控制URL，幫助社交媒體平台刷新緩存
 const imageUrl = getVersionedImageUrl(getFullUrl('/images/og-date.png'));
@@ -82,7 +83,9 @@ const articleSchema = generateArticleSchema(
   imageUrl,
   datePublished,   // 發布日期
   dateModified,    // 修改日期
-  language         // 語言
+  language,        // 語言
+  keywords,        // 關鍵字
+  1800             // 字數統計 (估計值)
 );
 
 // 使用 generateWebApplicationSchema 函數生成 WebApplication Schema
@@ -90,9 +93,11 @@ const webApplicationSchema = generateWebApplicationSchema(
   '/date',                    // 路徑
   '日期計算器',               // 應用名稱
   description,                // 使用上面定義的描述
-  'UtilityApplication',       // 應用類別
+  'CalculatorApplication',    // 應用類別
   '4.7',                      // 評分值
-  '152'                       // 評分數量
+  '152',                      // 評分數量
+  datePublished,              // 使用頁面發布日期作為有效日期起點
+  language                    // 頁面語言
 );
 
 export const metadata: Metadata = {
@@ -132,7 +137,7 @@ export const metadata: Metadata = {
     canonical: getFullUrl('/date'),
   },
   
-  keywords: '日期計算器, 日曆天, 工作天計算, 工期計算, 時程規劃',
+  keywords,
   authors: [{ name: 'fyimg團隊' }],
   creator: 'fyimg團隊',
   publisher: 'fyimg',
