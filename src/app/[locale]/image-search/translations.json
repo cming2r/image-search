@@ -1,0 +1,536 @@
+{
+  "zh": {
+    "title": "以圖搜圖 - 圖片搜尋工具",
+    "subtitle": "輸入圖片網址或上傳圖片，使用各大搜尋引擎查找相似圖片",
+    "howToUse": {
+      "title": "如何使用此工具？",
+      "steps": [
+        "輸入圖片的網址，或點擊「上傳圖片」選擇本地圖片",
+        "系統將上傳的圖片轉換為可搜尋的網址",
+        "點擊各大搜尋引擎按鈕，立即跳轉至對應搜尋服務",
+        "搜尋引擎會基於您提供的圖片尋找網路上的相似內容"
+      ],
+      "tip": "小提示：",
+      "tipContent": "透過複製其他網站的圖片，可以直接用Ctrl + V 貼上在上傳圖片的頁面。"
+    },
+    "whatIs": {
+      "title": "什麼是以圖搜圖？",
+      "content": [
+        "以圖搜圖（又稱反向圖像搜索，Reverse Image Search）是現代搜尋引擎的重要功能，允許用戶通過上傳圖片或提供圖片URL，搜尋相關圖片及其來源。本工具整合了Google、Bing、Yandex等主流搜尋引擎的以圖搜圖功能，支援在各種裝置（包括電腦、手機和平板）上使用。",
+        "以圖搜圖的實用場景包括：尋找圖片的高解析度版本、透過局部圖片找到完整原圖、識別相同人物或物體的不同照片、查找相似場景或素材。對於設計師、研究人員、內容創作者和一般用戶而言，這是一項極具價值的工具。",
+        "我們的整合平台簡化了以圖搜圖的流程，無需在多個搜尋引擎間切換。只需一次上傳圖片或輸入URL，即可便捷地使用各大搜尋服務，顯著提高搜尋效率。"
+      ]
+    },
+    "searchEngines": {
+      "title": "各大搜尋引擎特色",
+      "google": {
+        "title": "Google Lens 圖片搜尋",
+        "content": [
+          "Google Lens 是目前全球使用最廣泛的圖片搜尋服務，以其強大的AI視覺分析技術著稱。在全球搜尋引擎市場，Google佔有超過70%的份額，其行動裝置搜尋滲透率更高達85%，顯示其在全球範圍內的絕對領先地位。",
+          "Google的圖片搜尋功能不僅可以找到視覺上相似的圖片，還能識別圖中的物體、文字、地標，甚至提供購物選項。其獨特優勢在於極其龐大的圖片資料庫和先進的機器學習演算法，能夠理解圖片的語義內容並返回高度相關的結果。",
+          "對於創作者和設計師，Google還提供了強大的過濾功能，可以根據授權類型搜尋免費可商用圖片資源。其細緻的篩選器系統允許用戶按尺寸、顏色、類型和時間等多維度精確過濾搜尋結果。"
+        ]
+      },
+      "bing": {
+        "title": "Microsoft Bing 圖片搜尋",
+        "content": [
+          "Microsoft Bing於2009年推出，經過多次升級迭代，現在已成為全球第二大搜尋引擎。2020年，微軟將其更名為Microsoft Bing（微軟必應），進一步強化了其品牌識別度。",
+          "Bing的視覺搜尋功能擁有獨特的優勢，尤其在呈現高分辨率圖片方面表現出色。對於需要尋找高品質視覺素材的專業人士，Bing提供了優質的搜尋體驗和結果展示。",
+          "Bing Image Search以其簡潔直觀的用戶界面著稱，提供了豐富的過濾選項，包括尺寸、顏色、風格和佈局等。其「相關搜尋」功能推薦用戶可能感興趣的相關主題，而特色的「桌布圖片」類別則為用戶提供了大量高品質的桌面壁紙資源。"
+        ]
+      },
+      "yandex": {
+        "title": "Yandex 圖片搜尋",
+        "content": [
+          "Yandex是俄羅斯及東歐地區最大的搜尋引擎，其圖片搜尋功能在全球範圍內享有盛譽。Yandex的圖片識別技術特別擅長在不同場景、角度和光線條件下識別相同的物體或人物，使其成為尋找特定圖片變體的理想選擇。",
+          "Yandex圖片搜尋的核心優勢在於其先進的圖片處理演算法，能夠精確識別照片中的商標、地標和人物。即使圖片經過裁剪、旋轉或顏色調整等修改，Yandex仍能有效追溯原圖片或找到視覺上相似的內容。",
+          "除了基本的反向圖片搜尋功能，Yandex還提供豐富的圖片分析工具，包括視覺內容分類和元素識別。無論是追蹤圖片來源，還是發現視覺相關內容，Yandex都能提供獨特而全面的搜尋結果。"
+        ]
+      },
+      "sauceNAO": {
+        "title": "SauceNAO 圖片搜尋",
+        "content": [
+          "SauceNAO是動漫、漫畫和插畫領域最專業的圖片搜尋引擎，為二次元內容愛好者提供了無與倫比的搜尋體驗。其專門的資料庫涵蓋了Twitter、Pixiv、niconico等主要動漫藝術平台，能夠快速精準地定位圖片來源。",
+          "使用SauceNAO，用戶不僅能找到原始圖片及其作者資訊，還能獲取關聯的作品集、漫畫系列及遊戲出處。對於動漫藝術研究、同人創作參考或純粹的愛好者探索，SauceNAO提供了專業且全面的搜尋解決方案。"
+        ]
+      },
+      "tineye": {
+        "title": "TinEye（已移除）",
+        "content": [
+          "TinEye是一個專注於精確圖像匹配的搜尋引擎，其獨特之處在於能夠找出圖片的完全匹配，而非僅提供視覺上相似的結果。這使其成為追蹤圖片網路使用情況、確定圖片首次出現時間、尋找高解析度版本及驗證圖片原創性的理想工具。"
+        ],
+        "note": "註：經測試後發現TinEye搜尋功能不穩定，且結果質量不如其他引擎，因此我們已將其從搜尋選項中移除。我們持續評估各搜尋引擎的表現，以提供最佳用戶體驗。"
+      }
+    },
+    "useCases": {
+      "title": "以圖搜圖常見應用場景",
+      "cases": {
+        "verifyImage": {
+          "title": "鑑別圖片真實性",
+          "content": "透過搜尋原始圖片來源，識別是否為PS合成或AI生成圖片，避免被虛假信息或偽造圖像誤導。"
+        },
+        "findMaterials": {
+          "title": "尋找高品質素材",
+          "content": "設計師和創作者可搜尋高解析度圖片、無背景版本或相似素材，提升作品質量且省去繁瑣的搜尋過程。"
+        },
+        "identifyObjects": {
+          "title": "識別未知物體",
+          "content": "拍下不認識的植物、動物、商品或地標，通過以圖搜圖快速獲取相關信息，擴展知識面並滿足好奇心。"
+        },
+        "animeSource": {
+          "title": "追蹤動漫作品來源",
+          "content": "使用SauceNAO查找動漫截圖、插畫或表情包的原始來源，找到作者、作品名稱以及創作相關信息。"
+        },
+        "protectCopyright": {
+          "title": "保護版權內容",
+          "content": "創作者可定期以圖搜圖檢查自己的作品是否被盜用或侵權，及時發現並採取必要的法律保護措施。"
+        },
+        "findProducts": {
+          "title": "尋找商品購買渠道",
+          "content": "拍攝或保存喜歡的商品圖片，通過以圖搜圖找到相同或類似商品的購買渠道、價格比較和用戶評價。"
+        }
+      },
+      "callToAction": {
+        "title": "立即使用我們的以圖搜圖工具，一次搜索多個引擎，節省時間提高效率！",
+        "subtitle": "支援所有設備，完全免費，無需註冊，保護您的隱私"
+      }
+    },
+    "faq": {
+      "title": "以圖搜圖常見問題",
+      "questions": [
+        {
+          "question": "為什麼有時搜尋結果不準確？",
+          "answer": "以圖搜圖的準確性取決於多種因素，包括圖片質量、搜尋引擎的資料庫覆蓋範圍、圖像的獨特性等。如果您的圖片分辨率較低、經過裁剪或修改，或是非常常見的圖像類型（如藍天、草地等），搜尋準確率可能會降低。為獲得最佳結果，建議使用清晰、完整的原始圖片，並嘗試多個搜尋引擎進行對比，因為不同引擎的演算法和資料庫有所不同。"
+        },
+        {
+          "question": "手機上如何使用以圖搜圖功能？",
+          "answer": "我們的工具完全支援行動裝置使用。在手機上，您可以點擊「上傳圖片」後從相冊選擇照片，或直接拍攝新照片上傳。對於iOS設備，您也可以直接從照片應用分享圖片到我們的網站。Android用戶可以長按圖片後選擇分享到瀏覽器打開本工具。此外，如果您已將圖片複製到剪貼板，也可以直接在上傳區域長按並選擇「貼上」。"
+        },
+        {
+          "question": "如何選擇最適合的搜尋引擎？",
+          "answer": "不同搜尋引擎各有專長：Google Lens適合識別物體、商品和地標；Bing擅長尋找高解析度圖像和桌布；Yandex在識別人臉和追蹤修改過的圖片方面表現出色；SauceNAO則專門針對動漫、漫畫和插畫領域。建議根據您的具體需求選擇相應引擎，或者同時使用多個引擎獲取最全面的結果。對於重要搜尋，我們推薦至少使用Google和Yandex兩個引擎進行比較。"
+        },
+        {
+          "question": "使用以圖搜圖有法律風險嗎？",
+          "answer": "用戶需要注意使用方式和目的，搜尋受版權保護的圖像用於個人參考和研究通常屬於合理使用範疇。然而，如果您打算商業使用搜尋到的圖片，請確保獲得適當的授權或選擇免版權圖像。此外，請尊重他人隱私，避免使用此工具進行侵犯他人隱私或違反當地法律的活動。我們的工具僅提供搜尋服務，用戶需自行負責確保其使用方式符合相關法律法規。"
+        },
+        {
+          "question": "上傳的圖片會如何處理？是否會保存？",
+          "answer": "我們非常重視用戶隱私。當您上傳圖片時，系統會暫時存儲該圖片以生成可搜尋的URL，但所有圖片資料會在24小時內自動刪除。我們不會永久保存您的圖片，也不會將其用於任何其他目的。上傳的圖片僅用於提供搜尋服務，且只有您可以通過生成的URL訪問它。"
+        }
+      ]
+    },
+    "whyChooseUs": {
+      "title": "為什麼選擇我們的以圖搜圖工具？",
+      "features": {
+        "multiEngine": {
+          "title": "多引擎整合",
+          "content": "一站式訪問Google、Bing、Yandex和SauceNAO等主流搜尋引擎，無需切換網站，節省時間和精力。"
+        },
+        "free": {
+          "title": "完全免費",
+          "content": "所有功能均可免費使用，無隱藏費用，無需註冊帳號，也不顯示任何廣告，提供純淨的搜尋體驗。"
+        },
+        "crossPlatform": {
+          "title": "跨平台支援",
+          "content": "完美支援電腦、手機和平板，實現隨時隨地搜圖，且具有針對移動設備優化的響應式界面設計。"
+        },
+        "easyToUse": {
+          "title": "便捷操作",
+          "content": "支持URL輸入、本地上傳和剪貼板直接貼圖，操作簡單直觀，幾秒鐘內即可完成搜尋過程。"
+        },
+        "privacy": {
+          "title": "隱私保護",
+          "content": "圖片僅臨時存儲用於生成可搜尋URL，24小時內自動刪除，從不用於其他用途或分享給第三方。"
+        },
+        "clean": {
+          "title": "簡潔無干擾",
+          "content": "清爽簡潔的界面設計，沒有干擾用戶的彈窗和提示，聚焦於搜尋功能本身，提供專業高效的用戶體驗。"
+        }
+      },
+      "callToAction": {
+        "title": "立即體驗最全面的以圖搜圖工具",
+        "subtitle": "簡單上傳或輸入URL，開啟多引擎圖像搜尋"
+      }
+    },
+    "form": {
+      "enterUrlTab": "輸入圖片網址",
+      "uploadImageTab": "上傳圖片",
+      "imageUrl": "圖片網址",
+      "imageUrlPlaceholder": "https://example.com/image.jpg",
+      "imageUrlHint": "URL必須以 .jpg、.png、.webp 等常見圖片格式結尾",
+      "searchButton": "搜尋此圖片",
+      "processing": "處理中...",
+      "resetButton": "重置",
+      "imagePreview": "圖片預覽",
+      "selectImage": "選擇圖片",
+      "dragDropHint": "拖曳圖片到這裡 、 ctrl+V 貼上 或",
+      "clickUpload": "點擊上傳",
+      "supportedFormats": "支援 JPG, PNG, WEBP 等格式，最大5MB",
+      "validUrlError": "請輸入有效的圖片URL",
+      "emptyUrlError": "請輸入圖片URL",
+      "uploadErrorImage": "請上傳圖片文件",
+      "uploadErrorSize": "圖片大小不能超過5MB",
+      "imageUrlInfo": "圖片網址:",
+      "chooseEngine": "選擇搜尋引擎進行圖片搜尋",
+      "uploadFirst": "請先輸入圖片網址或上傳圖片",
+      "uploadFirstWarning": "!!請先輸入圖片網址或上傳圖片!!"
+    }
+  },
+  "en": {
+    "title": "Reverse Image Search Tool",
+    "subtitle": "Enter image URL or upload an image, search for similar images using major search engines",
+    "howToUse": {
+      "title": "How to Use This Tool?",
+      "steps": [
+        "Enter an image URL or click \"Upload Image\" to select a local image",
+        "The system will convert your uploaded image into a searchable URL",
+        "Click any search engine button to instantly redirect to the corresponding service",
+        "The search engine will find similar content online based on your provided image"
+      ],
+      "tip": "Tip:",
+      "tipContent": "You can directly paste images from other websites using Ctrl + V in the image upload section."
+    },
+    "whatIs": {
+      "title": "What is Reverse Image Search?",
+      "content": [
+        "Reverse Image Search is an important feature of modern search engines that allows users to search for related images and their sources by uploading an image or providing an image URL. This tool integrates the reverse image search functionality of Google, Bing, Yandex, and other mainstream search engines, supporting usage on various devices (including computers, phones, and tablets).",
+        "Practical uses of reverse image search include: finding higher resolution versions of images, locating the complete original through a partial image, identifying different photos of the same person or object, and finding similar scenes or materials. For designers, researchers, content creators, and general users, this is an extremely valuable tool.",
+        "Our integration platform simplifies the reverse image search process, eliminating the need to switch between multiple search engines. With just one image upload or URL input, you can conveniently use various search services, significantly improving search efficiency."
+      ]
+    },
+    "searchEngines": {
+      "title": "Features of Major Search Engines",
+      "google": {
+        "title": "Google Lens Image Search",
+        "content": [
+          "Google Lens is currently the most widely used image search service globally, known for its powerful AI visual analysis technology. In the global search engine market, Google holds over 70% market share, with its mobile device search penetration rate reaching as high as 85%, demonstrating its absolute leadership position worldwide.",
+          "Google's image search functionality not only finds visually similar images but also identifies objects, text, landmarks in images, and even provides shopping options. Its unique advantage lies in its extremely vast image database and advanced machine learning algorithms that can understand the semantic content of images and return highly relevant results.",
+          "For creators and designers, Google also offers powerful filtering features that allow searching for freely usable commercial images based on license type. Its sophisticated filter system enables users to precisely filter search results by dimensions, color, type, and time among other multi-dimensional criteria."
+        ]
+      },
+      "bing": {
+        "title": "Microsoft Bing Image Search",
+        "content": [
+          "Microsoft Bing was launched in 2009 and after multiple upgrades and iterations, it has become the world's second-largest search engine. In 2020, Microsoft renamed it to Microsoft Bing, further strengthening its brand recognition.",
+          "Bing's visual search feature has unique advantages, particularly excelling in presenting high-resolution images. For professionals seeking high-quality visual materials, Bing provides an excellent search experience and result presentation.",
+          "Bing Image Search is known for its clean and intuitive user interface, offering rich filtering options including size, color, style, and layout. Its \"Related Searches\" function intelligently recommends relevant topics that users might be interested in, while the featured \"Wallpaper Images\" category provides users with a large collection of high-quality desktop wallpaper resources."
+        ]
+      },
+      "yandex": {
+        "title": "Yandex Image Search",
+        "content": [
+          "Yandex is the largest search engine in Russia and Eastern Europe, with its image search functionality enjoying a worldwide reputation. Yandex's image recognition technology is particularly skilled at identifying the same objects or people under different scenarios, angles, and lighting conditions, making it an ideal choice for finding specific image variants.",
+          "The core advantage of Yandex image search lies in its advanced image processing algorithms, capable of precisely identifying trademarks, landmarks, and people in photos. Even if images have been modified through cropping, rotation, or color adjustment, Yandex can still effectively trace back to the original image or find visually similar content.",
+          "Beyond basic reverse image search functionality, Yandex offers rich image analysis tools, including visual content classification and element identification. Whether tracking image sources or discovering visually related content, Yandex provides unique and comprehensive search results."
+        ]
+      },
+      "sauceNAO": {
+        "title": "SauceNAO Image Search",
+        "content": [
+          "SauceNAO is the most professional image search engine in the anime, manga, and illustration fields, providing anime content enthusiasts with an unparalleled search experience. Its specialized database covers major anime art platforms like Twitter, Pixiv, and niconico, enabling fast and precise location of image sources.",
+          "Using SauceNAO, users can not only find the original images and their creator information but also obtain related collections, manga series, and game origins. For anime art research, fan creation references, or pure enthusiast exploration, SauceNAO provides a professional and comprehensive search solution."
+        ]
+      },
+      "tineye": {
+        "title": "TinEye (Removed)",
+        "content": [
+          "TinEye is a search engine focused on precise image matching, with its uniqueness being its ability to find exact matches for images rather than just providing visually similar results. This makes it an ideal tool for tracking image usage online, determining when an image first appeared, finding high-resolution versions, and verifying image originality."
+        ],
+        "note": "Note: After testing, we found TinEye's search function to be unstable and its result quality inferior to other engines, so we have removed it from our search options. We continuously evaluate the performance of various search engines to provide the best user experience."
+      }
+    },
+    "useCases": {
+      "title": "Common Applications of Reverse Image Search",
+      "cases": {
+        "verifyImage": {
+          "title": "Verify Image Authenticity",
+          "content": "Search for original image sources to identify Photoshopped composites or AI-generated images, avoiding being misled by false information or forged images."
+        },
+        "findMaterials": {
+          "title": "Find High-Quality Materials",
+          "content": "Designers and creators can search for high-resolution images, background-free versions, or similar materials, enhancing work quality while eliminating tedious search processes."
+        },
+        "identifyObjects": {
+          "title": "Identify Unknown Objects",
+          "content": "Take photos of unrecognized plants, animals, products, or landmarks and quickly obtain relevant information through reverse image search, expanding knowledge and satisfying curiosity."
+        },
+        "animeSource": {
+          "title": "Track Anime Work Sources",
+          "content": "Use SauceNAO to find the original sources of anime screenshots, illustrations, or memes, identifying the author, work name, and creation-related information."
+        },
+        "protectCopyright": {
+          "title": "Protect Copyrighted Content",
+          "content": "Creators can regularly check if their works have been stolen or infringed upon using reverse image search, promptly discovering issues and taking necessary legal protection measures."
+        },
+        "findProducts": {
+          "title": "Find Product Purchasing Channels",
+          "content": "Photograph or save images of desired products, and use reverse image search to find identical or similar products' purchasing channels, price comparisons, and user reviews."
+        }
+      },
+      "callToAction": {
+        "title": "Use our reverse image search tool now - search multiple engines at once, save time and improve efficiency!",
+        "subtitle": "Supports all devices, completely free, no registration required, protects your privacy"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions About Reverse Image Search",
+      "questions": [
+        {
+          "question": "Why are search results sometimes inaccurate?",
+          "answer": "The accuracy of reverse image search depends on various factors, including image quality, search engine database coverage, and image uniqueness. If your image has low resolution, has been cropped or modified, or is a very common image type (like blue sky, grass, etc.), search accuracy may decrease. For best results, we recommend using clear, complete original images and trying multiple search engines for comparison, as different engines have different algorithms and databases."
+        },
+        {
+          "question": "How do I use reverse image search on mobile?",
+          "answer": "Our tool fully supports mobile devices. On your phone, you can tap 'Upload Image' to select a photo from your gallery or take a new photo. For iOS devices, you can also share images directly from the Photos app to our website. Android users can long-press an image and choose to share it to a browser to open our tool. Additionally, if you've copied an image to your clipboard, you can directly long-press in the upload area and select 'Paste'."
+        },
+        {
+          "question": "How do I choose the most suitable search engine?",
+          "answer": "Different search engines have their specialties: Google Lens is good for identifying objects, products, and landmarks; Bing excels at finding high-resolution images and wallpapers; Yandex performs exceptionally well at identifying faces and tracking modified images; SauceNAO specializes in anime, manga, and illustrations. We recommend choosing engines based on your specific needs or using multiple engines simultaneously for the most comprehensive results. For important searches, we recommend using at least Google and Yandex for comparison."
+        },
+        {
+          "question": "Are there legal risks when using reverse image search?",
+          "answer": "Users should be mindful of how and why they use this tool. Searching for copyrighted images for personal reference and research typically falls under fair use. However, if you plan to use found images commercially, please ensure you obtain appropriate licenses or choose copyright-free images. Additionally, please respect others' privacy and avoid using this tool to invade others' privacy or violate local laws. Our tool only provides search services, and users are responsible for ensuring their usage complies with relevant laws and regulations."
+        },
+        {
+          "question": "How are uploaded images processed? Are they saved?",
+          "answer": "We take user privacy very seriously. When you upload an image, the system temporarily stores it to generate a searchable URL, but all image data is automatically deleted within 24 hours. We do not permanently store your images or use them for any other purpose. Uploaded images are only used to provide search services, and only you can access them through the generated URL."
+        }
+      ]
+    },
+    "whyChooseUs": {
+      "title": "Why Choose Our Reverse Image Search Tool?",
+      "features": {
+        "multiEngine": {
+          "title": "Multi-Engine Integration",
+          "content": "One-stop access to mainstream search engines like Google, Bing, Yandex, and SauceNAO without switching websites, saving time and effort."
+        },
+        "free": {
+          "title": "Completely Free",
+          "content": "All features are free to use with no hidden costs, no account registration required, and no advertisements displayed, providing a pure search experience."
+        },
+        "crossPlatform": {
+          "title": "Cross-Platform Support",
+          "content": "Perfect support for computers, phones, and tablets, enabling image searches anytime, anywhere, with a responsive interface optimized for mobile devices."
+        },
+        "easyToUse": {
+          "title": "Convenient Operation",
+          "content": "Supports URL input, local uploads, and direct clipboard pasting. Simple and intuitive operation completes the search process in seconds."
+        },
+        "privacy": {
+          "title": "Privacy Protection",
+          "content": "Images are only temporarily stored to generate searchable URLs and automatically deleted within 24 hours, never used for other purposes or shared with third parties."
+        },
+        "clean": {
+          "title": "Clean and Distraction-Free",
+          "content": "Clean, simple interface design without distracting pop-ups and prompts, focusing on search functionality and providing a professional, efficient user experience."
+        }
+      },
+      "callToAction": {
+        "title": "Experience the most comprehensive reverse image search tool now",
+        "subtitle": "Simply upload or enter a URL to start multi-engine intelligent image search"
+      }
+    },
+    "form": {
+      "enterUrlTab": "Enter Image URL",
+      "uploadImageTab": "Upload Image",
+      "imageUrl": "Image URL",
+      "imageUrlPlaceholder": "https://example.com/image.jpg",
+      "imageUrlHint": "URL must end with common image formats like .jpg, .png, .webp",
+      "searchButton": "Search this image",
+      "processing": "Processing...",
+      "resetButton": "Reset",
+      "imagePreview": "Image Preview",
+      "selectImage": "Select Image",
+      "dragDropHint": "Drag and drop image here, paste with ctrl+V, or",
+      "clickUpload": "click to upload",
+      "supportedFormats": "Supports JPG, PNG, WEBP and other formats, max 5MB",
+      "validUrlError": "Please enter a valid image URL",
+      "emptyUrlError": "Please enter an image URL",
+      "uploadErrorImage": "Please upload an image file",
+      "uploadErrorSize": "Image size cannot exceed 5MB",
+      "imageUrlInfo": "Image URL:",
+      "chooseEngine": "Choose a search engine to search for this image",
+      "uploadFirst": "Please enter an image URL or upload an image first",
+      "uploadFirstWarning": "!!Please enter an image URL or upload an image first!!"
+    }
+  },
+  "jp": {
+    "title": "画像検索ツール",
+    "subtitle": "画像URLを入力するか画像をアップロードして、主要検索エンジンで類似画像を検索",
+    "howToUse": {
+      "title": "このツールの使い方",
+      "steps": [
+        "画像のURLを入力するか、「画像をアップロード」をクリックしてローカル画像を選択",
+        "システムがアップロードされた画像を検索可能なURLに変換します",
+        "各検索エンジンのボタンをクリックすると、対応するサービスに即座にジャンプします",
+        "検索エンジンは提供された画像に基づいてウェブ上の類似コンテンツを検索します"
+      ],
+      "tip": "ヒント：",
+      "tipContent": "他のウェブサイトから画像をコピーして、アップロード画面でCtrl + Vで直接貼り付けることができます。"
+    },
+    "whatIs": {
+      "title": "画像検索とは？",
+      "content": [
+        "画像検索（リバースイメージサーチとも呼ばれる）は、ユーザーが画像をアップロードまたは画像URLを提供することで、関連画像やその出典を検索できる現代の検索エンジンの重要な機能です。このツールはGoogle、Bing、Yandexなどの主要検索エンジンの画像検索機能を統合し、パソコン、スマートフォン、タブレットなどさまざまなデバイスでの使用をサポートしています。",
+        "画像検索の実用的なシナリオには、画像の高解像度バージョンの検索、部分画像から完全なオリジナルの検索、同じ人物や物体の異なる写真の識別、類似シーンや素材の検索などがあります。デザイナー、研究者、コンテンツクリエイター、一般ユーザーにとって、これは非常に価値のあるツールです。",
+        "当プラットフォームは画像検索プロセスを簡素化し、複数の検索エンジン間の切り替えを不要にします。一度画像をアップロードするかURLを入力するだけで、様々な検索サービスを便利に利用でき、検索効率を大幅に向上させます。"
+      ]
+    },
+    "searchEngines": {
+      "title": "主要検索エンジンの特徴",
+      "google": {
+        "title": "Google Lens 画像検索",
+        "content": [
+          "Google Lensは現在、世界で最も広く使用されている画像検索サービスであり、強力なAI視覚分析技術で知られています。世界の検索エンジン市場では、Googleは70%以上のシェアを持ち、モバイルデバイスでの検索普及率は85%に達し、世界規模での絶対的なリーダーシップを示しています。",
+          "Googleの画像検索機能は、視覚的に類似した画像を見つけるだけでなく、画像内のオブジェクト、テキスト、ランドマークを識別し、ショッピングオプションまで提供します。その独自の強みは、非常に膨大な画像データベースと先進的な機械学習アルゴリズムにあり、画像の意味的内容を理解して高度に関連性の高い結果を返すことができます。",
+          "クリエイターやデザイナー向けに、Googleはライセンスタイプに基づいて商用利用可能な無料画像を検索できる強力なフィルタリング機能も提供しています。その洗練されたフィルターシステムにより、ユーザーはサイズ、色、タイプ、時間など多次元で検索結果を正確にフィルタリングできます。"
+        ]
+      },
+      "bing": {
+        "title": "Microsoft Bing 画像検索",
+        "content": [
+          "Microsoft Bingは2009年に立ち上げられ、複数回のアップグレードと改良を経て、現在は世界第二位の検索エンジンとなっています。2020年、マイクロソフトはこれをMicrosoft Bing（マイクロソフトビング）に改名し、そのブランド認知度をさらに強化しました。",
+          "Bingのビジュアルサーチ機能は独自の利点を持ち、特に高解像度画像の表示に優れています。高品質の視覚素材を求めるプロフェッショナルにとって、Bingは優れた検索体験と結果表示を提供します。",
+          "Bing Image Searchはクリーンで直感的なユーザーインターフェースで知られ、サイズ、色、スタイル、レイアウトなどの豊富なフィルタリングオプションを提供します。その「関連検索」機能はユーザーが興味を持つかもしれない関連トピックをインテリジェントに推奨し、特徴的な「壁紙画像」カテゴリーはユーザーに豊富な高品質デスクトップ壁紙リソースを提供します。"
+        ]
+      },
+      "yandex": {
+        "title": "Yandex 画像検索",
+        "content": [
+          "Yandexはロシアと東ヨーロッパ地域最大の検索エンジンであり、その画像検索機能は世界的に高い評価を得ています。Yandexの画像認識技術は、異なるシーン、角度、光条件下で同じ物体や人物を識別することに特に優れており、特定の画像バリエーションを探すための理想的な選択肢となっています。",
+          "Yandex画像検索の核心的な強みは、写真内の商標、ランドマーク、人物を正確に識別できる先進的な画像処理アルゴリズムにあります。画像が切り取り、回転、色調整などの修正を施されていても、Yandexは元の画像を効果的に追跡したり、視覚的に類似したコンテンツを見つけることができます。",
+          "基本的な画像検索機能に加えて、Yandexは視覚コンテンツの分類や要素識別など、豊富な画像分析ツールを提供しています。画像ソースの追跡や視覚的に関連するコンテンツの発見のいずれにおいても、Yandexはユニークで包括的な検索結果を提供します。"
+        ]
+      },
+      "sauceNAO": {
+        "title": "SauceNAO 画像検索",
+        "content": [
+          "SauceNAOはアニメ、漫画、イラストの分野で最もプロフェッショナルな画像検索エンジンであり、二次元コンテンツ愛好家に比類ない検索体験を提供します。その専門的なデータベースはTwitter、Pixiv、niconicoなどの主要なアニメアートプラットフォームをカバーし、画像ソースの迅速かつ正確な特定を可能にします。",
+          "SauceNAOを使用すると、ユーザーは元の画像とその作者情報を見つけるだけでなく、関連コレクション、漫画シリーズ、ゲーム出典も取得できます。アニメアート研究、同人創作の参考、または純粋な愛好家の探索のために、SauceNAOはプロフェッショナルで包括的な検索ソリューションを提供します。"
+        ]
+      },
+      "tineye": {
+        "title": "TinEye（削除済み）",
+        "content": [
+          "TinEyeは正確な画像マッチングに焦点を当てた検索エンジンであり、視覚的に類似した結果を提供するだけでなく、画像の完全一致を見つける能力がその独自性です。これにより、オンラインでの画像使用状況の追跡、画像が最初に登場した時期の特定、高解像度バージョンの発見、画像の独創性の検証に理想的なツールとなっています。"
+        ],
+        "note": "注：テスト後、TinEyeの検索機能が不安定であり、結果の品質が他のエンジンより劣ることが判明したため、検索オプションから削除しました。最高のユーザー体験を提供するため、様々な検索エンジンのパフォーマンスを継続的に評価しています。"
+      }
+    },
+    "useCases": {
+      "title": "画像検索の一般的な応用シーン",
+      "cases": {
+        "verifyImage": {
+          "title": "画像の真正性を確認",
+          "content": "元の画像ソースを検索することで、フォトショップで合成されたものやAIで生成された画像を識別し、誤った情報や偽造された画像に惑わされるのを避けます。"
+        },
+        "findMaterials": {
+          "title": "高品質素材を探す",
+          "content": "デザイナーやクリエイターは高解像度画像、背景なしバージョン、または類似素材を検索して、作品の品質を向上させながら面倒な検索プロセスを省略できます。"
+        },
+        "identifyObjects": {
+          "title": "未知のオブジェクトを識別",
+          "content": "認識できない植物、動物、製品、ランドマークの写真を撮り、画像検索を通じて関連情報を迅速に取得し、知識を広げ好奇心を満たします。"
+        },
+        "animeSource": {
+          "title": "アニメ作品のソースを追跡",
+          "content": "SauceNAOを使用して、アニメのスクリーンショット、イラスト、ミームの元のソースを見つけ、作者、作品名、制作関連情報を特定します。"
+        },
+        "protectCopyright": {
+          "title": "著作権コンテンツを保護",
+          "content": "クリエイターは画像検索を使って自分の作品が盗用または侵害されていないか定期的にチェックし、問題を迅速に発見して必要な法的保護措置を講じることができます。"
+        },
+        "findProducts": {
+          "title": "製品の購入チャネルを見つける",
+          "content": "欲しい製品の写真を撮ったり保存したりして、画像検索を使用して同一または類似の製品の購入チャネル、価格比較、ユーザーレビューを見つけます。"
+        }
+      },
+      "callToAction": {
+        "title": "今すぐ画像検索ツールを使用 - 複数のエンジンを一度に検索し、時間を節約して効率を向上させましょう！",
+        "subtitle": "すべてのデバイスをサポート、完全無料、登録不要、プライバシーを保護"
+      }
+    },
+    "faq": {
+      "title": "画像検索についてよくある質問",
+      "questions": [
+        {
+          "question": "検索結果が時々不正確なのはなぜですか？",
+          "answer": "画像検索の精度は、画像の品質、検索エンジンデータベースのカバレッジ、画像の独自性など、さまざまな要因に依存します。画像の解像度が低い、切り取られているか修正されている、または非常に一般的な画像タイプ（青空、草原など）の場合、検索精度が低下する可能性があります。最良の結果を得るには、鮮明で完全なオリジナル画像を使用し、異なるエンジンには異なるアルゴリズムとデータベースがあるため、複数の検索エンジンで比較することをお勧めします。"
+        },
+        {
+          "question": "モバイルで画像検索を使用するにはどうすればよいですか？",
+          "answer": "当ツールはモバイルデバイスを完全にサポートしています。スマートフォンでは、「画像をアップロード」をタップしてギャラリーから写真を選択するか、新しい写真を撮ることができます。iOSデバイスでは、写真アプリから直接画像を当サイトに共有することもできます。Androidユーザーは画像を長押しして、ブラウザで共有して当ツールを開くことができます。また、クリップボードに画像をコピーした場合は、アップロードエリアで長押しして「貼り付け」を選択することもできます。"
+        },
+        {
+          "question": "最適な検索エンジンをどのように選べばよいですか？",
+          "answer": "異なる検索エンジンにはそれぞれ特徴があります：Google Lensはオブジェクト、製品、ランドマークの識別に適しています；Bingは高解像度画像と壁紙の検索に優れています；Yandexは顔の識別と修正された画像の追跡に特に優れています；SauceNAOはアニメ、漫画、イラストを専門としています。具体的なニーズに基づいてエンジンを選択するか、最も包括的な結果を得るために複数のエンジンを同時に使用することをお勧めします。重要な検索については、少なくともGoogleとYandexを比較のために使用することをお勧めします。"
+        },
+        {
+          "question": "画像検索を使用する際の法的リスクはありますか？",
+          "answer": "ユーザーはこのツールの使用方法と目的に注意する必要があります。個人的な参照や研究のために著作権で保護された画像を検索することは通常、フェアユースに該当します。ただし、見つけた画像を商業的に使用する予定がある場合は、適切なライセンスを取得するか、著作権フリーの画像を選択してください。また、他者のプライバシーを尊重し、このツールを使用して他者のプライバシーを侵害したり、地域の法律に違反したりすることは避けてください。当ツールは検索サービスのみを提供し、ユーザーは関連法規制に準拠した使用を確保する責任があります。"
+        },
+        {
+          "question": "アップロードされた画像はどのように処理されますか？保存されますか？",
+          "answer": "ユーザーのプライバシーを非常に重視しています。画像をアップロードすると、システムは検索可能なURLを生成するために一時的に保存しますが、すべての画像データは24時間以内に自動的に削除されます。お客様の画像を永続的に保存したり、他の目的に使用したりすることはありません。アップロードされた画像は検索サービスの提供にのみ使用され、生成されたURLを通じてのみアクセスできます。"
+        }
+      ]
+    },
+    "whyChooseUs": {
+      "title": "なぜ当画像検索ツールを選ぶのか？",
+      "features": {
+        "multiEngine": {
+          "title": "マルチエンジン統合",
+          "content": "Google、Bing、Yandex、SauceNAOなどの主流検索エンジンにウェブサイトを切り替えることなくワンストップでアクセスでき、時間と労力を節約できます。"
+        },
+        "free": {
+          "title": "完全無料",
+          "content": "すべての機能は隠れたコストなしで無料で使用でき、アカウント登録は不要で、広告も表示されないため、純粋な検索体験を提供します。"
+        },
+        "crossPlatform": {
+          "title": "クロスプラットフォームサポート",
+          "content": "パソコン、スマートフォン、タブレットを完璧にサポートし、いつでもどこでも画像検索が可能で、モバイルデバイス向けに最適化されたレスポンシブインターフェースを備えています。"
+        },
+        "easyToUse": {
+          "title": "便利な操作",
+          "content": "URL入力、ローカルアップロード、クリップボードからの直接貼り付けをサポート。シンプルで直感的な操作で数秒で検索プロセスを完了します。"
+        },
+        "privacy": {
+          "title": "プライバシー保護",
+          "content": "画像は検索可能なURLを生成するためだけに一時的に保存され、24時間以内に自動的に削除されます。他の目的に使用されたり、第三者と共有されることはありません。"
+        },
+        "clean": {
+          "title": "クリーンで邪魔のない",
+          "content": "クリーンでシンプルなインターフェースデザインで、邪魔なポップアップやプロンプトがなく、検索機能に焦点を当て、プロフェッショナルで効率的なユーザー体験を提供します。"
+        }
+      },
+      "callToAction": {
+        "title": "今すぐ最も包括的な画像検索ツールを体験",
+        "subtitle": "シンプルにアップロードするかURLを入力して、マルチエンジンインテリジェント画像検索を開始"
+      }
+    },
+    "form": {
+      "enterUrlTab": "画像URLを入力",
+      "uploadImageTab": "画像をアップロード",
+      "imageUrl": "画像URL",
+      "imageUrlPlaceholder": "https://example.com/image.jpg",
+      "imageUrlHint": "URLは.jpg、.png、.webpなどの一般的な画像形式で終わる必要があります",
+      "searchButton": "この画像を検索",
+      "processing": "処理中...",
+      "resetButton": "リセット",
+      "imagePreview": "画像プレビュー",
+      "selectImage": "画像を選択",
+      "dragDropHint": "ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または",
+      "clickUpload": "クリックしてアップロード",
+      "supportedFormats": "JPG、PNG、WEBPなどの形式をサポート、最大5MB",
+      "validUrlError": "有効な画像URLを入力してください",
+      "emptyUrlError": "画像URLを入力してください",
+      "uploadErrorImage": "画像ファイルをアップロードしてください",
+      "uploadErrorSize": "画像サイズは5MBを超えることはできません",
+      "imageUrlInfo": "画像URL：",
+      "chooseEngine": "この画像を検索する検索エンジンを選択",
+      "uploadFirst": "最初に画像URLを入力するか画像をアップロードしてください",
+      "uploadFirstWarning": "!!最初に画像URLを入力するか画像をアップロードしてください!!"
+    }
+  }
+}

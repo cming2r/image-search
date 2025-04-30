@@ -17,7 +17,6 @@ export const getFullUrl = (path: string = "/"): string => {
   return `${baseUrl}${normalizedPath}`;
 };
 
-
 /**
  * 生成搜尋引擎的圖片搜尋URL
  * @param {string} engine - 搜尋引擎名稱
@@ -85,59 +84,59 @@ export interface GitDates {
 // 格式: { 文件路徑: { created: ISO日期, modified: ISO日期 } }
 // 注意：此變數需要在構建過程中填充實際值
 export const FILE_DATES: Record<string, GitDates> = {
-  "/src/app/page.tsx": {
-    created: "2025-03-20 21:37:52 +0800",
-    modified: "2025-04-07 21:30:32 +0800",
+  "/src/app/[locale]/page.tsx": {
+    created: "2025-03-20T12:47:14.723Z",
+    modified: "2025-04-29T16:29:01.681Z",
     routePath: "/",
   },
-  "/src/app/image-search/page.tsx": {
-    created: "2025-04-07 21:30:32 +0800",
-    modified: "2025-04-12 00:21:30 +0800",
+  "/src/app/[locale]/image-search/page.tsx": {
+    created: "2025-04-07T12:26:51.406Z",
+    modified: "2025-04-27T16:20:45.200Z",
     routePath: "/image-search",
   },
-  "/src/app/due-date-calculator/page.tsx": {
-    created: "2025-04-09 23:50:15 +0800",
-    modified: "2025-04-12 00:38:55 +0800",
-    routePath: "/due-date-calculator",
-  },
-  "/src/app/date/page.tsx": {
-    created: "2025-03-27 00:21:15 +0800",
-    modified: "2025-04-12 00:21:30 +0800",
-    routePath: "/date",
-  },
-  "/src/app/gift-exchange/page.tsx": {
-    created: "2025-04-17 01:10:09 +0800",
-    modified: "2025-04-18 17:46:20 +0800",
+  "/src/app/[locale]/gift-exchange/page.tsx": {
+    created: "2025-04-14T14:01:41.615Z",
+    modified: "2025-04-27T16:32:40.220Z",
     routePath: "/gift-exchange",
   },
-  "/src/app/admin/page.tsx": {
-    created: "2025-04-13 00:15:22 +0800",
-    modified: "2025-04-13 00:15:22 +0800",
+  "/src/app/[locale]/due-date-calculator/page.tsx": {
+    created: "2025-04-09T14:42:07.891Z",
+    modified: "2025-04-27T16:26:04.606Z",
+    routePath: "/due-date-calculator",
+  },
+  "/src/app/[locale]/admin/page.tsx": {
+    created: "2025-04-12T07:02:33.163Z",
+    modified: "2025-04-12T16:14:55.711Z",
     routePath: "/admin",
   },
-  "/src/app/gift-exchange/[id]/page.tsx": {
-    created: "2025-04-17 01:10:09 +0800",
-    modified: "2025-04-18 11:45:48 +0800",
+  "/src/app/[locale]/date/page.tsx": {
+    created: "2025-03-26T15:08:21.170Z",
+    modified: "2025-04-27T14:04:02.420Z",
+    routePath: "/date",
+  },
+  "/src/app/[locale]/gift-exchange/[id]/page.tsx": {
+    created: "2025-04-16T15:27:12.647Z",
+    modified: "2025-04-28T13:55:47.509Z",
     routePath: "/gift-exchange/[id]",
   },
-  "/src/app/admin/login/page.tsx": {
-    created: "2025-04-13 00:15:22 +0800",
-    modified: "2025-04-13 00:18:52 +0800",
+  "/src/app/[locale]/admin/login/page.tsx": {
+    created: "2025-04-12T07:44:25.655Z",
+    modified: "2025-04-12T16:18:39.205Z",
     routePath: "/admin/login",
   },
-  "/src/app/(info)/terms/page.tsx": {
-    created: "2025-04-18 11:45:48 +0800",
-    modified: "2025-04-18 11:45:48 +0800",
+  "/src/app/[locale]/(info)/terms/page.tsx": {
+    created: "2025-03-23T13:01:27.924Z",
+    modified: "2025-04-30T14:55:43.706Z",
     routePath: "/terms",
   },
-  "/src/app/(info)/privacy-policy/page.tsx": {
-    created: "2025-04-18 11:45:48 +0800",
-    modified: "2025-04-18 11:45:48 +0800",
+  "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
+    created: "2025-03-23T13:01:26.083Z",
+    modified: "2025-04-30T14:51:25.860Z",
     routePath: "/privacy-policy",
   },
-  "/src/app/(info)/contact/page.tsx": {
-    created: "2025-04-18 11:45:48 +0800",
-    modified: "2025-04-18 11:45:48 +0800",
+  "/src/app/[locale]/(info)/contact/page.tsx": {
+    created: "2025-04-08T14:11:35.558Z",
+    modified: "2025-04-30T15:02:58.220Z",
     routePath: "/contact",
   },
 };
@@ -156,6 +155,22 @@ export function getPageDates(
 ): GitDates {
   // 特定頁面的固定創建日期 - 這些不會被構建過程改變
   const fixedCreatedDates: Record<string, string> = {
+    // 新目錄結構
+    "src/app/[locale]/image-search/page.tsx": "2025-04-07 21:30:32 +0800",
+    "src/app/[locale]/page.tsx": "2025-03-20 21:37:52 +0800",
+    "src/app/[locale]/due-date-calculator/page.tsx":
+      "2025-04-09 23:50:15 +0800",
+    "src/app/[locale]/date/page.tsx": "2025-03-27 00:21:15 +0800",
+    "src/app/[locale]/gift-exchange/page.tsx": "2025-04-17 01:10:09 +0800",
+    "src/app/[locale]/admin/page.tsx": "2025-04-13 00:15:22 +0800",
+    "src/app/[locale]/gift-exchange/[id]/page.tsx": "2025-04-17 01:10:09 +0800",
+    "src/app/[locale]/admin/login/page.tsx": "2025-04-13 00:15:22 +0800",
+    "src/app/[locale]/(info)/terms/page.tsx": "2025-04-18 11:45:48 +0800",
+    "src/app/[locale]/(info)/privacy-policy/page.tsx":
+      "2025-04-18 11:45:48 +0800",
+    "src/app/[locale]/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800",
+
+    // 舊目錄結構 (保留向後兼容)
     "src/app/image-search/page.tsx": "2025-04-07 21:30:32 +0800",
     "src/app/page.tsx": "2025-03-20 21:37:52 +0800",
     "src/app/due-date-calculator/page.tsx": "2025-04-09 23:50:15 +0800",
@@ -166,9 +181,9 @@ export function getPageDates(
     "src/app/admin/login/page.tsx": "2025-04-13 00:15:22 +0800",
     "src/app/(info)/terms/page.tsx": "2025-04-18 11:45:48 +0800",
     "src/app/(info)/privacy-policy/page.tsx": "2025-04-18 11:45:48 +0800",
-    "src/app/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800"
+    "src/app/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800",
   };
-  
+
   // 嘗試規範化路徑
   const normalizedPath = pathOrRoute.startsWith("/")
     ? pathOrRoute
@@ -178,13 +193,13 @@ export function getPageDates(
   if (FILE_DATES[normalizedPath]) {
     // 提取創建和修改日期，不返回routePath屬性
     const { created, modified } = FILE_DATES[normalizedPath];
-    
+
     // 如果是固定創建日期的頁面，使用固定的創建日期
     const finalCreated = fixedCreatedDates[pathOrRoute] || created;
-    
-    return { 
-      created: formatDateToISO(finalCreated), 
-      modified: formatDateToISO(modified) 
+
+    return {
+      created: formatDateToISO(finalCreated),
+      modified: formatDateToISO(modified),
     };
   }
 
@@ -192,7 +207,7 @@ export function getPageDates(
   for (const key in FILE_DATES) {
     if (FILE_DATES[key].routePath === normalizedPath) {
       const { created, modified } = FILE_DATES[key];
-      
+
       // 檢查是否有與當前路由對應的文件路徑
       let matchingFilePath = null;
       for (const fixedPath in fixedCreatedDates) {
@@ -201,37 +216,62 @@ export function getPageDates(
           break;
         }
       }
-      
+
       // 如果找到匹配的固定日期，使用它
-      const finalCreated = matchingFilePath ? fixedCreatedDates[matchingFilePath] : created;
-      
-      return { 
-        created: formatDateToISO(finalCreated), 
-        modified: formatDateToISO(modified) 
+      const finalCreated = matchingFilePath
+        ? fixedCreatedDates[matchingFilePath]
+        : created;
+
+      return {
+        created: formatDateToISO(finalCreated),
+        modified: formatDateToISO(modified),
       };
     }
   }
 
-  // 方法3：嘗試擴展為page.tsx路徑
+  // 方法3：嘗試擴展為page.tsx路徑 (適應新的目錄結構)
   if (!normalizedPath.endsWith(".tsx")) {
-    // 處理可能的路由路徑，轉換為文件路徑
-    const routeAsFilePath =
+    // 處理可能的路由路徑，嘗試新的目錄結構
+    const newRouteAsFilePath =
+      normalizedPath === "/"
+        ? "/src/app/[locale]/page.tsx"
+        : `/src/app/[locale]${normalizedPath}/page.tsx`;
+
+    // 同時也嘗試舊的目錄結構 (向後兼容)
+    const oldRouteAsFilePath =
       normalizedPath === "/"
         ? "/src/app/page.tsx"
         : `/src/app${normalizedPath}/page.tsx`;
 
-    if (FILE_DATES[routeAsFilePath]) {
-      const { created, modified } = FILE_DATES[routeAsFilePath];
-      
+    // 優先使用新目錄結構
+    if (FILE_DATES[newRouteAsFilePath]) {
+      const { created, modified } = FILE_DATES[newRouteAsFilePath];
+
       // 構建對應的非絕對路徑格式，用於檢查固定日期
-      const nonAbsolutePath = routeAsFilePath.substring(1);  // 移除開頭的斜線
-      
+      const nonAbsolutePath = newRouteAsFilePath.substring(1); // 移除開頭的斜線
+
       // 檢查是否為固定創建日期的頁面
       const finalCreated = fixedCreatedDates[nonAbsolutePath] || created;
-      
-      return { 
-        created: formatDateToISO(finalCreated), 
-        modified: formatDateToISO(modified) 
+
+      return {
+        created: formatDateToISO(finalCreated),
+        modified: formatDateToISO(modified),
+      };
+    }
+
+    // 如果找不到新路徑，嘗試舊路徑
+    if (FILE_DATES[oldRouteAsFilePath]) {
+      const { created, modified } = FILE_DATES[oldRouteAsFilePath];
+
+      // 構建對應的非絕對路徑格式，用於檢查固定日期
+      const nonAbsolutePath = oldRouteAsFilePath.substring(1); // 移除開頭的斜線
+
+      // 檢查是否為固定創建日期的頁面
+      const finalCreated = fixedCreatedDates[nonAbsolutePath] || created;
+
+      return {
+        created: formatDateToISO(finalCreated),
+        modified: formatDateToISO(modified),
       };
     }
   }
@@ -244,18 +284,38 @@ export function getPageDates(
     );
     const pageFilePath = `${dirPath}/page.tsx`;
 
+    // 尝试将路径格式化为新目录结构格式
+    // 例如：将 /src/components/Header.tsx 转换为 /src/app/[locale]/../components/Header.tsx
+    let localeAdjustedPath = "";
+    if (normalizedPath.includes("/src/")) {
+      const pathAfterSrc = normalizedPath.split("/src/")[1];
+      if (!pathAfterSrc.startsWith("app/[locale]")) {
+        localeAdjustedPath = `/src/app/[locale]/../${pathAfterSrc}`;
+      }
+    }
+
+    // 优先使用现有路径
     if (FILE_DATES[pageFilePath]) {
       const { created, modified } = FILE_DATES[pageFilePath];
-      
+
       // 構建對應的非絕對路徑格式，用於檢查固定日期
-      const nonAbsolutePath = pageFilePath.substring(1);  // 移除開頭的斜線
-      
+      const nonAbsolutePath = pageFilePath.substring(1); // 移除開頭的斜線
+
       // 檢查是否為固定創建日期的頁面
       const finalCreated = fixedCreatedDates[nonAbsolutePath] || created;
-      
-      return { 
-        created: formatDateToISO(finalCreated), 
-        modified: formatDateToISO(modified) 
+
+      return {
+        created: formatDateToISO(finalCreated),
+        modified: formatDateToISO(modified),
+      };
+    }
+
+    // 尝试调整后的路径
+    if (localeAdjustedPath && FILE_DATES[localeAdjustedPath]) {
+      const { created, modified } = FILE_DATES[localeAdjustedPath];
+      return {
+        created: formatDateToISO(created),
+        modified: formatDateToISO(modified),
       };
     }
   }
@@ -280,13 +340,16 @@ function formatDateToISO(dateStr: string): string {
       const date = new Date(dateStr.replace(" +", "+"));
       return date.toISOString(); // 轉換為UTC時間的ISO格式
     }
-    
+
     // 如果已經是ISO格式（包括時區信息）
-    if (dateStr.includes("T") && (dateStr.includes("Z") || dateStr.includes("+"))) {
+    if (
+      dateStr.includes("T") &&
+      (dateStr.includes("Z") || dateStr.includes("+"))
+    ) {
       const date = new Date(dateStr);
       return date.toISOString(); // 轉換為UTC時間的ISO格式
     }
-    
+
     // 對於其他格式，盡力解析
     const date = new Date(dateStr);
     if (isNaN(date.getTime())) {

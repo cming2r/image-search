@@ -24,7 +24,7 @@ const projectRoot = path.resolve(__dirname, '..');
 async function findAllPageFiles() {
   console.log('正在掃描項目尋找頁面文件...');
   const files = await glob('src/app/**/page.tsx', { 
-    ignore: 'src/app/**/node_modules/**',
+    ignore: ['src/app/**/node_modules/**'],
     cwd: projectRoot 
   });
   console.log(`找到 ${files.length} 個頁面文件`);
@@ -35,6 +35,9 @@ async function findAllPageFiles() {
 function filePathToRoutePath(filePath) {
   // 移除src/app前綴和/page.tsx後綴
   let routePath = filePath.replace(/^src\/app/, '').replace(/\/page\.tsx$/, '');
+  
+  // 處理新的[locale]目錄結構
+  routePath = routePath.replace(/^\/\[locale\]/, '');
   
   // 處理 (info) 等分組資料夾
   routePath = routePath.replace(/\/\([^)]+\)/, '');

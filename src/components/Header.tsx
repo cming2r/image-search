@@ -4,6 +4,9 @@ import { FC, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClientForBrowser } from '@/lib/supabase';
+import { useParams } from 'next/navigation';
+import LanguageSwitcher from './LanguageSwitcher';
+import translations from './translations.json';
 
 // 簡單的防抖函數
 function debounce(func: () => void, wait: number) {
@@ -19,6 +22,12 @@ const Header: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dateDropdownRef = useRef<HTMLDivElement>(null);
   const supabase = createClientForBrowser();
+  const params = useParams();
+  // 從路徑參數中獲取當前語言
+  const locale = (params?.locale as string) || 'zh';
+  
+  // 獲取對應語言的翻譯
+  const t = translations[locale as keyof typeof translations] || translations.zh;
   
   // 切換選單狀態
   const toggleMenu = () => {
@@ -110,7 +119,7 @@ const Header: FC = () => {
           {/* 中間的導航菜單 */}
           <nav className="hidden md:flex items-center justify-center flex-grow mx-8">
             <div className="flex space-x-8">
-              <Link href="/image-search"
+              <Link href={`/${locale === 'zh' ? '' : locale + '/'}image-search`}
                 className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
               >
                 <span className="mr-2">
@@ -118,15 +127,15 @@ const Header: FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </span>
-                以圖搜圖
+                {t.header.imageSearch}
               </Link>
               <div className="relative group" ref={dateDropdownRef}>
-                <Link href="/date"
+                <Link href={`/${locale === 'zh' ? '' : locale + '/'}date`}
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
-                  日期計算器
+                  {t.header.calculator}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
@@ -144,18 +153,18 @@ const Header: FC = () => {
                   role="menu"
                 >
                   <Link 
-                    href="/date" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    日期計算器
+                    {t.header.calculator}
                   </Link>
                   <Link 
-                    href="/due-date-calculator" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    預產期計算器
+                    {t.header.dueDate}
                   </Link>
                 </div>
               </div>
@@ -165,7 +174,7 @@ const Header: FC = () => {
                   aria-expanded="false"
                   aria-haspopup="true"
                 >
-                  其他線上工具
+                  {t.header.tools}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
@@ -182,22 +191,30 @@ const Header: FC = () => {
                   role="menu"
                 >
                   <Link 
-                    href="/gift-exchange" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    交換禮物抽籤
+                    {t.header.giftExchange}
                   </Link>
                 </div>
               </div>
               <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
-                縮網址服務
+                {t.header.urlShortener}
               </a>
             </div>
           </nav>
           
           {/* 右側功能區 */}
           <div className="flex items-center">
+            {/* 語言切換器 - 在桌面版和手機版都顯示 */}
+            <div className="mr-4">
+              <LanguageSwitcher 
+                currentLocale={locale} 
+                className="text-sm" 
+              />
+            </div>
+            
             {/* 聯絡我們圖標 - 手機版放在選單按鈕左邊 */}
             <Link 
               href="/contact" 
@@ -215,8 +232,8 @@ const Header: FC = () => {
                 <Link 
                   href="/admin" 
                   className="mr-3 text-gray-600 hover:text-blue-600 transition-colors"
-                  aria-label="管理頁面"
-                  title="管理頁面"
+                  aria-label="Admin Panel"
+                  title="Admin Panel"
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
@@ -239,8 +256,8 @@ const Header: FC = () => {
                     }
                   }}
                   className="mr-4 text-gray-600 hover:text-red-600 transition-colors"
-                  aria-label="登出"
-                  title="登出"
+                  aria-label="Logout"
+                  title="Logout"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -273,9 +290,10 @@ const Header: FC = () => {
             
             {/* 聯絡我們圖標 - 桌面版放在最右邊 */}
             <Link 
-              href="/contact" 
+              href={`/${locale === 'zh' ? '' : locale + '/'}contact`}
               className="hidden md:block text-gray-600 hover:text-blue-600 transition-colors"
-              aria-label="聯絡我們"
+              aria-label={t.header.contact}
+              title={t.header.contact}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -288,8 +306,8 @@ const Header: FC = () => {
                 <Link 
                   href="/admin" 
                   className="hidden md:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
-                  aria-label="管理頁面"
-                  title="管理頁面"
+                  aria-label={t.header.admin}
+                  title={t.header.admin}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
@@ -312,8 +330,8 @@ const Header: FC = () => {
                     }
                   }}
                   className="hidden md:block ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
-                  aria-label="登出"
-                  title="登出"
+                  aria-label={t.header.logout}
+                  title={t.header.logout}
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -329,10 +347,19 @@ const Header: FC = () => {
           className={`md:hidden bg-white py-4 mt-2 rounded-lg shadow-lg border border-gray-100 transform transition-transform duration-200 ease-in-out ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 hidden'}`}
           role="navigation"
         >
+            {/* 行動版語言切換器 */}
+            <div className="px-4 py-2 mb-3 border-b border-gray-100">
+              <p className="text-sm text-gray-500 mb-2">選擇語言:</p>
+              <LanguageSwitcher 
+                currentLocale={locale} 
+                className="text-sm flex justify-start" 
+              />
+            </div>
+            
             <ul className="flex flex-col space-y-3">
               <li>
                 <Link 
-                  href="/image-search" 
+                  href={`/${locale === 'zh' ? '' : locale + '/'}image-search`}
                   className="flex items-center px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                   onClick={closeMenu}
                 >
@@ -341,17 +368,17 @@ const Header: FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </span>
-                  以圖搜圖
+                  {t.header.imageSearch}
                 </Link>
               </li>
               <li>
                 <div className="flex w-full items-center justify-between">
                   <Link
-                    href="/date"
+                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    日期計算器
+                    {t.header.calculator}
                   </Link>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
@@ -376,18 +403,18 @@ const Header: FC = () => {
                 </div>
                 <div id="date-submenu" className="hidden pl-4 bg-gray-50">
                   <Link 
-                    href="/date" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    日期計算器
+                    {t.header.calculator}
                   </Link>
                   <Link 
-                    href="/due-date-calculator" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    預產期計算器
+                    {t.header.dueDate}
                   </Link>
                 </div>
               </li>
@@ -396,7 +423,7 @@ const Header: FC = () => {
                   <button
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                   >
-                    其他線上工具
+                    {t.header.tools}
                   </button>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
@@ -421,11 +448,11 @@ const Header: FC = () => {
                 </div>
                 <div id="tools-submenu" className="hidden pl-4 bg-gray-50">
                   <Link 
-                    href="/gift-exchange" 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    交換禮物抽籤
+                    {t.header.giftExchange}
                   </Link>
                 </div>
               </li>
@@ -437,7 +464,7 @@ const Header: FC = () => {
                   rel="noopener noreferrer"
                   onClick={closeMenu}
                 >
-                  縮網址服務
+                  {t.header.urlShortener}
                 </a>
               </li>
               
@@ -460,7 +487,7 @@ const Header: FC = () => {
                           </g>
                         </svg>
                       </span>
-                      管理頁面
+                      {t.header.admin}
                     </Link>
                   </li>
                   <li>
@@ -483,7 +510,7 @@ const Header: FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                       </span>
-                      登出
+                      {t.header.logout}
                     </button>
                   </li>
                 </>

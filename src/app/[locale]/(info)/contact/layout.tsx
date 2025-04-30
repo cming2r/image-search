@@ -1,0 +1,112 @@
+import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
+
+// 多語言標題和描述
+const titles = {
+  zh: '聯絡我們',
+  en: 'Contact Us',
+  jp: 'お問い合わせ'
+};
+
+const descriptions = {
+  zh: '有任何問題、建議或回饋嗎？請與我們聯絡，我們會盡快回覆您。',
+  en: 'Have questions, suggestions, or feedback? Please contact us, and we will get back to you as soon as possible.',
+  jp: 'ご質問、ご提案、またはフィードバックがありますか？お問い合わせください。できるだけ早くご返信いたします。'
+};
+
+// 預覽圖片
+const imageUrl = getFullUrl('/og-image.png');
+
+// 生成多語言元數據配置
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale = 'zh' } = await params;
+  const title = titles[locale as keyof typeof titles] || titles.zh;
+  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  
+  return {
+    metadataBase: new URL(getBaseUrl()),
+    title,
+    description,
+    
+    // OpenGraph標籤設定
+    openGraph: {
+      title: `${title} ｜ fyimg`,
+      description,
+      url: getFullUrl(locale === 'zh' ? '/contact' : `/${locale}/contact`),
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: locale === 'zh' ? 'fyimg聯絡我們' : 
+               locale === 'en' ? 'fyimg Contact Us' : 
+               'fyimgお問い合わせ',
+          type: 'image/png',
+        },
+      ],
+    },
+    
+    // Twitter卡片設定
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      creator: '@fyimg',
+      site: '@fyimg',
+      images: [imageUrl],
+    },
+    
+    // 規範連結（確保SEO正確性）
+    alternates: {
+      canonical: getFullUrl(locale === 'zh' ? '/contact' : `/${locale}/contact`),
+      languages: {
+        'zh-TW': getFullUrl('/contact'),
+        'en': getFullUrl('/en/contact'),
+        'ja': getFullUrl('/jp/contact'),
+      },
+    },
+    
+    // 關鍵字、作者及發布者信息
+    keywords: locale === 'zh' ? '聯絡我們, 客戶服務, 回饋, 意見反饋, 問題諮詢' : 
+              locale === 'en' ? 'contact us, customer service, feedback, inquiry, support' :
+              'お問い合わせ, カスタマーサービス, フィードバック, お問い合わせフォーム, サポート',
+    authors: [{ name: 'fyimg開發團隊' }],
+    creator: 'fyimg開發團隊',
+    publisher: 'fyimg',
+  };
+}
+
+export default async function ContactLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode,
+  params: Promise<{ locale: string }>
+}) {
+  // 取得當前語言
+  const { locale = 'zh' } = await params;
+  
+  // 根據當前語言生成結構化數據
+  const breadcrumbSchema = generateBreadcrumbSchema('/contact', titles[locale as keyof typeof titles] || titles.zh, locale);
+  const webPageSchema = generateWebPageSchema(
+    '/contact',
+    titles[locale as keyof typeof titles] || titles.zh,
+    descriptions[locale as keyof typeof descriptions] || descriptions.zh,
+    locale
+  );
+  
+  return (
+    <>
+      {/* 使用標準腳本標籤添加 JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      {children}
+    </>
+  );
+}

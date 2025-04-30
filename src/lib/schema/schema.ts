@@ -188,8 +188,20 @@ export function generateWebApplicationSchema(
   ratingCount: string = '150',
   validFrom: string = '2025-01-01T00:00:00Z',
   language: string = 'zh-TW',
+  locale: string = 'zh'
 ): WebApplicationSchema {
-  const url = getFullUrl(path);
+  // 處理不同語言的路徑
+  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const url = getFullUrl(localePath);
+  
+  // 根據語言設置 inLanguage 參數
+  const langMap: Record<string, string> = {
+    'zh': 'zh-TW',
+    'en': 'en',
+    'jp': 'ja'
+  };
+  
+  const inLanguage = langMap[locale] || language;
   
   return {
     '@context': 'https://schema.org',
@@ -199,7 +211,7 @@ export function generateWebApplicationSchema(
     description,
     applicationCategory,
     operatingSystem: 'Windows, macOS, iOS, Android, Web',
-    inLanguage: language,
+    inLanguage: inLanguage,
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -220,13 +232,27 @@ export function generateWebApplicationSchema(
   };
 }
 
-export function generateBreadcrumbSchema(path?: string, pageName?: string): BreadcrumbSchema {
+export function generateBreadcrumbSchema(
+  path?: string, 
+  pageName?: string, 
+  locale: string = 'zh'
+): BreadcrumbSchema {
   const baseUrl = getBaseUrl();
+  
+  // 多語言主頁名稱
+  const homeNames: Record<string, string> = {
+    'zh': '首頁',
+    'en': 'Home',
+    'jp': 'ホーム'
+  };
+  
+  const homeName = homeNames[locale] || '首頁';
+  
   const itemListElement = [
     {
       '@type': 'ListItem',
       position: 1,
-      name: '首頁',
+      name: homeName,
       item: baseUrl,
     },
   ];
@@ -238,7 +264,16 @@ export function generateBreadcrumbSchema(path?: string, pageName?: string): Brea
     
     // 處理多層路徑
     pathSegments.forEach((segment, index) => {
-      currentUrl += `/${segment}`;
+      // 根據語言生成URL
+      if (locale === 'zh') {
+        currentUrl += `/${segment}`;
+      } else {
+        if (index === 0) {
+          currentUrl += `/${locale}/${segment}`;
+        } else {
+          currentUrl += `/${segment}`;
+        }
+      }
       
       // 處理路徑段名稱
       let segmentName;
@@ -275,11 +310,30 @@ export function generateWebPageSchema(
   language: string = 'zh-TW', 
   datePublished: string = '2025-01-01T00:00:00+08:00',
   dateModified: string = '2025-01-01T00:00:00+08:00',
-  removeBreadcrumb: boolean = false
+  removeBreadcrumb: boolean = false,
+  locale: string = 'zh'
 ): WebPageSchema {
-  const fullUrl = getFullUrl(path);
+  // 處理不同語言的路徑
+  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const fullUrl = getFullUrl(localePath);
   const baseUrl = getBaseUrl();
   const pathSegments = path.split('/').filter(Boolean);
+  
+  // 語言對應表，將locale映射為HTML語言代碼
+  const langMap: Record<string, string> = {
+    'zh': 'zh-TW',
+    'en': 'en',
+    'jp': 'ja'
+  };
+  
+  const inLanguage = langMap[locale] || language;
+  
+  // 多語言主頁名稱
+  const homeNames: Record<string, string> = {
+    'zh': '首頁',
+    'en': 'Home',
+    'jp': 'ホーム'
+  };
   
   // 準備麵包屑項目
   const breadcrumbItems = [];
@@ -289,7 +343,7 @@ export function generateWebPageSchema(
     item: {
       '@type': 'Thing',
       '@id': baseUrl,
-      name: '首頁'
+      name: homeNames[locale] || '首頁'
     }
   });
   
@@ -325,7 +379,7 @@ export function generateWebPageSchema(
       url: imageUrl,
       width: 1200,
       height: 630,
-      inLanguage: language
+      inLanguage: inLanguage
     };
     
     // 只有在不移除breadcrumb時才添加
@@ -343,10 +397,10 @@ export function generateWebPageSchema(
       url: baseUrl,
       name: 'fyimg',
       publisher: PUBLISHER,
-      inLanguage: language
+      inLanguage: inLanguage
     };
     
-    schema.inLanguage = language;
+    schema.inLanguage = inLanguage;
   }
 
   return schema;
@@ -361,13 +415,32 @@ export function generateArticleSchema(
   dateModified: string = '2025-01-01T00:00:00+08:00',
   language: string = 'zh-TW',
   keywords: string[] = [],
-  wordCount?: number
+  wordCount?: number,
+  locale: string = 'zh'
 ): ArticleSchema {
-  const fullUrl = getFullUrl(path);
+  // 處理不同語言的路徑
+  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const fullUrl = getFullUrl(localePath);
   const baseUrl = getBaseUrl();
   const richSnippetId = `${fullUrl}#richSnippet`;
   const webpageId = `${fullUrl}#webpage`;
   const pathSegments = path.split('/').filter(Boolean);
+  
+  // 語言對應表，將locale映射為HTML語言代碼
+  const langMap: Record<string, string> = {
+    'zh': 'zh-TW',
+    'en': 'en',
+    'jp': 'ja'
+  };
+  
+  const inLanguage = langMap[locale] || language;
+  
+  // 多語言主頁名稱
+  const homeNames: Record<string, string> = {
+    'zh': '首頁',
+    'en': 'Home',
+    'jp': 'ホーム'
+  };
   
   // 準備麵包屑項目 - 這些項目不再在ArticleSchema中使用，
   // 因為現在我們將這些數據放在WebPageSchema中
@@ -378,7 +451,7 @@ export function generateArticleSchema(
     item: {
       '@type': 'Thing',
       '@id': baseUrl,
-      name: '首頁'
+      name: homeNames[locale] || '首頁'
     }
   });
   
@@ -413,7 +486,7 @@ export function generateArticleSchema(
     },
     datePublished: datePublished,
     dateModified: dateModified,
-    inLanguage: language,
+    inLanguage: inLanguage,
     keywords: keywords,
     wordCount: wordCount,
     author: AUTHOR,
@@ -437,6 +510,7 @@ export function generateFAQSchema(
     };
   }>
 ): FAQSchema {
+  // FAQ Schema 不需要語言參數，只接受多語言的FAQ內容
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',

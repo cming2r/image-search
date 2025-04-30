@@ -2,29 +2,81 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// 支援的語言列表
+const locales = ['zh', 'en', 'jp'];
+const defaultLocale = 'zh';
+
+// 檢查路徑是否為靜態資源或特殊路徑
+function isStaticOrSpecialPath(pathname: string) {
+  return (
+    pathname.startsWith('/_next') || 
+    pathname.startsWith('/static/') || 
+    pathname.includes('.') || // 靜態資源
+    pathname === '/favicon.ico'
+  );
+}
+
+// 檢查是否為 API 路由
+function isApiRoute(pathname: string) {
+  return pathname.startsWith('/api/');
+}
+
 export async function middleware(request: NextRequest) {
   // 檢查頁面路徑
   const requestUrl = new URL(request.url);
   const pathname = requestUrl.pathname;
   
-  // 如果路徑是管理頁面但不是登入頁面，則檢查是否已登入
-  if (pathname.startsWith('/admin') && 
-      !pathname.startsWith('/admin/login') && 
-      !pathname.includes('.') && // 排除靜態資源
-      !pathname.includes('api/')) { // 排除 API 路由
+  // 跳過靜態檔案和特殊路徑的處理
+  if (isStaticOrSpecialPath(pathname)) {
+    return NextResponse.next();
+  }
+  
+  // 特殊處理根路徑
+  // 注意：我們不再將根路徑重定向到 /zh/，而是直接使用根路徑作為中文版
+  if (pathname === '/') {
+    // 將根路徑重寫到默認語言的頁面組件，但保持URL為 /
+    const response = NextResponse.rewrite(new URL(`/${defaultLocale}${pathname}`, request.url));
+    return response;
+  }
+  
+  // API 路由特殊處理 - 始終重寫到默認語言的 API 路由
+  if (isApiRoute(pathname)) {
+    const rewritePath = pathname.replace('/api/', `/${defaultLocale}/api/`);
+    const rewriteUrl = new URL(rewritePath, request.url);
     
-    // 檢查所有 cookie，查找 Supabase 會話 cookie
-    const allCookies = request.cookies.getAll();
-    const supabaseCookies = allCookies.filter(cookie => 
-      cookie.name.startsWith('sb-') || 
-      cookie.name === 'supabase-auth-token'
-    );
-    
-    // 輸出檢測到的 Supabase cookie
-    console.log(`Middleware: 檢測到 ${supabaseCookies.length} 個 Supabase 相關 cookie`);
-    supabaseCookies.forEach(cookie => {
-      console.log(`Cookie: ${cookie.name}, Value Length: ${cookie.value.length}`);
+    // 保留查詢參數
+    requestUrl.searchParams.forEach((value, key) => {
+      rewriteUrl.searchParams.set(key, value);
     });
+    
+    console.log(`Middleware: 將 API 請求 ${pathname} 重寫到 ${rewriteUrl.pathname}`);
+    return NextResponse.rewrite(rewriteUrl);
+  }
+  
+  // 檢查路徑的第一段是否為有效的語言代碼
+  const segments = pathname.split('/');
+  const firstSegment = segments.length > 1 ? segments[1] : '';
+  
+  // 如果路徑不包含有效的語言代碼，則重寫為默認語言內容，但保持URL不變（中文版使用根路徑）
+  if (!locales.includes(firstSegment)) {
+    // 使用重寫而不是重定向，保持URL不變但使用中文版內容
+    const rewriteUrl = new URL(`/${defaultLocale}${pathname}`, request.url);
+    
+    // 保留所有查詢參數
+    requestUrl.searchParams.forEach((value, key) => {
+      rewriteUrl.searchParams.set(key, value);
+    });
+    
+    console.log(`Middleware:${pathname} use ${rewriteUrl.pathname} `);
+    return NextResponse.rewrite(rewriteUrl);
+  }
+  
+  // 處理管理員身份驗證
+  if (pathname.startsWith(`/${firstSegment}/admin`) && 
+      !pathname.includes('/admin/login')) {
+    
+    // 檢查所有 cookie，確保 Supabase 會話可用
+    // 注意：我們不需要過濾 cookie，因為 Supabase 客戶端會直接使用 request.cookies.get
     
     // 創建 Supabase 客戶端
     const supabase = createServerClient(
@@ -50,18 +102,14 @@ export async function middleware(request: NextRequest) {
       const { data } = await supabase.auth.getSession();
       const session = data.session;
       
-      console.log(`Middleware: 檢查會話狀態，路徑=${pathname}, 是否已登入=${!!session}`);
-      
       // 如果未登入，則重定向到登入頁面，並附帶當前路徑作為重定向目標
       if (!session) {
-        const loginUrl = new URL('/admin/login', request.url);
+        const loginUrl = new URL(`/${firstSegment}/admin/login`, request.url);
         // 添加當前路徑作為登入後重定向目標
         loginUrl.searchParams.append('redirectTo', pathname);
         console.log(`Middleware: 用戶未登入，重定向到 ${loginUrl.toString()}`);
         return NextResponse.redirect(loginUrl);
       }
-      
-      console.log(`Middleware: 用戶已登入，允許訪問 ${pathname}`);
       
       // 如果已登入，添加標記並返回
       const requestHeaders = new Headers(request.headers);
@@ -75,10 +123,9 @@ export async function middleware(request: NextRequest) {
     } catch (error) {
       console.error("Middleware: 檢查身份驗證時出錯:", error);
       // 出錯時重定向到登入頁面
-      const loginUrl = new URL('/admin/login', request.url);
+      const loginUrl = new URL(`/${firstSegment}/admin/login`, request.url);
       // 添加當前路徑作為登入後重定向目標
       loginUrl.searchParams.append('redirectTo', pathname);
-      console.log(`Middleware: 身份驗證出錯，重定向到 ${loginUrl.toString()}`);
       return NextResponse.redirect(loginUrl);
     }
   }
@@ -87,7 +134,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// 設置 middleware 處理所有 /admin 路徑的請求，除了 .js、.css 等靜態資源
+// 設置 middleware 處理所有路徑的請求，排除靜態資源
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

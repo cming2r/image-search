@@ -2,23 +2,25 @@
 
 import { FC } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import translations from './translations.json';
 
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
+  const params = useParams();
+  // 從路徑參數中獲取當前語言
+  const locale = (params?.locale as string) || 'zh';
+  
+  // 獲取對應語言的翻譯
+  const t = translations[locale as keyof typeof translations] || translations.zh;
   
   return (
     <footer className="bg-white border-t mt-auto">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mt-1">
-            <p className="footer-text">此工具僅供學習和個人使用，請尊重著作權並遵守各搜尋引擎的使用條款</p>
-          </div>
+        <div className="flex justify-center items-center">
           <div>
-            <p className="footer-text">
-              本網站不儲存任何圖片搜尋記錄，只提供搜尋功能。
-            </p>
-            <p className="footer-text mt-1">
-              圖片搜尋服務由 Google、Bing、Yandex 等第三方搜尋引擎提供
+            <p className="footer-text text-center">
+              {t.footer.disclaimer}
             </p>
           </div>
         </div>
@@ -28,14 +30,14 @@ const Footer: FC = () => {
             <p className="footer-text">Copyright &copy; {currentYear} - fyimg.com</p>
           </div>
           <div className="md:w-1/3 flex justify-center md:justify-end mt-2 md:mt-0 space-x-4">
-            <Link href="/contact" className="text-blue-600 hover:underline">
-              聯絡我們
+            <Link href={`/${locale === 'zh' ? '' : locale + '/'}contact`} className="text-blue-600 hover:underline">
+              {t.footer.links.contact}
             </Link>
-            <Link href="/privacy-policy" className="text-blue-600 hover:underline">
-              隱私權政策
+            <Link href={`/${locale === 'zh' ? '' : locale + '/'}privacy-policy`} className="text-blue-600 hover:underline">
+              {t.footer.links.privacy}
             </Link>
-            <Link href="/terms" className="text-blue-600 hover:underline">
-              使用條款
+            <Link href={`/${locale === 'zh' ? '' : locale + '/'}terms`} className="text-blue-600 hover:underline">
+              {t.footer.links.terms}
             </Link>
           </div>
         </div>

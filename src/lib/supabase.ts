@@ -99,13 +99,58 @@ export async function saveSearchRecord(record: SearchRecord) {
     let countryCode = 'XX'; // 未知國家的備用代碼
     let ipAddress = '0.0.0.0'; // 未知IP的備用值
     try {
-      const response = await fetch('https://ipapi.co/json/');
-      if (response.ok) {
-        const data = await response.json();
-        // 使用ISO 3166-1 Alpha-2國家代碼
-        countryCode = data.country || 'XX';
-        // 獲取IP地址
-        ipAddress = data.ip || '0.0.0.0';
+      // 直接使用 geolocation-db API，一次性獲取 IP 和國家代碼
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000); // 2秒超時
+      
+      try {
+        // 使用 geolocation-db API (無需 API 密鑰)
+        const response = await fetch('https://geolocation-db.com/json/', {
+          signal: controller.signal,
+          cache: 'no-store' // 不緩存結果
+        });
+        clearTimeout(timeoutId);
+        
+        if (response.ok) {
+          const data = await response.json();
+          // 獲取 IP 地址
+          ipAddress = data.IPv4 || data.IPv6 || '0.0.0.0';
+          // 獲取國家代碼 (ISO 3166-1 Alpha-2)
+          countryCode = data.country_code || 'XX';
+        }
+      } catch  {
+        console.log('Primary geoip service failed, trying backup');
+        
+        // 備用：使用 ipinfo.io API (免費版每天有限制，但較可靠)
+        try {
+          const backupResponse = await fetch('https://ipinfo.io/json', { 
+            signal: controller.signal 
+          });
+          
+          if (backupResponse.ok) {
+            const data = await backupResponse.json();
+            ipAddress = data.ip || '0.0.0.0';
+            countryCode = data.country || 'XX';
+          }
+        } catch {
+          // 如果備用 API 也失敗，嘗試第三個 API
+          try {
+            const lastResortResponse = await fetch('https://ip-api.com/json/?fields=status,message,country,countryCode,query', {
+              signal: controller.signal
+            });
+            
+            if (lastResortResponse.ok) {
+              const data = await lastResortResponse.json();
+              if (data.status === 'success') {
+                ipAddress = data.query || '0.0.0.0';
+                countryCode = data.countryCode || 'XX';
+              }
+            }
+          } catch {
+            // 如果所有 API 都失敗，使用默認值
+            console.log('All geo services failed, using default values');
+          }
+        }
       }
     } catch (error) {
       console.error('獲取IP和國家信息失敗:', error);
