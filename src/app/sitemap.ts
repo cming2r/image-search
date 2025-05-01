@@ -2,6 +2,25 @@ import { getFullUrl, getPageDates } from '@/lib/utils';
 import { MetadataRoute } from 'next';
 
 /**
+ * 定義路由配置的類型
+ */
+type RouteConfig = {
+  path: string;
+  name: string;
+  priority: number;
+  changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  supportedLanguages: string[];
+};
+
+/**
+ * 定義語言配置的類型
+ */
+type LanguageConfig = {
+  code: string;
+  hreflang: string;
+};
+
+/**
  * 從Git日期字符串轉換為Date對象
  * @param dateString Git日期字符串，通常是ISO格式
  * @returns Date對象
@@ -21,10 +40,9 @@ function parseGitDate(dateString: string): Date {
  * @param languages 支援的語言配置
  * @returns 頁面的Git日期
  */
-function getRouteDate(fullRoute: string, languages: { code: string; hreflang: string }[]) {
+function getRouteDate(fullRoute: string, languages: LanguageConfig[]) {
   // 判斷當前環境，僅在開發環境輸出詳細日誌
   const isDev = process.env.NODE_ENV === 'development';
-  const logInfo = (message: string) => isDev && console.info(`[Sitemap] ${message}`);
   
   // 獲取基本路由（去除語言前綴）
   const getBaseRoute = () => {
@@ -35,154 +53,197 @@ function getRouteDate(fullRoute: string, languages: { code: string; hreflang: st
     return fullRoute.replace(languagePattern, '/');
   };
   
-  // 優先嘗試方法列表，按優先順序
-  const tryMethods = [
-    // 方法1: 直接使用完整路由
-    () => {
-      logInfo(`嘗試使用完整路由: ${fullRoute}`);
+  try {
+    // 先嘗試使用完整路由
+    try {
       return getPageDates(fullRoute);
-    },
-    
-    // 方法2: 使用基本路由（去除語言前綴）
-    () => {
+    } catch {
+      // 如果失敗，嘗試使用基本路由（去除語言前綴）
       const baseRoute = getBaseRoute();
       if (fullRoute !== baseRoute) {
-        logInfo(`嘗試使用基本路由: ${baseRoute}`);
         return getPageDates(baseRoute);
       }
-      throw new Error('基本路由與完整路由相同');
-    },
+      
+      // 如果仍然失敗，嘗試使用明確的文件路徑
+      // 針對新的目錄結構
+      const filePath = `src/app/[locale]${baseRoute === '/' ? '' : baseRoute}/page.tsx`;
+      return getPageDates(filePath);
+    }
+  } catch {
+    // 所有方法都失敗，使用當前日期作為後備修改日期
+    if (isDev) {
+      console.warn(`無法獲取 ${fullRoute} 的修改日期，使用當前日期作為後備`);
+    }
     
-    // 方法3: 嘗試使用明確的文件路徑
-    () => {
-      const baseRoute = getBaseRoute();
-      
-      // 嘗試各種可能的文件路徑
-      const paths = [
-        // 1. 新目錄結構 [locale]
-        `src/app/[locale]${baseRoute === '/' ? '' : baseRoute}/page.tsx`,
-        
-        // 2. 舊目錄結構
-        `src/app${baseRoute === '/' ? '' : baseRoute}/page.tsx`,
-        
-        // 3. 特定語言頁面
-        fullRoute !== baseRoute ? `src/app${fullRoute}/page.tsx` : undefined
-      ].filter((p): p is string => Boolean(p));
-      
-      // 嘗試每個可能的路徑
-      for (const path of paths) {
-        try {
-          logInfo(`嘗試使用文件路徑: ${path}`);
-          const result = getPageDates(path);
-          logInfo(`成功從文件路徑 ${path} 獲取日期`);
-          return result;
-        } catch {
-          // 繼續下一個路徑
-        }
-      }
-      throw new Error('所有文件路徑嘗試都失敗');
-    }
-  ];
-  
-  // 依次嘗試每個方法
-  for (const method of tryMethods) {
-    try {
-      return method();
-    } catch (error) {
-      // 繼續嘗試下一個方法
-      if (error instanceof Error) {
-        logInfo(`嘗試失敗: ${error.message}`);
-      }
-    }
+    return {
+      modified: new Date().toISOString()
+    };
   }
-  
-  // 所有方法都失敗，使用後備日期
-  if (isDev) {
-    console.warn(`無法獲取 ${fullRoute} 的日期，使用當前日期作為後備`);
-  }
-  
-  const now = new Date();
-  return {
-    created: now.toISOString(),
-    modified: now.toISOString()
-  };
 }
 
+/**
+ * 生成網站的站點地圖 (Sitemap)
+ * 
+ * 注意：您在瀏覽器中直接訪問 /sitemap.xml 時可能看到的是簡化的文本版本。
+ * 實際的 XML 包含更豐富的結構，包括語言替代鏈接。
+ * 
+ * 查看完整 XML 的方法：
+ * 1. 使用 curl http://localhost:3000/sitemap.xml > sitemap.xml 命令將其保存到文件
+ * 2. 使用瀏覽器的"查看源代碼"功能（右鍵點擊頁面，選擇"查看頁面源代碼"）
+ * 3. 使用網絡開發工具檢查網絡請求（F12 開發者工具 -> Network 標籤）
+ * 
+ * @returns MetadataRoute.Sitemap - Next.js 站點地圖配置
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   // 定義所有語言和對應的 hreflang
-  const languages = [
+  const LANGUAGES: LanguageConfig[] = [
     { code: '', hreflang: 'zh' }, // 中文（根路徑）
     { code: 'en', hreflang: 'en' }, // 英文
     { code: 'jp', hreflang: 'ja' }, // 日文
   ];
 
-  // 定義所有需要包含在sitemap中的基礎路由
-  const routes = [
-    '/',                   // 首頁
-    '/image-search',       // 圖片搜尋
-    '/date',               // 日期計算器
-    '/due-date-calculator', // 預產期計算器
-    '/gift-exchange',      // 禮物交換
-    '/contact',            // 聯繫我們
-    '/privacy-policy',     // 隱私政策
-    '/terms',              // 服務條款
+  // 定義所有需要包含在sitemap中的基礎路由及其配置
+  const ROUTES: RouteConfig[] = [
+    { 
+      path: '/', 
+      name: '首頁',
+      priority: 1.0,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh', 'en', 'ja'] // 支持所有語言
+    },
+    { 
+      path: '/image-search', 
+      name: '圖片搜尋',
+      priority: 0.9,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/date', 
+      name: '日期計算器',
+      priority: 0.8,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/due-date-calculator', 
+      name: '預產期計算器',
+      priority: 0.8,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/gift-exchange', 
+      name: '禮物交換',
+      priority: 0.7,
+      changeFrequency: 'weekly', 
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/contact', 
+      name: '聯繫我們',
+      priority: 0.5,
+      changeFrequency: 'monthly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/privacy-policy', 
+      name: '隱私政策',
+      priority: 0.3,
+      changeFrequency: 'monthly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
+    { 
+      path: '/terms', 
+      name: '服務條款',
+      priority: 0.3,
+      changeFrequency: 'monthly',
+      supportedLanguages: ['zh', 'en', 'ja']
+    },
   ];
 
-  // 生成sitemap項目
+  /**
+   * 生成sitemap項目 - 每個基本路由只有一個URL項目
+   * 
+   * 對於每個頁面，我們添加:
+   * 1. 主URL (例如 /)
+   * 2. 語言替代URL (zh, en, ja)
+   * 3. 優先級和更新頻率
+   */
   const sitemapItems: MetadataRoute.Sitemap = [];
+  
+  /**
+   * 檢查路由在特定語言中是否可用
+   * @param route 路由配置
+   * @param langHreflang 語言代碼
+   * @returns 是否支持該語言
+   */
+  const isRouteAvailableInLanguage = (route: RouteConfig, langHreflang: string): boolean => {
+    return route.supportedLanguages.includes(langHreflang);
+  };
 
-  for (const route of routes) {
-    // 預先計算此路由的所有語言URL和修改日期
-    const routeData = languages.map(lang => {
-      const langPrefix = lang.code ? `/${lang.code}` : '';
-      const fullRoute = `${langPrefix}${route === '/' ? '' : route}`;
-      const url = getFullUrl(fullRoute);
-      
-      // 獲取修改日期 (如果非必要，可考慮延遲計算)
-      const { modified } = getRouteDate(fullRoute, languages);
-      
-      return {
-        lang,
-        fullRoute,
-        url,
-        modified
-      };
-    });
+  for (const route of ROUTES) {
+    const baseRoute = route.path;
+    const mainUrl = getFullUrl(baseRoute);
+    // 只獲取修改日期，不需要創建日期
+    const { modified } = getRouteDate(baseRoute, LANGUAGES);
     
-    // 一次性生成語言替代鏈接
-    const alternates = {
-      languages: routeData.reduce((acc, item) => {
-        acc[item.lang.hreflang] = item.url;
-        return acc;
-      }, {} as Record<string, string>),
+    // 構建語言替代URL - 只包含支持的語言
+    const langAlternates: Record<string, string> = {};
+    for (const lang of LANGUAGES) {
+      // 檢查該路由是否支持此語言
+      if (isRouteAvailableInLanguage(route, lang.hreflang)) {
+        const langPrefix = lang.code ? `/${lang.code}` : '';
+        const fullRoute = `${langPrefix}${baseRoute === '/' ? '' : baseRoute}`;
+        langAlternates[lang.hreflang] = getFullUrl(fullRoute);
+      }
+    }
+    
+    // 使用路由配置的優先級和更新頻率
+    const { priority, changeFrequency } = route;
+    
+    // 添加主URL項目（包含所有替代語言連結）
+    sitemapItems.push({
+      url: mainUrl,
+      lastModified: parseGitDate(modified),
+      changeFrequency,
+      priority,
+      alternates: {
+        languages: langAlternates
+      }
+    });
+  }
+  
+  // 只在開發環境中輸出調試信息
+  if (process.env.NODE_ENV === 'development') {
+    console.log('\n======= Sitemap 生成信息 =======');
+    console.log(`生成的 sitemap 包含 ${sitemapItems.length} 個 URL 項目`);
+    
+    // 按路由類型統計
+    const routeTypeCount = {
+      mainPages: ROUTES.filter(r => r.priority >= 0.9).length,
+      toolPages: ROUTES.filter(r => r.priority >= 0.7 && r.priority < 0.9).length,
+      infoPages: ROUTES.filter(r => r.priority < 0.7).length
     };
-
-    // 定義基本優先級和更新頻率
-    let priority = 0.7;
-    let changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never' = 'weekly';
-
-    // 根據路由調整優先級和更新頻率
-    if (route === '/' || route === '/image-search') {
-      priority = 1.0;
-      changeFrequency = 'weekly';
-    } else if (route === '/date' || route === '/due-date-calculator' || route === '/gift-exchange') {
-      priority = 0.9;
-      changeFrequency = 'weekly';
-    } else {
-      priority = 0.3;
-      changeFrequency = 'monthly';
+    console.log(`路由類型統計: 主要頁面: ${routeTypeCount.mainPages}, 工具頁面: ${routeTypeCount.toolPages}, 資訊頁面: ${routeTypeCount.infoPages}`);
+    
+    // 輸出示例 XML 結構以便於了解實際生成的內容
+    console.log('\n實際生成的 XML 結構示例（第一個 URL）:');
+    if (sitemapItems.length > 0) {
+      const firstItem = sitemapItems[0];
+      console.log(`<url>
+  <loc>${firstItem.url}</loc>
+  <lastmod>${firstItem.lastModified instanceof Date ? 
+    firstItem.lastModified.toISOString() : 
+    firstItem.lastModified}</lastmod>
+  <changefreq>${firstItem.changeFrequency}</changefreq>
+  <priority>${firstItem.priority}</priority>
+  ${Object.entries(firstItem.alternates?.languages || {}).map(([lang, url]) => 
+    `<xhtml:link rel="alternate" hreflang="${lang}" href="${url}"/>`
+  ).join('\n  ')}
+</url>`);
     }
-
-    // 為每種語言添加sitemap項目 (使用預先計算的數據)
-    for (const item of routeData) {
-      sitemapItems.push({
-        url: item.url,
-        lastModified: parseGitDate(item.modified),
-        changeFrequency,
-        priority,
-        alternates,
-      });
-    }
+    console.log('\n===================================\n');
   }
 
   return sitemapItems;

@@ -107,7 +107,11 @@ const Header: FC = () => {
         <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
           {/* 左側 Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-xl font-bold text-blue-600 flex items-center" onClick={closeMenu}>
+            <Link 
+              href={`/${locale === 'zh' ? '' : locale}`} 
+              className="text-xl font-bold text-blue-600 flex items-center" 
+              onClick={closeMenu}
+            >
               <span className="mr-2">
                 <Image src="/favicon.ico" alt="" width={30} height={30} />
               </span>
@@ -169,7 +173,8 @@ const Header: FC = () => {
                 </div>
               </div>
               <div className="relative group">
-                <button
+                <Link
+                  href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="false"
                   aria-haspopup="true"
@@ -184,7 +189,7 @@ const Header: FC = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                </button>
+                </Link>
                 
                 <div 
                   className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
@@ -420,11 +425,13 @@ const Header: FC = () => {
               </li>
               <li>
                 <div className="flex w-full items-center justify-between">
-                  <button
+                  <Link
+                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
                   >
                     {t.header.tools}
-                  </button>
+                  </Link>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={() => {

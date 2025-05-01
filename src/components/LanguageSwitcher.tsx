@@ -85,18 +85,19 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
   };
 
   return (
-    <div className={`language-switcher relative ${className}`} ref={dropdownRef}>
+    <div className={`language-switcher relative group ${className}`} ref={dropdownRef}>
       {/* 當前語言按鈕 */}
       <button
         className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
         onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsOpen(true)}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <span>{languageNames[currentLocale]}</span>
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
-          className={`h-4 w-4 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''} group-hover:rotate-180`}
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"
@@ -105,29 +106,29 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
         </svg>
       </button>
       
-      {/* 下拉選單 */}
-      {isOpen && (
-        <div 
-          className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50"
-          role="menu"
-        >
-          {locales.map((locale) => {
-            const isActive = currentLocale === locale;
-            
-            return (
-              <Link
-                key={locale}
-                href={getLocalizedPath(locale)}
-                className={`block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${isActive ? 'font-bold bg-gray-50' : ''}`}
-                onClick={() => setIsOpen(false)}
-                role="menuitem"
-              >
-                {languageNames[locale]}
-              </Link>
-            );
-          })}
-        </div>
-      )}
+      {/* 下拉選單 - 添加hover功能 */}
+      <div 
+        className={`absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 transition-all duration-200 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        role="menu"
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        {locales.map((locale) => {
+          const isActive = currentLocale === locale;
+          
+          return (
+            <Link
+              key={locale}
+              href={getLocalizedPath(locale)}
+              className={`block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${isActive ? 'font-bold bg-gray-50' : ''}`}
+              onClick={() => setIsOpen(false)}
+              role="menuitem"
+            >
+              {languageNames[locale]}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
