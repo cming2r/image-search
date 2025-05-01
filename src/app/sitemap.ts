@@ -40,7 +40,7 @@ function parseGitDate(dateString: string): Date {
  * @param languages 支援的語言配置
  * @returns 頁面的Git日期
  */
-function getRouteDate(fullRoute: string, languages: LanguageConfig[]) {
+function getRouteDate(fullRoute: string, languages: LanguageConfig[]): { modified: string } {
   // 判斷當前環境，僅在開發環境輸出詳細日誌
   const isDev = process.env.NODE_ENV === 'development';
   
@@ -182,36 +182,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return route.supportedLanguages.includes(langHreflang);
   };
 
+  // 為每個路由處理所有語言版本
   for (const route of ROUTES) {
     const baseRoute = route.path;
-    const mainUrl = getFullUrl(baseRoute);
-    // 只獲取修改日期，不需要創建日期
-    const { modified } = getRouteDate(baseRoute, LANGUAGES);
     
-    // 構建語言替代URL - 只包含支持的語言
-    const langAlternates: Record<string, string> = {};
+    // 處理每種語言版本
     for (const lang of LANGUAGES) {
       // 檢查該路由是否支持此語言
       if (isRouteAvailableInLanguage(route, lang.hreflang)) {
+        // 生成該語言下的URL
         const langPrefix = lang.code ? `/${lang.code}` : '';
         const fullRoute = `${langPrefix}${baseRoute === '/' ? '' : baseRoute}`;
-        langAlternates[lang.hreflang] = getFullUrl(fullRoute);
+        const url = getFullUrl(fullRoute);
+        
+        // 獲取修改日期
+        const { modified } = getRouteDate(fullRoute, LANGUAGES);
+        
+        // 構建所有語言的替代URL
+        const langAlternates: Record<string, string> = {};
+        for (const altLang of LANGUAGES) {
+          // 僅添加支持的語言
+          if (isRouteAvailableInLanguage(route, altLang.hreflang)) {
+            const altLangPrefix = altLang.code ? `/${altLang.code}` : '';
+            const altFullRoute = `${altLangPrefix}${baseRoute === '/' ? '' : baseRoute}`;
+            langAlternates[altLang.hreflang] = getFullUrl(altFullRoute);
+          }
+        }
+        
+        // 使用路由配置的優先級和更新頻率
+        const { priority, changeFrequency } = route;
+        
+        // 添加URL項目（包含所有替代語言連結）
+        sitemapItems.push({
+          url,
+          lastModified: parseGitDate(modified),
+          changeFrequency,
+          priority,
+          alternates: {
+            languages: langAlternates
+          }
+        });
       }
     }
-    
-    // 使用路由配置的優先級和更新頻率
-    const { priority, changeFrequency } = route;
-    
-    // 添加主URL項目（包含所有替代語言連結）
-    sitemapItems.push({
-      url: mainUrl,
-      lastModified: parseGitDate(modified),
-      changeFrequency,
-      priority,
-      alternates: {
-        languages: langAlternates
-      }
-    });
   }
   
   // 只在開發環境中輸出調試信息
@@ -221,9 +233,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     
     // 按路由類型統計
     const routeTypeCount = {
-      mainPages: ROUTES.filter(r => r.priority >= 0.9).length,
-      toolPages: ROUTES.filter(r => r.priority >= 0.7 && r.priority < 0.9).length,
-      infoPages: ROUTES.filter(r => r.priority < 0.7).length
+      mainPages: ROUTES.filter((r: RouteConfig) => r.priority >= 0.9).length,
+      toolPages: ROUTES.filter((r: RouteConfig) => r.priority >= 0.7 && r.priority < 0.9).length,
+      infoPages: ROUTES.filter((r: RouteConfig) => r.priority < 0.7).length
     };
     console.log(`路由類型統計: 主要頁面: ${routeTypeCount.mainPages}, 工具頁面: ${routeTypeCount.toolPages}, 資訊頁面: ${routeTypeCount.infoPages}`);
     
