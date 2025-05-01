@@ -186,6 +186,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const route of ROUTES) {
     const baseRoute = route.path;
     
+    // 先獲取根路徑的日期，所有語言版本都使用相同的日期
+    const rootRoute = baseRoute === '/' ? '' : baseRoute;
+    const { modified } = getRouteDate(rootRoute, LANGUAGES);
+    const parsedDate = parseGitDate(modified);
+    
     // 處理每種語言版本
     for (const lang of LANGUAGES) {
       // 檢查該路由是否支持此語言
@@ -195,32 +200,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         const fullRoute = `${langPrefix}${baseRoute === '/' ? '' : baseRoute}`;
         const url = getFullUrl(fullRoute);
         
-        // 獲取修改日期
-        const { modified } = getRouteDate(fullRoute, LANGUAGES);
-        
-        // 構建所有語言的替代URL
-        const langAlternates: Record<string, string> = {};
-        for (const altLang of LANGUAGES) {
-          // 僅添加支持的語言
-          if (isRouteAvailableInLanguage(route, altLang.hreflang)) {
-            const altLangPrefix = altLang.code ? `/${altLang.code}` : '';
-            const altFullRoute = `${altLangPrefix}${baseRoute === '/' ? '' : baseRoute}`;
-            langAlternates[altLang.hreflang] = getFullUrl(altFullRoute);
-          }
-        }
-        
-        // 使用路由配置的優先級和更新頻率
-        const { priority, changeFrequency } = route;
-        
-        // 添加URL項目（包含所有替代語言連結）
+        // 所有語言版本使用相同的日期
         sitemapItems.push({
           url,
-          lastModified: parseGitDate(modified),
-          changeFrequency,
-          priority,
-          alternates: {
-            languages: langAlternates
-          }
+          lastModified: parsedDate,
+          changeFrequency: route.changeFrequency,
+          priority: route.priority
         });
       }
     }
@@ -250,13 +235,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     firstItem.lastModified}</lastmod>
   <changefreq>${firstItem.changeFrequency}</changefreq>
   <priority>${firstItem.priority}</priority>
-  ${Object.entries(firstItem.alternates?.languages || {}).map(([lang, url]) => 
-    `<xhtml:link rel="alternate" hreflang="${lang}" href="${url}"/>`
-  ).join('\n  ')}
 </url>`);
     }
     console.log('\n===================================\n');
   }
 
+  // 返回處理好的 sitemap 項目，Next.js 將自動轉換為 XML 格式
   return sitemapItems;
 }
