@@ -5,7 +5,7 @@ import { getBaseUrl, getFullUrl } from '../utils';
 export const AUTHOR = {
   '@type': 'Person',
   '@id': `${getBaseUrl()}/about/#author`,
-  name: 'fyimg',
+  name: 'Fyimg Editors',
   url: getBaseUrl(),
   image: {
     '@type': 'ImageObject',
@@ -13,7 +13,7 @@ export const AUTHOR = {
     url: getFullUrl('/og-image.png'),
     width: 1200,
     height: 630,
-    caption: 'fyimg'
+    caption: 'Fyimg Editors'
   }
 };
 
@@ -21,14 +21,14 @@ export const AUTHOR = {
 export const PUBLISHER = {
   '@type': 'Organization',
   '@id': `${getBaseUrl()}#organization`,
-  name: 'fyimg 編輯團隊',
+  name: 'Fyimg Creative Team',
   logo: {
     '@type': 'ImageObject',
     '@id': `${getBaseUrl()}#logo`,
     url: getFullUrl('/og-image.png'),
     width: 1200,
     height: 630,
-    caption: 'fyimg 編輯團隊'
+    caption: 'Fyimg Creative Team'
   }
 };
 

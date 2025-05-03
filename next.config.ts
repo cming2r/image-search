@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
   experimental: {
     // 啟用任何需要的實驗性功能
   },
+  // 使用 SWC 優化
+  swcMinify: true,
+  // 設定更先進的瀏覽器目標以減少 polyfills
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
 };
 
 // 直接導出配置，不使用 withNextIntl

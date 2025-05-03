@@ -10,6 +10,12 @@
     "typecheck": "tsc --noEmit",
     "update-dates": "node --experimental-modules scripts/update-git-dates.mjs"
   },
+  
+  "browserslist": [
+    "last 2 versions",
+    "> 0.2%",
+    "not dead"
+  ],
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.6.1",
