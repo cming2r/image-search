@@ -47,8 +47,13 @@ export async function GET(request: Request) {
     // 驗證請求
     if (!validateCronRequest(request)) {
       // 記錄更多信息以幫助調試
+      const headerObj: Record<string, string> = {};
+      request.headers.forEach((value, key) => {
+        headerObj[key] = value;
+      });
+      
       console.warn('未授權的 cron 請求:', {
-        headers: Object.fromEntries([...request.headers.entries()]),
+        headers: headerObj,
         url: request.url,
         method: request.method
       });

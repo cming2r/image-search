@@ -12,9 +12,10 @@
   },
   
   "browserslist": [
-    "last 2 versions",
     "> 0.2%",
-    "not dead"
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
   ],
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
