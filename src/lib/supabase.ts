@@ -92,6 +92,34 @@ export function getUserAgentInfo() {
   return { browser, os };
 }
 
+// 獲取用戶IP和國家代碼
+async function fetchIPInfo() {
+  try {
+    // 使用公共API獲取IP信息
+    const response = await fetch('https://api.ipify.org?format=json');
+    if (!response.ok) {
+      throw new Error('無法獲取IP地址');
+    }
+    const data = await response.json();
+    const ip = data.ip;
+
+    // 使用公共API獲取國家代碼
+    const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+    if (!geoResponse.ok) {
+      return { ip_address: ip, country_code: 'XX' };
+    }
+    const geoData = await geoResponse.json();
+    
+    return {
+      ip_address: ip,
+      country_code: geoData.country_code || 'XX'
+    };
+  } catch (error) {
+    console.error('獲取IP信息失敗:', error);
+    return { ip_address: '', country_code: 'XX' };
+  }
+}
+
 // 簡化版的保存搜尋記錄函數
 export async function saveSearchRecord(record: SearchRecord) {
   // 記錄基本信息到控制台
@@ -104,6 +132,9 @@ export async function saveSearchRecord(record: SearchRecord) {
       searchEngine = searchEngine ? [searchEngine] : [];
     }
     
+    // 獲取IP地址和國家代碼
+    const ipInfo = await fetchIPInfo();
+    
     // 簡單插入記錄 - 不再嘗試更新
     const { error } = await supabase
       .from('image_searches')
@@ -113,6 +144,8 @@ export async function saveSearchRecord(record: SearchRecord) {
         device_type: record.device_type || getDeviceType(),
         browser: record.browser || getUserAgentInfo().browser,
         os: record.os || getUserAgentInfo().os,
+        ip_address: record.ip_address || ipInfo.ip_address,
+        country_code: record.country_code || ipInfo.country_code,
         searched_at: new Date().toISOString()
       }]);
       
@@ -139,6 +172,9 @@ export async function saveImageUrl(imageUrl: string) {
     const deviceType = typeof window !== 'undefined' ? getDeviceType() : 'unknown';
     const { browser, os } = getUserAgentInfo();
     
+    // 獲取IP地址和國家代碼
+    const ipInfo = await fetchIPInfo();
+    
     // 簡單插入記錄 - 不再嘗試更新
     const { error } = await supabase
       .from('image_searches')
@@ -148,6 +184,8 @@ export async function saveImageUrl(imageUrl: string) {
         device_type: deviceType,
         browser: browser,
         os: os,
+        ip_address: ipInfo.ip_address,
+        country_code: ipInfo.country_code,
         searched_at: new Date().toISOString()
       }]);
       
