@@ -35,6 +35,38 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
     }, 3000);
   };
   
+  // 讀取並更新本地搜索引擎記錄
+  const updateLocalSearchEngines = (engineName: string): string[] => {
+    // 嘗試從localStorage獲取當前圖片URL的搜索引擎列表
+    try {
+      const currentImageKey = `image_url_${imageUrl}`;
+      let engines: string[] = [];
+      
+      const storedEngines = localStorage.getItem(currentImageKey);
+      if (storedEngines) {
+        try {
+          engines = JSON.parse(storedEngines);
+          if (!Array.isArray(engines)) {
+            engines = [];
+          }
+        } catch {
+          engines = [];
+        }
+      }
+      
+      // 如果引擎不在列表中，添加它
+      if (!engines.includes(engineName)) {
+        engines.push(engineName);
+        localStorage.setItem(currentImageKey, JSON.stringify(engines));
+      }
+      
+      return engines;
+    } catch (error) {
+      console.error('無法更新本地搜索引擎記錄:', error);
+      return [engineName];
+    }
+  };
+  
   // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
   const handleSearch = async (engineUrl: string, engineName: string): Promise<boolean> => {
     // 再次驗證URL的有效性
@@ -47,32 +79,23 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
       // 獲取設備類型
       const deviceType = getDeviceType();
       
-      // 用 Promise.race 和超時控制 API 調用
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Search record timeout')), 2000)
-      );
+      // 更新本地搜索引擎記錄
+      const engines = updateLocalSearchEngines(engineName);
+      console.log('本地搜索引擎記錄:', engines);
       
-      // 靜默保存詳細搜尋記錄到Supabase
-      await Promise.race([
-        saveSearchRecord({
-          image_url: imageUrl,
-          search_engine: engineName,
-          device_type: deviceType
-        }),
-        timeoutPromise
-      ]).catch(err => {
-        // 捕獲任何錯誤但不阻止繼續
-        console.log('搜尋記錄處理中止 (timeout or error):', err.message);
+      // 紀錄到Supabase
+      saveSearchRecord({
+        image_url: imageUrl,
+        search_engine: engines, // 使用完整的引擎陣列
+        device_type: deviceType
+      }).catch(err => {
+        console.error('保存搜索引擎失敗:', err);
       });
       
-      // 成功或失敗都繼續打開鏈接
       return true;
     } catch (error) {
-      // 只在控制台記錄錯誤，不顯示給用戶
-      console.error('保存搜尋記錄失敗:', error);
-      
-      // 即使保存失敗，仍允許打開連結
-      return true;
+      console.error('處理搜尋記錄失敗:', error);
+      return true; // 即使保存失敗，仍允許打開連結
     }
   };
   
@@ -214,13 +237,11 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
                 return false;
               }
               
-              // URL有效，立即打開鏈接，不等待數據保存
+              // 異步記錄搜尋，不阻塞用戶體驗
+              handleSearch(engine.url, engine.name);
+              
+              // URL有效，立即打開鏈接
               window.open(engine.url, '_blank');
-              
-              // 後台異步記錄搜尋，不阻塞用戶體驗
-              handleSearch(engine.url, engine.name)
-                .catch(err => console.error('記錄搜尋失敗:', err));
-              
               return false; // 阻止默認事件
             }}
             onAuxClick={(e) => {
@@ -237,9 +258,8 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
                   return false;
                 }
                 
-                // URL有效，異步記錄搜尋，不阻塞默認行為
-                handleSearch(engine.url, engine.name)
-                  .catch(err => console.error('記錄搜尋失敗:', err));
+                // 異步記錄搜尋，不阻塞默認行為
+                handleSearch(engine.url, engine.name);
               }
             }}
             className={`block w-full md:w-auto md:flex-1 ${engine.bgColor} ${engine.hoverColor} text-white px-4 py-3 rounded flex items-center justify-center transition-colors mb-3 md:mb-0`}

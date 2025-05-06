@@ -15,8 +15,7 @@ const nextConfig: NextConfig = {
   experimental: {
     // 啟用任何需要的實驗性功能
   },
-  // 使用 SWC 優化
-  swcMinify: true,
+  // SWC 優化在新版 Next.js 中默認啟用
   // 設定更先進的瀏覽器目標以減少 polyfills
   eslint: {
     ignoreDuringBuilds: false,

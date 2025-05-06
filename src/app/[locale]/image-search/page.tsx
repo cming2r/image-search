@@ -60,7 +60,20 @@ export default function ImageSearch() {
             
             <div className="space-y-6">
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-medium text-blue-700">{t.searchEngines.google.title}</h3>
+                <h3 className="text-lg font-medium text-blue-700 flex items-center">
+                  {t.searchEngines.google.title}
+                  <a 
+                    href="https://lens.google.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    aria-label="前往 Google Lens"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
                 <div className="mt-3 space-y-3">
                   {t.searchEngines.google.content.map((paragraph, index) => (
                     <p key={index}>
@@ -71,7 +84,20 @@ export default function ImageSearch() {
               </div>
               
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-medium text-teal-700">{t.searchEngines.bing.title}</h3>
+                <h3 className="text-lg font-medium text-teal-700 flex items-center">
+                  {t.searchEngines.bing.title}
+                  <a 
+                    href="https://www.bing.com/images/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-teal-600 hover:text-teal-800 transition-colors"
+                    aria-label="前往 Bing 圖片搜尋"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
                 <div className="mt-3 space-y-3">
                   {t.searchEngines.bing.content.map((paragraph, index) => (
                     <p key={index}>
@@ -82,7 +108,20 @@ export default function ImageSearch() {
               </div>
               
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-medium text-red-700">{t.searchEngines.yandex.title}</h3>
+                <h3 className="text-lg font-medium text-red-700 flex items-center">
+                  {t.searchEngines.yandex.title}
+                  <a 
+                    href="https://ya.ru/images/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-red-600 hover:text-red-800 transition-colors"
+                    aria-label="前往 Yandex 圖片搜尋"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
                 <div className="mt-3 space-y-3">
                   {t.searchEngines.yandex.content.map((paragraph, index) => (
                     <p key={index}>
@@ -93,7 +132,20 @@ export default function ImageSearch() {
               </div>
               
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-medium text-purple-700">{t.searchEngines.sauceNAO.title}</h3>
+                <h3 className="text-lg font-medium text-purple-700 flex items-center">
+                  {t.searchEngines.sauceNAO.title}
+                  <a 
+                    href="https://saucenao.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-purple-600 hover:text-purple-800 transition-colors"
+                    aria-label="前往 SauceNAO 圖片搜尋"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
                 <div className="mt-3 space-y-3">
                   {t.searchEngines.sauceNAO.content.map((paragraph, index) => (
                     <p key={index}>
@@ -104,7 +156,20 @@ export default function ImageSearch() {
               </div>
               
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-medium text-gray-700">{t.searchEngines.tineye.title}</h3>
+                <h3 className="text-lg font-medium text-gray-700 flex items-center">
+                  {t.searchEngines.tineye.title}
+                  <a 
+                    href="https://tineye.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-gray-500 hover:text-gray-700 transition-colors"
+                    aria-label="前往 TinEye 網站"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
                 <div className="mt-3 space-y-3">
                   {t.searchEngines.tineye.content.map((paragraph, index) => (
                     <p key={index}>

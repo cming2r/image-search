@@ -39,7 +39,7 @@ export async function isAdmin(userId: string | undefined) {
 // 定義搜索記錄接口
 export interface SearchRecord {
   image_url: string;
-  search_engine: string;
+  search_engine: string | string[];  // 現在支持字串或字串數組
   device_type: string;
   country_code?: string;  // ISO 3166-1 Alpha-2 國家代碼
   browser?: string;
@@ -92,109 +92,76 @@ export function getUserAgentInfo() {
   return { browser, os };
 }
 
-// 創建保存搜尋記錄的函數
+// 簡化版的保存搜尋記錄函數
 export async function saveSearchRecord(record: SearchRecord) {
+  // 記錄基本信息到控制台
+  console.log('正在保存搜尋記錄:', record);
+  
   try {
-    // 嘗試獲取IP信息和國家代碼 (ISO 3166-1 Alpha-2)
-    let countryCode = 'XX'; // 未知國家的備用代碼
-    let ipAddress = '0.0.0.0'; // 未知IP的備用值
-    try {
-      // 直接使用 geolocation-db API，一次性獲取 IP 和國家代碼
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000); // 2秒超時
-      
-      try {
-        // 使用 geolocation-db API (無需 API 密鑰)
-        const response = await fetch('https://geolocation-db.com/json/', {
-          signal: controller.signal,
-          cache: 'no-store' // 不緩存結果
-        });
-        clearTimeout(timeoutId);
-        
-        if (response.ok) {
-          const data = await response.json();
-          // 獲取 IP 地址
-          ipAddress = data.IPv4 || data.IPv6 || '0.0.0.0';
-          // 獲取國家代碼 (ISO 3166-1 Alpha-2)
-          countryCode = data.country_code || 'XX';
-        }
-      } catch  {
-        console.log('Primary geoip service failed, trying backup');
-        
-        // 備用：使用 ipinfo.io API (免費版每天有限制，但較可靠)
-        try {
-          const backupResponse = await fetch('https://ipinfo.io/json', { 
-            signal: controller.signal 
-          });
-          
-          if (backupResponse.ok) {
-            const data = await backupResponse.json();
-            ipAddress = data.ip || '0.0.0.0';
-            countryCode = data.country || 'XX';
-          }
-        } catch {
-          // 如果備用 API 也失敗，嘗試第三個 API
-          try {
-            const lastResortResponse = await fetch('https://ip-api.com/json/?fields=status,message,country,countryCode,query', {
-              signal: controller.signal
-            });
-            
-            if (lastResortResponse.ok) {
-              const data = await lastResortResponse.json();
-              if (data.status === 'success') {
-                ipAddress = data.query || '0.0.0.0';
-                countryCode = data.countryCode || 'XX';
-              }
-            }
-          } catch {
-            // 如果所有 API 都失敗，使用默認值
-            console.log('All geo services failed, using default values');
-          }
-        }
-      }
-    } catch (error) {
-      console.error('獲取IP和國家信息失敗:', error);
+    // 確保 search_engine 是數組
+    let searchEngine = record.search_engine;
+    if (!Array.isArray(searchEngine)) {
+      searchEngine = searchEngine ? [searchEngine] : [];
     }
-
-    // 獲取用戶代理信息（只取瀏覽器和操作系統，不儲存完整user_agent）
-    const { browser, os } = getUserAgentInfo();
-
-    const { data, error } = await supabase
+    
+    // 簡單插入記錄 - 不再嘗試更新
+    const { error } = await supabase
       .from('image_searches')
-      .insert([
-        { 
-          image_url: record.image_url,
-          search_engine: record.search_engine,
-          device_type: record.device_type,
-          country_code: countryCode,
-          browser: browser,
-          os: os,
-          ip_address: ipAddress,
-          searched_at: new Date().toISOString()
-        }
-      ]);
+      .insert([{
+        image_url: record.image_url,
+        search_engine: searchEngine,
+        device_type: record.device_type || getDeviceType(),
+        browser: record.browser || getUserAgentInfo().browser,
+        os: record.os || getUserAgentInfo().os,
+        searched_at: new Date().toISOString()
+      }]);
+      
+    if (error) {
+      // 忽略主鍵衝突錯誤 (image_url 已存在)，但記錄其他錯誤
+      if (error.code !== '23505') {
+        console.error('保存記錄失敗:', error);
+        return { success: false, error };
+      }
+    }
     
-    if (error) throw error;
-    
-    return { success: true, data };
+    return { success: true };
   } catch (error) {
-    console.error('保存搜尋記錄失敗:', error);
+    console.error('保存記錄時出現異常:', error);
     return { success: false, error };
   }
 }
 
-// 保留向後兼容的函數
+// 記錄圖片上傳或URL輸入，初始搜索引擎為空數組
 export async function saveImageUrl(imageUrl: string) {
   try {
-    const deviceType = typeof window !== 'undefined' ? getDeviceType() : 'unknown';
+    console.log('保存圖片URL:', imageUrl);
     
-    return await saveSearchRecord({
-      image_url: imageUrl,
-      search_engine: 'unknown',
-      device_type: deviceType
-    });
+    const deviceType = typeof window !== 'undefined' ? getDeviceType() : 'unknown';
+    const { browser, os } = getUserAgentInfo();
+    
+    // 簡單插入記錄 - 不再嘗試更新
+    const { error } = await supabase
+      .from('image_searches')
+      .insert([{
+        image_url: imageUrl,
+        search_engine: [],
+        device_type: deviceType,
+        browser: browser,
+        os: os,
+        searched_at: new Date().toISOString()
+      }]);
+      
+    if (error) {
+      // 忽略主鍵衝突錯誤 (image_url 已存在)，但記錄其他錯誤
+      if (error.code !== '23505') {
+        console.error('保存圖片URL失敗:', error);
+        return { success: false, error };
+      }
+    }
+    
+    return { success: true };
   } catch (error) {
-    console.error('保存圖片URL失敗:', error);
+    console.error('保存圖片URL時出現異常:', error);
     return { success: false, error };
   }
 }
