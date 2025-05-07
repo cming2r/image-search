@@ -92,30 +92,82 @@ export function getUserAgentInfo() {
   return { browser, os };
 }
 
-// 獲取用戶IP和國家代碼
+// IP信息緩存 - 5分鐘內有效
+const ipCache = {
+  data: null as { ip_address: string; country_code: string } | null,
+  timestamp: 0,
+  expiryTime: 5 * 60 * 1000 // 5分鐘
+};
+
+// 獲取用戶IP和國家代碼 - 優化版本
 async function fetchIPInfo() {
+  // 1. 檢查緩存是否有效
+  const now = Date.now();
+  if (ipCache.data && (now - ipCache.timestamp < ipCache.expiryTime)) {
+    console.log('使用緩存的IP信息:', ipCache.data);
+    return ipCache.data;
+  }
+  
   try {
-    // 使用公共API獲取IP信息
+    // 2. 使用更可靠的組合API獲取IP和地理信息
+    // 方法1: ipinfo.io - 單一請求獲取所有信息
+    try {
+      const response = await fetch('https://ipinfo.io/json');
+      if (response.ok) {
+        const data = await response.json();
+        const result = {
+          ip_address: data.ip || '',
+          country_code: data.country || 'XX'
+        };
+        
+        // 更新緩存
+        ipCache.data = result;
+        ipCache.timestamp = now;
+        
+        return result;
+      }
+    } catch  {
+      console.log('ipinfo.io 獲取失敗，嘗試備用方法');
+    }
+    
+    // 方法2: 備用方案 - 使用ipify + ipapi.co
     const response = await fetch('https://api.ipify.org?format=json');
     if (!response.ok) {
       throw new Error('無法獲取IP地址');
     }
+    
     const data = await response.json();
     const ip = data.ip;
-
-    // 使用公共API獲取國家代碼
+    
     const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
     if (!geoResponse.ok) {
-      return { ip_address: ip, country_code: 'XX' };
+      const fallbackResult = { ip_address: ip, country_code: 'XX' };
+      ipCache.data = fallbackResult;
+      ipCache.timestamp = now;
+      return fallbackResult;
     }
-    const geoData = await geoResponse.json();
     
-    return {
+    const geoData = await geoResponse.json();
+    const result = {
       ip_address: ip,
       country_code: geoData.country_code || 'XX'
     };
+    
+    // 更新緩存
+    ipCache.data = result;
+    ipCache.timestamp = now;
+    
+    return result;
   } catch (error) {
     console.error('獲取IP信息失敗:', error);
+    
+    // 如果請求失敗但有舊緩存，仍然返回舊緩存
+    if (ipCache.data) {
+      console.log('使用過期的緩存IP信息');
+      return ipCache.data;
+    }
+    
+    // 最後的後備方案
     return { ip_address: '', country_code: 'XX' };
   }
 }
@@ -143,41 +195,6 @@ function prepareRecordData(imageUrl: string, searchEngine?: string | string[], u
   };
 }
 
-// 定義記錄數據接口
-interface RecordData {
-  device_type: string;
-  browser: string;
-  os: string;
-  ip_address?: string;
-  country_code?: string;
-  searched_at: string;
-}
-
-// 共用的插入記錄邏輯
-async function insertSearchRecord(imageUrl: string, searchEngine: string[], baseData: RecordData) {
-  const { error: insertError } = await supabase
-    .from('image_searches')
-    .insert([{
-      image_url: imageUrl,
-      search_engine: searchEngine,
-      ...baseData
-    }]);
-    
-  if (insertError) {
-    // 如果有主鍵衝突，視為成功
-    if (insertError.code === '23505') {
-      console.log('檢測到鍵衝突，記錄可能已存在');
-      return { success: true };
-    }
-    
-    console.error('插入記錄失敗:', insertError);
-    return { success: false, error: insertError };
-  }
-  
-  console.log('新記錄創建成功');
-  return { success: true };
-}
-
 // 保存或更新搜尋記錄函數 - 使用原子更新操作
 export async function saveSearchRecord(record: SearchRecord) {
   console.log('正在保存搜尋記錄:', record);
@@ -190,8 +207,8 @@ export async function saveSearchRecord(record: SearchRecord) {
     const { imageUrl, engines, deviceType, browser, os, timestamp } = 
       prepareRecordData(record.image_url, record.search_engine, record);
     
-    // 嘗試使用RPC函數更新記錄
-    const { data: updateResult, error: updateError } = await supabase.rpc(
+    // 使用RPC函數更新記錄
+    const { error: updateError } = await supabase.rpc(
       'update_search_record',
       {
         p_image_url: imageUrl,
@@ -207,64 +224,10 @@ export async function saveSearchRecord(record: SearchRecord) {
     
     if (updateError) {
       console.error('執行RPC更新記錄失敗:', updateError);
-      
-      // 回退方案: 使用標準API
-      // 先嘗試查詢記錄
-      const { data: records, error: queryError } = await supabase
-        .from('image_searches')
-        .select('id, search_engine')
-        .eq('image_url', imageUrl);
-      
-      if (queryError) {
-        console.error('查詢記錄失敗:', queryError);
-        return { success: false, error: queryError };
-      }
-      
-      if (records && records.length > 0) {
-        // 記錄存在，更新
-        const existingRecord = records[0];
-        let updatedEngines = [...engines];
-        
-        if (existingRecord.search_engine && Array.isArray(existingRecord.search_engine)) {
-          // 合併搜索引擎並去重
-          updatedEngines = [...new Set([...existingRecord.search_engine, ...engines])];
-        }
-        
-        // 使用記錄ID更新
-        const { error: updateRecordError } = await supabase
-          .from('image_searches')
-          .update({
-            search_engine: updatedEngines,
-            device_type: deviceType,
-            browser: browser,
-            os: os,
-            ip_address: record.ip_address || ipInfo.ip_address,
-            country_code: record.country_code || ipInfo.country_code,
-            searched_at: timestamp
-          })
-          .eq('id', existingRecord.id);
-        
-        if (updateRecordError) {
-          console.error('更新記錄失敗:', updateRecordError);
-          return { success: false, error: updateRecordError };
-        }
-        
-        console.log('記錄已成功更新 (API)');
-        return { success: true };
-      }
-      
-      // 記錄不存在，創建新記錄
-      return await insertSearchRecord(imageUrl, engines, {
-        device_type: deviceType,
-        browser: browser,
-        os: os,
-        ip_address: record.ip_address || ipInfo.ip_address,
-        country_code: record.country_code || ipInfo.country_code,
-        searched_at: timestamp
-      });
+      return { success: false, error: updateError };
     }
     
-    console.log('RPC操作成功完成:', updateResult);
+    console.log('搜索引擎記錄更新成功');
     return { success: true };
   } catch (error) {
     console.error('保存記錄時出現異常:', error);
@@ -283,8 +246,8 @@ export async function saveImageUrl(imageUrl: string) {
     // 準備共用數據
     const { deviceType, browser, os, timestamp } = prepareRecordData(imageUrl);
     
-    // 嘗試使用RPC函數創建初始記錄
-    const { data: rpcResult, error: rpcError } = await supabase.rpc(
+    // 使用RPC函數創建初始記錄
+    const { error: rpcError } = await supabase.rpc(
       'create_initial_search_record',
       {
         p_image_url: imageUrl,
@@ -299,37 +262,10 @@ export async function saveImageUrl(imageUrl: string) {
     
     if (rpcError) {
       console.error('執行RPC創建初始記錄失敗:', rpcError);
-      
-      // 回退方案: 使用標準API
-      // 檢查記錄是否已存在
-      const { data: records, error: queryError } = await supabase
-        .from('image_searches')
-        .select('id')
-        .eq('image_url', imageUrl);
-      
-      if (queryError) {
-        console.error('查詢圖片URL記錄失敗:', queryError);
-        return { success: false, error: queryError };
-      }
-      
-      if (records && records.length > 0) {
-        // 記錄已存在，不需要操作
-        console.log('圖片URL記錄已存在 (API)');
-        return { success: true };
-      }
-      
-      // 記錄不存在，創建新記錄
-      return await insertSearchRecord(imageUrl, [], {
-        device_type: deviceType,
-        browser: browser,
-        os: os,
-        ip_address: ipInfo.ip_address,
-        country_code: ipInfo.country_code,
-        searched_at: timestamp
-      });
+      return { success: false, error: rpcError };
     }
     
-    console.log('RPC操作成功完成:', rpcResult);
+    console.log('初始圖片記錄創建成功');
     return { success: true };
   } catch (error) {
     console.error('保存圖片URL時出現異常:', error);
