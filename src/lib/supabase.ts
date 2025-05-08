@@ -163,28 +163,15 @@ function prepareRecordData(imageUrl: string, searchEngine?: string | string[], u
   };
 }
 
-// 保存或更新搜尋記錄函數 - 使用原子更新操作
+// 保存或更新搜尋記錄函數 - 僅更新搜尋引擎信息，不獲取IP
 export async function saveSearchRecord(record: SearchRecord) {
-  console.log('正在保存搜尋記錄:', record);
   
   try {
-    // 獲取IP地址和國家代碼
-    const ipInfo = await fetchIPInfo();
-    
     // 準備共用數據
     const { imageUrl, engines, deviceType, browser, os, timestamp } = 
       prepareRecordData(record.image_url, record.search_engine, record);
     
-    // 優先使用有效的IP信息
-    // 先檢查記錄中提供的IP，若無效則使用fetchIPInfo獲取的IP
-    const ip_address = record.ip_address && record.ip_address !== '' ? 
-      record.ip_address : (ipInfo.ip_address || '');
-    
-    // 同樣地處理國家代碼
-    const country_code = record.country_code && record.country_code !== '' && record.country_code !== 'XX' ? 
-      record.country_code : (ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '');
-    
-    // 使用RPC函數更新記錄
+    // 使用RPC函數僅更新搜索引擎信息，保留原有IP和國家信息
     const { error: updateError } = await supabase.rpc(
       'update_search_record',
       {
@@ -193,8 +180,8 @@ export async function saveSearchRecord(record: SearchRecord) {
         p_device_type: deviceType,
         p_browser: browser,
         p_os: os,
-        p_ip_address: ip_address,
-        p_country_code: country_code,
+        p_ip_address: '', // 不更新IP信息，保留資料庫中已有的值
+        p_country_code: '', // 不更新國家信息，保留資料庫中已有的值
         p_searched_at: timestamp
       }
     );
@@ -205,8 +192,7 @@ export async function saveSearchRecord(record: SearchRecord) {
     }
     
     console.log('搜索引擎記錄更新成功', {
-      ip_address: ip_address || '(無)',
-      country_code: country_code || '(無)'
+      engines: engines
     });
     return { success: true };
   } catch (error) {
@@ -215,25 +201,25 @@ export async function saveSearchRecord(record: SearchRecord) {
   }
 }
 
-// 記錄圖片上傳或URL輸入，初始搜索引擎為空數組
+// 記錄圖片上傳或URL輸入，初始搜索引擎為空數組，同時獲取IP和國家信息
 export async function saveImageUrl(imageUrl: string) {
   try {
-    console.log('保存圖片URL:', imageUrl);
+    console.log('保存圖片URL並獲取IP信息:', imageUrl);
     
-    // 獲取IP地址和國家代碼
+    // 獲取IP地址和國家代碼（只在這裡獲取並存儲）
+    console.log('開始獲取IP和國家信息...');
     const ipInfo = await fetchIPInfo();
     
     // 準備共用數據
     const { deviceType, browser, os, timestamp } = prepareRecordData(imageUrl);
     
-    // 確保我們只使用有效的IP和國家代碼
-    // 檢查IP是否有效
+    // 獲取並記錄IP地址
     const ip_address = ipInfo.ip_address || '';
-    console.log('取得的IP地址:', ip_address);
+    console.log('成功獲取IP地址:', ip_address || '(無法獲取)');
     
-    // 檢查國家代碼是否有效
+    // 獲取並記錄國家代碼
     const country_code = ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '';
-    console.log('取得的國家代碼:', country_code || '(無)');
+    console.log('成功獲取國家代碼:', country_code || '(無法獲取)');
     
     // 使用RPC函數創建初始記錄
     const { error: rpcError } = await supabase.rpc(

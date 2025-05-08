@@ -68,7 +68,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }
   };
   
-  // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
+  // 處理點擊搜尋按鈕，僅更新搜尋引擎信息到Supabase (靜默記錄)
   const handleSearch = async (engineUrl: string, engineName: string): Promise<boolean> => {
     // 再次驗證URL的有效性
     if (!isValidImageUrl(imageUrl)) {
@@ -84,13 +84,14 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
       const engines = updateLocalSearchEngines(engineName);
       console.log('本地搜索引擎記錄:', engines);
       
-      // 紀錄到Supabase
+      // 僅更新搜尋引擎信息到Supabase，不獲取IP和國家
       saveSearchRecord({
         image_url: imageUrl,
         search_engine: engines, // 使用完整的引擎陣列
         device_type: deviceType
+        // 不提供ip_address和country_code
       }).catch(err => {
-        console.error('保存搜索引擎失敗:', err);
+        console.error('更新搜索引擎失敗:', err);
       });
       
       return true;
