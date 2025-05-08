@@ -178,12 +178,12 @@ const ImageForm: FC = () => {
         <div className="space-y-8">
           {/* 圖片上傳區塊 */}
           <div className="pb-8 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+            <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
               </svg>
               {t.form.uploadImageTab}
-            </h3>
+            </h2>
             
             <div className="md:flex md:space-x-4">
               <div className="md:w-full">
@@ -259,12 +259,12 @@ const ImageForm: FC = () => {
 
           {/* URL輸入區塊 */}
           <div>
-            <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+            <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
               </svg>
               {t.form.enterUrlTab}
-            </h3>
+            </h2>
             
             <form onSubmit={handleSubmitUrl} className="mb-6">
               <div className="md:flex md:space-x-4">
@@ -314,11 +314,23 @@ const ImageForm: FC = () => {
       ) : (
         // 已上傳圖片時只顯示預覽區域
         <div className="flex flex-col items-center">
-          <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+          <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
             {t.form.imagePreview}
-          </h3>
+          </h2>
           <div className="w-full max-w-md mb-6">
-            <div className="border rounded p-4 bg-gray-50 flex justify-center">
+            <div className="border rounded p-4 bg-gray-50 flex justify-center relative">
+              {/* 右上角的叉叉按鈕 - 更明顯的版本但保持原位置 */}
+              <button
+                type="button"
+                onClick={handleReset}
+                className="absolute top-2 right-2 z-10 bg-red-500 rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
+                aria-label="Close"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              
               <div className="relative w-full h-48">
                 <Image
                   src={uploadedImageUrl}
@@ -330,13 +342,6 @@ const ImageForm: FC = () => {
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors mb-4"
-          >
-            {t.form.resetButton}
-          </button>
         </div>
       )}
 
@@ -347,18 +352,11 @@ const ImageForm: FC = () => {
         </div>
       )}
 
-      {/* 圖片網址資訊 - 只在有上傳圖片時顯示 */}
+      {/* 搜尋按鈕組 - 只在有上傳圖片時顯示 */}
       {uploadedImageUrl && (
         <div className="mt-6">
-          <div className="bg-blue-50 p-3 rounded mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            <span className="text-blue-700 text-base break-all">{t.form.imageUrlInfo} {uploadedImageUrl}</span>
-          </div>
-          
-          {/* 搜尋按鈕組 */}
-          <SearchButtons imageUrl={uploadedImageUrl} />
+          {/* 搜尋按鈕組 - 傳遞重置函數 */}
+          <SearchButtons imageUrl={uploadedImageUrl} onReset={handleReset} />
         </div>
       )}
 

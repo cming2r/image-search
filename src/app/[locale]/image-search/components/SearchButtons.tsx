@@ -8,6 +8,7 @@ import translations from '../translations.json';
 
 interface SearchButtonProps {
   imageUrl: string;
+  onReset?: () => void;
 }
 
 interface SearchEngine {
@@ -18,7 +19,7 @@ interface SearchEngine {
   icon: ReactElement;
 }
 
-const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
+const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
   const t = translations[locale as keyof typeof translations] || translations.zh;
@@ -269,6 +270,19 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl }) => {
           </a>
         ))}
       </div>
+      
+      {/* 重置按鈕 - 僅在有圖片URL時顯示 */}
+      {imageUrl && onReset && (
+        <div className="mt-8 text-center">
+          <button
+            type="button"
+            onClick={onReset}
+            className="bg-gray-700 hover:bg-gray-400 text-white font-medium py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors"
+          >
+            {locale === 'zh' ? '重置' : locale === 'jp' ? 'リセット' : 'Reset'}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
