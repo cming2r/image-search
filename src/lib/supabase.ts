@@ -70,10 +70,77 @@ export function getUserAgentInfo() {
   };
 }
 
-// 簡化版的IP獲取函數 - 由服務器處理大部分邏輯
+// 從外部服務獲取IP和國家代碼信息
 async function fetchIPInfo() {
-  // 簡單返回空值，真正的IP檢測將在服務器端處理
-  return { ip_address: '', country_code: 'XX' };
+  try {
+    // 確認是否在客戶端環境
+    if (typeof window === 'undefined') {
+      // 服務器端不進行IP檢測，僅記錄日誌
+      console.log('服務器端不進行IP檢測');
+      return { ip_address: '', country_code: 'XX' };
+    }
+    
+    // 客戶端環境下獲取IP信息
+    console.log('正在獲取IP信息...');
+    
+    // 使用兩個備選API以提高成功率
+    // 先嘗試 ipapi.co
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('成功從ipapi.co獲取IP信息');
+        
+        return { 
+          ip_address: data.ip || '', 
+          country_code: data.country_code || '' 
+        };
+      }
+    } catch (apiError) {
+      console.error('ipapi.co獲取失敗，嘗試備選API', apiError);
+    }
+    
+    // 如果第一個API失敗，嘗試另一個API
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      
+      if (response.ok) {
+        const ipData = await response.json();
+        const ip = ipData.ip;
+        
+        // 得到IP後，嘗試獲取地理位置信息
+        if (ip) {
+          const geoResponse = await fetch(`https://ipwho.is/${ip}`);
+          if (geoResponse.ok) {
+            const geoData = await geoResponse.json();
+            console.log('成功從備選API獲取IP信息');
+            
+            return {
+              ip_address: ip,
+              country_code: geoData.country_code || ''
+            };
+          }
+        }
+        
+        // 如果只能獲取IP但沒有地理位置
+        return {
+          ip_address: ip || '',
+          country_code: ''
+        };
+      }
+    } catch (backupError) {
+      console.error('備選API也獲取失敗', backupError);
+    }
+    
+    // 所有嘗試都失敗
+    console.warn('所有IP獲取嘗試均失敗');
+    return { ip_address: '', country_code: 'XX' };
+  } catch (error) {
+    console.error('IP信息獲取過程中發生異常:', error);
+    // 發生錯誤時返回空值，以便應用程序仍然可以運行
+    return { ip_address: '', country_code: 'XX' };
+  }
 }
 
 // 提取共用的數據準備邏輯 - 簡化版
@@ -109,11 +176,13 @@ export async function saveSearchRecord(record: SearchRecord) {
       prepareRecordData(record.image_url, record.search_engine, record);
     
     // 優先使用有效的IP信息
+    // 先檢查記錄中提供的IP，若無效則使用fetchIPInfo獲取的IP
     const ip_address = record.ip_address && record.ip_address !== '' ? 
       record.ip_address : (ipInfo.ip_address || '');
     
-    const country_code = record.country_code && record.country_code !== 'XX' ? 
-      record.country_code : (ipInfo.country_code !== 'XX' ? ipInfo.country_code : '');
+    // 同樣地處理國家代碼
+    const country_code = record.country_code && record.country_code !== '' && record.country_code !== 'XX' ? 
+      record.country_code : (ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '');
     
     // 使用RPC函數更新記錄
     const { error: updateError } = await supabase.rpc(
@@ -158,8 +227,13 @@ export async function saveImageUrl(imageUrl: string) {
     const { deviceType, browser, os, timestamp } = prepareRecordData(imageUrl);
     
     // 確保我們只使用有效的IP和國家代碼
+    // 檢查IP是否有效
     const ip_address = ipInfo.ip_address || '';
-    const country_code = ipInfo.country_code !== 'XX' ? ipInfo.country_code : '';
+    console.log('取得的IP地址:', ip_address);
+    
+    // 檢查國家代碼是否有效
+    const country_code = ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '';
+    console.log('取得的國家代碼:', country_code || '(無)');
     
     // 使用RPC函數創建初始記錄
     const { error: rpcError } = await supabase.rpc(
