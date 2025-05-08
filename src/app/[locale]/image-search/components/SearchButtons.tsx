@@ -36,10 +36,36 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }, 3000);
   };
   
-  // 讀取並更新本地搜索引擎記錄 - 簡化版
+  // 讀取並更新本地搜索引擎記錄
   const updateLocalSearchEngines = (engineName: string): string[] => {
-    // 簡化運行邏輯，直接返回引擎名稱陣列
-    return [engineName];
+    // 嘗試從localStorage獲取當前圖片URL的搜索引擎列表
+    try {
+      const currentImageKey = `image_url_${imageUrl}`;
+      let engines: string[] = [];
+      
+      const storedEngines = localStorage.getItem(currentImageKey);
+      if (storedEngines) {
+        try {
+          engines = JSON.parse(storedEngines);
+          if (!Array.isArray(engines)) {
+            engines = [];
+          }
+        } catch {
+          engines = [];
+        }
+      }
+      
+      // 如果引擎不在列表中，添加它
+      if (!engines.includes(engineName)) {
+        engines.push(engineName);
+        localStorage.setItem(currentImageKey, JSON.stringify(engines));
+      }
+      
+      return engines;
+    } catch (error) {
+      console.error('無法更新本地搜索引擎記錄:', error);
+      return [engineName];
+    }
   };
   
   // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
@@ -74,49 +100,79 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }
   };
   
-  // 組建搜尋引擎的圖片搜尋URL結構 - 動態營建以減少初始包大小
-  // 使用函數創建圖標組件，避免在模塊層面定義多個Image組件
-  const createIcon = (src: string, width: number = 20, height: number = 20) => (
-    <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
-      <Image 
-        src={src} 
-        alt="" 
-        width={width} 
-        height={height} 
-        className="filter brightness-0 invert"
-      />
-    </div>
-  );
-
-  // 定義基本結構
+  // 搜尋引擎的圖片搜尋URL結構
   const searchEngines: SearchEngine[] = [
     {
       name: 'Google',
       url: `https://lens.google.com/uploadbyurl?url=${encodeURIComponent(imageUrl)}`,
       bgColor: 'bg-blue-500',
       hoverColor: 'hover:bg-blue-600',
-      icon: createIcon('/images/google.svg')
+      icon: (
+        <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
+          <Image 
+            src="/images/google.svg" 
+            alt="" 
+            width={20} 
+            height={20} 
+            className="filter brightness-0 invert" 
+            priority
+          />
+        </div>
+      )
     },
     {
       name: 'Bing',
       url: `https://www.bing.com/images/search?view=detailv2&iss=sbi&form=SBIHMP&sbisrc=UrlPaste&q=imgurl:${encodeURIComponent(imageUrl)}`,
       bgColor: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
-      icon: createIcon('/images/bing.svg', 14, 20)
+      icon: (
+        <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
+          <Image 
+            src="/images/bing.svg" 
+            alt="" 
+            width={14} 
+            height={20} 
+            className="filter brightness-0 invert" 
+            priority
+          />
+        </div>
+      )
     },
     {
       name: 'Yandex',
       url: `https://ya.ru/images/search?rpt=imageview&url=${encodeURIComponent(imageUrl)}`,
       bgColor: 'bg-red-500',
       hoverColor: 'hover:bg-red-600',
-      icon: createIcon('/images/yandex.svg')
+      icon: (
+        <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
+          <Image 
+            src="/images/yandex.svg" 
+            alt="" 
+            width={20} 
+            height={20} 
+            className="filter brightness-0 invert" 
+            priority
+          />
+        </div>
+      )
     },
     {
       name: 'SauceNAO',
       url: `https://saucenao.com/search.php?url=${encodeURIComponent(imageUrl)}`,
       bgColor: 'bg-indigo-500',
       hoverColor: 'hover:bg-indigo-600',
-      icon: createIcon('/images/SauceNAO.png')
+      icon: (
+        <div className="w-5 h-5 mr-2 flex items-center justify-center overflow-hidden">
+          <Image 
+            src="/images/SauceNAO.png" 
+            alt="" 
+            width={20} 
+            height={20} 
+            className="filter brightness-0 invert" 
+            priority
+          />
+        </div>
+      )
     }
   ];
 

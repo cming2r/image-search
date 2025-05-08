@@ -1,13 +1,11 @@
 'use client';
 
-import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent, Suspense, lazy } from 'react';
+import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import SearchButtons from './SearchButtons';
 import translations from '../translations.json';
 import { saveImageUrl } from '@/lib/supabase';
-
-// 動態導入SearchButtons組件以減少初始包大小
-const SearchButtons = lazy(() => import('./SearchButtons'));
 
 const ImageForm: FC = () => {
   const params = useParams();
@@ -357,14 +355,13 @@ const ImageForm: FC = () => {
       {/* 搜尋按鈕組 - 只在有上傳圖片時顯示 */}
       {uploadedImageUrl && (
         <div className="mt-6">
-          {/* 使用Suspense包裹懶加載組件 */}
-          <Suspense fallback={<div className="text-center py-4">Loading search options...</div>}>
-            <SearchButtons imageUrl={uploadedImageUrl} onReset={handleReset} />
-          </Suspense>
+          {/* 搜尋按鈕組 - 傳遞重置函數 */}
+          <SearchButtons imageUrl={uploadedImageUrl} onReset={handleReset} />
         </div>
       )}
 
-      {/* 未上傳狀態的搜尋按鈕組 - 完全移除，只有需要時才加載 */}
+      {/* 未上傳狀態的搜尋按鈕組 - 依然保留但不顯示按鈕 */}
+      {!uploadedImageUrl && <SearchButtons imageUrl="" />}
     </div>
   );
 };
