@@ -61,164 +61,37 @@ export function getDeviceType(): string {
   return 'desktop';
 }
 
-// 獲取瀏覽器和操作系統信息
+// 獲取瀏覽器和操作系統信息 - 簡化版以減少包大小
 export function getUserAgentInfo() {
-  if (typeof window === 'undefined') {
-    return { 
-      browser: 'unknown',
-      os: 'unknown'
-    };
-  }
-
-  const ua = navigator.userAgent;
-  
-  // 檢測瀏覽器
-  let browser = 'unknown';
-  if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
-  else if (ua.indexOf('Safari') > -1) browser = 'Safari';
-  else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
-  else if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident/') > -1) browser = 'IE';
-  else if (ua.indexOf('Edge') > -1) browser = 'Edge';
-  
-  // 檢測操作系統
-  let os = 'unknown';
-  if (ua.indexOf('Windows') > -1) os = 'Windows';
-  else if (ua.indexOf('Mac') > -1) os = 'MacOS';
-  else if (ua.indexOf('X11') > -1) os = 'UNIX';
-  else if (ua.indexOf('Linux') > -1) os = 'Linux';
-  else if (ua.indexOf('Android') > -1) os = 'Android';
-  else if (ua.indexOf('iOS') > -1) os = 'iOS';
-
-  return { browser, os };
+  // 返回一個簡單的結果，不做複雜檢測
+  return { 
+    browser: 'unknown',
+    os: 'unknown'
+  };
 }
 
-// IP信息緩存 - 5分鐘內有效
-const ipCache = {
-  data: null as { ip_address: string; country_code: string } | null,
-  timestamp: 0,
-  expiryTime: 5 * 60 * 1000 // 5分鐘
-};
-
-// IP供應商優先順序 - 可以根據需要調整
-const IP_PROVIDERS = [
-  { name: 'ipinfo.io', url: 'https://ipinfo.io/json' },
-  { name: 'ipify-ipapi', ipUrl: 'https://api.ipify.org?format=json', geoUrl: (ip: string) => `https://ipapi.co/${ip}/json/` },
-  { name: 'ipwho.is', ipUrl: 'https://api.ipify.org?format=json', geoUrl: (ip: string) => `https://ipwho.is/${ip}` }
-];
-
-// 獲取用戶IP和國家代碼 - 加強版本
+// 簡化版的IP獲取函數 - 由服務器處理大部分邏輯
 async function fetchIPInfo() {
-  // 1. 檢查緩存是否有效
-  const now = Date.now();
-  if (ipCache.data && ipCache.data.ip_address && ipCache.data.country_code !== 'XX' && 
-      (now - ipCache.timestamp < ipCache.expiryTime)) {
-    console.log('使用緩存的IP信息:', ipCache.data);
-    return ipCache.data;
-  }
-  
-  // 初始化一個有效但最低優先順序的結果
-  let bestResult = { ip_address: '', country_code: 'XX' };
-  let foundComplete = false;
-  
-  // 2. 嘗試多個數據源獲取IP和地理信息
-  for (const provider of IP_PROVIDERS) {
-    try {
-      console.log(`嘗試使用 ${provider.name} 獲取IP信息`);
-      
-      if (provider.url) {
-        // 單一請求獲取所有信息的提供商 (如 ipinfo.io)
-        const response = await fetch(provider.url);
-        if (response.ok) {
-          const data = await response.json();
-          
-          // 檢查是否有完整的IP和國家信息
-          const ip = data.ip || '';
-          const country = data.country || data.country_code || 'XX';
-          
-          if (ip && country !== 'XX') {
-            // 找到完整信息，立即使用
-            bestResult = { ip_address: ip, country_code: country };
-            foundComplete = true;
-            break;
-          } else if (ip && !bestResult.ip_address) {
-            // 至少有IP信息，作為備用
-            bestResult = { ip_address: ip, country_code: country };
-          }
-        }
-      } else if (provider.ipUrl && provider.geoUrl) {
-        // 兩步獲取信息的提供商 (如 ipify + ipapi.co)
-        const ipResponse = await fetch(provider.ipUrl);
-        if (!ipResponse.ok) continue;
-        
-        const ipData = await ipResponse.json();
-        const ip = ipData.ip;
-        
-        if (!ip) continue;
-        
-        // 已有IP信息，設為備用結果
-        if (!bestResult.ip_address) {
-          bestResult = { ip_address: ip, country_code: 'XX' };
-        }
-        
-        // 嘗試獲取地理信息
-        const geoResponse = await fetch(provider.geoUrl(ip));
-        if (!geoResponse.ok) continue;
-        
-        const geoData = await geoResponse.json();
-        const country = geoData.country_code || geoData.country || 'XX';
-        
-        if (country !== 'XX') {
-          // 找到完整信息
-          bestResult = { ip_address: ip, country_code: country };
-          foundComplete = true;
-          break;
-        }
-      }
-    } catch (error) {
-      console.error(`使用 ${provider.name} 獲取IP信息失敗:`, error);
-      // 繼續嘗試下一個提供商
-    }
-  }
-  
-  // 3. 優先使用完整信息，或至少有IP的結果
-  if (foundComplete || bestResult.ip_address) {
-    // 只有在找到有效結果時才更新緩存
-    ipCache.data = bestResult;
-    ipCache.timestamp = now;
-    console.log('成功獲取IP信息:', bestResult);
-    return bestResult;
-  }
-  
-  // 4. 如果所有提供商都失敗，但有舊緩存，使用舊緩存
-  if (ipCache.data) {
-    console.log('所有提供商失敗，使用過期的緩存IP信息');
-    return ipCache.data;
-  }
-  
-  // 5. 最後的後備方案
-  console.error('無法獲取任何IP信息');
+  // 簡單返回空值，真正的IP檢測將在服務器端處理
   return { ip_address: '', country_code: 'XX' };
 }
 
-// 提取共用的數據準備邏輯
+// 提取共用的數據準備邏輯 - 簡化版
 function prepareRecordData(imageUrl: string, searchEngine?: string | string[], userProvidedData?: Partial<SearchRecord>) {
   // 處理搜索引擎數組
   const engines = !searchEngine ? [] : (
     Array.isArray(searchEngine) ? searchEngine : (searchEngine ? [searchEngine] : [])
   );
   
-  // 獲取設備信息
+  // 獲取設備信息 - 僅基本信息
   const deviceType = userProvidedData?.device_type || getDeviceType();
-  const userAgent = getUserAgentInfo();
-  const browser = userProvidedData?.browser || userAgent.browser;
-  const os = userProvidedData?.os || userAgent.os;
   
   return {
     imageUrl,
     engines,
     deviceType,
-    browser,
-    os,
+    browser: 'browser',
+    os: 'os',
     timestamp: new Date().toISOString()
   };
 }

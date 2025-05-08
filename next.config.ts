@@ -16,7 +16,10 @@ const nextConfig: NextConfig = {
   // 現在使用 [locale] 路徑參數和中間件處理，而不是 i18n 配置選項
   experimental: {
     // 減少 polyfills，只針對現代瀏覽器
-    optimizePackageImports: ['next', 'react', 'react-dom'],
+    optimizePackageImports: [
+      'next', 'react', 'react-dom', 'date-fns', 'lodash', 
+      '@supabase/auth-helpers-nextjs', '@supabase/supabase-js'
+    ],
   },
   // SWC 優化在新版 Next.js 中默認啟用
   swcMinify: true,
