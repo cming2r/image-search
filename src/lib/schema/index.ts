@@ -8,3 +8,6 @@ export {
   generateArticleSchema,
   generateFAQSchema
 } from './schema';
+
+// 導出JSON格式化函數
+export { formatJSON } from './format-json';

@@ -3,7 +3,8 @@ import {
   generateBreadcrumbSchema, 
   generateFAQSchema, 
   generateArticleSchema, 
-  generateWebApplicationSchema 
+  generateWebApplicationSchema,
+  formatJSON
 } from '@/lib/schema';
 
 // 多語言標題和描述
@@ -365,19 +366,19 @@ export default async function ImageSearchLayout({
       {/* 結構化數據標記 - 使用格式化輸出 */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema, null, 2) }}
+        dangerouslySetInnerHTML={{ __html: formatJSON(breadcrumbSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema, null, 2) }}
+        dangerouslySetInnerHTML={{ __html: formatJSON(faqSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema, null, 2) }}
+        dangerouslySetInnerHTML={{ __html: formatJSON(articleSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema, null, 2) }}
+        dangerouslySetInnerHTML={{ __html: formatJSON(webApplicationSchema) }}
       />
       {children}
     </>
