@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // OpenGraph標籤設定
     openGraph: {
-      title: `${title} ｜ fyimg`,
+      title: title,
       description,
       url: getFullUrl(locale === 'zh' ? '/privacy-policy' : `/${locale}/privacy-policy`),
       images: [

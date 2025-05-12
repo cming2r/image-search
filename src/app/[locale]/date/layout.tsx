@@ -45,9 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `日期計算器 | fyimg` : 
-                 locale === 'en' ? `Date Calculator | fyimg` : 
-                 `日付計算機 | fyimg`;
+  const ogTitle = locale === 'zh' ? `日期計算器` : 
+                 locale === 'en' ? `Date Calculator` : 
+                 `日付計算機`;
 
   return {
     metadataBase: new URL(getBaseUrl()),

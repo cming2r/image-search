@@ -248,9 +248,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `以圖搜圖 | fyimg` : 
-                  locale === 'en' ? `Image Search | fyimg` : 
-                  `画像検索 | fyimg`;
+  const ogTitle = locale === 'zh' ? `以圖搜圖` : 
+                  locale === 'en' ? `Image Search` : 
+                  `画像検索`;
 
   return {
     metadataBase: new URL(getBaseUrl()),

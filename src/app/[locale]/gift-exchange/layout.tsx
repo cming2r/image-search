@@ -152,9 +152,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `交換禮物抽籤 | fyimg` : 
-                locale === 'en' ? `Gift Exchange Draw | fyimg` : 
-                `ギフト交換抽選 | fyimg`;
+  const ogTitle = locale === 'zh' ? `交換禮物抽籤` : 
+                locale === 'en' ? `Gift Exchange Draw` : 
+                `ギフト交換抽選`;
 
   return {
     metadataBase: new URL(getBaseUrl()),
