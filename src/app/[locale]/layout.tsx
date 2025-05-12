@@ -36,12 +36,17 @@ export default async function RootLayout({
       break;
   }
   
+  // 使用更明確的HTML結構和換行
   return (
     <html lang={htmlLang}>
-      <head />
-      {/* 注意：不需要手動添加 favicon link，因為 Next.js 會自動從 metadata 中處理 */}
+      <head>
+        {/* 頭部元數據已由Next.js處理 */}
+      </head>
+      
       <body suppressHydrationWarning>
         {children}
+        
+        {/* 分析工具 */}
         <SpeedInsights />
         <Analytics />
       </body>

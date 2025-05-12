@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['next', 'react', 'react-dom'],
   },
   // SWC 優化在新版 Next.js 中默認啟用
-  swcMinify: true,
+  swcMinify: false, // 禁用Minify以保持HTML格式
   // 禁用HTML壓縮，使結構化數據更易讀
   compress: false,
   eslint: {

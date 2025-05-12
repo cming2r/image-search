@@ -363,23 +363,33 @@ export default async function ImageSearchLayout({
   
   return (
     <>
-      {/* 結構化數據標記 - 使用格式化輸出 */}
+      {/* 結構化數據標記 - 為每個數據類型使用獨立標記 */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: formatJSON(breadcrumbSchema) }}
-      />
+      >{`
+${formatJSON(breadcrumbSchema)}
+`}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
+
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: formatJSON(faqSchema) }}
-      />
+      >{`
+${formatJSON(faqSchema)}
+`}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
+
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: formatJSON(articleSchema) }}
-      />
+      >{`
+${formatJSON(articleSchema)}
+`}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
+
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: formatJSON(webApplicationSchema) }}
-      />
+      >{`
+${formatJSON(webApplicationSchema)}
+`}</script>
       {children}
     </>
   );
