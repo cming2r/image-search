@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
   },
   // SWC 優化在新版 Next.js 中默認啟用
   swcMinify: true,
+  // 禁用HTML壓縮，使結構化數據更易讀
+  compress: false,
   eslint: {
     ignoreDuringBuilds: false,
   },
