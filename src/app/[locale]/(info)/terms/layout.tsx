@@ -1,5 +1,5 @@
 import { getBaseUrl, getFullUrl } from '@/lib/utils';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/schema';
+import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/lib/schema';
 
 // 多語言標題和描述
 const titles = {
@@ -97,15 +97,19 @@ export default async function TermsLayout({
   
   return (
     <>
-      {/* 使用標準腳本標籤添加 JSON-LD */}
+      {/* 結構化數據標記 - 為每個數據類型使用獨立標記 */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      >{`
+${formatJSON(breadcrumbSchema)}
+`}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
+
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
+      >{`
+${formatJSON(webPageSchema)}
+`}</script>
       {children}
     </>
   );
