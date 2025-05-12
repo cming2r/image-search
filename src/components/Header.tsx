@@ -102,8 +102,8 @@ const Header: FC = () => {
   }, []);
   
   return (
-    <header className="bg-white shadow-sm">
-      <div className="container mx-auto px-4 py-4">
+    <header className="bg-white shadow-sm block">
+      <div className="container mx-auto px-4 py-4 block">
         <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
           {/* 左側 Logo */}
           <div className="flex-shrink-0">

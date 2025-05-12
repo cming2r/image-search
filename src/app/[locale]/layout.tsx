@@ -38,13 +38,16 @@ export default async function RootLayout({
   
   // 使用更明確的HTML結構和換行
   return (
-    <html lang={htmlLang}>
-      <head>
+    <html lang={htmlLang} className="block">
+      <head className="block">
         {/* 頭部元數據已由Next.js處理 */}
+        <meta name="schema-format" content="preserve" />
       </head>
       
-      <body suppressHydrationWarning>
-        {children}
+      <body suppressHydrationWarning className="block">
+        <div className="block">
+          {children}
+        </div>
         
         {/* 分析工具 */}
         <SpeedInsights />

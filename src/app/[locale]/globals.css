@@ -14,6 +14,11 @@
 }
 
 @layer base {
+  /* 確保HTML基本元素有正確的顯示模式 */
+  html, head, body, header, main, footer, section, article, aside, nav {
+    display: block !important;
+  }
+  
   body {
     @apply bg-background text-foreground font-sans flex flex-col min-h-screen;
   }
