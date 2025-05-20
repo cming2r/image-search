@@ -44,6 +44,9 @@ function getRouteDate(fullRoute: string, languages: LanguageConfig[]): { modifie
   // 判斷當前環境，僅在開發環境輸出詳細日誌
   const isDev = process.env.NODE_ENV === 'development';
   
+  // 始終輸出一些偵錯訊息，無論環境
+  console.log(`嘗試獲取路由 ${fullRoute} 的日期`);
+  
   // 獲取基本路由（去除語言前綴）
   const getBaseRoute = () => {
     const languageCodes = languages.map(lang => lang.code).filter(Boolean);
@@ -188,7 +191,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     
     // 先獲取根路徑的日期，所有語言版本都使用相同的日期
     const rootRoute = baseRoute === '/' ? '' : baseRoute;
-    const { modified } = getRouteDate(rootRoute, LANGUAGES);
+    
+    // 直接構建可能的文件路徑，避免路由轉換的複雜性
+    let pageFilePath = '';
+    if (rootRoute === '/') {
+      pageFilePath = 'src/app/[locale]/page.tsx';
+    } else {
+      pageFilePath = `src/app/[locale]${rootRoute}/page.tsx`;
+    }
+    
+    // 直接使用文件路徑獲取日期
+    console.log(`將使用文件路徑: ${pageFilePath} 獲取日期`);
+    const { modified } = getPageDates(pageFilePath);
+    
+    // 輸出偵錯訊息
+    console.log(`路由 ${rootRoute} (文件: ${pageFilePath}) 的修改日期: ${modified}`);
+    
     const parsedDate = parseGitDate(modified);
     
     // 處理每種語言版本
