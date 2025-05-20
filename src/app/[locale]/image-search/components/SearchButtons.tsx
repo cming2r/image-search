@@ -2,7 +2,7 @@
 
 import { FC, useState, ReactElement } from 'react';
 import { useParams } from 'next/navigation';
-import { saveSearchRecord, getDeviceType } from '@/lib/supabase';
+import { saveSearchRecord, getDeviceType } from '@/lib/supabase/imageSearch';
 import Image from 'next/image';
 import translations from '../translations.json';
 

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createGiftExchange, updateGiftExchangeResult, getGiftExchange } from '@/lib/supabase/giftExchange';
 
 export async function POST(request: Request) {
   try {
@@ -18,47 +18,24 @@ export async function POST(request: Request) {
       );
     }
     
-    // 初始化結果列表為空陣列
-    const results = data.results || [];
+    // 使用模块化函数创建礼物交换活动
+    const result = await createGiftExchange(data);
     
-    // 格式化數據以符合資料庫需求
-    const insertData = {
-      code: data.code,
-      participant_count: data.participantCount || data.participantNames.length,
-      participant_names: Array.isArray(data.participantNames) ? data.participantNames : [],
-      results: results
-      // 不要包含資料庫中不存在的欄位
-      // created_at 欄位由 Supabase 自動處理
-    };
-    
-    // 保存選項到服務器內存，但不存入資料庫中不存在的欄位
-    const showResultsDirectly = data.showResultsDirectly === true;
-    
-    console.log('準備插入數據:', JSON.stringify(insertData));
-
-    // 用簡化的表結構存儲交換禮物活動
-    const { data: insertedData, error: eventError } = await supabase
-      .from('gift_exchange_wheel')
-      .insert([insertData])
-      .select();
-
-    if (eventError) {
-      console.error('建立活動錯誤:', eventError);
+    if (!result.success) {
+      console.error('建立活動錯誤:', result.error);
       return NextResponse.json(
-        { error: `建立活動失敗: ${eventError.message || eventError.code || '未知錯誤'}` },
+        { error: `建立活動失敗: ${result.error}` },
         { status: 500 }
       );
     }
 
-    console.log('活動建立成功!', insertedData);
-
-    // 回傳成功結果，包含前端需要但數據庫中沒有的選項
+    // 返回成功结果
     return NextResponse.json({
       success: true,
       message: '交換禮物活動已建立',
       code: data.code,
-      data: insertedData,
-      showResultsDirectly: showResultsDirectly // 傳回前端使用，雖然不存入資料庫
+      data: result.data,
+      showResultsDirectly: data.showResultsDirectly
     });
 
   } catch (error) {
@@ -82,36 +59,13 @@ export async function PATCH(request: Request) {
       );
     }
     
-    // 先獲取現有的活動數據
-    const { data: existingData, error: fetchError } = await supabase
-      .from('gift_exchange_wheel')
-      .select('results')
-      .eq('code', code)
-      .single();
-      
-    if (fetchError) {
-      console.error('獲取活動數據錯誤:', fetchError);
-      return NextResponse.json(
-        { error: `獲取活動數據失敗: ${fetchError.message || fetchError.code}` },
-        { status: 500 }
-      );
-    }
+    // 使用模块化函数更新礼物交换活动结果
+    const updateResult = await updateGiftExchangeResult(code, result);
     
-    // 將新結果添加到結果列表中
-    const currentResults = existingData?.results || [];
-    const updatedResults = [...currentResults, result];
-    
-    // 更新資料庫
-    const { data: updatedData, error: updateError } = await supabase
-      .from('gift_exchange_wheel')
-      .update({ results: updatedResults })
-      .eq('code', code)
-      .select();
-      
-    if (updateError) {
-      console.error('更新活動結果錯誤:', updateError);
+    if (!updateResult.success) {
+      console.error('更新活動結果錯誤:', updateResult.error);
       return NextResponse.json(
-        { error: `更新活動結果失敗: ${updateError.message || updateError.code}` },
+        { error: `更新活動結果失敗: ${updateResult.error}` },
         { status: 500 }
       );
     }
@@ -119,7 +73,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({
       success: true,
       message: '活動結果已更新',
-      data: updatedData
+      data: updateResult.data
     });
     
   } catch (error) {
@@ -143,38 +97,29 @@ export async function GET(request: Request) {
       );
     }
 
-    // 獲取活動資訊
-    const { data: eventData, error: eventError } = await supabase
-      .from('gift_exchange_wheel')
-      .select('*')
-      .eq('code', code)
-      .single();
+    // 使用模块化函数获取礼物交换活动信息
+    const result = await getGiftExchange(code);
 
-    if (eventError) {
-      console.error('查詢活動錯誤:', eventError);
-      // 如果是找不到資料的錯誤，返回404
-      if (eventError.code === 'PGRST116') {
+    if (!result.success) {
+      console.error('查詢活動錯誤:', result.error);
+      
+      // 如果是找不到数据的错误
+      if (result.notFound) {
         return NextResponse.json(
           { error: '找不到活動' },
           { status: 404 }
         );
       }
-      // 其他錯誤
+      
+      // 其他错误
       return NextResponse.json(
-        { error: `查詢活動失敗: ${eventError.message || eventError.code}` },
+        { error: `查詢活動失敗: ${result.error}` },
         { status: 500 }
       );
     }
 
-    if (!eventData) {
-      return NextResponse.json(
-        { error: '找不到活動' },
-        { status: 404 }
-      );
-    }
-
-    // 回傳所有資料
-    return NextResponse.json(eventData);
+    // 返回所有数据
+    return NextResponse.json(result.data);
 
   } catch (error) {
     console.error('API錯誤:', error);

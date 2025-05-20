@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientForBrowser } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase/';
 import { format } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
+import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
 // 圖片搜尋記錄接口
 interface ImageSearch {
@@ -41,8 +42,6 @@ export default function AdminPage() {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [showImages, setShowImages] = useState(false);
   const recordsPerPage = 50;
-  
-  const supabase = createClientForBrowser();
   
   // 檢查用戶是否已登入且是管理員
   useEffect(() => {
@@ -93,7 +92,7 @@ export default function AdminPage() {
     checkAuthStatus();
     
     // 監聽身份驗證狀態變化
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session: Session | null) => {
       console.log('Auth state changed:', event);
       
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
@@ -128,7 +127,7 @@ export default function AdminPage() {
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, [router, supabase]);
+  }, [router]);
   
   // 處理登出
   const handleLogout = async () => {
@@ -165,7 +164,9 @@ export default function AdminPage() {
               tableError.message?.includes('permission denied') || 
               tableError.message?.includes('access denied')) {
             console.log('這似乎是 Row-Level Security (RLS) 權限問題');
-            setError(`權限錯誤: 你的帳戶 (${supabase.auth.getUser().then(data => data.data.user?.email)}) 沒有權限訪問數據表。請確保 Supabase 後端已將此帳戶設置為管理員。`);
+            supabase.auth.getUser().then(({ data: { user }}) => {
+              setError(`權限錯誤: 你的帳戶 (${user?.email}) 沒有權限訪問數據表。請確保 Supabase 後端已將此帳戶設置為管理員。`);
+            });
           } else {
             // 其他錯誤，顯示示例數據
             setSearches([{
@@ -234,7 +235,7 @@ export default function AdminPage() {
     };
     
     fetchSearches();
-  }, [sortField, sortDirection, currentPage, supabase, isAuthenticated, isAdmin, isCheckingAuth]);
+  }, [sortField, sortDirection, currentPage, isAuthenticated, isAdmin, isCheckingAuth]);
 
   // 處理排序
   const handleSort = (field: SortField) => {

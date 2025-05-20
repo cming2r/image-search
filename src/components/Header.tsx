@@ -3,7 +3,8 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { createClientForBrowser } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
+import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { useParams } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
 import translations from './translations.json';
@@ -21,7 +22,6 @@ const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dateDropdownRef = useRef<HTMLDivElement>(null);
-  const supabase = createClientForBrowser();
   const params = useParams();
   // 從路徑參數中獲取當前語言
   const locale = (params?.locale as string) || 'zh';
@@ -65,7 +65,7 @@ const Header: FC = () => {
     checkAuthStatus();
     
     // 設置監聽器，當身份驗證狀態發生變化時觸發
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       console.log(`Header: 身份驗證狀態變化, 事件=${event}, 是否有會話=${!!session}`);
       
       if (session) {
@@ -78,7 +78,7 @@ const Header: FC = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase.auth]);
+  }, []);
   
   // 監聽螢幕寬度變化，使用防抖優化性能
   useEffect(() => {

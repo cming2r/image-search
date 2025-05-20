@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientForBrowser } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -10,7 +10,6 @@ export default function LoginPage() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [countdown, setCountdown] = useState<number | null>(null);
-  const supabase = createClientForBrowser();
   
   // 處理登出並跳轉 - 必須在使用前定義
   const handleLogoutAndRedirect = useCallback(async () => {
@@ -22,7 +21,7 @@ export default function LoginPage() {
       // 即使登出失敗，仍然嘗試跳轉到首頁
       window.location.href = '/';
     }
-  }, [supabase.auth]);
+  }, []);
 
   // 檢查查詢參數中的錯誤
   useEffect(() => {
@@ -82,7 +81,7 @@ export default function LoginPage() {
     };
     
     checkAuthStatus();
-  }, [router, supabase.auth]);
+  }, [router]);
 
   // 處理倒數登出
   useEffect(() => {
@@ -112,15 +111,14 @@ export default function LoginPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // 使用自定義的回調 URL
-          redirectTo: `${window.location.origin}/auth/callback`,
+          // 使用自定義的回調 URL，使用 API 路由
+          redirectTo: `${window.location.origin}/api/auth/callback`,
           // 只要求最小權限，減少警告的嚴重性
           scopes: 'email',
           queryParams: {
-            // 提示用戶選擇賬戶，而不是自動使用
-            prompt: 'select_account',
-          },
-        },
+            prompt: 'select_account'
+          }
+        }
       });
       
       if (error) {
@@ -131,11 +129,19 @@ export default function LoginPage() {
         window.location.href = data.url;
       }
     } catch (error) {
-      console.log('登入失敗:', error);
+      console.log('登入失敗詳細資訊:', error);
+      // 輸出更詳細的錯誤日誌
+      console.error('登入失敗:', {
+        error,
+        redirectUrl: `${window.location.origin}/api/auth/callback`,
+        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL
+      });
+      
       let errorMessage = '登入失敗，請稍後再試';
       
       if (error instanceof Error) {
-        errorMessage = error.message;
+        errorMessage = `錯誤: ${error.message}`;
+        console.error('錯誤詳情:', error.message, error.stack);
       }
       
       setLoginError(errorMessage);

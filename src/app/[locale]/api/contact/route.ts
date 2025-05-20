@@ -1,92 +1,44 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
-
-// 定義表單數據的接口
-interface ContactFormData {
-  name?: string;
-  email?: string;
-  message?: string;
-}
-
-// 自定義驗證函數
-function validateContactForm(data: ContactFormData) {
-  const errors: Record<string, string> = {};
-  
-  // 驗證名稱
-  if (!data.name || data.name.trim() === '') {
-    errors.name = '姓名為必填欄位';
-  }
-  
-  // 驗證電子郵件
-  if (!data.email || data.email.trim() === '') {
-    errors.email = '電子郵件為必填欄位';
-  } else {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-      errors.email = '請輸入有效的電子郵件地址';
-    }
-  }
-  
-  // 驗證訊息
-  if (!data.message || data.message.trim() === '') {
-    errors.message = '訊息為必填欄位';
-  }
-  
-  return {
-    valid: Object.keys(errors).length === 0,
-    errors
-  };
-}
+import { saveContactMessage, ContactFormData } from '@/lib/supabase/contact';
 
 export async function POST(req: Request) {
   try {
-    // 解析請求體
+    // 解析请求体
     const body = await req.json();
     
-    // 驗證資料
-    const validation = validateContactForm(body);
-    if (!validation.valid) {
+    // 使用模块化函数保存联系表单消息
+    const result = await saveContactMessage(body as ContactFormData);
+    
+    if (!result.success) {
+      // 验证失败
+      if (result.details && typeof result.details === 'object') {
+        return NextResponse.json({ 
+          success: false, 
+          error: result.error, 
+          details: result.details 
+        }, { status: 400 });
+      }
+      
+      // 其他错误
+      console.error('保存联系表单失败:', result.error);
       return NextResponse.json({ 
         success: false, 
-        error: '表單驗證失敗', 
-        details: validation.errors 
-      }, { status: 400 });
-    }
-    
-    const { name, email, message } = body;
-    
-    // 儲存到 Supabase
-    const { error } = await supabase
-      .from('contact_messages')
-      .insert([
-        { 
-          name,
-          email,
-          message,
-          created_at: new Date().toISOString()
-        }
-      ]);
-    
-    if (error) {
-      console.error('Supabase 儲存錯誤:', error);
-      return NextResponse.json({ 
-        success: false, 
-        error: '儲存訊息失敗' 
+        error: result.error 
       }, { status: 500 });
     }
     
-    // 成功回應
+    // 成功响应
     return NextResponse.json({ 
       success: true, 
-      message: '訊息已成功送出，我們會盡快回覆您。' 
+      message: result.message 
     });
     
   } catch (error) {
-    console.error('處理聯絡表單錯誤:', error);
+    console.error('处理联系表单错误:', error);
     return NextResponse.json({ 
       success: false, 
-      error: '處理請求時發生錯誤',
-      details: error instanceof Error ? error.message : '未知錯誤'
+      error: '处理请求时发生错误',
+      details: error instanceof Error ? error.message : '未知错误'
     }, { status: 500 });
   }
 }

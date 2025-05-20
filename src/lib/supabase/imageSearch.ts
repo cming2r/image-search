@@ -1,53 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
-import { createBrowserClient } from '@supabase/ssr';
+import { supabase } from '.';
 
-// 從環境變數獲取Supabase URL和匿名密鑰
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-
-// 創建Supabase客戶端實例
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// 創建瀏覽器端Supabase客戶端實例 (支援Auth功能)
-export function createClientForBrowser() {
-  return createBrowserClient(
-    supabaseUrl,
-    supabaseAnonKey
-  );
-}
-
-// 檢查用戶是否為管理員
-export async function isAdmin(userId: string | undefined) {
-  if (!userId) return false;
-  
-  // 通過檢查特定的管理員表或標記來確定用戶是否為管理員
-  // 這裡我們使用簡單的白名單方式，將來可以改為資料庫查詢
-  const adminEmails = process.env.ADMIN_EMAILS?.split(',') || [];
-  
-  // 獲取用戶資料
-  const { data: userData, error } = await supabase
-    .from('users')
-    .select('email')
-    .eq('id', userId)
-    .single();
-    
-  if (error || !userData) return false;
-  
-  return adminEmails.includes(userData.email);
-}
-
-// 定義搜索記錄接口
+// 定义搜索记录接口
 export interface SearchRecord {
   image_url: string;
-  search_engine: string | string[];  // 現在支持字串或字串數組
+  search_engine: string | string[];  // 现在支持字符串或字符串数组
   device_type: string;
-  country_code?: string;  // ISO 3166-1 Alpha-2 國家代碼
+  country_code?: string;  // ISO 3166-1 Alpha-2 国家代码
   browser?: string;
   os?: string;
-  ip_address?: string;  // 用戶IP地址
+  ip_address?: string;  // 用户IP地址
 }
 
-// 獲取用戶設備類型
+// 获取用户设备类型
 export function getDeviceType(): string {
   if (typeof window === 'undefined') return 'unknown';
   
@@ -61,36 +25,36 @@ export function getDeviceType(): string {
   return 'desktop';
 }
 
-// 獲取瀏覽器和操作系統信息 - 簡化版以減少包大小
+// 获取浏览器和操作系统信息 - 简化版以减少包大小
 export function getUserAgentInfo() {
-  // 返回一個簡單的結果，不做複雜檢測
+  // 返回一个简单的结果，不做复杂检测
   return { 
     browser: 'unknown',
     os: 'unknown'
   };
 }
 
-// 從外部服務獲取IP和國家代碼信息
+// 从外部服务获取IP和国家代码信息
 async function fetchIPInfo() {
   try {
-    // 確認是否在客戶端環境
+    // 确认是否在客户端环境
     if (typeof window === 'undefined') {
-      // 服務器端不進行IP檢測，僅記錄日誌
-      console.log('服務器端不進行IP檢測');
+      // 服务器端不进行IP检测，仅记录日志
+      console.log('服务器端不进行IP检测');
       return { ip_address: '', country_code: 'XX' };
     }
     
-    // 客戶端環境下獲取IP信息
-    console.log('正在獲取IP信息...');
+    // 客户端环境下获取IP信息
+    console.log('正在获取IP信息...');
     
-    // 使用兩個備選API以提高成功率
-    // 先嘗試 ipapi.co
+    // 使用两个备选API以提高成功率
+    // 先尝试 ipapi.co
     try {
       const response = await fetch('https://ipapi.co/json/');
       
       if (response.ok) {
         const data = await response.json();
-        console.log('成功從ipapi.co獲取IP信息');
+        console.log('成功从ipapi.co获取IP信息');
         
         return { 
           ip_address: data.ip || '', 
@@ -98,10 +62,10 @@ async function fetchIPInfo() {
         };
       }
     } catch (apiError) {
-      console.error('ipapi.co獲取失敗，嘗試備選API', apiError);
+      console.error('ipapi.co获取失败，尝试备选API', apiError);
     }
     
-    // 如果第一個API失敗，嘗試另一個API
+    // 如果第一个API失败，尝试另一个API
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       
@@ -109,12 +73,12 @@ async function fetchIPInfo() {
         const ipData = await response.json();
         const ip = ipData.ip;
         
-        // 得到IP後，嘗試獲取地理位置信息
+        // 得到IP后，尝试获取地理位置信息
         if (ip) {
           const geoResponse = await fetch(`https://ipwho.is/${ip}`);
           if (geoResponse.ok) {
             const geoData = await geoResponse.json();
-            console.log('成功從備選API獲取IP信息');
+            console.log('成功从备选API获取IP信息');
             
             return {
               ip_address: ip,
@@ -123,34 +87,34 @@ async function fetchIPInfo() {
           }
         }
         
-        // 如果只能獲取IP但沒有地理位置
+        // 如果只能获取IP但没有地理位置
         return {
           ip_address: ip || '',
           country_code: ''
         };
       }
     } catch (backupError) {
-      console.error('備選API也獲取失敗', backupError);
+      console.error('备选API也获取失败', backupError);
     }
     
-    // 所有嘗試都失敗
-    console.warn('所有IP獲取嘗試均失敗');
+    // 所有尝试都失败
+    console.warn('所有IP获取尝试均失败');
     return { ip_address: '', country_code: 'XX' };
   } catch (error) {
-    console.error('IP信息獲取過程中發生異常:', error);
-    // 發生錯誤時返回空值，以便應用程序仍然可以運行
+    console.error('IP信息获取过程中发生异常:', error);
+    // 发生错误时返回空值，以便应用程序仍然可以运行
     return { ip_address: '', country_code: 'XX' };
   }
 }
 
-// 提取共用的數據準備邏輯 - 簡化版
+// 提取共用的数据准备逻辑 - 简化版
 function prepareRecordData(imageUrl: string, searchEngine?: string | string[], userProvidedData?: Partial<SearchRecord>) {
-  // 處理搜索引擎數組
+  // 处理搜索引擎数组
   const engines = !searchEngine ? [] : (
     Array.isArray(searchEngine) ? searchEngine : (searchEngine ? [searchEngine] : [])
   );
   
-  // 獲取設備信息 - 僅基本信息
+  // 获取设备信息 - 仅基本信息
   const deviceType = userProvidedData?.device_type || getDeviceType();
   
   return {
@@ -163,28 +127,28 @@ function prepareRecordData(imageUrl: string, searchEngine?: string | string[], u
   };
 }
 
-// 保存或更新搜尋記錄函數 - 使用原子更新操作
+// 保存或更新搜索记录函数 - 使用原子更新操作
 export async function saveSearchRecord(record: SearchRecord) {
-  console.log('正在保存搜尋記錄:', record);
+  console.log('正在保存搜索记录:', record);
   
   try {
-    // 獲取IP地址和國家代碼
+    // 获取IP地址和国家代码
     const ipInfo = await fetchIPInfo();
     
-    // 準備共用數據
+    // 准备共用数据
     const { imageUrl, engines, deviceType, browser, os, timestamp } = 
       prepareRecordData(record.image_url, record.search_engine, record);
     
-    // 優先使用有效的IP信息
-    // 先檢查記錄中提供的IP，若無效則使用fetchIPInfo獲取的IP
+    // 优先使用有效的IP信息
+    // 先检查记录中提供的IP，若无效则使用fetchIPInfo获取的IP
     const ip_address = record.ip_address && record.ip_address !== '' ? 
       record.ip_address : (ipInfo.ip_address || '');
     
-    // 同樣地處理國家代碼
+    // 同样地处理国家代码
     const country_code = record.country_code && record.country_code !== '' && record.country_code !== 'XX' ? 
       record.country_code : (ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '');
     
-    // 使用RPC函數更新記錄
+    // 使用RPC函数更新记录
     const { error: updateError } = await supabase.rpc(
       'update_search_record',
       {
@@ -200,42 +164,42 @@ export async function saveSearchRecord(record: SearchRecord) {
     );
     
     if (updateError) {
-      console.error('執行RPC更新記錄失敗:', updateError);
+      console.error('执行RPC更新记录失败:', updateError);
       return { success: false, error: updateError };
     }
     
-    console.log('搜索引擎記錄更新成功', {
-      ip_address: ip_address || '(無)',
-      country_code: country_code || '(無)'
+    console.log('搜索引擎记录更新成功', {
+      ip_address: ip_address || '(无)',
+      country_code: country_code || '(无)'
     });
     return { success: true };
   } catch (error) {
-    console.error('保存記錄時出現異常:', error);
+    console.error('保存记录时出现异常:', error);
     return { success: false, error };
   }
 }
 
-// 記錄圖片上傳或URL輸入，初始搜索引擎為空數組
+// 记录图片上传或URL输入，初始搜索引擎为空数组
 export async function saveImageUrl(imageUrl: string) {
   try {
-    console.log('保存圖片URL:', imageUrl);
+    console.log('保存图片URL:', imageUrl);
     
-    // 獲取IP地址和國家代碼
+    // 获取IP地址和国家代码
     const ipInfo = await fetchIPInfo();
     
-    // 準備共用數據
+    // 准备共用数据
     const { deviceType, browser, os, timestamp } = prepareRecordData(imageUrl);
     
-    // 確保我們只使用有效的IP和國家代碼
-    // 檢查IP是否有效
+    // 确保我们只使用有效的IP和国家代码
+    // 检查IP是否有效
     const ip_address = ipInfo.ip_address || '';
     console.log('取得的IP地址:', ip_address);
     
-    // 檢查國家代碼是否有效
+    // 检查国家代码是否有效
     const country_code = ipInfo.country_code && ipInfo.country_code !== 'XX' ? ipInfo.country_code : '';
-    console.log('取得的國家代碼:', country_code || '(無)');
+    console.log('取得的国家代码:', country_code || '(无)');
     
-    // 使用RPC函數創建初始記錄
+    // 使用RPC函数创建初始记录
     const { error: rpcError } = await supabase.rpc(
       'create_initial_search_record',
       {
@@ -250,17 +214,17 @@ export async function saveImageUrl(imageUrl: string) {
     );
     
     if (rpcError) {
-      console.error('執行RPC創建初始記錄失敗:', rpcError);
+      console.error('执行RPC创建初始记录失败:', rpcError);
       return { success: false, error: rpcError };
     }
     
-    console.log('初始圖片記錄創建成功', {
-      ip_address: ip_address || '(無)',
-      country_code: country_code || '(無)'
+    console.log('初始图片记录创建成功', {
+      ip_address: ip_address || '(无)',
+      country_code: country_code || '(无)'
     });
     return { success: true };
   } catch (error) {
-    console.error('保存圖片URL時出現異常:', error);
+    console.error('保存图片URL时出现异常:', error);
     return { success: false, error };
   }
 }

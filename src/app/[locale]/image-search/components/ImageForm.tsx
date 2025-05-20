@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import SearchButtons from './SearchButtons';
 import translations from '../translations.json';
-import { saveImageUrl } from '@/lib/supabase';
+import { saveImageUrl } from '@/lib/supabase/imageSearch';
 
 const ImageForm: FC = () => {
   const params = useParams();

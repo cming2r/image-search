@@ -12,13 +12,15 @@ function isStaticOrSpecialPath(pathname: string) {
     pathname.startsWith('/_next') || 
     pathname.startsWith('/static/') || 
     pathname.includes('.') || // 靜態資源
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    pathname === '/api/auth/callback' // 允許 API 路由回調通過
   );
 }
 
 // 檢查是否為 API 路由
 function isApiRoute(pathname: string) {
-  return pathname.startsWith('/api/');
+  // 排除 auth callback 路徑，因為它需要特殊處理
+  return pathname.startsWith('/api/') && pathname !== '/api/auth/callback';
 }
 
 export async function middleware(request: NextRequest) {
@@ -57,6 +59,18 @@ export async function middleware(request: NextRequest) {
   const segments = pathname.split('/');
   const firstSegment = segments.length > 1 ? segments[1] : '';
   
+  // 特殊處理 /auth/callback 路徑，重定向到 /api/auth/callback
+  if (pathname === '/auth/callback') {
+    // 獲取所有查詢參數
+    const redirectUrl = new URL('/api/auth/callback', request.url);
+    requestUrl.searchParams.forEach((value, key) => {
+      redirectUrl.searchParams.set(key, value);
+    });
+    
+    console.log(`Middleware: 將 /auth/callback 重定向到 /api/auth/callback`);
+    return NextResponse.redirect(redirectUrl);
+  }
+
   // 如果路徑不包含有效的語言代碼，則重寫為默認語言內容，但保持URL不變（中文版使用根路徑）
   if (!locales.includes(firstSegment)) {
     // 使用重寫而不是重定向，保持URL不變但使用中文版內容
