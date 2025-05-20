@@ -34,55 +34,6 @@ function parseGitDate(dateString: string): Date {
   }
 }
 
-/**
- * 處理國際化路徑的日期獲取
- * @param fullRoute 完整路徑，可能包含語言前綴
- * @param languages 支援的語言配置
- * @returns 頁面的Git日期
- */
-function getRouteDate(fullRoute: string, languages: LanguageConfig[]): { modified: string } {
-  // 判斷當前環境，僅在開發環境輸出詳細日誌
-  const isDev = process.env.NODE_ENV === 'development';
-  
-  // 始終輸出一些偵錯訊息，無論環境
-  console.log(`嘗試獲取路由 ${fullRoute} 的日期`);
-  
-  // 獲取基本路由（去除語言前綴）
-  const getBaseRoute = () => {
-    const languageCodes = languages.map(lang => lang.code).filter(Boolean);
-    const languagePattern = languageCodes.length > 0 
-      ? new RegExp(`^/(${languageCodes.join('|')})/`) 
-      : /^\/$/;
-    return fullRoute.replace(languagePattern, '/');
-  };
-  
-  try {
-    // 先嘗試使用完整路由
-    try {
-      return getPageDates(fullRoute);
-    } catch {
-      // 如果失敗，嘗試使用基本路由（去除語言前綴）
-      const baseRoute = getBaseRoute();
-      if (fullRoute !== baseRoute) {
-        return getPageDates(baseRoute);
-      }
-      
-      // 如果仍然失敗，嘗試使用明確的文件路徑
-      // 針對新的目錄結構
-      const filePath = `src/app/[locale]${baseRoute === '/' ? '' : baseRoute}/page.tsx`;
-      return getPageDates(filePath);
-    }
-  } catch {
-    // 所有方法都失敗，使用當前日期作為後備修改日期
-    if (isDev) {
-      console.warn(`無法獲取 ${fullRoute} 的修改日期，使用當前日期作為後備`);
-    }
-    
-    return {
-      modified: new Date().toISOString()
-    };
-  }
-}
 
 /**
  * 生成網站的站點地圖 (Sitemap)
