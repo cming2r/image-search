@@ -6,6 +6,7 @@ import Image from 'next/image';
 import SearchButtons from './SearchButtons';
 import translations from '../translations.json';
 import { saveImageUrl } from '@/lib/supabase/imageSearch';
+import Toast from '@/components/Toast';
 
 const ImageForm: FC = () => {
   const params = useParams();
@@ -14,8 +15,8 @@ const ImageForm: FC = () => {
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [toast, setToast] = useState<{message: string; isVisible: boolean; type: 'success' | 'error' | 'info'}>({message: '', isVisible: false, type: 'info'});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadContainerRef = useRef<HTMLDivElement>(null);
 
@@ -60,9 +61,10 @@ const ImageForm: FC = () => {
       return;
     }
     
-    setIsLoading(true);
-    
     try {
+      // 顯示處理中的提示
+      setToast({message: t.form.processing, isVisible: true, type: 'info'});
+      
       // 此處我們將用戶輸入的URL直接設為搜尋用URL
       setUploadedImageUrl(imageUrl);
       setError('');
@@ -72,10 +74,12 @@ const ImageForm: FC = () => {
         console.error('保存圖片URL失敗:', err);
         // 但不影響用戶繼續使用
       });
+      
+      // 成功提示
+      setToast({message: t.form.successUpload || '圖片上傳成功', isVisible: true, type: 'success'});
     } catch (error) {
       console.error('處理URL錯誤:', error);
-    } finally {
-      setIsLoading(false);
+      setToast({message: t.form.errorMessage || '處理圖片URL時發生錯誤', isVisible: true, type: 'error'});
     }
   };
 
@@ -92,10 +96,12 @@ const ImageForm: FC = () => {
       return;
     }
     
-    setIsLoading(true);
     setError('');
     
     try {
+      // 顯示處理中的提示
+      setToast({message: t.form.processing, isVisible: true, type: 'info'});
+      
       // 創建FormData
       const formData = new FormData();
       formData.append('file', file);
@@ -121,13 +127,16 @@ const ImageForm: FC = () => {
         console.error('保存圖片URL失敗:', err);
         // 但不影響用戶繼續使用
       });
+      
+      // 顯示成功訊息
+      setToast({message: t.form.successUpload || '圖片上傳成功', isVisible: true, type: 'success'});
     } catch (err) {
       console.error('上傳錯誤:', err);
-      setError(err instanceof Error ? err.message : '圖片上傳失敗，請稍後再試');
-    } finally {
-      setIsLoading(false);
+      const errorMessage = err instanceof Error ? err.message : '圖片上傳失敗，請稍後再試';
+      setError(errorMessage);
+      setToast({message: errorMessage, isVisible: true, type: 'error'});
     }
-  }, [t.form.uploadErrorImage, t.form.uploadErrorSize]);
+  }, [t.form.uploadErrorImage, t.form.uploadErrorSize, t.form.processing, t.form.successUpload]);
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = e.target.files?.[0];
@@ -286,24 +295,11 @@ const ImageForm: FC = () => {
                     <button
                       type="submit"
                       className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors flex items-center"
-                      disabled={isLoading}
                     >
-                      {isLoading ? (
-                        <>
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          {t.form.processing}
-                        </>
-                      ) : (
-                        <>
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                          </svg>
-                          {t.form.searchButton}
-                        </>
-                      )}
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                      </svg>
+                      {t.form.searchButton}
                     </button>
                   </div>
                 </div>
@@ -362,6 +358,16 @@ const ImageForm: FC = () => {
 
       {/* 未上傳狀態的搜尋按鈕組 - 依然保留但不顯示按鈕 */}
       {!uploadedImageUrl && <SearchButtons imageUrl="" />}
+      
+      {/* Toast通知 */}
+      <Toast 
+        message={toast.message}
+        isVisible={toast.isVisible}
+        type={toast.type}
+        onClose={() => setToast(prev => ({...prev, isVisible: false}))}
+        position="top-center"
+        duration={3000}
+      />
     </div>
   );
 };

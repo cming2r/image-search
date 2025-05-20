@@ -174,7 +174,11 @@
       "imageUrlInfo": "圖片網址:",
       "chooseEngine": "選擇搜尋引擎進行圖片搜尋",
       "uploadFirst": "請先輸入圖片網址或上傳圖片",
-      "uploadFirstWarning": "!!請先輸入圖片網址或上傳圖片!!"
+      "uploadFirstWarning": "!!請先輸入圖片網址或上傳圖片!!",
+      "successMessage": "圖片網址設置成功",
+      "errorMessage": "處理圖片URL時發生錯誤",
+      "successUpload": "圖片上傳成功",
+      "errorUpload": "圖片上傳失敗，請稍後再試"
     }
   },
   "en": {
@@ -352,7 +356,11 @@
       "imageUrlInfo": "Image URL:",
       "chooseEngine": "Choose a search engine to search for this image",
       "uploadFirst": "Please enter an image URL or upload an image first",
-      "uploadFirstWarning": "!!Please enter an image URL or upload an image first!!"
+      "uploadFirstWarning": "!!Please enter an image URL or upload an image first!!",
+      "successMessage": "Image URL set successfully",
+      "errorMessage": "Error processing image URL",
+      "successUpload": "Image uploaded successfully",
+      "errorUpload": "Failed to upload image, please try again later"
     }
   },
   "jp": {
@@ -530,7 +538,11 @@
       "imageUrlInfo": "画像URL：",
       "chooseEngine": "この画像を検索する検索エンジンを選択",
       "uploadFirst": "最初に画像URLを入力するか画像をアップロードしてください",
-      "uploadFirstWarning": "!!最初に画像URLを入力するか画像をアップロードしてください!!"
+      "uploadFirstWarning": "!!最初に画像URLを入力するか画像をアップロードしてください!!",
+      "successMessage": "画像URLが正常に設定されました", 
+      "errorMessage": "画像URLの処理中にエラーが発生しました",
+      "successUpload": "画像が正常にアップロードされました",
+      "errorUpload": "画像のアップロードに失敗しました。後でもう一度お試しください"
     }
   }
 }

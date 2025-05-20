@@ -25,13 +25,49 @@ export function getDeviceType(): string {
   return 'desktop';
 }
 
-// 获取浏览器和操作系统信息 - 简化版以减少包大小
+// 获取浏览器和操作系统信息
 export function getUserAgentInfo() {
-  // 返回一个简单的结果，不做复杂检测
-  return { 
-    browser: 'unknown',
-    os: 'unknown'
-  };
+  // 如果不在浏览器环境中，返回未知
+  if (typeof window === 'undefined' || !navigator) {
+    return { 
+      browser: 'unknown',
+      os: 'unknown'
+    };
+  }
+  
+  const ua = navigator.userAgent;
+  
+  // 检测浏览器
+  let browser = 'unknown';
+  if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1 && ua.indexOf('OPR') === -1 && ua.indexOf('Safari') > -1) {
+    browser = 'Chrome';
+  } else if (ua.indexOf('Firefox') > -1) {
+    browser = 'Firefox';
+  } else if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) {
+    browser = 'Safari';
+  } else if (ua.indexOf('Edg') > -1) {
+    browser = 'Edge';
+  } else if (ua.indexOf('OPR') > -1 || ua.indexOf('Opera') > -1) {
+    browser = 'Opera';
+  } else if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1) {
+    browser = 'Internet Explorer';
+  }
+  
+  // 检测操作系统
+  let os = 'unknown';
+  if (ua.indexOf('Windows') > -1) {
+    os = 'Windows';
+  } else if (ua.indexOf('Mac') > -1) {
+    os = 'MacOS';
+  } else if (ua.indexOf('Linux') > -1) {
+    os = 'Linux';
+  } else if (ua.indexOf('Android') > -1) {
+    os = 'Android';
+  } else if (ua.indexOf('iOS') > -1 || ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) {
+    os = 'iOS';
+  }
+  
+  return { browser, os };
 }
 
 // 从外部服务获取IP和国家代码信息
@@ -117,12 +153,15 @@ function prepareRecordData(imageUrl: string, searchEngine?: string | string[], u
   // 获取设备信息 - 仅基本信息
   const deviceType = userProvidedData?.device_type || getDeviceType();
   
+  // 获取浏览器和操作系统信息
+  const { browser, os } = getUserAgentInfo();
+  
   return {
     imageUrl,
     engines,
     deviceType,
-    browser: 'browser',
-    os: 'os',
+    browser,
+    os,
     timestamp: new Date().toISOString()
   };
 }

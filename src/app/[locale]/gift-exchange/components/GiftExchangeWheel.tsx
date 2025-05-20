@@ -96,8 +96,14 @@ export default function GiftExchangeWheel() {
       // 如果直接顯示結果，則提前生成結果數組
       let results: string[] = [];
       if (showResultsDirectly && showResultsDirectly.checked) {
-        // 創建環狀配對（每個人送禮物給下一個人，最後一個送給第一個）
+        // 創建隨機分佈的結果數組
         results = [...participantNames];
+        
+        // 使用 Fisher-Yates 洗牌算法隨機排序結果數組
+        for (let i = results.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [results[i], results[j]] = [results[j], results[i]];
+        }
       }
       
       // 創建活動數據 - 只包含數據庫有的欄位

@@ -62,10 +62,16 @@ export default function GiftExchangeEvent() {
         };
         
         // 如果已經設置為直接顯示結果，並且結果為空，
-        // 那麼自動生成結果（環形配對）
+        // 那麼自動生成結果（隨機配對）
         if (showDirectly && (!data.results || data.results.length === 0)) {
-          // 創建一個從頭到尾的配對（環形）
+          // 創建一個隨機分佈的結果數組
           const autoResults = [...data.participant_names];
+          
+          // 使用 Fisher-Yates 洗牌算法隨機排序結果數組
+          for (let i = autoResults.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [autoResults[i], autoResults[j]] = [autoResults[j], autoResults[i]];
+          }
           
           // 發送 PATCH 請求，一次性添加所有結果
           for (const participant of autoResults) {
