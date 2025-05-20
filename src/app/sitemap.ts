@@ -1,4 +1,6 @@
-import { getFullUrl, getPageDates } from '@/lib/utils';
+import { getFullUrl, FILE_DATES } from '@/lib/utils';
+import * as fs from 'fs';
+import * as path from 'path';
 import { MetadataRoute } from 'next';
 
 /**
@@ -20,16 +22,28 @@ type LanguageConfig = {
   hreflang: string;
 };
 
+
 /**
- * 從Git日期字符串轉換為Date對象
- * @param dateString Git日期字符串，通常是ISO格式
- * @returns Date對象
+ * 直接從文件系統取得檔案的最後修改日期
+ * @param filePath 檔案路徑，相對於專案根目錄
+ * @returns 文件最後修改日期作為 Date 物件
  */
-function parseGitDate(dateString: string): Date {
+function getFileModifiedDateFromFilesystem(filePath: string): Date {
   try {
-    return new Date(dateString);
-  } catch {
-    console.warn(`無法解析日期: ${dateString}，使用當前日期`);
+    // 確保路徑存在 (如果路徑是相對的，轉換為絕對路徑)
+    const projectRoot = process.cwd();
+    const fullPath = path.join(projectRoot, filePath);
+    
+    if (fs.existsSync(fullPath)) {
+      const stats = fs.statSync(fullPath);
+      console.log(`從文件系統讀取 ${filePath} 的修改日期: ${stats.mtime.toISOString()}`);
+      return stats.mtime;
+    } else {
+      console.warn(`文件不存在: ${fullPath}`);
+      return new Date();
+    }
+  } catch (error) {
+    console.error(`獲取文件修改日期錯誤: ${error instanceof Error ? error.message : String(error)}`);
     return new Date();
   }
 }
@@ -49,6 +63,13 @@ function parseGitDate(dateString: string): Date {
  * @returns MetadataRoute.Sitemap - Next.js 站點地圖配置
  */
 export default function sitemap(): MetadataRoute.Sitemap {
+  // 載入時列印 FILE_DATES 物件的大小，用於驗證是否重新載入
+  console.log(`\n=========== SITEMAP 開始生成 ===========`);
+  console.log(`sitemap.ts 模組載入，FILE_DATES 包含 ${Object.keys(FILE_DATES).length} 個路徑`);
+  console.log(`首頁日期: ${FILE_DATES['/src/app/[locale]/page.tsx']?.modified || '未找到'}`);
+  console.log(`圖片搜尋日期: ${FILE_DATES['/src/app/[locale]/image-search/page.tsx']?.modified || '未找到'}`);
+  console.log(`禮物交換日期: ${FILE_DATES['/src/app/[locale]/gift-exchange/page.tsx']?.modified || '未找到'}`);
+  console.log(`========================================\n`);
   // 定義所有語言和對應的 hreflang
   const LANGUAGES: LanguageConfig[] = [
     { code: '', hreflang: 'zh' }, // 中文（根路徑）
@@ -151,14 +172,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       pageFilePath = `src/app/[locale]${rootRoute}/page.tsx`;
     }
     
-    // 直接使用文件路徑獲取日期
-    console.log(`將使用文件路徑: ${pageFilePath} 獲取日期`);
-    const { modified } = getPageDates(pageFilePath);
+    // 雙重檢查 - 檢查 FILE_DATES 中的日期
+    const normalizedPath = `/${pageFilePath}`;
+    console.log(`檢查 FILE_DATES 是否包含路徑: ${normalizedPath}`);
     
-    // 輸出偵錯訊息
-    console.log(`路由 ${rootRoute} (文件: ${pageFilePath}) 的修改日期: ${modified}`);
+    // 從 FILE_DATES 獲取日期
+    if (normalizedPath in FILE_DATES) {
+      console.log(`FILE_DATES 中的日期: ${JSON.stringify(FILE_DATES[normalizedPath])}`);
+    }
     
-    const parsedDate = parseGitDate(modified);
+    // 直接從文件系統獲取日期 (這是最可靠的方法)
+    const fileSystemDate = getFileModifiedDateFromFilesystem(pageFilePath);
+    
+    // 輸出對比信息
+    console.log(`路由 ${rootRoute} (文件: ${pageFilePath})`);
+    
+    // 使用文件系統獲取的日期作為最終日期
+    const parsedDate = fileSystemDate;
     
     // 處理每種語言版本
     for (const lang of LANGUAGES) {
