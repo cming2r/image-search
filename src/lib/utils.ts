@@ -85,59 +85,59 @@ export interface GitDates {
 // 注意：此變數需要在構建過程中填充實際值
 export const FILE_DATES: Record<string, GitDates> = {
   "/src/app/[locale]/page.tsx": {
-    created: "2025-03-20T12:47:14.723Z",
-    modified: "2025-04-29T16:29:01.681Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/",
   },
   "/src/app/[locale]/image-search/page.tsx": {
-    created: "2025-04-07T12:26:51.406Z",
-    modified: "2025-04-27T16:20:45.200Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-07 00:17:13 +0800",
     routePath: "/image-search",
   },
   "/src/app/[locale]/gift-exchange/page.tsx": {
-    created: "2025-04-14T14:01:41.615Z",
-    modified: "2025-04-27T16:32:40.220Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/gift-exchange",
   },
   "/src/app/[locale]/due-date-calculator/page.tsx": {
-    created: "2025-04-09T14:42:07.891Z",
-    modified: "2025-04-27T16:26:04.606Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/due-date-calculator",
   },
-  "/src/app/[locale]/admin/page.tsx": {
-    created: "2025-04-12T07:02:33.163Z",
-    modified: "2025-04-12T16:14:55.711Z",
-    routePath: "/admin",
-  },
   "/src/app/[locale]/date/page.tsx": {
-    created: "2025-03-26T15:08:21.170Z",
-    modified: "2025-04-27T14:04:02.420Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/date",
   },
+  "/src/app/[locale]/admin/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-21 00:07:01 +0800",
+    routePath: "/admin",
+  },
   "/src/app/[locale]/gift-exchange/[id]/page.tsx": {
-    created: "2025-04-16T15:27:12.647Z",
-    modified: "2025-04-28T13:55:47.509Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-21 00:41:36 +0800",
     routePath: "/gift-exchange/[id]",
   },
-  "/src/app/[locale]/admin/login/page.tsx": {
-    created: "2025-04-12T07:44:25.655Z",
-    modified: "2025-04-12T16:18:39.205Z",
-    routePath: "/admin/login",
-  },
   "/src/app/[locale]/(info)/terms/page.tsx": {
-    created: "2025-03-23T13:01:27.924Z",
-    modified: "2025-04-30T14:55:43.706Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/terms",
   },
   "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
-    created: "2025-03-23T13:01:26.083Z",
-    modified: "2025-04-30T14:51:25.860Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/privacy-policy",
   },
   "/src/app/[locale]/(info)/contact/page.tsx": {
-    created: "2025-04-08T14:11:35.558Z",
-    modified: "2025-04-30T15:02:58.220Z",
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
     routePath: "/contact",
+  },
+  "/src/app/[locale]/admin/login/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-21 00:07:01 +0800",
+    routePath: "/admin/login",
   },
 };
 
