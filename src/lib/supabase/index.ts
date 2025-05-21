@@ -24,6 +24,11 @@ import {
   isAdmin, 
   checkAdminPermission
 } from './auth';
+import { 
+  createShortUrl, 
+  getShortUrl, 
+  updateClickCount
+} from './shorturl';
 
 // 重新导出所有函数
 export {
@@ -44,10 +49,16 @@ export {
   
   // 身份验证和管理员功能
   isAdmin,
-  checkAdminPermission
+  checkAdminPermission,
+  
+  // 短網址功能
+  createShortUrl,
+  getShortUrl,
+  updateClickCount
 };
 
 // 导出所有类型
 export type { SearchRecord } from './imageSearch';
 export type { ContactFormData } from './contact';
 export type { GiftExchangeData } from './giftExchange';
+export type { ShortUrlData, CreateShortUrlParams } from './shorturl';

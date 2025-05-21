@@ -12,15 +12,13 @@ function isStaticOrSpecialPath(pathname: string) {
     pathname.startsWith('/_next') || 
     pathname.startsWith('/static/') || 
     pathname.includes('.') || // 靜態資源
-    pathname === '/favicon.ico' ||
-    pathname === '/api/auth/callback' // 允許 API 路由回調通過
+    pathname === '/favicon.ico'
   );
 }
 
 // 檢查是否為 API 路由
 function isApiRoute(pathname: string) {
-  // 排除 auth callback 路徑，因為它需要特殊處理
-  return pathname.startsWith('/api/') && pathname !== '/api/auth/callback';
+  return pathname.startsWith('/api/');
 }
 
 export async function middleware(request: NextRequest) {
@@ -41,18 +39,9 @@ export async function middleware(request: NextRequest) {
     return response;
   }
   
-  // API 路由特殊處理 - 始終重寫到默認語言的 API 路由
+  // API 路由直接放行，不需要重寫
   if (isApiRoute(pathname)) {
-    const rewritePath = pathname.replace('/api/', `/${defaultLocale}/api/`);
-    const rewriteUrl = new URL(rewritePath, request.url);
-    
-    // 保留查詢參數
-    requestUrl.searchParams.forEach((value, key) => {
-      rewriteUrl.searchParams.set(key, value);
-    });
-    
-    console.log(`Middleware: 將 API 請求 ${pathname} 重寫到 ${rewriteUrl.pathname}`);
-    return NextResponse.rewrite(rewriteUrl);
+    return NextResponse.next();
   }
   
   // 檢查路徑的第一段是否為有效的語言代碼
