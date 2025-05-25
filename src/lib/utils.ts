@@ -89,6 +89,11 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/",
   },
+  "/src/app/[locale]/shorturl/page.tsx": {
+    created: "2025-05-22 00:56:16 +0800",
+    modified: "2025-05-22 00:56:16 +0800",
+    routePath: "/shorturl",
+  },
   "/src/app/[locale]/image-search/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-05-07 00:17:13 +0800",
@@ -104,15 +109,15 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/due-date-calculator",
   },
-  "/src/app/[locale]/admin/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-05-21 00:07:01 +0800",
-    routePath: "/admin",
-  },
   "/src/app/[locale]/date/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/date",
+  },
+  "/src/app/[locale]/admin/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-21 00:07:01 +0800",
+    routePath: "/admin",
   },
   "/src/app/[locale]/gift-exchange/[id]/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
@@ -163,15 +168,17 @@ export function getPageDates(
     // 目錄結構
     "src/app/[locale]/image-search/page.tsx": "2025-04-07 21:30:32 +0800",
     "src/app/[locale]/page.tsx": "2025-03-20 21:37:52 +0800",
-    "src/app/[locale]/due-date-calculator/page.tsx": "2025-04-09 23:50:15 +0800",
+    "src/app/[locale]/due-date-calculator/page.tsx":
+      "2025-04-09 23:50:15 +0800",
     "src/app/[locale]/date/page.tsx": "2025-03-27 00:21:15 +0800",
     "src/app/[locale]/gift-exchange/page.tsx": "2025-04-17 01:10:09 +0800",
     "src/app/[locale]/admin/page.tsx": "2025-04-13 00:15:22 +0800",
     "src/app/[locale]/gift-exchange/[id]/page.tsx": "2025-04-17 01:10:09 +0800",
     "src/app/[locale]/admin/login/page.tsx": "2025-04-13 00:15:22 +0800",
     "src/app/[locale]/(info)/terms/page.tsx": "2025-04-18 11:45:48 +0800",
-    "src/app/[locale]/(info)/privacy-policy/page.tsx": "2025-04-18 11:45:48 +0800",
-    "src/app/[locale]/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800"
+    "src/app/[locale]/(info)/privacy-policy/page.tsx":
+      "2025-04-18 11:45:48 +0800",
+    "src/app/[locale]/(info)/contact/page.tsx": "2025-04-18 11:45:48 +0800",
   };
 
   // 嘗試規範化路徑
@@ -278,14 +285,14 @@ export function getPageDates(
         modified: formatDateToISO(modified),
       };
     }
-    
+
     // 嘗試將路徑調整為符合 [locale] 結構
     if (normalizedPath.includes("/src/")) {
       const pathAfterSrc = normalizedPath.split("/src/")[1];
       // 檢查路徑是否已經包含 app/[locale]
       if (!pathAfterSrc.startsWith("app/[locale]")) {
         const localeAdjustedPath = `/src/app/[locale]/${pathAfterSrc}`;
-        
+
         // 檢查調整後的路徑是否有對應的日期
         if (FILE_DATES[localeAdjustedPath]) {
           const { created, modified } = FILE_DATES[localeAdjustedPath];

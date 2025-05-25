@@ -156,6 +156,30 @@ export default function ImageSearch() {
               </div>
               
               <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-lg font-medium text-fuchsia-700 flex items-center">
+                  {t.searchEngines.traceMoe.title}
+                  <a 
+                    href="https://trace.moe/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-fuchsia-600 hover:text-fuchsia-800 transition-colors"
+                    aria-label="前往 trace.moe"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </h3>
+                <div className="mt-3 space-y-3">
+                  {t.searchEngines.traceMoe.content.map((paragraph, index) => (
+                    <p key={index}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
                 <h3 className="text-lg font-medium text-gray-700 flex items-center">
                   {t.searchEngines.tineye.title}
                   <a 

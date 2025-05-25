@@ -4,7 +4,6 @@ import { FC, useState, ReactElement } from 'react';
 import { useParams } from 'next/navigation';
 import { saveSearchRecord, getDeviceType } from '@/lib/supabase/imageSearch';
 import Image from 'next/image';
-import translations from '../translations.json';
 
 interface SearchButtonProps {
   imageUrl: string;
@@ -22,7 +21,6 @@ interface SearchEngine {
 const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
   
   const [showWarning, setShowWarning] = useState<boolean>(false);
   
@@ -173,6 +171,17 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
           />
         </div>
       )
+    },
+    {
+      name: 'trace.moe',
+      url: `https://trace.moe/?url=${encodeURIComponent(imageUrl)}`,
+      bgColor: 'bg-fuchsia-500',
+      hoverColor: 'hover:bg-fuchsia-600',
+      icon: (
+        <div className="w-5 h-5 mr-2 flex items-center justify-center">
+          <span className="text-white font-bold text-sm">T</span>
+        </div>
+      )
     }
   ];
 
@@ -194,7 +203,10 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     return (
       <div className="mt-4">
         <p className={`${showWarning ? 'text-red-500 font-medium' : 'text-gray-500'} text-center mb-2`}>
-          {showWarning ? t.form.uploadFirstWarning : t.form.uploadFirst}
+          {showWarning 
+            ? (locale === 'zh' ? '!!請先輸入圖片網址或上傳圖片!!' : locale === 'jp' ? '!!最初に画像URLを入力するか画像をアップロードしてください!!' : '!!Please enter an image URL or upload an image first!!')
+            : (locale === 'zh' ? '請先輸入圖片網址或上傳圖片' : locale === 'jp' ? '最初に画像URLを入力するか画像をアップロードしてください' : 'Please enter an image URL or upload an image first')
+          }
         </p>
         <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
           {searchEngines.map((engine) => (
@@ -216,7 +228,9 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
 
   return (
     <div className="mt-4">
-      <p className="text-gray-600 text-center mb-2">{t.form.chooseEngine}</p>
+      <p className="text-gray-600 text-center mb-2">
+        {locale === 'zh' ? '選擇搜尋引擎進行圖片搜尋' : locale === 'jp' ? 'この画像を検索する検索エンジンを選択' : 'Choose a search engine to search for this image'}
+      </p>
       <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
         {searchEngines.map((engine) => (
           <a

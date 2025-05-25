@@ -54,6 +54,13 @@
           "使用SauceNAO，用戶不僅能找到原始圖片及其作者資訊，還能獲取關聯的作品集、漫畫系列及遊戲出處。對於動漫藝術研究、同人創作參考或純粹的愛好者探索，SauceNAO提供了專業且全面的搜尋解決方案。"
         ]
       },
+      "traceMoe": {
+        "title": "trace.moe 動畫場景搜尋",
+        "content": [
+          "trace.moe 是專門針對動畫場景的反向搜尋引擎，能夠精確識別動畫截圖來源，包括作品名稱、具體集數和時間點。這項服務使用先進的圖像識別技術，通過分析動畫畫面的特徵，在龐大的動畫資料庫中進行比對。",
+          "使用 trace.moe，用戶可以快速找到動畫截圖的確切來源，無論是想要重溫某個經典場景，還是尋找表情包或迷因圖的原始出處。系統不僅提供準確的作品信息，還能精確到具體的集數和時間戳，讓用戶能夠直接定位到該場景。對於動畫愛好者、內容創作者和研究人員來說，這是一個極其實用的工具。"
+        ]
+      },
       "tineye": {
         "title": "TinEye（已移除）",
         "content": [
@@ -172,9 +179,6 @@
       "uploadErrorImage": "請上傳圖片文件",
       "uploadErrorSize": "圖片大小不能超過5MB",
       "imageUrlInfo": "圖片網址:",
-      "chooseEngine": "選擇搜尋引擎進行圖片搜尋",
-      "uploadFirst": "請先輸入圖片網址或上傳圖片",
-      "uploadFirstWarning": "!!請先輸入圖片網址或上傳圖片!!",
       "successMessage": "圖片網址設置成功",
       "errorMessage": "處理圖片URL時發生錯誤",
       "successUpload": "圖片上傳成功",
@@ -234,6 +238,13 @@
         "content": [
           "SauceNAO is the most professional image search engine in the anime, manga, and illustration fields, providing anime content enthusiasts with an unparalleled search experience. Its specialized database covers major anime art platforms like Twitter, Pixiv, and niconico, enabling fast and precise location of image sources.",
           "Using SauceNAO, users can not only find the original images and their creator information but also obtain related collections, manga series, and game origins. For anime art research, fan creation references, or pure enthusiast exploration, SauceNAO provides a professional and comprehensive search solution."
+        ]
+      },
+      "traceMoe": {
+        "title": "trace.moe Anime Scene Search",
+        "content": [
+          "trace.moe is a reverse search engine specifically designed for anime scenes, capable of accurately identifying the source of anime screenshots, including the work name, specific episode, and timestamp. This service uses advanced image recognition technology to analyze anime frame characteristics and match them against a vast anime database.",
+          "Using trace.moe, users can quickly find the exact source of anime screenshots, whether they want to relive a classic scene or find the original source of emotes or memes. The system not only provides accurate work information but also pinpoints the specific episode and timestamp, allowing users to directly locate the scene. For anime enthusiasts, content creators, and researchers, this is an extremely practical tool."
         ]
       },
       "tineye": {
@@ -354,9 +365,6 @@
       "uploadErrorImage": "Please upload an image file",
       "uploadErrorSize": "Image size cannot exceed 5MB",
       "imageUrlInfo": "Image URL:",
-      "chooseEngine": "Choose a search engine to search for this image",
-      "uploadFirst": "Please enter an image URL or upload an image first",
-      "uploadFirstWarning": "!!Please enter an image URL or upload an image first!!",
       "successMessage": "Image URL set successfully",
       "errorMessage": "Error processing image URL",
       "successUpload": "Image uploaded successfully",
@@ -416,6 +424,13 @@
         "content": [
           "SauceNAOはアニメ、漫画、イラストの分野で最もプロフェッショナルな画像検索エンジンであり、二次元コンテンツ愛好家に比類ない検索体験を提供します。その専門的なデータベースはTwitter、Pixiv、niconicoなどの主要なアニメアートプラットフォームをカバーし、画像ソースの迅速かつ正確な特定を可能にします。",
           "SauceNAOを使用すると、ユーザーは元の画像とその作者情報を見つけるだけでなく、関連コレクション、漫画シリーズ、ゲーム出典も取得できます。アニメアート研究、同人創作の参考、または純粋な愛好家の探索のために、SauceNAOはプロフェッショナルで包括的な検索ソリューションを提供します。"
+        ]
+      },
+      "traceMoe": {
+        "title": "trace.moe アニメシーン検索",
+        "content": [
+          "trace.moeはアニメシーンに特化した逆画像検索エンジンで、作品名、具体的なエピソード、タイムスタンプを含むアニメスクリーンショットのソースを正確に識別できます。このサービスは高度な画像認識技術を使用して、アニメフレームの特徴を分析し、膨大なアニメデータベースと照合します。",
+          "trace.moeを使用することで、ユーザーはアニメスクリーンショットの正確なソースを素早く見つけることができます。クラシックなシーンを再体験したい場合や、エモートやミームの元のソースを見つけたい場合に便利です。システムは正確な作品情報を提供するだけでなく、特定のエピソードとタイムスタンプまで特定し、ユーザーがシーンを直接見つけられるようにします。アニメ愛好家、コンテンツクリエイター、研究者にとって、これは極めて実用的なツールです。"
         ]
       },
       "tineye": {
@@ -536,9 +551,6 @@
       "uploadErrorImage": "画像ファイルをアップロードしてください",
       "uploadErrorSize": "画像サイズは5MBを超えることはできません",
       "imageUrlInfo": "画像URL：",
-      "chooseEngine": "この画像を検索する検索エンジンを選択",
-      "uploadFirst": "最初に画像URLを入力するか画像をアップロードしてください",
-      "uploadFirstWarning": "!!最初に画像URLを入力するか画像をアップロードしてください!!",
       "successMessage": "画像URLが正常に設定されました", 
       "errorMessage": "画像URLの処理中にエラーが発生しました",
       "successUpload": "画像が正常にアップロードされました",
