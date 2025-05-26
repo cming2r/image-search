@@ -11,7 +11,7 @@ import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 interface ImageSearch {
   id: number;
   image_url: string;
-  search_engine: string;
+  search_engine: string | string[];
   device_type: string;
   country_code: string;
   browser: string;
@@ -524,8 +524,22 @@ export default function AdminPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {formatDateTime(search.searched_at)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {search.search_engine}
+                    <td className="px-6 py-4 text-sm text-gray-800">
+                      <div className="space-y-1">
+                        {(() => {
+                          const engines = typeof search.search_engine === 'string' 
+                            ? search.search_engine.split(',').map(e => e.trim())
+                            : Array.isArray(search.search_engine) 
+                            ? search.search_engine
+                            : [String(search.search_engine)];
+                          
+                          return engines.map((engine: string, index: number) => (
+                            <div key={index} className="whitespace-nowrap">
+                              {engine}
+                            </div>
+                          ));
+                        })()}
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800 max-w-xs truncate">
                       <a
