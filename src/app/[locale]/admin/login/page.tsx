@@ -23,9 +23,19 @@ export default function LoginPage() {
     }
   }, []);
 
-  // 檢查查詢參數中的錯誤
+  // 檢查查詢參數中的錯誤和 hash 中的 token
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // 檢查 hash 中是否有 access_token（Supabase OAuth 回調）
+      const hash = window.location.hash;
+      if (hash && hash.includes('access_token')) {
+        console.log('檢測到 OAuth 回調，處理登入...');
+        // Supabase 會自動處理 hash 中的 token
+        // 清除 URL 中的 hash 和錯誤參數
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+      
       const urlParams = new URLSearchParams(window.location.search);
       const error = urlParams.get('error');
       
@@ -111,8 +121,8 @@ export default function LoginPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // 使用自定義的回調 URL，使用 API 路由
-          redirectTo: `${window.location.origin}/api/auth/callback`,
+          // 改為重定向回登入頁面，讓客戶端處理 token
+          redirectTo: `${window.location.origin}/admin/login`,
           // 只要求最小權限，減少警告的嚴重性
           scopes: 'email',
           queryParams: {
