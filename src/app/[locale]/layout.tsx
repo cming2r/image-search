@@ -42,6 +42,12 @@ export default async function RootLayout({
       <head className="block">
         {/* 頭部元數據已由Next.js處理 */}
         <meta name="schema-format" content="preserve" />
+        {/* Google AdSense */}
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5238540470214596"
+          crossOrigin="anonymous"
+        />
       </head>
       
       <body suppressHydrationWarning className="block">

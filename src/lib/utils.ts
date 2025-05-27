@@ -99,50 +99,50 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/gift-exchange",
   },
-  "/src/app/[locale]/image-search/page.tsx": {
+  "/src/app/[locale]/date/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-05-25 22:22:35 +0800",
-    routePath: "/image-search",
+    modified: "2025-04-30 23:14:10 +0800",
+    routePath: "/date",
   },
   "/src/app/[locale]/due-date-calculator/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/due-date-calculator",
   },
-  "/src/app/[locale]/date/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-04-30 23:14:10 +0800",
-    routePath: "/date",
-  },
   "/src/app/[locale]/admin/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-05-21 00:07:01 +0800",
+    modified: "2025-05-26 22:17:11 +0800",
     routePath: "/admin",
+  },
+  "/src/app/[locale]/image-search/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-25 22:22:35 +0800",
+    routePath: "/image-search",
   },
   "/src/app/[locale]/gift-exchange/[id]/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-05-21 00:41:36 +0800",
     routePath: "/gift-exchange/[id]",
   },
-  "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-04-30 23:14:10 +0800",
-    routePath: "/privacy-policy",
-  },
   "/src/app/[locale]/admin/login/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-05-21 00:07:01 +0800",
+    modified: "2025-05-26 22:17:11 +0800",
     routePath: "/admin/login",
-  },
-  "/src/app/[locale]/(info)/contact/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-04-30 23:14:10 +0800",
-    routePath: "/contact",
   },
   "/src/app/[locale]/(info)/terms/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/terms",
+  },
+  "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
+    routePath: "/privacy-policy",
+  },
+  "/src/app/[locale]/(info)/contact/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
+    routePath: "/contact",
   },
 };
 
@@ -158,11 +158,6 @@ export function getPageDates(
   fallbackCreated: string = "2025-01-01T00:00:00Z",
   fallbackModified: string = "2025-01-15T00:00:00Z",
 ): GitDates {
-  // 始終輸出偵錯訊息，幫助調試
-  console.log(`getPageDates 被調用，參數: ${pathOrRoute}`);
-  console.log(
-    `當前 FILE_DATES 物件包含 ${Object.keys(FILE_DATES).length} 個路徑`,
-  );
   // 特定頁面的固定創建日期 - 這些不會被構建過程改變
   const fixedCreatedDates: Record<string, string> = {
     // 目錄結構
@@ -188,27 +183,19 @@ export function getPageDates(
 
   // 方法1：直接查找精確的文件路徑
   if (FILE_DATES[normalizedPath]) {
-    console.log(`直接匹配成功! 路徑: ${normalizedPath}`);
-
     // 提取創建和修改日期，不返回routePath屬性
     const { created, modified } = FILE_DATES[normalizedPath];
-    console.log(`獲取到的日期: created=${created}, modified=${modified}`);
 
     // 如果是固定創建日期的頁面，使用固定的創建日期
     const finalCreated = fixedCreatedDates[pathOrRoute] || created;
-    console.log(`最終使用的創建日期: ${finalCreated}`);
 
     const result = {
       created: formatDateToISO(finalCreated),
       modified: formatDateToISO(modified),
     };
-    console.log(
-      `返回的日期: created=${result.created}, modified=${result.modified}`,
-    );
 
     return result;
   } else {
-    console.log(`直接匹配失敗: ${normalizedPath} 不在 FILE_DATES 中`);
   }
 
   // 方法2：嘗試將路徑作為路由路徑與routePath屬性匹配
@@ -306,7 +293,6 @@ export function getPageDates(
   }
 
   // 找不到信息時使用後備日期
-  console.log(`未找到 "${pathOrRoute}" 的日期信息，使用默認日期。`);
   return {
     created: fallbackCreated,
     modified: fallbackModified,
