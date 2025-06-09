@@ -1,6 +1,7 @@
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import { locales } from "./metadata";
 
 // 定義有效的靜態路徑參數
@@ -43,9 +44,9 @@ export default async function RootLayout({
         {/* 頭部元數據已由Next.js處理 */}
         <meta name="schema-format" content="preserve" />
         {/* Google AdSense */}
-        <script 
-          async 
+        <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5238540470214596"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
       </head>
