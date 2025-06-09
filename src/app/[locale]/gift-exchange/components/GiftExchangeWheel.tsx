@@ -2,13 +2,91 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import translations from '../translations.json';
+const giftExchangeTranslations = {
+  wheel: {
+    participantsLabel: {
+      zh: "參與者名單",
+      en: "Participants List",
+      jp: "参加者リスト"
+    },
+    participantsPlaceholder: {
+      zh: "輸入參與者名單，用空格分隔（如：小明 小華 小強）",
+      en: "Enter participant names, separated by spaces (e.g., John Mary David)",
+      jp: "参加者名をスペースで区切って入力（例：太郎 花子 健太）"
+    },
+    randomizeOrder: {
+      zh: "隨機分佈參與者順序",
+      en: "Randomize participant order",
+      jp: "参加者の順序をランダム化"
+    },
+    showFinalResultDirectly: {
+      zh: "直接顯示最終結果",
+      en: "Show final results directly",
+      jp: "最終結果を直接表示"
+    },
+    startButton: {
+      zh: "開始抽籤",
+      en: "Start Drawing",
+      jp: "抽選開始"
+    },
+    noParticipantsError: {
+      zh: "請至少輸入兩名參與者",
+      en: "Please enter at least two participants",
+      jp: "少なくとも2人の参加者を入力してください"
+    },
+    quickAdd: {
+      zh: "快速添加",
+      en: "Quick Add",
+      jp: "クイック追加"
+    },
+    addButton: {
+      zh: "添加",
+      en: "Add",
+      jp: "追加"
+    },
+    currentParticipants: {
+      zh: "目前參與者",
+      en: "Current participants",
+      jp: "現在の参加者"
+    },
+    clearAll: {
+      zh: "清除全部",
+      en: "Clear All",
+      jp: "すべてクリア"
+    },
+    noParticipantsYet: {
+      zh: "尚未添加參與者",
+      en: "No participants added yet",
+      jp: "まだ参加者が追加されていません"
+    },
+    addedPrefix: {
+      zh: "已添加",
+      en: "Added",
+      jp: "追加済み"
+    },
+    addedSuffix: {
+      zh: "名參與者",
+      en: "participants",
+      jp: "人の参加者"
+    },
+    personSuffix: {
+      zh: "人",
+      en: "",
+      jp: "人"
+    }
+  },
+  createEventDescription: {
+    zh: "點擊「開始抽籤」按鈕，系統會自動生成活動連結",
+    en: "Click the \"Start Drawing\" button, and the system will automatically generate an event link",
+    jp: "「抽選開始」ボタンをクリックすると、システムは自動的にイベントリンクを生成します"
+  }
+};
 import { useParams } from 'next/navigation';
 
 export default function GiftExchangeWheel() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   // 初始為空數組，避免服務器/客戶端水合問題
   const [participants, setParticipants] = useState<string[]>([]);
@@ -71,7 +149,7 @@ export default function GiftExchangeWheel() {
   // 開始抽籤，創建新活動
   const startGiftExchange = async () => {
     if (participants.length < 2) {
-      alert(t.wheel.noParticipantsError);
+      alert(giftExchangeTranslations.wheel.noParticipantsError[lang]);
       return;
     }
 
@@ -155,7 +233,7 @@ export default function GiftExchangeWheel() {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-medium mb-4">{t.wheel.participantsLabel}</h2>
+        <h2 className="text-xl font-medium mb-4">{giftExchangeTranslations.wheel.participantsLabel[lang]}</h2>
         
         {/* 手動添加參與者 */}
         <div className="flex gap-2 mb-4">
@@ -170,14 +248,14 @@ export default function GiftExchangeWheel() {
                 addParticipant();
               }
             }}
-            placeholder={t.wheel.participantsPlaceholder}
+            placeholder={giftExchangeTranslations.wheel.participantsPlaceholder[lang]}
             className="flex-1 px-3 py-2 border rounded"
           />
           <button 
             onClick={addParticipant}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            {t.wheel.addButton}
+            {giftExchangeTranslations.wheel.addButton[lang]}
           </button>
         </div>
         
@@ -202,25 +280,25 @@ export default function GiftExchangeWheel() {
             onClick={quickAddParticipants}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
-            {t.wheel.quickAdd}
+            {giftExchangeTranslations.wheel.quickAdd[lang]}
           </button>
         </div>
         
         {/* 參與者列表 - 無論是否有參與者都顯示 */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="font-medium">{t.wheel.currentParticipants} ({participants.length}{t.wheel.personSuffix}):</h3>
+            <h3 className="font-medium">{giftExchangeTranslations.wheel.currentParticipants[lang]} ({participants.length}{giftExchangeTranslations.wheel.personSuffix[lang]}):</h3>
             {participants.length > 0 && (
               <button
                 onClick={() => updateParticipants([])}
                 className="text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded border border-red-200 hover:border-red-400"
               >
-                {t.wheel.clearAll}
+                {giftExchangeTranslations.wheel.clearAll[lang]}
               </button>
             )}
           </div>
           {participants.length === 0 ? (
-            <div className="text-gray-500 italic">{t.wheel.noParticipantsYet}</div>
+            <div className="text-gray-500 italic">{giftExchangeTranslations.wheel.noParticipantsYet[lang]}</div>
           ) : (
             <div className="flex flex-wrap gap-2">
               {participants.map((participant, index) => (
@@ -248,7 +326,7 @@ export default function GiftExchangeWheel() {
               id="randomize-order"
               className="w-4 h-4 accent-blue-600"
             />
-            <span className="text-gray-700">{t.wheel.randomizeOrder}</span>
+            <span className="text-gray-700">{giftExchangeTranslations.wheel.randomizeOrder[lang]}</span>
           </label>
           
           <label className="flex items-center gap-2 cursor-pointer">
@@ -257,7 +335,7 @@ export default function GiftExchangeWheel() {
               id="show-results-directly"
               className="w-4 h-4 accent-blue-600"
             />
-            <span className="text-gray-700">{t.wheel.showFinalResultDirectly}</span>
+            <span className="text-gray-700">{giftExchangeTranslations.wheel.showFinalResultDirectly[lang]}</span>
           </label>
         </div>
         
@@ -270,18 +348,18 @@ export default function GiftExchangeWheel() {
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-blue-700'}`}
         >
-          {t.wheel.startButton}
+          {giftExchangeTranslations.wheel.startButton[lang]}
         </button>
       </div>
       
       {/* 參與者人數提示 */}
       {participants.length > 0 && (
         <div className="mt-8 text-center p-4 bg-blue-50 rounded-lg">
-          <p className="text-lg">{t.wheel.addedPrefix} <span className="font-bold">{participants.length}</span> {t.wheel.addedSuffix}</p>
+          <p className="text-lg">{giftExchangeTranslations.wheel.addedPrefix[lang]} <span className="font-bold">{participants.length}</span> {giftExchangeTranslations.wheel.addedSuffix[lang]}</p>
           <p className="text-sm text-gray-600 mt-1">
             {participants.length < 2 
-              ? t.wheel.noParticipantsError 
-              : `${t.howToUse.steps[2].description}`}
+              ? giftExchangeTranslations.wheel.noParticipantsError[lang] 
+              : giftExchangeTranslations.createEventDescription[lang]}
           </p>
         </div>
       )}

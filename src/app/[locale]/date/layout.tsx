@@ -5,19 +5,9 @@ import {
   generateWebApplicationSchema,
   formatJSON
 } from '@/lib/schema';
+import { metaTranslations } from './components/meta-translations';
 
-// 多語言標題和描述
-const titles = {
-  zh: '日期計算器',
-  en: 'Date Calculator',
-  jp: '日付計算機'
-};
-
-const descriptions = {
-  zh: '計算日期之間的差距，或從指定日期加減天數',
-  en: 'Calculate the difference between dates, or add/subtract days from a specific date',
-  jp: '日付間の差を計算したり、特定の日付から日数を追加・減算する'
-};
+// 多語言關鍵字
 
 const keywordsList = {
   zh: ['日期計算器', '日期加減', '計算日期差', '天數計算'],
@@ -41,14 +31,13 @@ const imageUrl = getFullUrl('/images/og-date.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
+  const title = metaTranslations.meta.title[lang];
+  const description = metaTranslations.meta.description[lang];
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `日期計算器` : 
-                 locale === 'en' ? `Date Calculator` : 
-                 `日付計算機`;
+  const ogTitle = title;
 
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -119,10 +108,11 @@ export default async function DateLayout({
   // 取得當前語言
   const { locale = 'zh' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   // 根據當前語言取得相應標題與描述
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = metaTranslations.meta.title[lang];
+  const description = metaTranslations.meta.description[lang];
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // 生成多語言結構化數據

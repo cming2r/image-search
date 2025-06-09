@@ -4,14 +4,126 @@ import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent } 
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import SearchButtons from './SearchButtons';
-import translations from '../translations.json';
 import { saveImageUrl } from '@/lib/supabase/imageSearch';
 import Toast from '@/components/Toast';
+
+const formTranslations = {
+  enterUrlTab: {
+    zh: "輸入圖片網址",
+    en: "Enter Image URL",
+    jp: "画像URLを入力"
+  },
+  uploadImageTab: {
+    zh: "上傳圖片",
+    en: "Upload Image",
+    jp: "画像をアップロード"
+  },
+  imageUrl: {
+    zh: "圖片網址",
+    en: "Image URL",
+    jp: "画像URL"
+  },
+  imageUrlPlaceholder: {
+    zh: "https://example.com/image.jpg",
+    en: "https://example.com/image.jpg",
+    jp: "https://example.com/image.jpg"
+  },
+  imageUrlHint: {
+    zh: "URL必須以 .jpg、.png、.webp 等常見圖片格式結尾",
+    en: "URL must end with common image formats like .jpg, .png, .webp",
+    jp: "URLは.jpg、.png、.webpなどの一般的な画像形式で終わる必要があります"
+  },
+  searchButton: {
+    zh: "搜尋此圖片",
+    en: "Search this image",
+    jp: "この画像を検索"
+  },
+  processing: {
+    zh: "處理中...",
+    en: "Processing...",
+    jp: "処理中..."
+  },
+  resetButton: {
+    zh: "重置",
+    en: "Reset",
+    jp: "リセット"
+  },
+  imagePreview: {
+    zh: "圖片預覽",
+    en: "Image Preview",
+    jp: "画像プレビュー"
+  },
+  selectImage: {
+    zh: "選擇圖片",
+    en: "Select Image",
+    jp: "画像を選択"
+  },
+  dragDropHint: {
+    zh: "拖曳圖片到這裡 、 ctrl+V 貼上 或",
+    en: "Drag and drop image here, paste with ctrl+V, or",
+    jp: "ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または"
+  },
+  clickUpload: {
+    zh: "點擊上傳",
+    en: "click to upload",
+    jp: "クリックしてアップロード"
+  },
+  supportedFormats: {
+    zh: "支援 JPG, PNG, WEBP 等格式，最大5MB",
+    en: "Supports JPG, PNG, WEBP and other formats, max 5MB",
+    jp: "JPG、PNG、WEBPなどの形式をサポート、最大5MB"
+  },
+  validUrlError: {
+    zh: "請輸入有效的圖片URL",
+    en: "Please enter a valid image URL",
+    jp: "有効な画像URLを入力してください"
+  },
+  emptyUrlError: {
+    zh: "請輸入圖片URL",
+    en: "Please enter an image URL",
+    jp: "画像URLを入力してください"
+  },
+  uploadErrorImage: {
+    zh: "請上傳圖片文件",
+    en: "Please upload an image file",
+    jp: "画像ファイルをアップロードしてください"
+  },
+  uploadErrorSize: {
+    zh: "圖片大小不能超過5MB",
+    en: "Image size cannot exceed 5MB",
+    jp: "画像サイズは5MBを超えることはできません"
+  },
+  imageUrlInfo: {
+    zh: "圖片網址:",
+    en: "Image URL:",
+    jp: "画像URL："
+  },
+  successMessage: {
+    zh: "圖片網址設置成功",
+    en: "Image URL set successfully",
+    jp: "画像URLが正常に設定されました"
+  },
+  errorMessage: {
+    zh: "處理圖片URL時發生錯誤",
+    en: "Error processing image URL",
+    jp: "画像URLの処理中にエラーが発生しました"
+  },
+  successUpload: {
+    zh: "圖片上傳成功",
+    en: "Image uploaded successfully",
+    jp: "画像が正常にアップロードされました"
+  },
+  errorUpload: {
+    zh: "圖片上傳失敗，請稍後再試",
+    en: "Failed to upload image, please try again later",
+    jp: "画像のアップロードに失敗しました。後でもう一度お試しください"
+  }
+};
 
 const ImageForm: FC = () => {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
@@ -42,7 +154,7 @@ const ImageForm: FC = () => {
     
     // 如果URL不是空的但格式無效，顯示錯誤提示
     if (url && !isValidImageUrl(url)) {
-      setError(t.form.validUrlError);
+      setError(formTranslations.validUrlError[lang]);
     }
   };
 
@@ -51,48 +163,48 @@ const ImageForm: FC = () => {
     
     // 基本的URL驗證
     if (!imageUrl) {
-      setError(t.form.emptyUrlError);
+      setError(formTranslations.emptyUrlError[lang]);
       return;
     }
     
     // 檢查是否為有效的圖片URL（包括格式和擴展名）
     if (!isValidImageUrl(imageUrl)) {
-      setError(t.form.validUrlError);
+      setError(formTranslations.validUrlError[lang]);
       return;
     }
     
     try {
       // 顯示處理中的提示
-      setToast({message: t.form.processing, isVisible: true, type: 'info'});
+      setToast({message: formTranslations.processing[lang], isVisible: true, type: 'info'});
       
-      // 此處我們將用戶輸入的URL直接設為搜尋用URL
+      // 此處我們將使用者輸入的URL直接設為搜尋用URL
       setUploadedImageUrl(imageUrl);
       setError('');
       
       // 在URL輸入成功時記錄到Supabase
       saveImageUrl(imageUrl).catch(err => {
         console.error('保存圖片URL失敗:', err);
-        // 但不影響用戶繼續使用
+        // 但不影響使用者繼續使用
       });
       
       // 成功提示
-      setToast({message: t.form.successUpload || '圖片上傳成功', isVisible: true, type: 'success'});
+      setToast({message: formTranslations.successUpload[lang], isVisible: true, type: 'success'});
     } catch (error) {
       console.error('處理URL錯誤:', error);
-      setToast({message: t.form.errorMessage || '處理圖片URL時發生錯誤', isVisible: true, type: 'error'});
+      setToast({message: formTranslations.errorMessage[lang], isVisible: true, type: 'error'});
     }
   };
 
   const processFile = useCallback(async (file: File): Promise<void> => {
     // 檢查文件是否為圖片
     if (!file.type.startsWith('image/')) {
-      setError(t.form.uploadErrorImage);
+      setError(formTranslations.uploadErrorImage[lang]);
       return;
     }
     
     // 檢查文件大小 (不超過5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError(t.form.uploadErrorSize);
+      setError(formTranslations.uploadErrorSize[lang]);
       return;
     }
     
@@ -100,7 +212,7 @@ const ImageForm: FC = () => {
     
     try {
       // 顯示處理中的提示
-      setToast({message: t.form.processing, isVisible: true, type: 'info'});
+      setToast({message: formTranslations.processing[lang], isVisible: true, type: 'info'});
       
       // 創建FormData
       const formData = new FormData();
@@ -125,18 +237,18 @@ const ImageForm: FC = () => {
       // 在上傳成功時記錄圖片URL到Supabase
       saveImageUrl(data.url).catch(err => {
         console.error('保存圖片URL失敗:', err);
-        // 但不影響用戶繼續使用
+        // 但不影響使用者繼續使用
       });
       
       // 顯示成功訊息
-      setToast({message: t.form.successUpload || '圖片上傳成功', isVisible: true, type: 'success'});
+      setToast({message: formTranslations.successUpload[lang], isVisible: true, type: 'success'});
     } catch (err) {
       console.error('上傳錯誤:', err);
-      const errorMessage = err instanceof Error ? err.message : '圖片上傳失敗，請稍後再試';
+      const errorMessage = err instanceof Error ? err.message : formTranslations.errorUpload[lang];
       setError(errorMessage);
       setToast({message: errorMessage, isVisible: true, type: 'error'});
     }
-  }, [t.form.uploadErrorImage, t.form.uploadErrorSize, t.form.processing, t.form.successUpload]);
+  }, [lang]);
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = e.target.files?.[0];
@@ -191,7 +303,7 @@ const ImageForm: FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
               </svg>
-              {t.form.uploadImageTab}
+              {formTranslations.uploadImageTab[lang]}
             </h2>
             
             <div className="md:flex md:space-x-4">
@@ -222,12 +334,12 @@ const ImageForm: FC = () => {
                         
                         // 觸發與 handleUpload 相同的邏輯
                         if (!file.type.startsWith('image/')) {
-                          setError(t.form.uploadErrorImage);
+                          setError(formTranslations.uploadErrorImage[lang]);
                           return;
                         }
                         
                         if (file.size > 5 * 1024 * 1024) {
-                          setError(t.form.uploadErrorSize);
+                          setError(formTranslations.uploadErrorSize[lang]);
                           return;
                         }
                         
@@ -248,7 +360,7 @@ const ImageForm: FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <p className="mt-1 text-sm text-gray-600">
-                        {t.form.dragDropHint} <span className="text-blue-600 font-medium">{t.form.clickUpload}</span>
+                        {formTranslations.dragDropHint[lang]} <span className="text-blue-600 font-medium">{formTranslations.clickUpload[lang]}</span>
                       </p>
                     </div>
                   </div>
@@ -260,7 +372,7 @@ const ImageForm: FC = () => {
                     ref={fileInputRef}
                     className="hidden"
                   />
-                  <p className="text-gray-500 text-base mt-1">{t.form.supportedFormats}</p>
+                  <p className="text-gray-500 text-base mt-1">{formTranslations.supportedFormats[lang]}</p>
                 </div>
               </div>
             </div>
@@ -272,7 +384,7 @@ const ImageForm: FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
               </svg>
-              {t.form.enterUrlTab}
+              {formTranslations.enterUrlTab[lang]}
             </h2>
             
             <form onSubmit={handleSubmitUrl} className="mb-6">
@@ -284,11 +396,11 @@ const ImageForm: FC = () => {
                       id="imageUrl"
                       value={imageUrl}
                       onChange={handleUrlInput}
-                      placeholder={t.form.imageUrlPlaceholder}
+                      placeholder={formTranslations.imageUrlPlaceholder[lang]}
                       className={`block w-full text-gray-700 border ${error ? 'border-red-500' : 'border-gray-300'} rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                     />
                     <p className="text-gray-500 text-base mt-1">
-                      {t.form.imageUrlHint}
+                      {formTranslations.imageUrlHint[lang]}
                     </p>
                   </div>
                   <div className="flex space-x-3">
@@ -299,7 +411,7 @@ const ImageForm: FC = () => {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                       </svg>
-                      {t.form.searchButton}
+                      {formTranslations.searchButton[lang]}
                     </button>
                   </div>
                 </div>
@@ -311,7 +423,7 @@ const ImageForm: FC = () => {
         // 已上傳圖片時只顯示預覽區域
         <div className="flex flex-col items-center">
           <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
-            {t.form.imagePreview}
+            {formTranslations.imagePreview[lang]}
           </h2>
           <div className="w-full max-w-md mb-6">
             <div className="border rounded p-4 bg-gray-50 flex justify-center relative">

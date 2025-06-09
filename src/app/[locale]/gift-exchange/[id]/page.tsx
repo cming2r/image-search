@@ -7,7 +7,107 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Toast from '@/components/Toast';
 import WheelCanvas from '../components/WheelCanvas';
-import translations from '../translations.json';
+const eventTranslations = {
+  title: {
+    zh: "交換禮物抽籤",
+    en: "Gift Exchange Draw",
+    jp: "ギフト交換抽選"
+  },
+  event: {
+    eventCode: {
+      zh: "活動代碼",
+      en: "Event Code",
+      jp: "イベントコード"
+    },
+    eventLink: {
+      zh: "活動連結",
+      en: "Event Link",
+      jp: "イベントリンク"
+    },
+    copyLinkTitle: {
+      zh: "複製連結",
+      en: "Copy Link",
+      jp: "リンクをコピー"
+    },
+    shareLinkTitle: {
+      zh: "分享連結",
+      en: "Share Link",
+      jp: "リンクを共有"
+    },
+    loadingData: {
+      zh: "正在載入活動資料...",
+      en: "Loading event data...",
+      jp: "イベントデータを読み込んでいます..."
+    },
+    noDataError: {
+      zh: "無法加載活動數據，請確認連結是否正確",
+      en: "Unable to load event data. Please verify the link is correct.",
+      jp: "イベントデータを読み込めません。リンクが正しいか確認してください。"
+    },
+    wheelSection: {
+      zh: "抽籤轉盤",
+      en: "Drawing Wheel",
+      jp: "抽選ホイール"
+    },
+    wheelParticipants: {
+      zh: "轉盤參與者",
+      en: "Wheel Participants",
+      jp: "ホイール参加者"
+    },
+    people: {
+      zh: "人",
+      en: "",
+      jp: "人"
+    },
+    noParticipants: {
+      zh: "沒有參與者",
+      en: "No Participants",
+      jp: "参加者がいません"
+    },
+    returnToHome: {
+      zh: "請返回主頁添加參與者",
+      en: "Please return to the home page to add participants",
+      jp: "ホームページに戻って参加者を追加してください"
+    },
+    backToHome: {
+      zh: "返回主頁",
+      en: "Back to Home",
+      jp: "ホームに戻る"
+    },
+    drawingComplete: {
+      zh: "抽籤已完成！最終結果",
+      en: "Drawing Complete! Final Results",
+      jp: "抽選完了！最終結果"
+    },
+    drawingRecord: {
+      zh: "抽籤結果記錄",
+      en: "Drawing Results Record",
+      jp: "抽選結果記録"
+    },
+    shareSuccess: {
+      zh: "已複製連結",
+      en: "Link copied",
+      jp: "リンクがコピーされました"
+    },
+    shareFailed: {
+      zh: "複製連結失敗",
+      en: "Failed to copy link",
+      jp: "リンクのコピーに失敗しました"
+    },
+    shareSystemFailed: {
+      zh: "系統分享失敗，已複製連結",
+      en: "System sharing failed, link copied instead",
+      jp: "システム共有に失敗しました、リンクがコピーされました"
+    }
+  },
+  wheel: {
+    givesTo: {
+      zh: "送禮給",
+      en: "gives to",
+      jp: "贈る相手"
+    }
+  }
+};
 
 interface GiftExchangeData {
   code: string;
@@ -21,7 +121,7 @@ export default function GiftExchangeEvent() {
   const params = useParams();
   const code = params.id as string;
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   const [eventData, setEventData] = useState<GiftExchangeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -132,7 +232,7 @@ export default function GiftExchangeEvent() {
         // 顯示成功提示，不使用 alert
         setToast({
           visible: true,
-          message: t.event.shareSuccess,
+          message: eventTranslations.event.shareSuccess[lang],
           type: 'success'
         });
       })
@@ -140,7 +240,7 @@ export default function GiftExchangeEvent() {
         // 複製連結失敗顯示錯誤提示
         setToast({
           visible: true,
-          message: t.event.shareFailed,
+          message: eventTranslations.event.shareFailed[lang],
           type: 'error'
         });
       });
@@ -152,7 +252,7 @@ export default function GiftExchangeEvent() {
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
           <div className="text-center">
-            {t.event.loadingData}
+            {eventTranslations.event.loadingData[lang]}
           </div>
         </main>
         <Footer />
@@ -165,7 +265,7 @@ export default function GiftExchangeEvent() {
       <>
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
-          <div className="text-center text-red-500">{error || t.event.noDataError}</div>
+          <div className="text-center text-red-500">{error || eventTranslations.event.noDataError[lang]}</div>
         </main>
         <Footer />
       </>
@@ -187,20 +287,20 @@ export default function GiftExchangeEvent() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-6">
-            <h1>{t.title}</h1>
+            <h1>{eventTranslations.title[lang]}</h1>
             <div className="flex items-center justify-center mt-3 text-sm">
               <div className="flex items-center">
-                <span className="text-gray-500">{t.event.eventCode}:</span>
+                <span className="text-gray-500">{eventTranslations.event.eventCode[lang]}:</span>
                 <span className="ml-1 font-medium">{eventData.code}</span>
               </div>
               <span className="mx-3 text-gray-300">|</span>
               <div className="flex items-center">
-                <span className="text-gray-500">{t.event.eventLink}:</span>
+                <span className="text-gray-500">{eventTranslations.event.eventLink[lang]}:</span>
                 <div className="flex ml-1 space-x-1">
                   <button 
                     onClick={copyShareLink}
                     className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-1 rounded-full transition-colors duration-200 flex items-center justify-center"
-                    title={t.event.copyLinkTitle}
+                    title={eventTranslations.event.copyLinkTitle[lang]}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -211,15 +311,15 @@ export default function GiftExchangeEvent() {
                     onClick={() => {
                       if (navigator.share) {
                         navigator.share({
-                          title: t.title,
-                          text: `${t.title} - ${t.event.eventCode}: ${eventData.code}`,
+                          title: eventTranslations.title[lang],
+                          text: `${eventTranslations.title[lang]} - ${eventTranslations.event.eventCode[lang]}: ${eventData.code}`,
                           url: shareLink
                         }).catch(() => {
                           // 分享失敗時嘗試複製
                           copyShareLink();
                           setToast({
                             visible: true,
-                            message: t.event.shareSystemFailed,
+                            message: eventTranslations.event.shareSystemFailed[lang],
                             type: 'info'
                           });
                         });
@@ -228,7 +328,7 @@ export default function GiftExchangeEvent() {
                       }
                     }}
                     className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-1 rounded-full transition-colors duration-200 flex items-center justify-center"
-                    title={t.event.shareLinkTitle}
+                    title={eventTranslations.event.shareLinkTitle[lang]}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
@@ -243,11 +343,11 @@ export default function GiftExchangeEvent() {
 
           {/* 轉盤區域 */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-xl font-medium mb-4">{t.event.wheelSection}</h2>
+            <h2 className="text-xl font-medium mb-4">{eventTranslations.event.wheelSection[lang]}</h2>
             
             <div className="mb-4">
               <div className="text-sm text-gray-500">
-                {t.event.wheelParticipants}: {wheelParticipants.length} {t.event.people}
+                {eventTranslations.event.wheelParticipants[lang]}: {wheelParticipants.length} {eventTranslations.event.people[lang]}
               </div>
             </div>
             
@@ -374,7 +474,7 @@ export default function GiftExchangeEvent() {
                 {/* 最終結果窗格 - 完成所有抽籤時展示 */}
                 {eventData?.results && eventData.participant_names.length === eventData.results.length && (
                   <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg shadow-sm">
-                    <h3 className="text-lg font-medium mb-3 text-green-700">{t.event.drawingComplete}</h3>
+                    <h3 className="text-lg font-medium mb-3 text-green-700">{eventTranslations.event.drawingComplete[lang]}</h3>
                     <div className="space-y-3">
                       {eventData.results.map((result, index) => {
                         // 獲取此人要送禮物給誰
@@ -384,7 +484,7 @@ export default function GiftExchangeEvent() {
                         return (
                           <div key={`final-result-${index}`} className="py-2 flex items-center gap-2 bg-white p-3 rounded-md">
                             <span className="font-medium text-gray-700">{result}</span>
-                            <span className="text-gray-400">{t.wheel.givesTo}</span>
+                            <span className="text-gray-400">{eventTranslations.wheel.givesTo[lang]}</span>
                             <span className="font-medium text-gray-700">{giftRecipient}</span>
                           </div>
                         );
@@ -396,7 +496,7 @@ export default function GiftExchangeEvent() {
                 {/* 進行中結果窗格 - 尚未完成所有抽籤時顯示 */}
                 {eventData?.results && eventData.results.length > 0 && eventData.participant_names.length > eventData.results.length && (
                   <div className="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <h3 className="text-lg font-medium mb-3">{t.event.drawingRecord} ({eventData.results.length}/{eventData.participant_names.length})</h3>
+                    <h3 className="text-lg font-medium mb-3">{eventTranslations.event.drawingRecord[lang]} ({eventData.results.length}/{eventData.participant_names.length})</h3>
                     <div className="space-y-2">
                       {eventData.results.map((result, index) => {
                         // 獲取下一個結果（如果有）
@@ -418,8 +518,8 @@ export default function GiftExchangeEvent() {
               </>
             ) : (
               <div className="text-center p-6 bg-gray-50 rounded-lg">
-                <p className="text-lg font-medium">{t.event.noParticipants}</p>
-                <p className="mt-2">{t.event.returnToHome}</p>
+                <p className="text-lg font-medium">{eventTranslations.event.noParticipants[lang]}</p>
+                <p className="mt-2">{eventTranslations.event.returnToHome[lang]}</p>
               </div>
             )}
           </div>
@@ -429,7 +529,7 @@ export default function GiftExchangeEvent() {
               href={`/${locale}/gift-exchange`} 
               className="inline-flex items-center justify-center px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
             >
-              {t.event.backToHome}
+              {eventTranslations.event.backToHome[lang]}
             </Link>
           </div>
         </section>

@@ -7,18 +7,7 @@ import {
   formatJSON
 } from '@/lib/schema';
 
-// 多語言標題和描述
-const titles = {
-  zh: '以圖搜圖 - 圖像搜尋工具',
-  en: 'Reverse Image Search Tool',
-  jp: '画像検索ツール'
-};
-
-const descriptions = {
-  zh: '以圖搜圖工具透過上傳圖片或輸入URL，一鍵使用Google、Bing、Yandex和SauceNAO進行反向圖像搜尋，支援電腦、iphone手機和平板等所有裝置。',
-  en: 'Upload an image or enter a URL to search with Google, Bing, Yandex, and SauceNAO for reverse image search. Compatible with all devices including computers, iPhones and tablets.',
-  jp: '画像をアップロードするかURLを入力して、Google、Bing、Yandex、SauceNAOで逆画像検索を行います。パソコン、iPhone、タブレットなどすべてのデバイスに対応。'
-};
+import { imageSearchTranslations } from './components/meta-translations';
 
 const keywordsList = {
   zh: ['以圖搜圖', '反向圖片搜尋', 'iphone手機以圖搜圖'],
@@ -58,7 +47,7 @@ const faqsData = {
       name: '上傳的圖片會如何處理？是否會保存？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '我們非常重視用戶隱私。當您上傳圖片時，系統會暫時存儲該圖片以生成可搜尋的URL，但所有圖片資料會在24小時內自動刪除。我們不會永久保存您的圖片，也不會將其用於任何其他目的。上傳的圖片僅用於提供搜尋服務，且只有您可以通過生成的URL訪問它。'
+        text: '我們非常重視使用者隱私。當您上傳圖片時，系統會暫時儲存該圖片以生成可搜尋的URL，但所有圖片資料會在24小時內自動刪除。我們不會永久保存您的圖片，也不會將其用於任何其他目的。上傳的圖片僅用於提供搜尋服務，且只有您可以透過生成的URL存取它。'
       }
     },
     {
@@ -66,7 +55,7 @@ const faqsData = {
       name: '為什麼有時搜尋結果不準確？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '以圖搜圖的準確性取決於多種因素，包括圖片質量、搜尋引擎的資料庫覆蓋範圍、圖像的獨特性等。如果您的圖片分辨率較低、經過裁剪或修改，或是非常常見的圖像類型（如藍天、草地等），搜尋準確率可能會降低。為獲得最佳結果，建議使用清晰、完整的原始圖片，並嘗試多個搜尋引擎進行對比，因為不同引擎的演算法和資料庫有所不同。'
+        text: '以圖搜圖的準確性取決於多種因素，包括圖片品質、搜尋引擎的資料庫覆蓋範圍、圖片的獨特性等。如果您的圖片解析度較低、經過裁剪或修改，或是非常常見的圖片類型（如藍天、草地等），搜尋準確率可能會降低。為獲得最佳結果，建議使用清晰、完整的原始圖片，並嘗試多個搜尋引擎進行對比，因為不同引擎的演算法和資料庫有所不同。'
       }
     },
     {
@@ -82,7 +71,7 @@ const faqsData = {
       name: '如何在手機上直接拍照搜尋？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '在手機上使用我們的工具拍照搜尋非常簡單：1) 用手機瀏覽器訪問我們的網站；2) 點擊「上傳圖片」按鈕；3) 選擇「拍攝照片」選項（或選擇手機相冊中已有的照片）；4) 拍攝您想搜尋的物體或場景；5) 圖片上傳後，選擇喜好的搜尋引擎進行搜尋。這個功能在購物時查詢商品、旅行中識別地標、或遇到不認識的植物動物時特別有用。'
+        text: '在手機上使用我們的工具拍照搜尋非常簡單：1) 用手機瀏覽我們的網站；2) 點擊「上傳圖片」按鈕；3) 選擇「拍攝照片」選項（或選擇手機相冊中已有的照片）；4) 拍攝您想搜尋的物體或場景；5) 圖片上傳後，選擇喜好的搜尋引擎進行搜尋。這個功能在購物時查詢商品、旅行中識別地標、或遇到不認識的植物動物時特別有用。'
       }
     },
     {
@@ -98,7 +87,7 @@ const faqsData = {
       name: '以圖搜圖有哪些常見使用場景？',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '以圖搜圖的應用非常廣泛：1) 查找圖片來源或高解析度版本；2) 識別不認識的植物、動物、商品或地標；3) 查找類似的設計靈感或素材；4) 驗證圖片真實性，識別合成或修改過的圖像；5) 查找特定服裝或商品的購買渠道；6) 追蹤藝術作品、動漫或遊戲截圖的出處；7) 檢查自己創作的內容是否被盜用。這些場景對設計師、研究人員、內容創作者和日常用戶都非常實用。'
+        text: '以圖搜圖的應用非常廣泛：1) 查找圖片來源或高解析度版本；2) 識別不認識的植物、動物、商品或地標；3) 查找類似的設計靈感或素材；4) 驗證圖片真實性，識別合成或修改過的圖片；5) 查找特定服裝或商品的購買渠道；6) 追蹤藝術作品、動漫或遊戲截圖的出處；7) 檢查自己創作的內容是否被盜用。這些場景對設計師、研究人員、內容創作者和日常使用者都非常實用。'
       }
     }
   ],
@@ -244,8 +233,8 @@ const imageUrl = getFullUrl('/images/og-image-search.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.zh;
+  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
@@ -325,8 +314,8 @@ export default async function ImageSearchLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.zh;
+  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // 根據語言選擇正確的FAQ資料

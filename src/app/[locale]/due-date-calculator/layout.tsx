@@ -7,18 +7,7 @@ import {
   formatJSON
 } from '@/lib/schema';
 
-// 多語言標題和描述
-const titles = {
-  zh: '預產期計算器',
-  en: 'Due Date Calculator',
-  jp: '出産予定日計算機'
-};
-
-const descriptions = {
-  zh: '計算預產期及懷孕週數，幫助您追蹤懷孕進程',
-  en: 'Calculate your due date and track pregnancy progress',
-  jp: '出産予定日と妊娠週数を計算し、妊娠経過を追跡'
-};
+import { metaTranslations } from './components/meta-translations';
 
 const keywordsList = {
   zh: ['預產期計算', '懷孕週數', '生產日期', '孕期追蹤'],
@@ -148,8 +137,8 @@ const imageUrl = getFullUrl('/images/og-due-date-calculator.webp');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.zh;
+  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
@@ -229,8 +218,8 @@ export default async function DueDateCalculatorLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.zh;
+  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // 根據語言選擇正確的FAQ資料

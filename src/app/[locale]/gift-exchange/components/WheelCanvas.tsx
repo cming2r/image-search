@@ -2,7 +2,33 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import translations from '../translations.json';
+const wheelTranslations = {
+  noParticipantsError: {
+    zh: "請至少輸入兩名參與者",
+    en: "Please enter at least two participants",
+    jp: "少なくとも2人の参加者を入力してください"
+  },
+  spinningText: {
+    zh: "轉動中...",
+    en: "Spinning...",
+    jp: "回転中..."
+  },
+  loading: {
+    zh: "載入中...",
+    en: "Loading...",
+    jp: "読み込み中..."
+  },
+  spinButton: {
+    zh: "轉動轉盤",
+    en: "Spin the Wheel",
+    jp: "ホイールを回す"
+  },
+  resultsTitle: {
+    zh: "抽籤結果",
+    en: "Drawing Results",
+    jp: "抽選結果"
+  }
+};
 
 interface WheelCanvasProps {
   items: string[];
@@ -12,7 +38,7 @@ interface WheelCanvasProps {
 export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<number | null>(null);
@@ -113,7 +139,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
 
   // 沒有項目時顯示提示
   if (items.length === 0) {
-    return <div className="text-center p-4 bg-gray-100 rounded-lg">{t.wheel.noParticipantsError}</div>;
+    return <div className="text-center p-4 bg-gray-100 rounded-lg">{wheelTranslations.noParticipantsError[lang]}</div>;
   }
 
   return (
@@ -175,13 +201,13 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
             spinning || disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
-          {spinning ? t.wheel.spinningText : disabled ? t.wheel.loading : t.wheel.spinButton}
+          {spinning ? wheelTranslations.spinningText[lang] : disabled ? wheelTranslations.loading[lang] : wheelTranslations.spinButton[lang]}
         </button>
         
         {result !== null && !spinning && (
           <div className="mt-2 p-3 bg-yellow-100 rounded-lg border border-yellow-300">
             <span className="text-lg font-semibold">
-              {t.wheel.resultsTitle}: <strong>{clientSegments[result]}</strong>
+              {wheelTranslations.resultsTitle[lang]}: <strong>{clientSegments[result]}</strong>
             </span>
           </div>
         )}

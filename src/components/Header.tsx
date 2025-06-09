@@ -2,7 +2,6 @@
 
 import { FC, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { useParams } from 'next/navigation';
@@ -109,14 +108,10 @@ const Header: FC = () => {
           <div className="flex-shrink-0">
             <Link 
               href={`/${locale === 'zh' ? '' : locale}`} 
-              className="text-xl font-bold text-blue-600 flex items-center" 
+              className="text-2xl font-bold text-blue-600 flex items-center tracking-wider" 
               onClick={closeMenu}
             >
-              <span className="mr-2">
-                <Image src="/favicon.ico" alt="" width={30} height={30} />
-              </span>
-              <span className="hidden sm:inline">fyimg</span>
-              <span className="sm:hidden">fyimg</span>
+              <span>FYimg</span>
             </Link>
           </div>
           

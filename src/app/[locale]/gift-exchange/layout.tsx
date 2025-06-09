@@ -7,18 +7,7 @@ import {
   formatJSON
 } from '@/lib/schema';
 
-// 多語言標題和描述
-const titles = {
-  zh: '交換禮物抽籤',
-  en: 'Gift Exchange Draw',
-  jp: 'ギフト交換抽選'
-};
-
-const descriptions = {
-  zh: '輸入參與者名單，使用轉盤決定禮物交換對象，增添活動樂趣和驚喜',
-  en: 'Enter participant list, use the wheel to determine gift exchange partners, adding fun and surprise to your event',
-  jp: '参加者リストを入力し、ホイールを使ってギフト交換相手を決定し、イベントに楽しさとサプライズを追加'
-};
+import { giftExchangeTranslations } from './components/meta-translations';
 
 const keywordsList = {
   zh: ['交換禮物', '抽籤', '輪盤', '秘密聖誕老人', '團隊活動'],
@@ -148,8 +137,8 @@ const imageUrl = getFullUrl('/images/og-gift-exchange.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.zh;
+  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
@@ -229,8 +218,8 @@ export default async function GiftExchangeLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.zh;
+  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // 根據語言選擇正確的FAQ資料

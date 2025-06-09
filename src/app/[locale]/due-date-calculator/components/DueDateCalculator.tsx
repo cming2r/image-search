@@ -2,12 +2,44 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
-import translations from '../translations.json';
+
+const calculatorTranslations = {
+  lastPeriodLabel: {
+    zh: "最後一次月經開始日",
+    en: "First day of last period",
+    jp: "最後の月経開始日"
+  },
+  dueDate: {
+    zh: "預估預產期",
+    en: "Estimated Due Date",
+    jp: "推定予定日"
+  },
+  currentStatus: {
+    zh: "目前懷孕進度",
+    en: "Current Pregnancy Progress",
+    jp: "現在の妊娠進行状況"
+  },
+  today: {
+    zh: "今天",
+    en: "Today",
+    jp: "今日"
+  },
+  weeks: {
+    zh: "週",
+    en: "weeks",
+    jp: "週"
+  },
+  days: {
+    zh: "天",
+    en: "days",
+    jp: "日"
+  }
+};
 
 export default function DueDateCalculator() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   const [lastPeriodDate, setLastPeriodDate] = useState<string>('');
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -74,9 +106,9 @@ export default function DueDateCalculator() {
       line.setAttribute('x2', position.toString());
       circle.setAttribute('cx', position.toString());
       text.setAttribute('x', position.toString());
-      text.textContent = `👶${weeks}${t.calculator.weeks}`;
+      text.textContent = `👶${weeks}${calculatorTranslations.weeks[lang]}`;
     }
-  }, [lastPeriodDate, currentPregnancyData, t.calculator.weeks]);
+  }, [lastPeriodDate, currentPregnancyData, lang]);
 
   // 檢查是否為今天
   const isToday = useCallback((date: Date) => {
@@ -155,8 +187,8 @@ export default function DueDateCalculator() {
     
     setCurrentWeeksDisplay(
       currentPregnancy 
-        ? `${currentPregnancy.weeks} ${t.calculator.weeks} ${currentPregnancy.days} ${t.calculator.days}` 
-        : `0 ${t.calculator.weeks} 0 ${t.calculator.days}`
+        ? `${currentPregnancy.weeks} ${calculatorTranslations.weeks[lang]} ${currentPregnancy.days} ${calculatorTranslations.days[lang]}` 
+        : `0 ${calculatorTranslations.weeks[lang]} 0 ${calculatorTranslations.days[lang]}`
     );
     
     // 只在初始載入或日期變更時才更新共享狀態
@@ -165,7 +197,7 @@ export default function DueDateCalculator() {
     }
     
   // 移除 currentPregnancyData 從依賴數組 - 防止循環更新
-  }, [lastPeriodDate, formatLocalDate, calculateWeeksAndDays, t.calculator.weeks, t.calculator.days]);
+  }, [lastPeriodDate, formatLocalDate, calculateWeeksAndDays, lang]);
 
   // 更新日曆
   const updateCalendar = useCallback(() => {
@@ -174,7 +206,12 @@ export default function DueDateCalculator() {
     
     // 先設置一個載入狀態，保留空間避免佈局偏移
     if (calendarEl.children.length === 0) {
-      calendarEl.innerHTML = `<div class="col-span-7 text-center py-16">${t.calculator.noDateSelected}</div>`;
+      const noDateText = {
+        zh: "請先選擇最後一次月經日期",
+        en: "Please select the first day of your last period",
+        jp: "最後の月経開始日を選択してください"
+      };
+      calendarEl.innerHTML = `<div class="col-span-7 text-center py-16">${noDateText[lang]}</div>`;
     } else {
       calendarEl.innerHTML = '';
     }
@@ -282,7 +319,7 @@ export default function DueDateCalculator() {
     
     // 更新週數標記
     updateWeekMarker();
-  }, [currentMonth, calculateWeeksAndDays, isToday, isLMPDate, isEDDDate, lastPeriodDate, isSameMonth, updateWeekMarker, t.calculator.noDateSelected, locale]);
+  }, [locale, currentMonth, lastPeriodDate, updateWeekMarker, lang, calculateWeeksAndDays, isToday, isLMPDate, isEDDDate, isSameMonth]);
   
   // 設置月份
   const setMonth = useCallback((date: Date) => {
@@ -346,7 +383,7 @@ export default function DueDateCalculator() {
           <div className="p-6 flex flex-col gap-6">
             <div className="grid grid-cols-1 gap-4">
               <div className="p-2 px-4 bg-gray-50 rounded-lg flex items-center justify-center">
-                <label htmlFor="lastPeriodDate" className="m-0 mr-4 whitespace-nowrap text-center">{t.calculator.lastPeriodLabel}：</label>
+                <label htmlFor="lastPeriodDate" className="m-0 mr-4 whitespace-nowrap text-center">{calculatorTranslations.lastPeriodLabel[lang]}：</label>
                 <input
                   type="date"
                   id="lastPeriodDate"
@@ -374,11 +411,11 @@ export default function DueDateCalculator() {
               <div id="resultSection">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-2 px-4 bg-gray-50 rounded-lg text-center">
-                    <p className="m-0 text-center">{t.calculator.dueDate}</p>
+                    <p className="m-0 text-center">{calculatorTranslations.dueDate[lang]}</p>
                     <p id="eddDisplay" className="text-xl font-bold text-blue-600 m-0 text-center">{eddDisplay}</p>
                   </div>
                   <div className="p-2 px-4 bg-gray-50 rounded-lg text-center">
-                    <p className="font-medium m-0 text-center">{t.calculator.currentStatus}</p>
+                    <p className="font-medium m-0 text-center">{calculatorTranslations.currentStatus[lang]}</p>
                     <p id="currentWeeksDisplay" className="text-xl font-bold text-green-600 m-0 text-center">{currentWeeksDisplay}</p>
                   </div>
                 </div>
@@ -425,7 +462,7 @@ export default function DueDateCalculator() {
                     aria-label="Go to Today"
                     className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                   >
-                    {t.calculator.today}
+                    {calculatorTranslations.today[lang]}
                   </button>
                   <button 
                     id="goToEDC"

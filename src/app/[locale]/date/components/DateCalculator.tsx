@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import translations from '../translations.json';
 
 // 定義全域 CSS 樣式
 const dateInputStyle = {
@@ -12,13 +11,55 @@ const dateInputStyle = {
   paddingRight: '0' as const,
 };
 
+// 定義多語言內容
+const translations = {
+    calculator: {
+      tabs: {
+        addDays: {
+          zh: "日期加天數",
+          en: "Add Days to Date",
+          jp: "日付に日数を追加"
+        },
+        subtractDates: {
+          zh: "日期相減",
+          en: "Calculate Date Difference",
+          jp: "日付の差を計算"
+        }
+      },
+      startDate: {
+        zh: "起始日期：",
+        en: "Start Date:",
+        jp: "開始日："
+      },
+      days: {
+        zh: "天數：",
+        en: "Days:",
+        jp: "日数："
+      },
+      endDate: {
+        zh: "結束日期：",
+        en: "End Date:",
+        jp: "終了日："
+      },
+      result: {
+        zh: "計算結果：",
+        en: "Result:",
+        jp: "計算結果："
+      },
+      weekdays: {
+        zh: ["日", "一", "二", "三", "四", "五", "六"],
+        en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        jp: ["日", "月", "火", "水", "木", "金", "土"]
+      }
+    }
+  };
+
 export default function DateCalculator() {
   // 從URL參數中獲取當前語言
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
   
-  // 獲取對應語言的翻譯
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   // 日期加天數的狀態
   const [startDate, setStartDate] = useState<string>('');
@@ -75,7 +116,7 @@ export default function DateCalculator() {
       start.setDate(start.getDate() + days);
       
       // 取得星期幾
-      const weekdays = t.calculator.weekdays;
+      const weekdays = translations.calculator.weekdays[lang];
       const weekday = weekdays[start.getDay()];
       
       // 格式化日期為 yyyy/MM/dd
@@ -85,7 +126,7 @@ export default function DateCalculator() {
       
       setResult(`${year}/${month}/${day}（${weekday}）`);
     }
-  }, [startDate, days, t.calculator.weekdays]);
+  }, [startDate, days, lang]);
 
   // 計算日期相減
   useEffect(() => {
@@ -124,7 +165,7 @@ export default function DateCalculator() {
               : 'bg-gray-200 text-gray-700'
           } rounded-t-md font-medium transition-colors`}
         >
-          {t.calculator.tabs.addDays}
+          {translations.calculator.tabs.addDays[lang]}
         </button>
         <button 
           onClick={() => setActiveTab('subtractDates')}
@@ -134,7 +175,7 @@ export default function DateCalculator() {
               : 'bg-gray-200 text-gray-700'
           } rounded-t-md font-medium transition-colors`}
         >
-          {t.calculator.tabs.subtractDates}
+          {translations.calculator.tabs.subtractDates[lang]}
         </button>
       </div>
       
@@ -147,7 +188,7 @@ export default function DateCalculator() {
         <div className="mb-4 max-w-lg mx-auto">
           <div className="flex items-center mb-4">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="start-date" className="text-lg font-medium">{t.calculator.startDate}</label>
+              <label htmlFor="start-date" className="text-lg font-medium">{translations.calculator.startDate[lang]}</label>
             </div>
             <div className="flex-1 flex">
               <input
@@ -174,7 +215,7 @@ export default function DateCalculator() {
           
           <div className="flex items-center mb-4">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="days-input" className="text-lg font-medium">{t.calculator.days}</label>
+              <label htmlFor="days-input" className="text-lg font-medium">{translations.calculator.days[lang]}</label>
             </div>
             <div className="flex-1">
               <input
@@ -193,7 +234,7 @@ export default function DateCalculator() {
           
           <div className="flex items-center">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="result-display" className="text-lg font-medium">{t.calculator.result}</label>
+              <label htmlFor="result-display" className="text-lg font-medium">{translations.calculator.result[lang]}</label>
             </div>
             <div className="flex-1">
               <input
@@ -218,7 +259,7 @@ export default function DateCalculator() {
         <div className="mb-4 max-w-lg mx-auto">
           <div className="flex items-center mb-4">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="start-date2" className="text-lg font-medium">{t.calculator.startDate}</label>
+              <label htmlFor="start-date2" className="text-lg font-medium">{translations.calculator.startDate[lang]}</label>
             </div>
             <div className="flex-1 flex">
               <input
@@ -245,7 +286,7 @@ export default function DateCalculator() {
           
           <div className="flex items-center mb-4">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="end-date" className="text-lg font-medium">{t.calculator.endDate}</label>
+              <label htmlFor="end-date" className="text-lg font-medium">{translations.calculator.endDate[lang]}</label>
             </div>
             <div className="flex-1 flex">
               <input
@@ -272,7 +313,7 @@ export default function DateCalculator() {
           
           <div className="flex items-center">
             <div className="w-32 text-right pr-4">
-              <label htmlFor="days-diff" className="text-lg font-medium">{t.calculator.result}</label>
+              <label htmlFor="days-diff" className="text-lg font-medium">{translations.calculator.result[lang]}</label>
             </div>
             <div className="flex-1">
               <input

@@ -2,16 +2,75 @@
 
 import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
-import translations from '../translations.json';
 
 interface PregnancyTimelineProps {
   currentWeeks: number;
 }
 
+const timelineTranslations = {
+  weeks: {
+    zh: "週",
+    en: "weeks",
+    jp: "週"
+  },
+  firstTrimester: {
+    zh: "第一孕期",
+    en: "First Trimester",
+    jp: "第1三半期"
+  },
+  secondTrimester: {
+    zh: "第二孕期",
+    en: "Second Trimester",
+    jp: "第2三半期"
+  },
+  thirdTrimester: {
+    zh: "第三孕期",
+    en: "Third Trimester",
+    jp: "第3三半期"
+  },
+  title: {
+    zh: "懷孕週期發展時程表",
+    en: "Pregnancy Development Timeline",
+    jp: "妊娠発達タイムライン"
+  },
+  milestones: {
+    heartbeat: {
+      zh: "心跳開始",
+      en: "Heartbeat Begins",
+      jp: "心拍開始"
+    },
+    organsDeveloped: {
+      zh: "器官發育完成",
+      en: "Organs Developed",
+      jp: "器官発達完了"
+    },
+    feelMovement: {
+      zh: "胎動感受",
+      en: "Feel Movement",
+      jp: "胎動感じる"
+    },
+    genderVisible: {
+      zh: "性別辨識",
+      en: "Gender Visible",
+      jp: "性別判別可能"
+    },
+    lungsMature: {
+      zh: "肺部成熟",
+      en: "Lungs Mature",
+      jp: "肺成熟"
+    },
+    positionFixed: {
+      zh: "胎位定位",
+      en: "Position Fixed",
+      jp: "胎位固定"
+    }
+  }
+};
+
 export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelineProps) {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  const lang = locale as 'zh' | 'en' | 'jp';
   
   const weekMarkerLineRef = useRef<SVGLineElement>(null);
   const weekMarkerCircleRef = useRef<SVGCircleElement>(null);
@@ -33,9 +92,9 @@ export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelinePro
       weekMarkerLineRef.current.setAttribute('x2', position.toString());
       weekMarkerCircleRef.current.setAttribute('cx', position.toString());
       weekMarkerTextRef.current.setAttribute('x', position.toString());
-      weekMarkerTextRef.current.textContent = `👶${weeks}${t.calculator.weeks}`;
+      weekMarkerTextRef.current.textContent = `👶${weeks}${timelineTranslations.weeks[lang]}`;
     }
-  }, [currentWeeks, t.calculator.weeks]);
+  }, [currentWeeks, lang]);
   
   return (
     <div className="container">
@@ -48,20 +107,20 @@ export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelinePro
         <g fontFamily="Arial, sans-serif" fontSize="18">
           {/* 週數標記 - 移到上方 */}
           <g textAnchor="middle" fontWeight="bold">
-              <text x="50" y="170">0{t.calculator.weeks}</text>
-              <text x="277" y="170">13{t.calculator.weeks}</text>
-              <text x="557" y="170">29{t.calculator.weeks}</text>
-              <text x="750" y="170">40{t.calculator.weeks}</text>
+              <text x="50" y="170">0{timelineTranslations.weeks[lang]}</text>
+              <text x="277" y="170">13{timelineTranslations.weeks[lang]}</text>
+              <text x="557" y="170">29{timelineTranslations.weeks[lang]}</text>
+              <text x="750" y="170">40{timelineTranslations.weeks[lang]}</text>
           </g>
           {/* 第一孕期 */}
           <rect x="50" y="180" width="227" height="40" fill="#FF91A4" opacity="0.4"/>
-          <text x="163" y="140" textAnchor="middle" fill="#C71585" fontWeight="bold">{t.calculator.firstTrimester}</text>
+          <text x="163" y="140" textAnchor="middle" fill="#C71585" fontWeight="bold">{timelineTranslations.firstTrimester[lang]}</text>
           {/* 第二孕期 */}
           <rect x="277" y="180" width="280" height="40" fill="#90EE90" opacity="0.4"/>
-          <text x="417" y="140" textAnchor="middle" fill="#228B22" fontWeight="bold">{t.calculator.secondTrimester}</text>
+          <text x="417" y="140" textAnchor="middle" fill="#228B22" fontWeight="bold">{timelineTranslations.secondTrimester[lang]}</text>
           {/* 第三孕期 */}
           <rect x="557" y="180" width="193" height="40" fill="#87CEEB" opacity="0.4"/>
-          <text x="654" y="140" textAnchor="middle" fill="#4169E1" fontWeight="bold">{t.calculator.thirdTrimester}</text>
+          <text x="654" y="140" textAnchor="middle" fill="#4169E1" fontWeight="bold">{timelineTranslations.thirdTrimester[lang]}</text>
         </g>
         {/* 重要里程碑 */}
         <g fontFamily="Arial, sans-serif" fontSize="12">
@@ -70,57 +129,55 @@ export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelinePro
           <line x1="164" y1="200" x2="164" y2="270" stroke="#C71585" strokeWidth="1" strokeDasharray="2"/>
           <rect x="114" y="270" width="100" height="40" rx="5" fill="#FF91A4" opacity="0.2"/>
           <text x="164" y="285" textAnchor="middle" fill="#C71585">
-            {locale === 'en' ? 'Heartbeat Begins' : locale === 'jp' ? '心拍開始' : '心跳開始'}
+            {timelineTranslations.milestones.heartbeat[lang]}
           </text>
-          <text x="164" y="300" textAnchor="middle" fill="#C71585">(6-7{t.calculator.weeks})</text>
+          <text x="164" y="300" textAnchor="middle" fill="#C71585">(6-7{timelineTranslations.weeks[lang]})</text>
 
           <circle cx="260" cy="200" r="6" fill="#C71585"/>
           <line x1="260" y1="200" x2="260" y2="330" stroke="#C71585" strokeWidth="1" strokeDasharray="2"/>
           <rect x="210" y="330" width="100" height="40" rx="5" fill="#FF91A4" opacity="0.2"/>
           <text x="260" y="345" textAnchor="middle" fill="#C71585">
-            {locale === 'en' ? 'Organs Developed' : locale === 'jp' ? '器官発達完了' : '器官發育完成'}
+            {timelineTranslations.milestones.organsDeveloped[lang]}
           </text>
-          <text x="260" y="360" textAnchor="middle" fill="#C71585">(12{t.calculator.weeks})</text>
+          <text x="260" y="360" textAnchor="middle" fill="#C71585">(12{timelineTranslations.weeks[lang]})</text>
 
           {/* 第二孕期里程碑 */}
           <circle cx="365" cy="200" r="6" fill="#228B22"/>
           <line x1="365" y1="200" x2="365" y2="270" stroke="#228B22" strokeWidth="1" strokeDasharray="2"/>
           <rect x="315" y="270" width="100" height="40" rx="5" fill="#90EE90" opacity="0.2"/>
           <text x="365" y="285" textAnchor="middle" fill="#228B22">
-            {locale === 'en' ? 'Feel Movement' : locale === 'jp' ? '胎動感じる' : '胎動感受'}
+            {timelineTranslations.milestones.feelMovement[lang]}
           </text>
-          <text x="365" y="300" textAnchor="middle" fill="#228B22">(16-20{t.calculator.weeks})</text>
+          <text x="365" y="300" textAnchor="middle" fill="#228B22">(16-20{timelineTranslations.weeks[lang]})</text>
 
           <circle cx="400" cy="200" r="6" fill="#228B22"/>
           <line x1="400" y1="200" x2="400" y2="330" stroke="#228B22" strokeWidth="1" strokeDasharray="2"/>
           <rect x="350" y="330" width="100" height="40" rx="5" fill="#90EE90" opacity="0.2"/>
           <text x="400" y="345" textAnchor="middle" fill="#228B22">
-            {locale === 'en' ? 'Gender Visible' : locale === 'jp' ? '性別判別可能' : '性別辨識'}
+            {timelineTranslations.milestones.genderVisible[lang]}
           </text>
-          <text x="400" y="360" textAnchor="middle" fill="#228B22">(20{t.calculator.weeks})</text>
+          <text x="400" y="360" textAnchor="middle" fill="#228B22">(20{timelineTranslations.weeks[lang]})</text>
 
           {/* 第三孕期里程碑 */}
           <circle cx="662" cy="200" r="6" fill="#4169E1"/>
           <line x1="662" y1="200" x2="662" y2="270" stroke="#4169E1" strokeWidth="1" strokeDasharray="2"/>
           <rect x="612" y="270" width="100" height="40" rx="5" fill="#87CEEB" opacity="0.2"/>
           <text x="662" y="285" textAnchor="middle" fill="#4169E1">
-            {locale === 'en' ? 'Lungs Mature' : locale === 'jp' ? '肺成熟' : '肺部成熟'}
+            {timelineTranslations.milestones.lungsMature[lang]}
           </text>
-          <text x="662" y="300" textAnchor="middle" fill="#4169E1">(34-36{t.calculator.weeks})</text>
+          <text x="662" y="300" textAnchor="middle" fill="#4169E1">(34-36{timelineTranslations.weeks[lang]})</text>
 
           <circle cx="680" cy="200" r="6" fill="#4169E1"/>
           <line x1="680" y1="200" x2="680" y2="330" stroke="#4169E1" strokeWidth="1" strokeDasharray="2"/>
           <rect x="630" y="330" width="100" height="40" rx="5" fill="#87CEEB" opacity="0.2"/>
           <text x="680" y="345" textAnchor="middle" fill="#4169E1">
-            {locale === 'en' ? 'Position Fixed' : locale === 'jp' ? '胎位固定' : '胎位定位'}
+            {timelineTranslations.milestones.positionFixed[lang]}
           </text>
-          <text x="680" y="360" textAnchor="middle" fill="#4169E1">(36{t.calculator.weeks})</text>
+          <text x="680" y="360" textAnchor="middle" fill="#4169E1">(36{timelineTranslations.weeks[lang]})</text>
         </g>
         {/* 標題 */}
         <text x="400" y="60" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="24" fontWeight="bold" fill="#2c3e50">
-          {locale === 'en' ? 'Pregnancy Development Timeline' : 
-           locale === 'jp' ? '妊娠発達タイムライン' : 
-           '懷孕週期發展時程表'}
+          {timelineTranslations.title[lang]}
         </text>
         {/* 當前週數標記 */}
         <line 
@@ -152,7 +209,7 @@ export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelinePro
           fontWeight="bold" 
           fill="#FF4500"
         >
-          👶4{t.calculator.weeks}
+          👶4{timelineTranslations.weeks[lang]}
         </text>
       </svg>
     </div>
