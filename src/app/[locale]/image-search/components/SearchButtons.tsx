@@ -34,37 +34,6 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }, 3000);
   };
   
-  // 讀取並更新本地搜索引擎記錄
-  const updateLocalSearchEngines = (engineName: string): string[] => {
-    // 嘗試從localStorage獲取當前圖片URL的搜索引擎列表
-    try {
-      const currentImageKey = `image_url_${imageUrl}`;
-      let engines: string[] = [];
-      
-      const storedEngines = localStorage.getItem(currentImageKey);
-      if (storedEngines) {
-        try {
-          engines = JSON.parse(storedEngines);
-          if (!Array.isArray(engines)) {
-            engines = [];
-          }
-        } catch {
-          engines = [];
-        }
-      }
-      
-      // 如果引擎不在列表中，添加它
-      if (!engines.includes(engineName)) {
-        engines.push(engineName);
-        localStorage.setItem(currentImageKey, JSON.stringify(engines));
-      }
-      
-      return engines;
-    } catch (error) {
-      console.error('無法更新本地搜索引擎記錄:', error);
-      return [engineName];
-    }
-  };
   
   // 處理點擊搜尋按鈕，保存詳細的搜尋記錄到Supabase (靜默記錄)
   const handleSearch = async (engineUrl: string, engineName: string): Promise<boolean> => {
@@ -78,14 +47,10 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
       // 獲取設備類型
       const deviceType = getDeviceType();
       
-      // 更新本地搜索引擎記錄
-      const engines = updateLocalSearchEngines(engineName);
-      console.log('本地搜索引擎記錄:', engines);
-      
       // 紀錄到Supabase
       saveSearchRecord({
         image_url: imageUrl,
-        search_engine: engines, // 使用完整的引擎陣列
+        search_engine: [engineName], // 只記錄當前點擊的搜尋引擎
         device_type: deviceType
       }).catch(err => {
         console.error('保存搜索引擎失敗:', err);
