@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import { locales } from "./metadata";
+import LocaleRedirect from "@/components/LocaleRedirect";
 
 // 定義有效的靜態路徑參數
 export async function generateStaticParams() {
@@ -52,6 +53,7 @@ export default async function RootLayout({
       </head>
       
       <body suppressHydrationWarning className="block">
+        <LocaleRedirect currentLocale={locale} />
         <div className="block">
           {children}
         </div>

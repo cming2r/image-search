@@ -121,7 +121,13 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
               key={locale}
               href={getLocalizedPath(locale)}
               className={`block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${isActive ? 'font-bold bg-gray-50' : ''}`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                // Save language preference to localStorage
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('preferredLocale', locale);
+                }
+              }}
               role="menuitem"
             >
               {languageNames[locale]}
