@@ -60,6 +60,20 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // 特別處理 admin 路徑（無語言前綴的情況）
+  if (pathname.startsWith('/admin')) {
+    // 重寫為默認語言的 admin 路徑
+    const rewriteUrl = new URL(`/${defaultLocale}${pathname}`, request.url);
+    
+    // 保留所有查詢參數
+    requestUrl.searchParams.forEach((value, key) => {
+      rewriteUrl.searchParams.set(key, value);
+    });
+    
+    console.log(`Middleware: 將 ${pathname} 重寫為 ${rewriteUrl.pathname}`);
+    return NextResponse.rewrite(rewriteUrl);
+  }
+  
   // 如果路徑不包含有效的語言代碼，則重寫為默認語言內容，但保持URL不變（中文版使用根路徑）
   if (!locales.includes(firstSegment)) {
     // 使用重寫而不是重定向，保持URL不變但使用中文版內容
@@ -74,8 +88,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.rewrite(rewriteUrl);
   }
   
-  // 處理管理員身份驗證
-  if (pathname.startsWith(`/${firstSegment}/admin`) && 
+  // 處理管理員身份驗證（只處理有語言前綴的 admin 路徑）
+  if (locales.includes(firstSegment) && 
+      pathname.startsWith(`/${firstSegment}/admin`) && 
       !pathname.includes('/admin/login')) {
     
     // 檢查所有 cookie，確保 Supabase 會話可用

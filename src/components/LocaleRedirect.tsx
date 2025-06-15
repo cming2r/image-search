@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/app/[locale]/metadata';
 
@@ -11,10 +11,24 @@ interface LocaleRedirectProps {
 export default function LocaleRedirect({ currentLocale }: LocaleRedirectProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const hasRedirected = useRef(false);
+  const lastPathname = useRef(pathname);
 
   useEffect(() => {
     // Only run on client side
     if (typeof window === 'undefined') return;
+
+    // Skip admin routes to avoid conflicts with middleware auth logic
+    if (pathname.includes('/admin')) return;
+
+    // Reset redirect flag when pathname changes
+    if (pathname !== lastPathname.current) {
+      hasRedirected.current = false;
+      lastPathname.current = pathname;
+    }
+
+    // Prevent multiple redirects for the same pathname
+    if (hasRedirected.current) return;
 
     // Get saved language preference
     const savedLocale = localStorage.getItem('preferredLocale');
@@ -24,6 +38,9 @@ export default function LocaleRedirect({ currentLocale }: LocaleRedirectProps) {
     
     // Validate saved locale
     if (!locales.includes(savedLocale as typeof locales[number])) return;
+
+    // Mark as redirected to prevent loops
+    hasRedirected.current = true;
 
     // Generate the new path with the preferred locale
     let newPath = pathname;
@@ -41,16 +58,25 @@ export default function LocaleRedirect({ currentLocale }: LocaleRedirectProps) {
     }
     
     // Add preferred locale prefix (except for zh which uses root path)
+    let targetPath: string;
     if (savedLocale === 'zh') {
       // For Chinese, use the path without locale prefix
-      router.replace(newPath);
+      targetPath = newPath;
     } else {
       // For other languages, add the locale prefix
       if (newPath === '/') {
-        router.replace(`/${savedLocale}`);
+        targetPath = `/${savedLocale}`;
       } else {
-        router.replace(`/${savedLocale}${newPath}`);
+        targetPath = `/${savedLocale}${newPath}`;
       }
+    }
+
+    // Only redirect if the target path is different from current path
+    if (targetPath !== pathname) {
+      router.replace(targetPath);
+    } else {
+      // If we're already at the correct path, reset the flag
+      hasRedirected.current = false;
     }
   }, [currentLocale, pathname, router]);
 

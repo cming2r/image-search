@@ -89,10 +89,20 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/",
   },
+  "/src/app/[locale]/gift-exchange/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-06-10 00:18:44 +0800",
+    routePath: "/gift-exchange",
+  },
   "/src/app/[locale]/shorturl/page.tsx": {
     created: "2025-05-22 00:56:16 +0800",
     modified: "2025-05-22 00:56:16 +0800",
     routePath: "/shorturl",
+  },
+  "/src/app/[locale]/admin/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-05-26 22:17:11 +0800",
+    routePath: "/admin",
   },
   "/src/app/[locale]/image-search/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
@@ -103,16 +113,6 @@ export const FILE_DATES: Record<string, GitDates> = {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-06-10 00:18:44 +0800",
     routePath: "/due-date-calculator",
-  },
-  "/src/app/[locale]/gift-exchange/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-06-10 00:18:44 +0800",
-    routePath: "/gift-exchange",
-  },
-  "/src/app/[locale]/admin/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-05-26 22:17:11 +0800",
-    routePath: "/admin",
   },
   "/src/app/[locale]/date/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
@@ -129,6 +129,11 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-05-26 22:17:11 +0800",
     routePath: "/admin/login",
   },
+  "/src/app/[locale]/(info)/contact/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-04-30 23:14:10 +0800",
+    routePath: "/contact",
+  },
   "/src/app/[locale]/(info)/terms/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-04-30 23:14:10 +0800",
@@ -138,11 +143,6 @@ export const FILE_DATES: Record<string, GitDates> = {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-04-30 23:14:10 +0800",
     routePath: "/privacy-policy",
-  },
-  "/src/app/[locale]/(info)/contact/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-04-30 23:14:10 +0800",
-    routePath: "/contact",
   },
 };
 
