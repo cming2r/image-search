@@ -1,12 +1,6 @@
-import { del, list } from '@vercel/blob';
 import { NextResponse } from 'next/server';
+import { cleanupOldImages } from '@/lib/blob';
 
-interface BlobWithContentType {
-  url: string;
-  pathname: string;
-  contentType?: string;
-  uploadedAt: string;
-}
 
 // 驗證請求是否來自 Vercel Cron
 function validateCronRequest(request: Request): boolean {
@@ -64,68 +58,20 @@ export async function GET(request: Request) {
       );
     }
     
-    // 取得當前時間，減去 24 小時（保留最近一天的檔案）
-    const cutoffDate = new Date();
-    cutoffDate.setHours(cutoffDate.getHours() - 24);
+    // 使用 blob.ts 中的 cleanupOldImages 函數
+    const result = await cleanupOldImages(24);
     
-    // 列出所有 blob
-    const { blobs } = await list();
-    
-    // 刪除前的數量
-    const initialCount = blobs.length;
-    
-    // 刪除操作計數和結果
-    let deletedCount = 0;
-    const deletionResults: Array<{
-      url: string;
-      status: string;
-      createdAt?: string;
-      error?: string;
-    }> = [];
-    
-    // 刪除所有符合條件的 blob（可根據需求修改條件）
-    for (const blob of blobs as unknown as BlobWithContentType[]) {
-      // 檢查是否是圖片（根據 pathname 或 contentType）
-      const isImage = blob.pathname.match(/\.(jpg|jpeg|png|gif|webp)$/i) || 
-                      (blob.contentType && blob.contentType.startsWith('image/'));
-      
-      // 檢查創建時間是否早於截止日期
-      const createdAt = new Date(blob.uploadedAt);
-      const isOld = createdAt < cutoffDate;
-      
-      // 如果是圖片且已過期，則刪除
-      if (isImage && isOld) {
-        try {
-          await del(blob.url);
-          deletedCount++;
-          deletionResults.push({
-            url: blob.url,
-            status: 'deleted',
-            createdAt: blob.uploadedAt
-          });
-        } catch (error) {
-          deletionResults.push({
-            url: blob.url,
-            status: 'error',
-            error: error instanceof Error ? error.message : '未知錯誤'
-          });
-        }
-      }
-    }
-    
-    // 返回刪除結果
-    return NextResponse.json({
-      success: true,
-      message: `已清理 ${deletedCount} 個圖片檔案`,
-      total: initialCount,
-      deleted: deletedCount,
-      detail: deletionResults
-    });
+    // 返回清理結果
+    return NextResponse.json(result);
     
   } catch (error) {
     console.error('清理檔案時發生錯誤:', error);
     return NextResponse.json(
-      { error: '清理檔案時發生錯誤', message: error instanceof Error ? error.message : '未知錯誤' },
+      { 
+        success: false,
+        error: '清理檔案時發生錯誤', 
+        message: error instanceof Error ? error.message : '未知錯誤' 
+      },
       { status: 500 }
     );
   }
