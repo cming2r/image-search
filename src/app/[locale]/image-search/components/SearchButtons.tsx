@@ -48,9 +48,9 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
       // 獲取設備類型
       const deviceType = getDeviceType();
       
-      // Vercel Analytics 追蹤
-      track('image_search_engine_click', {
-        search_engine: engineName,
+      // Vercel Analytics 追蹤 - 為每個搜尋引擎創建獨立事件
+      const trackingEventName = `${engineName.toLowerCase().replace('.', '')}_search_click`;
+      track(trackingEventName, {
         device_type: deviceType,
         locale: locale
       });
