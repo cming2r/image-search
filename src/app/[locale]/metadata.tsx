@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getBaseUrl, getFullUrl } from "@/lib/utils";
 
 // 定義有效的語言代碼
-export const locales = ['zh', 'en', 'jp'] as const;
+export const locales = ['en', 'es', 'zh', 'jp'] as const;
 export type Locale = typeof locales[number];
 
 // 簡化的基礎元數據，僅包含通用設置
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       'zh-TW': getFullUrl('/'),
       'en': getFullUrl('/en/'),
       'ja': getFullUrl('/jp/'),
+      'es': getFullUrl('/es/'),
     },
   },
   // 默認搜索引擎行為設置 - 對所有公開頁面適用

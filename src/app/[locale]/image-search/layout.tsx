@@ -12,7 +12,8 @@ import { imageSearchTranslations } from './components/meta-translations';
 const keywordsList = {
   zh: ['以圖搜圖', '反向圖片搜尋', 'iphone手機以圖搜圖'],
   en: ['reverse image search', 'image search tool', 'search by image'],
-  jp: ['画像検索', '逆画像検索', '画像で検索']
+  jp: ['画像検索', '逆画像検索', '画像で検索'],
+  es: ['búsqueda inversa de imágenes', 'herramienta de búsqueda de imágenes', 'buscar por imagen']
 };
 
 // 多語言FAQ數據
@@ -214,6 +215,80 @@ const faqsData = {
         text: 'スマートフォンで当ツールを使って写真検索するのは簡単です：1) モバイルブラウザで当サイトにアクセスします；2) 「画像をアップロード」ボタンをタップします；3) 「写真を撮る」オプションを選択します（またはギャラリーから既存の写真を選択します）；4) 検索したいオブジェクトやシーンを撮影します；5) 画像がアップロードされたら、お好みの検索エンジンを選択して検索します。この機能は、商品の買い物中、旅行中のランドマークの識別、または見慣れない植物や動物に出会ったときに特に役立ちます。'
       }
     }
+  ],
+  es: [
+    {
+      '@type': 'Question',
+      name: '¿Qué es la búsqueda inversa de imágenes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'La búsqueda inversa de imágenes es un método de búsqueda que utiliza una imagen como entrada de búsqueda (en lugar de texto). Al subir una imagen o proporcionar una URL de imagen, los motores de búsqueda pueden encontrar otras imágenes similares o relacionadas y páginas web.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo uso esta herramienta para buscar imágenes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Puede usar esta herramienta de tres maneras: 1) Ingrese directamente la URL de la imagen, luego haga clic en "Buscar esta imagen"; 2) Suba un archivo de imagen desde su computadora local; 3) Copie directamente una imagen y péguela usando Ctrl+V. Después seleccione el motor de búsqueda que desea usar (como Google, Bing, Yandex, etc.).'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Qué motores de búsqueda admite esta herramienta?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Esta herramienta admite múltiples motores de búsqueda de imágenes populares, incluyendo Búsqueda de Imágenes de Google, Búsqueda de Imágenes de Bing, Yandex y SauceNAO. Cada motor de búsqueda tiene sus fortalezas: Google es integral, Bing sobresale en imágenes de alta resolución, Yandex es bueno encontrando imágenes modificadas, y SauceNAO se especializa en contenido de anime.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo se procesan las imágenes subidas? ¿Se guardan?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Tomamos muy en serio la privacidad del usuario. Cuando sube una imagen, el sistema la almacena temporalmente para generar una URL de búsqueda, pero todos los datos de imagen se eliminan automáticamente dentro de 24 horas. No almacenamos permanentemente sus imágenes ni las usamos para ningún otro propósito. Las imágenes subidas solo se usan para proporcionar servicios de búsqueda, y solo usted puede acceder a ellas a través de la URL generada.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Por qué a veces los resultados de búsqueda son inexactos?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'La precisión de la búsqueda inversa de imágenes depende de múltiples factores, incluyendo la calidad de la imagen, la cobertura de la base de datos del motor de búsqueda y la singularidad de la imagen. Si su imagen tiene baja resolución, ha sido recortada o modificada, o es un tipo de imagen muy común (como cielo azul, césped, etc.), la precisión de búsqueda puede disminuir. Para mejores resultados, recomendamos usar imágenes originales claras y completas, y probar múltiples motores de búsqueda para comparación, ya que diferentes motores tienen diferentes algoritmos y bases de datos.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Esta herramienta admite búsquedas desde móviles?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sí, nuestra herramienta admite completamente el uso en dispositivos móviles, incluyendo dispositivos iPhone y Android. En su móvil, puede tocar "Subir Imagen" para seleccionar una foto de su galería o tomar una nueva foto. También puede compartir imágenes desde otras aplicaciones a nuestro sitio web o copiar una imagen al portapapeles y pegarla.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo puedo buscar directamente con la cámara de mi teléfono?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Usar nuestra herramienta para buscar con la cámara de su teléfono es simple: 1) Visite nuestro sitio web con su navegador móvil; 2) Toque el botón "Subir Imagen"; 3) Elija la opción "Tomar Foto" (o seleccione una foto existente de su galería); 4) Capture el objeto o escena que desea buscar; 5) Después de que la imagen se suba, seleccione su motor de búsqueda preferido. Esta función es especialmente útil al comprar productos, identificar monumentos mientras viaja, o cuando encuentre plantas o animales desconocidos.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Puedo copiar directamente imágenes de páginas web para buscar?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sí, admitimos la función de pegado directo de imágenes desde el portapapeles. Cuando vea una imagen interesante mientras navega, haga clic derecho en la imagen y elija "Copiar Imagen", luego cambie a nuestro sitio web, haga clic en el área de subida y use Ctrl+V (Windows/Linux) o Command+V (Mac) para pegar la imagen directamente. El sistema procesará automáticamente la subida y preparará la búsqueda, simplificando enormemente el proceso de búsqueda.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cuáles son los escenarios de uso comunes para la búsqueda inversa de imágenes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Las aplicaciones de la búsqueda inversa de imágenes son muy amplias: 1) Encontrar el origen de la imagen o versiones de alta resolución; 2) Identificar plantas, animales, productos o monumentos desconocidos; 3) Buscar inspiración de diseño similar o materiales; 4) Verificar la autenticidad de imágenes, identificar imágenes sintéticas o modificadas; 5) Encontrar canales de compra para ropa o productos específicos; 6) Rastrear el origen de obras de arte, anime o capturas de pantalla de juegos; 7) Verificar si su contenido creado ha sido usado sin autorización. Estos escenarios son muy útiles para diseñadores, investigadores, creadores de contenido y usuarios cotidianos.'
+      }
+    }
   ]
 };
 
@@ -224,7 +299,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 // 社交媒體分享圖片
@@ -240,7 +316,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'zh' ? `以圖搜圖` : 
                   locale === 'en' ? `Image Search` : 
-                  `画像検索`;
+                  locale === 'jp' ? `画像検索` :
+                  locale === 'es' ? `Búsqueda de Imágenes` : `Image Search`;
 
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -259,7 +336,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? '以圖搜圖工具界面' : 
                locale === 'en' ? 'Image Search Tool Interface' :
-               '画像検索ツールインターフェース',
+               locale === 'jp' ? '画像検索ツールインターフェース' :
+               locale === 'es' ? 'Interfaz de Herramienta de Búsqueda de Imágenes' : 'Image Search Tool Interface',
           type: 'image/png',
         },
       ],
@@ -282,6 +360,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/image-search'),
         'en': getFullUrl('/en/image-search'),
         'ja': getFullUrl('/jp/image-search'),
+        'es': getFullUrl('/es/image-search'),
       },
     },
     
@@ -340,7 +419,8 @@ export default async function ImageSearchLayout({
     '/image-search',
     locale === 'zh' ? '以圖搜圖多引擎搜尋工具' :
     locale === 'en' ? 'Multi-Engine Reverse Image Search Tool' :
-    '複数エンジン画像検索ツール',
+    locale === 'jp' ? '複数エンジン画像検索ツール' :
+    locale === 'es' ? 'Herramienta de Búsqueda Inversa de Imágenes Multi-Motor' : 'Multi-Engine Reverse Image Search Tool',
     description,
     'SearchApplication',
     '4.9',           // 更新的評分值

@@ -20,60 +20,69 @@ export default function Contact() {
   // Determine the current locale
   const isZhLocale = locale === 'zh';
   const isEnLocale = locale === 'en';
-  // For Japanese locale, use it as the fallback when neither zh nor en
+  const isJpLocale = locale === 'jp';
+  const isEsLocale = locale === 'es';
   
   // Get content based on locale
-  const getContent = (zhText: string, enText: string, jpText: string) => {
+  const getContent = (zhText: string, enText: string, jpText: string, esText: string) => {
     if (isZhLocale) return zhText;
     if (isEnLocale) return enText;
-    return jpText; // Default to Japanese if neither zh nor en
+    if (isJpLocale) return jpText;
+    if (isEsLocale) return esText;
+    return enText; // Default to English if no match
   };
   
   // Form translations
   const formLabels = {
-    name: getContent('您的名字', 'Your Name', 'お名前'),
-    email: getContent('電子郵件', 'Email Address', 'メールアドレス'),
-    message: getContent('訊息內容', 'Message', 'メッセージ'),
-    submit: getContent('送出', 'Submit', '送信'),
-    submitting: getContent('送出中...', 'Submitting...', '送信中...')
+    name: getContent('您的名字', 'Your Name', 'お名前', 'Su Nombre'),
+    email: getContent('電子郵件', 'Email Address', 'メールアドレス', 'Dirección de Email'),
+    message: getContent('訊息內容', 'Message', 'メッセージ', 'Mensaje'),
+    submit: getContent('送出', 'Submit', '送信', 'Enviar'),
+    submitting: getContent('送出中...', 'Submitting...', '送信中...', 'Enviando...')
   };
   
   const validationMessages = {
     requiredFields: getContent(
       '請填寫所有必填欄位',
       'Please fill in all required fields',
-      'すべての必須フィールドにご記入ください'
+      'すべての必須フィールドにご記入ください',
+      'Por favor complete todos los campos requeridos'
     ),
     invalidEmail: getContent(
       '請輸入有效的電子郵件地址',
       'Please enter a valid email address',
-      '有効なメールアドレスを入力してください'
+      '有効なメールアドレスを入力してください',
+      'Por favor ingrese una dirección de email válida'
     ),
     generalError: getContent(
       '提交表單時發生錯誤，請稍後再試',
       'An error occurred while submitting the form. Please try again later.',
-      'フォームの送信中にエラーが発生しました。後でもう一度お試しください。'
+      'フォームの送信中にエラーが発生しました。後でもう一度お試しください。',
+      'Ocurrió un error al enviar el formulario. Por favor intente nuevamente más tarde.'
     )
   };
   
   const successMessage = getContent(
     '感謝您的訊息！我們會盡快回覆您。',
     'Thank you for your message! We will get back to you soon.',
-    'メッセージをお送りいただきありがとうございます！早急にご返信いたします。'
+    'メッセージをお送りいただきありがとうございます！早急にご返信いたします。',
+    '¡Gracias por su mensaje! Le responderemos pronto.'
   );
   
   const pageContent = {
-    title: getContent('聯絡我們', 'Contact Us', 'お問い合わせ'),
+    title: getContent('聯絡我們', 'Contact Us', 'お問い合わせ', 'Contáctanos'),
     description: getContent(
       '有任何問題、建議或回饋嗎？請填寫以下表單與我們聯絡，我們會盡快回覆您。',
       'Have questions, suggestions, or feedback? Please fill out the form below to get in touch with us, and we\'ll get back to you as soon as possible.',
-      'ご質問、ご提案、またはフィードバックがありますか？以下のフォームにご記入いただき、お問い合わせください。できるだけ早くご返信いたします。'
+      'ご質問、ご提案、またはフィードバックがありますか？以下のフォームにご記入いただき、お問い合わせください。できるだけ早くご返信いたします。',
+      '¿Tiene preguntas, sugerencias o comentarios? Por favor complete el formulario a continuación para contactarnos, y le responderemos lo antes posible.'
     ),
-    otherMethodsTitle: getContent('其他聯絡方式', 'Other Contact Methods', 'その他の連絡方法'),
+    otherMethodsTitle: getContent('其他聯絡方式', 'Other Contact Methods', 'その他の連絡方法', 'Otros Métodos de Contacto'),
     otherMethodsContent: getContent(
       '一般情況下，我們會在2個工作日內回覆您的訊息。如有緊急事項，請發送電子郵件至 support@fyimg.com。',
       'We typically respond to messages within 2 business days. For urgent matters, please send an email to support@fyimg.com.',
-      '通常、2営業日以内にメッセージに返信いたします。緊急の場合は、support@fyimg.comまでメールをお送りください。'
+      '通常、2営業日以内にメッセージに返信いたします。緊急の場合は、support@fyimg.comまでメールをお送りください。',
+      'Normalmente respondemos a los mensajes dentro de 2 días hábiles. Para asuntos urgentes, por favor envíe un email a support@fyimg.com.'
     )
   };
   

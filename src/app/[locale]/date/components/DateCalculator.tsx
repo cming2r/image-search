@@ -18,38 +18,45 @@ const translations = {
         addDays: {
           zh: "日期加天數",
           en: "Add Days to Date",
-          jp: "日付に日数を追加"
+          jp: "日付に日数を追加",
+          es: "Agregar Días a Fecha"
         },
         subtractDates: {
           zh: "日期相減",
           en: "Calculate Date Difference",
-          jp: "日付の差を計算"
+          jp: "日付の差を計算",
+          es: "Calcular Diferencia de Fechas"
         }
       },
       startDate: {
         zh: "起始日期：",
         en: "Start Date:",
-        jp: "開始日："
+        jp: "開始日：",
+        es: "Fecha de Inicio:"
       },
       days: {
         zh: "天數：",
         en: "Days:",
-        jp: "日数："
+        jp: "日数：",
+        es: "Días:"
       },
       endDate: {
         zh: "結束日期：",
         en: "End Date:",
-        jp: "終了日："
+        jp: "終了日：",
+        es: "Fecha Final:"
       },
       result: {
         zh: "計算結果：",
         en: "Result:",
-        jp: "計算結果："
+        jp: "計算結果：",
+        es: "Resultado:"
       },
       weekdays: {
         zh: ["日", "一", "二", "三", "四", "五", "六"],
         en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        jp: ["日", "月", "火", "水", "木", "金", "土"]
+        jp: ["日", "月", "火", "水", "木", "金", "土"],
+        es: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
       }
     }
   };
@@ -59,7 +66,7 @@ export default function DateCalculator() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
   
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   // 日期加天數的狀態
   const [startDate, setStartDate] = useState<string>('');
@@ -137,7 +144,9 @@ export default function DateCalculator() {
       const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
       
       // 根據語言設置不同的天數單位
-      const dayUnit = locale === 'en' ? ' days' : locale === 'jp' ? ' 日' : ' 天';
+      const dayUnit = locale === 'en' ? ' days' : 
+                      locale === 'jp' ? ' 日' : 
+                      locale === 'es' ? ' días' : ' 天';
       setDaysDiff(`${diffDays}${dayUnit}`);
     }
   }, [startDate2, endDate, locale]);

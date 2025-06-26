@@ -20,6 +20,7 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
     zh: '中文',
     en: 'English',
     jp: '日本語',
+    es: 'Español',
   };
   
   // 處理點擊外部關閉下拉菜單

@@ -5,13 +5,15 @@ import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/l
 const titles = {
   zh: '隱私權政策',
   en: 'Privacy Policy',
-  jp: 'プライバシーポリシー'
+  jp: 'プライバシーポリシー',
+  es: 'Política de Privacidad'
 };
 
 const descriptions = {
   zh: 'fyimg.com 的隱私權政策。了解我們如何收集、使用、分享和保護您的個人資訊。',
   en: 'Privacy Policy of fyimg.com. Learn how we collect, use, share, and protect your personal information.',
-  jp: 'fyimg.comのプライバシーポリシー。当社が個人情報をどのように収集、使用、共有、保護するかについて説明します。'
+  jp: 'fyimg.comのプライバシーポリシー。当社が個人情報をどのように収集、使用、共有、保護するかについて説明します。',
+  es: 'Política de Privacidad de fyimg.com. Aprenda cómo recolectamos, usamos, compartimos y protegemos su información personal.'
 };
 
 // 預覽圖片
@@ -40,7 +42,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? 'fyimg隱私權政策' : 
                locale === 'en' ? 'fyimg Privacy Policy' : 
-               'fyimgプライバシーポリシー',
+               locale === 'jp' ? 'fyimgプライバシーポリシー' :
+               locale === 'es' ? 'fyimg Política de Privacidad' : 'fyimg Privacy Policy',
           type: 'image/png',
         },
       ],
@@ -63,13 +66,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/privacy-policy'),
         'en': getFullUrl('/en/privacy-policy'),
         'ja': getFullUrl('/jp/privacy-policy'),
+        'es': getFullUrl('/es/privacy-policy'),
       },
     },
     
     // 關鍵字、作者及發布者信息
     keywords: locale === 'zh' ? '隱私權政策, 資料保護, fyimg, 用戶隱私, Cookie, 數據安全' : 
               locale === 'en' ? 'privacy policy, data protection, fyimg, user privacy, cookie, data security' :
-              'プライバシーポリシー, データ保護, fyimg, ユーザープライバシー, Cookie, データセキュリティ',
+              locale === 'jp' ? 'プライバシーポリシー, データ保護, fyimg, ユーザープライバシー, Cookie, データセキュリティ' :
+              locale === 'es' ? 'política de privacidad, protección de datos, fyimg, privacidad del usuario, cookie, seguridad de datos' :
+              'privacy policy, data protection, fyimg, user privacy, cookie, data security',
     authors: [{ name: 'fyimg開發團隊' }],
     creator: 'fyimg開發團隊',
     publisher: 'fyimg',

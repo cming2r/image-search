@@ -12,7 +12,8 @@ import { metaTranslations } from './components/meta-translations';
 const keywordsList = {
   zh: ['日期計算器', '日期加減', '計算日期差', '天數計算'],
   en: ['date calculator', 'date difference', 'days between dates', 'add days to date'],
-  jp: ['日付計算機', '日付の差', '日数計算', '日付の追加']
+  jp: ['日付計算機', '日付の差', '日数計算', '日付の追加'],
+  es: ['calculadora de fechas', 'diferencia de fechas', 'días entre fechas', 'agregar días a fecha']
 };
 
 // 從Git歷史取得頁面發布與更新日期
@@ -22,7 +23,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 // 社交媒體分享圖片
@@ -31,7 +33,7 @@ const imageUrl = getFullUrl('/images/og-date.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   const title = metaTranslations.meta.title[lang];
   const description = metaTranslations.meta.description[lang];
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
@@ -56,7 +58,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? '日期計算器工具界面' : 
                locale === 'en' ? 'Date Calculator Tool Interface' :
-               '日付計算機ツールインターフェース',
+               locale === 'jp' ? '日付計算機ツールインターフェース' :
+               locale === 'es' ? 'Interfaz de Herramienta Calculadora de Fechas' : 'Date Calculator Tool Interface',
           type: 'image/png',
         },
       ],
@@ -79,6 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/date'),
         'en': getFullUrl('/en/date'),
         'ja': getFullUrl('/jp/date'),
+        'es': getFullUrl('/es/date'),
       },
     },
     
@@ -108,7 +112,7 @@ export default async function DateLayout({
   // 取得當前語言
   const { locale = 'zh' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   // 根據當前語言取得相應標題與描述
   const title = metaTranslations.meta.title[lang];
@@ -133,7 +137,8 @@ export default async function DateLayout({
     '/date',
     locale === 'zh' ? '日期計算工具' :
     locale === 'en' ? 'Date Calculation Tool' :
-    '日付計算ツール',
+    locale === 'jp' ? '日付計算ツール' :
+    locale === 'es' ? 'Herramienta de Cálculo de Fechas' : 'Date Calculation Tool',
     description,
     'UtilityApplication',
     '4.8',           // 評分值

@@ -6,27 +6,32 @@ const wheelTranslations = {
   noParticipantsError: {
     zh: "請至少輸入兩名參與者",
     en: "Please enter at least two participants",
-    jp: "少なくとも2人の参加者を入力してください"
+    jp: "少なくとも2人の参加者を入力してください",
+    es: "Por favor ingrese al menos dos participantes"
   },
   spinningText: {
     zh: "轉動中...",
     en: "Spinning...",
-    jp: "回転中..."
+    jp: "回転中...",
+    es: "Girando..."
   },
   loading: {
     zh: "載入中...",
     en: "Loading...",
-    jp: "読み込み中..."
+    jp: "読み込み中...",
+    es: "Cargando..."
   },
   spinButton: {
     zh: "轉動轉盤",
     en: "Spin the Wheel",
-    jp: "ホイールを回す"
+    jp: "ホイールを回す",
+    es: "Girar la Ruleta"
   },
   resultsTitle: {
     zh: "抽籤結果",
     en: "Drawing Results",
-    jp: "抽選結果"
+    jp: "抽選結果",
+    es: "Resultados del Sorteo"
   }
 };
 
@@ -38,7 +43,7 @@ interface WheelCanvasProps {
 export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<number | null>(null);

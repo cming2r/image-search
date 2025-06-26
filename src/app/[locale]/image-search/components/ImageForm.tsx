@@ -11,119 +11,141 @@ const formTranslations = {
   enterUrlTab: {
     zh: "輸入圖片網址",
     en: "Enter Image URL",
-    jp: "画像URLを入力"
+    jp: "画像URLを入力",
+    es: "Ingresar URL de Imagen"
   },
   uploadImageTab: {
     zh: "上傳圖片",
     en: "Upload Image",
-    jp: "画像をアップロード"
+    jp: "画像をアップロード",
+    es: "Subir Imagen"
   },
   imageUrl: {
     zh: "圖片網址",
     en: "Image URL",
-    jp: "画像URL"
+    jp: "画像URL",
+    es: "URL de Imagen"
   },
   imageUrlPlaceholder: {
     zh: "https://example.com/image.jpg",
     en: "https://example.com/image.jpg",
-    jp: "https://example.com/image.jpg"
+    jp: "https://example.com/image.jpg",
+    es: "https://example.com/image.jpg"
   },
   imageUrlHint: {
     zh: "URL必須以 .jpg、.png、.webp 等常見圖片格式結尾",
     en: "URL must end with common image formats like .jpg, .png, .webp",
-    jp: "URLは.jpg、.png、.webpなどの一般的な画像形式で終わる必要があります"
+    jp: "URLは.jpg、.png、.webpなどの一般的な画像形式で終わる必要があります",
+    es: "La URL debe terminar con formatos de imagen comunes como .jpg, .png, .webp"
   },
   searchButton: {
     zh: "搜尋此圖片",
     en: "Search this image",
-    jp: "この画像を検索"
+    jp: "この画像を検索",
+    es: "Buscar esta imagen"
   },
   processing: {
     zh: "處理中...",
     en: "Processing...",
-    jp: "処理中..."
+    jp: "処理中...",
+    es: "Procesando..."
   },
   resetButton: {
     zh: "重置",
     en: "Reset",
-    jp: "リセット"
+    jp: "リセット",
+    es: "Reiniciar"
   },
   imagePreview: {
     zh: "圖片預覽",
     en: "Image Preview",
-    jp: "画像プレビュー"
+    jp: "画像プレビュー",
+    es: "Vista Previa de Imagen"
   },
   selectImage: {
     zh: "選擇圖片",
     en: "Select Image",
-    jp: "画像を選択"
+    jp: "画像を選択",
+    es: "Seleccionar Imagen"
   },
   dragDropHint: {
     zh: "拖曳圖片到這裡 、 ctrl+V 貼上 或",
     en: "Drag and drop image here, paste with ctrl+V, or",
-    jp: "ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または"
+    jp: "ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または",
+    es: "Arrastra y suelta la imagen aquí, pega con ctrl+V, o"
   },
   clickUpload: {
     zh: "點擊上傳",
     en: "click to upload",
-    jp: "クリックしてアップロード"
+    jp: "クリックしてアップロード",
+    es: "haz clic para subir"
   },
   supportedFormats: {
     zh: "支援 JPG, PNG, WEBP 等格式，最大5MB",
     en: "Supports JPG, PNG, WEBP and other formats, max 5MB",
-    jp: "JPG、PNG、WEBPなどの形式をサポート、最大5MB"
+    jp: "JPG、PNG、WEBPなどの形式をサポート、最大5MB",
+    es: "Soporta JPG, PNG, WEBP y otros formatos, máx 5MB"
   },
   validUrlError: {
     zh: "請輸入有效的圖片URL",
     en: "Please enter a valid image URL",
-    jp: "有効な画像URLを入力してください"
+    jp: "有効な画像URLを入力してください",
+    es: "Por favor ingresa una URL de imagen válida"
   },
   emptyUrlError: {
     zh: "請輸入圖片URL",
     en: "Please enter an image URL",
-    jp: "画像URLを入力してください"
+    jp: "画像URLを入力してください",
+    es: "Por favor ingresa una URL de imagen"
   },
   uploadErrorImage: {
     zh: "請上傳圖片文件",
     en: "Please upload an image file",
-    jp: "画像ファイルをアップロードしてください"
+    jp: "画像ファイルをアップロードしてください",
+    es: "Por favor sube un archivo de imagen"
   },
   uploadErrorSize: {
     zh: "圖片大小不能超過5MB",
     en: "Image size cannot exceed 5MB",
-    jp: "画像サイズは5MBを超えることはできません"
+    jp: "画像サイズは5MBを超えることはできません",
+    es: "El tamaño de la imagen no puede exceder 5MB"
   },
   imageUrlInfo: {
     zh: "圖片網址:",
     en: "Image URL:",
-    jp: "画像URL："
+    jp: "画像URL：",
+    es: "URL de Imagen:"
   },
   successMessage: {
     zh: "圖片網址設置成功",
     en: "Image URL set successfully",
-    jp: "画像URLが正常に設定されました"
+    jp: "画像URLが正常に設定されました",
+    es: "URL de imagen configurada exitosamente"
   },
   errorMessage: {
     zh: "處理圖片URL時發生錯誤",
     en: "Error processing image URL",
-    jp: "画像URLの処理中にエラーが発生しました"
+    jp: "画像URLの処理中にエラーが発生しました",
+    es: "Error al procesar la URL de imagen"
   },
   successUpload: {
     zh: "圖片上傳成功",
     en: "Image uploaded successfully",
-    jp: "画像が正常にアップロードされました"
+    jp: "画像が正常にアップロードされました",
+    es: "Imagen subida exitosamente"
   },
   errorUpload: {
     zh: "圖片上傳失敗，請稍後再試",
     en: "Failed to upload image, please try again later",
-    jp: "画像のアップロードに失敗しました。後でもう一度お試しください"
+    jp: "画像のアップロードに失敗しました。後でもう一度お試しください",
+    es: "Error al subir la imagen, por favor inténtalo de nuevo más tarde"
   }
 };
 
 const ImageForm: FC = () => {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');

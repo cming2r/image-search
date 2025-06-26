@@ -11,100 +11,119 @@ const eventTranslations = {
   title: {
     zh: "交換禮物抽籤",
     en: "Gift Exchange Draw",
-    jp: "ギフト交換抽選"
+    jp: "ギフト交換抽選",
+    es: "Sorteo de Intercambio de Regalos"
   },
   event: {
     eventCode: {
       zh: "活動代碼",
       en: "Event Code",
-      jp: "イベントコード"
+      jp: "イベントコード",
+      es: "Código del Evento"
     },
     eventLink: {
       zh: "活動連結",
       en: "Event Link",
-      jp: "イベントリンク"
+      jp: "イベントリンク",
+      es: "Enlace del Evento"
     },
     copyLinkTitle: {
       zh: "複製連結",
       en: "Copy Link",
-      jp: "リンクをコピー"
+      jp: "リンクをコピー",
+      es: "Copiar Enlace"
     },
     shareLinkTitle: {
       zh: "分享連結",
       en: "Share Link",
-      jp: "リンクを共有"
+      jp: "リンクを共有",
+      es: "Compartir Enlace"
     },
     loadingData: {
       zh: "正在載入活動資料...",
       en: "Loading event data...",
-      jp: "イベントデータを読み込んでいます..."
+      jp: "イベントデータを読み込んでいます...",
+      es: "Cargando datos del evento..."
     },
     noDataError: {
       zh: "無法加載活動數據，請確認連結是否正確",
       en: "Unable to load event data. Please verify the link is correct.",
-      jp: "イベントデータを読み込めません。リンクが正しいか確認してください。"
+      jp: "イベントデータを読み込めません。リンクが正しいか確認してください。",
+      es: "No se pueden cargar los datos del evento. Por favor verifique que el enlace sea correcto."
     },
     wheelSection: {
       zh: "抽籤轉盤",
       en: "Drawing Wheel",
-      jp: "抽選ホイール"
+      jp: "抽選ホイール",
+      es: "Ruleta de Sorteo"
     },
     wheelParticipants: {
       zh: "轉盤參與者",
       en: "Wheel Participants",
-      jp: "ホイール参加者"
+      jp: "ホイール参加者",
+      es: "Participantes de la Ruleta"
     },
     people: {
       zh: "人",
       en: "",
-      jp: "人"
+      jp: "人",
+      es: ""
     },
     noParticipants: {
       zh: "沒有參與者",
       en: "No Participants",
-      jp: "参加者がいません"
+      jp: "参加者がいません",
+      es: "Sin Participantes"
     },
     returnToHome: {
       zh: "請返回主頁添加參與者",
       en: "Please return to the home page to add participants",
-      jp: "ホームページに戻って参加者を追加してください"
+      jp: "ホームページに戻って参加者を追加してください",
+      es: "Por favor regrese a la página principal para agregar participantes"
     },
     backToHome: {
       zh: "返回主頁",
       en: "Back to Home",
-      jp: "ホームに戻る"
+      jp: "ホームに戻る",
+      es: "Volver al Inicio"
     },
     drawingComplete: {
       zh: "抽籤已完成！最終結果",
       en: "Drawing Complete! Final Results",
-      jp: "抽選完了！最終結果"
+      jp: "抽選完了！最終結果",
+      es: "¡Sorteo Completado! Resultados Finales"
     },
     drawingRecord: {
       zh: "抽籤結果記錄",
       en: "Drawing Results Record",
-      jp: "抽選結果記録"
+      jp: "抽選結果記録",
+      es: "Registro de Resultados del Sorteo"
     },
     shareSuccess: {
       zh: "已複製連結",
       en: "Link copied",
-      jp: "リンクがコピーされました"
+      jp: "リンクがコピーされました",
+      es: "Enlace copiado"
     },
     shareFailed: {
       zh: "複製連結失敗",
       en: "Failed to copy link",
-      jp: "リンクのコピーに失敗しました"
+      jp: "リンクのコピーに失敗しました",
+      es: "Error al copiar enlace"
     },
     shareSystemFailed: {
       zh: "系統分享失敗，已複製連結",
       en: "System sharing failed, link copied instead",
-      jp: "システム共有に失敗しました、リンクがコピーされました"
+      jp: "システム共有に失敗しました、リンクがコピーされました",
+      es: "Error al compartir del sistema, enlace copiado en su lugar"
     }
   },
   wheel: {
     givesTo: {
       zh: "送禮給",
       en: "gives to",
-      jp: "贈る相手"
+      jp: "贈る相手",
+      es: "da regalo a"
     }
   }
 };
@@ -121,7 +140,7 @@ export default function GiftExchangeEvent() {
   const params = useParams();
   const code = params.id as string;
   const locale = (params?.locale as string) || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [eventData, setEventData] = useState<GiftExchangeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

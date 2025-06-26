@@ -13,13 +13,19 @@ export default function PrivacyPolicy() {
   const isZhLocale = locale === 'zh';
   const isEnLocale = locale === 'en';
   const isJpLocale = locale === 'jp';
+  const isEsLocale = locale === 'es';
   
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow w-full">
         <div className="container mx-auto max-w-4xl px-4 py-8">
-          <h1 className="text-3xl font-bold mb-8">{isZhLocale ? "隱私權政策" : isEnLocale ? "Privacy Policy" : "プライバシーポリシー"}</h1>
+          <h1 className="text-3xl font-bold mb-8">
+            {isZhLocale ? "隱私權政策" : 
+             isEnLocale ? "Privacy Policy" : 
+             isJpLocale ? "プライバシーポリシー" : 
+             isEsLocale ? "Política de Privacidad" : "Privacy Policy"}
+          </h1>
 
           <div className="prose prose-lg max-w-none">
             {isZhLocale && (
@@ -226,6 +232,75 @@ export default function PrivacyPolicy() {
                 
                 <h2 className="text-2xl font-semibold mb-3 mt-6">10. お問い合わせ</h2>
                 <p>このプライバシーポリシーについてご質問やご懸念がある場合は、<Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">お問い合わせページ</Link>を通じてご連絡ください。</p>
+              </div>
+            )}
+            
+            {isEsLocale && (
+              <div>
+                <p>Bienvenido a fyimg.com (en adelante &quot;nosotros&quot; o &quot;este sitio web&quot;). Estamos comprometidos a proteger su privacidad y garantizar la seguridad de su información personal al usar nuestro sitio web. Esta Política de Privacidad explica cómo recolectamos, usamos, compartimos y protegemos su información.</p>
+                
+                <p className="text-gray-500 mb-6">Última actualización: 1 de enero de 2025</p>
+                
+                <h2 className="text-2xl font-semibold mb-3">1. Información que Recolectamos</h2>
+                <p>Podemos recolectar los siguientes tipos de información:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Información que usted proporciona activamente: Datos personales que proporciona al usar nuestros formularios de contacto, registrar cuentas o participar en encuestas, como nombre, dirección de email, etc.</li>
+                  <li>Información recolectada automáticamente: Cuando navega por nuestro sitio web, podemos recolectar automáticamente información a través de tecnologías como cookies, incluyendo dirección IP, tipo de navegador, sistema operativo, hábitos de navegación, etc.</li>
+                  <li>Imágenes subidas: Cuando utiliza nuestra función de búsqueda de imágenes y sube imágenes, podemos almacenar temporalmente estas imágenes para proporcionar servicios.</li>
+                </ul>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">2. Cómo Usamos su Información</h2>
+                <p>Usamos la información recolectada para:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Proporcionar, mantener y mejorar nuestros servicios</li>
+                  <li>Procesar sus consultas y solicitudes</li>
+                  <li>Enviar notificaciones importantes, como actualizaciones y cambios del servicio</li>
+                  <li>Analizar tráfico web y uso para mejorar la experiencia del usuario</li>
+                  <li>Prevenir fraude y abuso de nuestros servicios</li>
+                </ul>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">3. Cookies y Tecnologías Similares</h2>
+                <p>Este sitio web utiliza cookies y tecnologías similares para recolectar y almacenar información. Las cookies son pequeños archivos de texto almacenados en su navegador o dispositivo. Usamos cookies para:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Recordar sus configuraciones y preferencias</li>
+                  <li>Proporcionar experiencias de usuario personalizadas</li>
+                  <li>Recolectar estadísticas de uso</li>
+                </ul>
+                <p>Puede controlar o eliminar cookies cambiando la configuración de su navegador. Sin embargo, tenga en cuenta que hacerlo puede afectar ciertas funciones del sitio web.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">4. Compartir Información</h2>
+                <p>No vendemos ni alquilamos su información personal a terceros. Sin embargo, podemos compartir su información en las siguientes circunstancias:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Con su consentimiento explícito</li>
+                  <li>Con socios de servicio, como proveedores de almacenamiento en la nube</li>
+                  <li>En respuesta a requisitos legales, como órdenes judiciales o citaciones</li>
+                  <li>Para proteger nuestros derechos, propiedad o seguridad</li>
+                  <li>Durante reestructuración, fusión o adquisición de la empresa</li>
+                </ul>
+                <p>Transferencias internacionales de datos: Nuestros servidores pueden estar ubicados fuera de su país/región. Al usar nuestros servicios, usted consiente la transferencia de datos a estas regiones.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">5. Sus Derechos</h2>
+                <p>Usted tiene derecho a:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Solicitar acceso a sus datos personales que tenemos.</li>
+                  <li>Solicitar corrección o eliminación de sus datos (donde aplique).</li>
+                  <li>Dejar de usar nuestros servicios web en cualquier momento.</li>
+                </ul>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">6. Seguridad de Datos</h2>
+                <p>Implementamos medidas técnicas y organizacionales razonables para proteger sus datos personales del acceso, uso o divulgación no autorizados. Sin embargo, tenga en cuenta que la transmisión por Internet no es 100% segura, y no podemos garantizar la seguridad absoluta de la transmisión de información.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">7. Privacidad de Menores</h2>
+                <p>Este sitio web no está dirigido a niños menores de 13 años, y no recolectamos conscientemente datos personales de niños. Si cree que podemos haber recolectado datos personales de niños, contáctenos a través de nuestra página de contacto.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">8. Enlaces de Terceros</h2>
+                <p>Este sitio web puede contener enlaces a sitios web de terceros. Las políticas de privacidad de estos sitios web difieren de la nuestra. Recomendamos que lea las políticas de privacidad de estos sitios web, ya que no somos responsables de su contenido o prácticas de privacidad.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">9. Actualizaciones de Política</h2>
+                <p>Podemos actualizar esta Política de Privacidad de vez en cuando. Las políticas actualizadas se publicarán en esta página y, cuando corresponda, le notificaremos. Le recomendamos revisar esta política regularmente para entender cómo protegemos su información.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">10. Contáctanos</h2>
+                <p>Si tiene alguna pregunta o inquietud sobre esta Política de Privacidad, contáctenos a través de nuestra <Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">Página de Contacto</Link>.</p>
               </div>
             )}
           </div>

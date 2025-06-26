@@ -7,39 +7,45 @@ const calculatorTranslations = {
   lastPeriodLabel: {
     zh: "最後一次月經開始日",
     en: "First day of last period",
-    jp: "最後の月経開始日"
+    jp: "最後の月経開始日",
+    es: "Primer día del último período"
   },
   dueDate: {
     zh: "預估預產期",
     en: "Estimated Due Date",
-    jp: "推定予定日"
+    jp: "推定予定日",
+    es: "Fecha Estimada de Parto"
   },
   currentStatus: {
     zh: "目前懷孕進度",
     en: "Current Pregnancy Progress",
-    jp: "現在の妊娠進行状況"
+    jp: "現在の妊娠進行状況",
+    es: "Progreso Actual del Embarazo"
   },
   today: {
     zh: "今天",
     en: "Today",
-    jp: "今日"
+    jp: "今日",
+    es: "Hoy"
   },
   weeks: {
     zh: "週",
     en: "weeks",
-    jp: "週"
+    jp: "週",
+    es: "semanas"
   },
   days: {
     zh: "天",
     en: "days",
-    jp: "日"
+    jp: "日",
+    es: "días"
   }
 };
 
 export default function DueDateCalculator() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [lastPeriodDate, setLastPeriodDate] = useState<string>('');
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -52,7 +58,7 @@ export default function DueDateCalculator() {
 
   // 格式化日期為本地格式
   const formatLocalDate = useCallback((date: Date) => {
-    return date.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : 'en-US');
+    return date.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : locale === 'es' ? 'es-ES' : 'en-US');
   }, [locale]);
 
   // 計算懷孕週數
@@ -209,7 +215,8 @@ export default function DueDateCalculator() {
       const noDateText = {
         zh: "請先選擇最後一次月經日期",
         en: "Please select the first day of your last period",
-        jp: "最後の月経開始日を選択してください"
+        jp: "最後の月経開始日を選択してください",
+        es: "Por favor seleccione el primer día de su último período"
       };
       calendarEl.innerHTML = `<div class="col-span-7 text-center py-16">${noDateText[lang]}</div>`;
     } else {
@@ -219,6 +226,7 @@ export default function DueDateCalculator() {
     // 添加星期標題
     const weekDays = locale === 'en' ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : 
                     locale === 'jp' ? ['日', '月', '火', '水', '木', '金', '土'] : 
+                    locale === 'es' ? ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'] :
                     ['日', '一', '二', '三', '四', '五', '六'];
     
     weekDays.forEach(day => {
@@ -279,7 +287,7 @@ export default function DueDateCalculator() {
     const calendarMonthDisplay = document.getElementById('calendarMonthDisplay');
     if (calendarMonthDisplay) {
       calendarMonthDisplay.textContent = 
-        currentMonth.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : 'en-US', 
+        currentMonth.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : locale === 'es' ? 'es-ES' : 'en-US', 
         { year: 'numeric', month: 'long' });
     }
     

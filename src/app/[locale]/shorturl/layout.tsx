@@ -10,19 +10,22 @@ import {
 const titles = {
   zh: '短網址產生器 - 縮短網址工具',
   en: 'URL Shortener - Short Link Generator',
-  jp: 'URL短縮ツール - 短縮リンクジェネレーター'
+  jp: 'URL短縮ツール - 短縮リンクジェネレーター',
+  es: 'Acortador de URL - Generador de Enlaces Cortos'
 };
 
 const descriptions = {
   zh: '免費短網址產生器，快速將長網址縮短為簡潔易分享的短連結，支援自訂短網址、點擊統計與安全連結管理。',
   en: 'Free URL shortener to quickly convert long URLs into concise, shareable short links. Features custom URLs, click analytics, and secure link management.',
-  jp: '無料のURL短縮ツールで、長いURLを簡潔で共有しやすい短いリンクに素早く変換できます。カスタムURL、クリック分析、安全なリンク管理機能付き。'
+  jp: '無料のURL短縮ツールで、長いURLを簡潔で共有しやすい短いリンクに素早く変換できます。カスタムURL、クリック分析、安全なリンク管理機能付き。',
+  es: 'Acortador de URL gratuito para convertir rápidamente URLs largas en enlaces cortos concisos y fáciles de compartir. Incluye URLs personalizadas, análisis de clics y gestión segura de enlaces.'
 };
 
 const keywordsList = {
   zh: ['短網址', '縮短網址', '短連結產生器', 'URL縮短工具'],
   en: ['url shortener', 'short link', 'link shortener', 'short url generator'],
-  jp: ['URL短縮', '短縮リンク', 'リンク短縮ツール', 'URL短縮ジェネレーター']
+  jp: ['URL短縮', '短縮リンク', 'リンク短縮ツール', 'URL短縮ジェネレーター'],
+  es: ['acortador de url', 'enlace corto', 'acortador de enlaces', 'generador de url corta']
 };
 
 const faqsData = {
@@ -95,6 +98,32 @@ const faqsData = {
         text: '簡単です：1) 長いURLを入力フィールドに貼り付け、2) 「URL短縮」ボタンをクリック、3) 生成された短いURLをコピーして共有します。URLにhttp://またはhttps://が含まれていることを確認してください。'
       }
     }
+  ],
+  es: [
+    {
+      '@type': 'Question',
+      name: '¿Qué es un acortador de URL?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Un acortador de URL es un servicio que convierte URLs largas en enlaces cortos y fáciles de compartir, perfectos para redes sociales, campañas de marketing y aplicaciones de mensajería.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo uso la herramienta acortadora de URL?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Es simple: 1) Pega tu URL larga en el campo de entrada, 2) Haz clic en el botón "Acortar URL", 3) Copia la URL corta generada y compártela. Asegúrate de que tu URL incluya http:// o https://.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cuáles son los beneficios de las URLs cortas?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Las URLs cortas hacen que compartir sea más conveniente, reducen el conteo de caracteres, se ven más limpias en redes sociales, son más fáciles de recordar y escribir, y pueden proporcionar análisis de clics (próximamente).'
+      }
+    }
   ]
 };
 
@@ -103,7 +132,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 const imageUrl = getFullUrl('/images/og-image.png');
@@ -116,6 +146,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   const ogTitle = locale === 'zh' ? `短網址產生器` : 
                   locale === 'en' ? `URL Shortener` : 
+                  locale === 'es' ? `Acortador de URL` :
                   `URL短縮ツール`;
 
   return {
@@ -134,6 +165,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? '短網址產生器工具界面' : 
                locale === 'en' ? 'URL Shortener Tool Interface' :
+               locale === 'es' ? 'Interfaz de Herramienta Acortadora de URL' :
                'URL短縮ツールインターフェース',
           type: 'image/png',
         },
@@ -155,6 +187,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/shorturl'),
         'en': getFullUrl('/en/shorturl'),
         'ja': getFullUrl('/jp/shorturl'),
+        'es': getFullUrl('/es/shorturl'),
       },
     },
     
@@ -199,6 +232,7 @@ export default async function ShortUrlLayout({
     '/shorturl',
     locale === 'zh' ? '短網址產生器工具' :
     locale === 'en' ? 'URL Shortener Tool' :
+    locale === 'es' ? 'Herramienta Acortadora de URL' :
     'URL短縮ツール',
     description,
     'WebApplication',

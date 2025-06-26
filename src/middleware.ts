@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // 支援的語言列表
-const locales = ['zh', 'en', 'jp'];
+const locales = ['zh', 'en', 'jp', 'es'];
 const defaultLocale = 'zh';
 
 // 檢查路徑是否為靜態資源或特殊路徑

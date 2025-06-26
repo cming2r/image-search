@@ -193,6 +193,52 @@ const localeContents: Record<string, LocaleContent> = {
     },
     commitment: 'fyimgは、シンプルで使いやすく、実用的なオンラインツールを提供し、あなたの仕事と生活をより便利にすることに専念しています。私たちは継続的に最適化し、新機能を開発して、ユーザーに最高の体験を提供します。',
     contactSuggestion: '何か提案がありますか？お問い合わせください →'
+  },
+  'es': {
+    title: 'fyimg - Herramientas Online Gratuitas',
+    description: 'El sitio web fyimg ofrece una variedad de herramientas útiles gratuitas incluyendo búsqueda de imágenes, calculadora de fechas, calculadora de fecha de parto y sorteo de intercambio de regalos para ayudarte a mejorar la eficiencia en el trabajo y la vida.',
+    subtitle: 'Proporcionando diversas herramientas prácticas para hacer tu trabajo y vida más conveniente y eficiente',
+    keywords: 'buscar por imagen, calculadora de fechas, calculadora de fecha de parto, sorteo de intercambio de regalos, herramientas online',
+    homeTitle: 'fyimg | Herramientas Online Gratuitas',
+    homeSubtitle: 'Proporcionando diversas herramientas prácticas para hacer tu trabajo y vida más conveniente y eficiente',
+    breadcrumbName: 'Inicio',
+    cardImageSearch: {
+      title: 'Buscar por Imagen',
+      description: 'Busca con Google, Bing, Yandex y otros motores de búsqueda subiendo una imagen o ingresando una URL. Compatible con móviles e iPhone.',
+      startUsing: 'Comenzar a Usar'
+    },
+    cardDateCalculator: {
+      title: 'Calculadora de Fechas',
+      description: 'Calcula la diferencia entre dos fechas, días del calendario, y suma o resta días desde una fecha específica. Ideal para gestión de proyectos y planificación laboral.',
+      startUsing: 'Comenzar a Usar'
+    },
+    cardDueDateCalculator: {
+      title: 'Calculadora de Fecha de Parto',
+      description: 'Calcula la fecha de parto y semanas de embarazo basándose en la última menstruación. Proporciona consejos de cuidado prenatal para ayudar a las futuras madres durante el embarazo.',
+      startUsing: 'Comenzar a Usar'
+    },
+    cardGiftExchange: {
+      title: 'Sorteo de Intercambio de Regalos',
+      description: 'Ingresa una lista de participantes, asigna aleatoriamente receptores de regalos con un clic, permite excluir emparejamientos específicos. Ideal para empresas y reuniones de amigos.',
+      startUsing: 'Comenzar a Usar'
+    },
+    whyChoose: {
+      title: 'Por Qué Elegir las Herramientas fyimg',
+      free: {
+        title: 'Completamente Gratis',
+        description: 'Todas las herramientas son gratuitas sin pago ni registro requerido'
+      },
+      secure: {
+        title: 'Seguro y Sin Anuncios',
+        description: 'No almacena datos sensibles, sin rastreo, sin anuncios molestos'
+      },
+      mobile: {
+        title: 'Compatible con Móviles',
+        description: 'Todas las herramientas son perfectamente compatibles con teléfonos móviles y tablets'
+      }
+    },
+    commitment: 'fyimg se compromete a proporcionar herramientas online simples, fáciles de usar y prácticas para hacer tu trabajo y vida más conveniente. Continuamente optimizamos y desarrollamos nuevas funciones para brindar la mejor experiencia a los usuarios.',
+    contactSuggestion: '¿Tienes alguna sugerencia? Por favor contáctanos →'
   }
 };
 
@@ -203,7 +249,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const content = localeContents[locale] || localeContents.zh;
   
   // 設置 OpenGraph 語言格式
-  const ogLocale = locale === 'zh' ? 'zh_TW' : locale === 'jp' ? 'ja_JP' : 'en_US';
+  const ogLocale = locale === 'zh' ? 'zh_TW' : locale === 'jp' ? 'ja_JP' : locale === 'es' ? 'es_ES' : 'en_US';
   
   const imageUrl = getFullUrl('/og-image.png');
   
@@ -246,7 +292,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const content = localeContents[locale] || localeContents.zh;
   
   // 生成結構化數據
-  const language = locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja' : 'en';
+  const language = locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja' : locale === 'es' ? 'es' : 'en';
   const imageUrl = getFullUrl('/og-image.png');
   const { created, modified } = getPageDates('src/app/[locale]/page.tsx');
 

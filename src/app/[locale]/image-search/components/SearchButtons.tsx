@@ -3,6 +3,7 @@
 import { FC, useState, ReactElement } from 'react';
 import { useParams } from 'next/navigation';
 import { saveSearchRecord, getDeviceType } from '@/lib/supabase/imageSearch';
+import { track } from '@vercel/analytics';
 import Image from 'next/image';
 
 interface SearchButtonProps {
@@ -46,6 +47,13 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     try {
       // 獲取設備類型
       const deviceType = getDeviceType();
+      
+      // Vercel Analytics 追蹤
+      track('image_search_engine_click', {
+        search_engine: engineName,
+        device_type: deviceType,
+        locale: locale
+      });
       
       // 紀錄到Supabase
       saveSearchRecord({
@@ -169,8 +177,8 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
       <div className="mt-4">
         <p className={`${showWarning ? 'text-red-500 font-medium' : 'text-gray-500'} text-center mb-2`}>
           {showWarning 
-            ? (locale === 'zh' ? '!!請先輸入圖片網址或上傳圖片!!' : locale === 'jp' ? '!!最初に画像URLを入力するか画像をアップロードしてください!!' : '!!Please enter an image URL or upload an image first!!')
-            : (locale === 'zh' ? '請先輸入圖片網址或上傳圖片' : locale === 'jp' ? '最初に画像URLを入力するか画像をアップロードしてください' : 'Please enter an image URL or upload an image first')
+            ? (locale === 'zh' ? '!!請先輸入圖片網址或上傳圖片!!' : locale === 'jp' ? '!!最初に画像URLを入力するか画像をアップロードしてください!!' : locale === 'es' ? '!!Por favor ingresa una URL de imagen o sube una imagen primero!!' : '!!Please enter an image URL or upload an image first!!')
+            : (locale === 'zh' ? '請先輸入圖片網址或上傳圖片' : locale === 'jp' ? '最初に画像URLを入力するか画像をアップロードしてください' : locale === 'es' ? 'Por favor ingresa una URL de imagen o sube una imagen primero' : 'Please enter an image URL or upload an image first')
           }
         </p>
         <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
@@ -194,7 +202,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
   return (
     <div className="mt-4">
       <p className="text-gray-600 text-center mb-2">
-        {locale === 'zh' ? '選擇搜尋引擎進行圖片搜尋' : locale === 'jp' ? 'この画像を検索する検索エンジンを選択' : 'Choose a search engine to search for this image'}
+        {locale === 'zh' ? '選擇搜尋引擎進行圖片搜尋' : locale === 'jp' ? 'この画像を検索する検索エンジンを選択' : locale === 'es' ? 'Elige un motor de búsqueda para buscar esta imagen' : 'Choose a search engine to search for this image'}
       </p>
       <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
         {searchEngines.map((engine) => (
@@ -258,7 +266,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
             onClick={onReset}
             className="bg-gray-700 hover:bg-gray-400 text-white font-medium py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors"
           >
-            {locale === 'zh' ? '重置' : locale === 'jp' ? 'リセット' : 'Reset'}
+            {locale === 'zh' ? '重置' : locale === 'jp' ? 'リセット' : locale === 'es' ? 'Reiniciar' : 'Reset'}
           </button>
         </div>
       )}

@@ -9,7 +9,8 @@ const imageSearchContentTranslations = {
     title: {
       zh: "如何使用此工具？",
       en: "How to Use This Tool?",
-      jp: "このツールの使い方"
+      jp: "このツールの使い方",
+      es: "¿Cómo Usar Esta Herramienta?"
     },
     steps: {
       zh: [
@@ -29,24 +30,33 @@ const imageSearchContentTranslations = {
         "システムがアップロードされた画像を検索可能なURLに変換します",
         "各検索エンジンのボタンをクリックすると、対応するサービスに即座にジャンプします",
         "検索エンジンは提供された画像に基づいてウェブ上の類似コンテンツを検索します"
+      ],
+      es: [
+        "Ingresa la URL de una imagen o haz clic en 'Subir Imagen' para seleccionar una imagen local",
+        "El sistema convertirá tu imagen subida en una URL buscable",
+        "Haz clic en cualquier botón de motor de búsqueda para redirigir instantáneamente al servicio correspondiente",
+        "El motor de búsqueda encontrará contenido similar en línea basado en la imagen que proporciones"
       ]
     },
     tip: {
       zh: "小提示：",
       en: "Tip:",
-      jp: "ヒント："
+      jp: "ヒント：",
+      es: "Consejo:"
     },
     tipContent: {
       zh: "透過複製其他網站的圖片，可以直接用Ctrl + V 貼上在上傳圖片的頁面。",
       en: "You can directly paste images from other websites using Ctrl + V in the image upload section.",
-      jp: "他のウェブサイトから画像をコピーして、アップロード画面でCtrl + Vで直接貼り付けることができます。"
+      jp: "他のウェブサイトから画像をコピーして、アップロード画面でCtrl + Vで直接貼り付けることができます。",
+      es: "Puedes pegar directamente imágenes de otros sitios web usando Ctrl + V en la sección de subida de imagen."
     }
   },
   whatIs: {
     title: {
       zh: "什麼是以圖搜圖？",
       en: "What is Reverse Image Search?",
-      jp: "画像検索とは？"
+      jp: "画像検索とは？",
+      es: "¿Qué es la Búsqueda de Imagen Inversa?"
     },
     content: {
       zh: [
@@ -63,6 +73,11 @@ const imageSearchContentTranslations = {
         "画像検索（リバースイメージサーチとも呼ばれる）は、ユーザーが画像をアップロードまたは画像URLを提供することで、関連画像やその出典を検索できる現代の検索エンジンの重要な機能です。このツールはGoogle、Bing、Yandexなどの主要検索エンジンの画像検索機能を統合し、パソコン、スマートフォン、タブレットなどさまざまなデバイスでの使用をサポートしています。",
         "画像検索の実用的なシナリオには、画像の高解像度バージョンの検索、部分画像から完全なオリジナルの検索、同じ人物や物体の異なる写真の識別、類似シーンや素材の検索などがあります。デザイナー、研究者、コンテンツクリエイター、一般ユーザーにとって、これは非常に価値のあるツールです。",
         "当プラットフォームは画像検索プロセスを簡素化し、複数の検索エンジン間の切り替えを不要にします。一度画像をアップロードするかURLを入力するだけで、様々な検索サービスを便利に利用でき、検索効率を大幅に向上させます。"
+      ],
+      es: [
+        "La Búsqueda de Imagen Inversa es una función importante de los motores de búsqueda modernos que permite a los usuarios buscar imágenes relacionadas y sus fuentes subiendo una imagen o proporcionando una URL de imagen. Esta herramienta integra la funcionalidad de búsqueda de imagen inversa de Google, Bing, Yandex y otros motores de búsqueda principales, soportando el uso en varios dispositivos (incluyendo computadoras, teléfonos y tablets).",
+        "Los usos prácticos de la búsqueda de imagen inversa incluyen: encontrar versiones de mayor resolución de imágenes, localizar la imagen completa original a través de una imagen parcial, identificar diferentes fotos de la misma persona u objeto, y encontrar escenas o materiales similares. Para diseñadores, investigadores, creadores de contenido y usuarios en general, esta es una herramienta extremadamente valiosa.",
+        "Nuestra plataforma de integración simplifica el proceso de búsqueda de imagen inversa, eliminando la necesidad de cambiar entre múltiples motores de búsqueda. Con solo una subida de imagen o entrada de URL, puedes usar convenientemente varios servicios de búsqueda, mejorando significativamente la eficiencia de búsqueda."
       ]
     }
   },
@@ -70,13 +85,15 @@ const imageSearchContentTranslations = {
     title: {
       zh: "各大搜尋引擎特色",
       en: "Features of Major Search Engines",
-      jp: "主要検索エンジンの特徴"
+      jp: "主要検索エンジンの特徴",
+      es: "Características de los Principales Motores de Búsqueda"
     },
     google: {
       title: {
         zh: "Google Lens 圖片搜尋",
         en: "Google Lens Image Search",
-        jp: "Google Lens 画像検索"
+        jp: "Google Lens 画像検索",
+        es: "Búsqueda de Imágenes Google Lens"
       },
       content: {
         zh: [
@@ -93,6 +110,11 @@ const imageSearchContentTranslations = {
           "Google Lensは現在、世界で最も広く使用されている画像検索サービスであり、強力なAI視覚分析技術で知られています。世界の検索エンジン市場では、Googleは70%以上のシェアを持ち、モバイルデバイスでの検索普及率は85%に達し、世界規模での絶対的なリーダーシップを示しています。",
           "Googleの画像検索機能は、視覚的に類似した画像を見つけるだけでなく、画像内のオブジェクト、テキスト、ランドマークを識別し、ショッピングオプションまで提供します。その独自の強みは、非常に膨大な画像データベースと先進的な機械学習アルゴリズムにあり、画像の意味的内容を理解して高度に関連性の高い結果を返すことができます。",
           "クリエイターやデザイナー向けに、Googleはライセンスタイプに基づいて商用利用可能な無料画像を検索できる強力なフィルタリング機能も提供しています。その洗練されたフィルターシステムにより、ユーザーはサイズ、色、タイプ、時間など多次元で検索結果を正確にフィルタリングできます。"
+        ],
+        es: [
+          "Google Lens es actualmente el servicio de búsqueda de imágenes más ampliamente utilizado a nivel mundial, conocido por su poderosa tecnología de análisis visual con IA. En el mercado global de motores de búsqueda, Google tiene más del 70% de participación de mercado, con su tasa de penetración de búsqueda en dispositivos móviles alcanzando hasta el 85%, demostrando su posición de liderazgo absoluto a nivel mundial.",
+          "La funcionalidad de búsqueda de imágenes de Google no solo encuentra imágenes visualmente similares, sino que también identifica objetos, texto, puntos de referencia en las imágenes, e incluso proporciona opciones de compra. Su ventaja única radica en su extremadamente vasta base de datos de imágenes y algoritmos avanzados de aprendizaje automático que pueden entender el contenido semántico de las imágenes y devolver resultados altamente relevantes.",
+          "Para creadores y diseñadores, Google también ofrece potentes funciones de filtrado que permiten buscar imágenes comerciales gratuitas basadas en el tipo de licencia. Su sofisticado sistema de filtros permite a los usuarios filtrar con precisión los resultados de búsqueda por dimensiones, color, tipo y tiempo entre otros criterios multidimensionales."
         ]
       }
     },
@@ -100,7 +122,8 @@ const imageSearchContentTranslations = {
       title: {
         zh: "Microsoft Bing 圖片搜尋",
         en: "Microsoft Bing Image Search",
-        jp: "Microsoft Bing 画像検索"
+        jp: "Microsoft Bing 画像検索",
+        es: "Búsqueda de Imágenes de Microsoft Bing"
       },
       content: {
         zh: [
@@ -117,6 +140,11 @@ const imageSearchContentTranslations = {
           "Microsoft Bingは2009年に立ち上げられ、複数回のアップグレードと改良を経て、現在は世界第二位の検索エンジンとなっています。2020年、マイクロソフトはこれをMicrosoft Bing（マイクロソフトビング）に改名し、そのブランド認知度をさらに強化しました。",
           "Bingのビジュアルサーチ機能は独自の利点を持ち、特に高解像度画像の表示に優れています。高品質の視覚素材を求めるプロフェッショナルにとって、Bingは優れた検索体験と結果表示を提供します。",
           "Bing Image Searchはクリーンで直感的なユーザーインターフェースで知られ、サイズ、色、スタイル、レイアウトなどの豊富なフィルタリングオプションを提供します。その「関連検索」機能はユーザーが興味を持つかもしれない関連トピックをインテリジェントに推奨し、特徴的な「壁紙画像」カテゴリーはユーザーに豊富な高品質デスクトップ壁紙リソースを提供します。"
+        ],
+        es: [
+          "Microsoft Bing fue lanzado en 2009 y después de múltiples actualizaciones e iteraciones, se ha convertido en el segundo motor de búsqueda más grande del mundo. En 2020, Microsoft lo renombró como Microsoft Bing, fortaleciendo aún más el reconocimiento de su marca.",
+          "La función de búsqueda visual de Bing tiene ventajas únicas, destacando particularmente en la presentación de imágenes de alta resolución. Para profesionales que buscan materiales visuales de alta calidad, Bing proporciona una excelente experiencia de búsqueda y presentación de resultados.",
+          "Bing Image Search es conocido por su interfaz de usuario limpia e intuitiva, ofreciendo ricas opciones de filtrado incluyendo tamaño, color, estilo y diseño. Su función de \"Búsquedas Relacionadas\" recomienda inteligentemente temas relacionados que podrían interesar a los usuarios, mientras que la categoría destacada de \"Imágenes de Fondo de Pantalla\" proporciona a los usuarios una gran colección de recursos de fondos de escritorio de alta calidad."
         ]
       }
     },
@@ -124,7 +152,8 @@ const imageSearchContentTranslations = {
       title: {
         zh: "Yandex 圖片搜尋",
         en: "Yandex Image Search",
-        jp: "Yandex 画像検索"
+        jp: "Yandex 画像検索",
+        es: "Búsqueda de Imágenes de Yandex"
       },
       content: {
         zh: [
@@ -141,6 +170,11 @@ const imageSearchContentTranslations = {
           "Yandexはロシアと東ヨーロッパ地域最大の検索エンジンであり、その画像検索機能は世界的に高い評価を得ています。Yandexの画像認識技術は、異なるシーン、角度、光条件下で同じ物体や人物を識別することに特に優れており、特定の画像バリエーションを探すための理想的な選択肢となっています。",
           "Yandex画像検索の核心的な強みは、写真内の商標、ランドマーク、人物を正確に識別できる先進的な画像処理アルゴリズムにあります。画像が切り取り、回転、色調整などの修正を施されていても、Yandexは元の画像を効果的に追跡したり、視覚的に類似したコンテンツを見つけることができます。",
           "基本的な画像検索機能に加えて、Yandexは視覚コンテンツの分類や要素識別など、豊富な画像分析ツールを提供しています。画像ソースの追跡や視覚的に関連するコンテンツの発見のいずれにおいても、Yandexはユニークで包括的な検索結果を提供します。"
+        ],
+        es: [
+          "Yandex es el motor de búsqueda más grande de Rusia y Europa del Este, con su funcionalidad de búsqueda de imágenes gozando de una reputación mundial. La tecnología de reconocimiento de imágenes de Yandex es particularmente hábil para identificar los mismos objetos o personas bajo diferentes escenarios, ángulos y condiciones de iluminación, convirtiéndolo en una opción ideal para encontrar variantes específicas de imágenes.",
+          "La ventaja central de la búsqueda de imágenes de Yandex radica en sus algoritmos avanzados de procesamiento de imágenes, capaces de identificar con precisión marcas comerciales, puntos de referencia y personas en las fotos. Incluso si las imágenes han sido modificadas a través de recortes, rotación o ajustes de color, Yandex aún puede rastrear efectivamente de vuelta a la imagen original o encontrar contenido visualmente similar.",
+          "Más allá de la funcionalidad básica de búsqueda de imagen inversa, Yandex ofrece ricas herramientas de análisis de imágenes, incluyendo clasificación de contenido visual e identificación de elementos. Ya sea rastreando fuentes de imágenes o descubriendo contenido visualmente relacionado, Yandex proporciona resultados de búsqueda únicos y comprensivos."
         ]
       }
     },
@@ -148,7 +182,8 @@ const imageSearchContentTranslations = {
       title: {
         zh: "SauceNAO 圖片搜尋",
         en: "SauceNAO Image Search",
-        jp: "SauceNAO 画像検索"
+        jp: "SauceNAO 画像検索",
+        es: "Búsqueda de Imágenes SauceNAO"
       },
       content: {
         zh: [
@@ -162,6 +197,10 @@ const imageSearchContentTranslations = {
         jp: [
           "SauceNAOはアニメ、漫画、イラストの分野で最もプロフェッショナルな画像検索エンジンであり、二次元コンテンツ愛好家に比類ない検索体験を提供します。その専門的なデータベースはTwitter、Pixiv、niconicoなどの主要なアニメアートプラットフォームをカバーし、画像ソースの迅速かつ正確な特定を可能にします。",
           "SauceNAOを使用すると、ユーザーは元の画像とその作者情報を見つけるだけでなく、関連コレクション、漫画シリーズ、ゲーム出典も取得できます。アニメアート研究、同人創作の参考、または純粋な愛好家の探索のために、SauceNAOはプロフェッショナルで包括的な検索ソリューションを提供します。"
+        ],
+        es: [
+          "SauceNAO es el motor de búsqueda de imágenes más profesional en los campos de anime, manga e ilustraciones, proporcionando a los entusiastas del contenido de anime una experiencia de búsqueda sin igual. Su base de datos especializada cubre las principales plataformas de arte anime como Twitter, Pixiv y niconico, permitiendo la localización rápida y precisa de fuentes de imágenes.",
+          "Usando SauceNAO, los usuarios no solo pueden encontrar las imágenes originales y la información de sus creadores, sino que también pueden obtener colecciones relacionadas, series de manga y orígenes de juegos. Para investigación de arte anime, referencias de creación de fans o exploración pura de entusiastas, SauceNAO proporciona una solución de búsqueda profesional y completa."
         ]
       }
     },
@@ -169,7 +208,8 @@ const imageSearchContentTranslations = {
       title: {
         zh: "trace.moe 動畫場景搜尋",
         en: "trace.moe Anime Scene Search",
-        jp: "trace.moe アニメシーン検索"
+        jp: "trace.moe アニメシーン検索",
+        es: "Búsqueda de Escenas de Anime trace.moe"
       },
       content: {
         zh: [
@@ -183,6 +223,10 @@ const imageSearchContentTranslations = {
         jp: [
           "trace.moeはアニメシーンに特化した逆画像検索エンジンで、作品名、具体的なエピソード、タイムスタンプを含むアニメスクリーンショットのソースを正確に識別できます。このサービスは高度な画像認識技術を使用して、アニメフレームの特徴を分析し、膨大なアニメデータベースと照合します。",
           "trace.moeを使用することで、ユーザーはアニメスクリーンショットの正確なソースを素早く見つけることができます。クラシックなシーンを再体験したい場合や、エモートやミームの元のソースを見つけたい場合に便利です。システムは正確な作品情報を提供するだけでなく、特定のエピソードとタイムスタンプまで特定し、ユーザーがシーンを直接見つけられるようにします。アニメ愛好家、コンテンツクリエイター、研究者にとって、これは極めて実用的なツールです。"
+        ],
+        es: [
+          "trace.moe es un motor de búsqueda inversa específicamente diseñado para escenas de anime, capaz de identificar con precisión la fuente de capturas de pantalla de anime, incluyendo el nombre de la obra, episodio específico y marca de tiempo. Este servicio utiliza tecnología avanzada de reconocimiento de imágenes para analizar las características de los fotogramas de anime y compararlos con una vasta base de datos de anime.",
+          "Usando trace.moe, los usuarios pueden encontrar rápidamente la fuente exacta de capturas de pantalla de anime, ya sea que quieran revivir una escena clásica o encontrar la fuente original de emotes o memes. El sistema no solo proporciona información precisa de la obra, sino que también señala el episodio específico y marca de tiempo, permitiendo a los usuarios localizar directamente la escena. Para entusiastas del anime, creadores de contenido e investigadores, esta es una herramienta extremadamente práctica."
         ]
       }
     },
@@ -190,7 +234,8 @@ const imageSearchContentTranslations = {
       title: {
         zh: "TinEye（已移除）",
         en: "TinEye (Removed)",
-        jp: "TinEye（削除済み）"
+        jp: "TinEye（削除済み）",
+        es: "TinEye (Eliminado)"
       },
       content: {
         zh: [
@@ -201,12 +246,16 @@ const imageSearchContentTranslations = {
         ],
         jp: [
           "TinEyeは正確な画像マッチングに焦点を当てた検索エンジンであり、視覚的に類似した結果を提供するだけでなく、画像の完全一致を見つける能力がその独自性です。これにより、オンラインでの画像使用状況の追跡、画像が最初に登場した時期の特定、高解像度バージョンの発見、画像の独創性の検証に理想的なツールとなっています。"
+        ],
+        es: [
+          "TinEye es un motor de búsqueda enfocado en el emparejamiento preciso de imágenes, con su singularidad siendo su capacidad de encontrar coincidencias exactas para imágenes en lugar de solo proporcionar resultados visualmente similares. Esto lo convierte en una herramienta ideal para rastrear el uso de imágenes en línea, determinar cuándo apareció una imagen por primera vez, encontrar versiones de alta resolución y verificar la originalidad de la imagen."
         ]
       },
       note: {
         zh: "註：經測試後發現TinEye搜尋功能不穩定，且結果不如其他引擎，因此我們已將其從搜尋選項中移除。我們持續評估各搜尋引擎的表現，以提供最佳使用者體驗。",
         en: "Note: After testing, we found TinEye's search function to be unstable and its result quality inferior to other engines, so we have removed it from our search options. We continuously evaluate the performance of various search engines to provide the best user experience.",
-        jp: "注：テスト後、TinEyeの検索機能が不安定であり、結果の品質が他のエンジンより劣ることが判明したため、検索オプションから削除しました。最高のユーザー体験を提供するため、様々な検索エンジンのパフォーマンスを継続的に評価しています。"
+        jp: "注：テスト後、TinEyeの検索機能が不安定であり、結果の品質が他のエンジンより劣ることが判明したため、検索オプションから削除しました。最高のユーザー体験を提供するため、様々な検索エンジンのパフォーマンスを継続的に評価しています。",
+        es: "Nota: Después de las pruebas, encontramos que la función de búsqueda de TinEye es inestable y su calidad de resultados inferior a otros motores, por lo que lo hemos eliminado de nuestras opciones de búsqueda. Evaluamos continuamente el rendimiento de varios motores de búsqueda para proporcionar la mejor experiencia de usuario."
       }
     }
   },
@@ -214,7 +263,8 @@ const imageSearchContentTranslations = {
     title: {
       zh: "以圖搜圖常見問題",
       en: "Frequently Asked Questions About Reverse Image Search",
-      jp: "画像検索についてよくある質問"
+      jp: "画像検索についてよくある質問",
+      es: "Preguntas Frecuentes sobre Búsqueda de Imagen Inversa"
     },
     questions: {
       zh: [
@@ -282,6 +332,28 @@ const imageSearchContentTranslations = {
           question: "アップロードされた画像はどのように処理されますか？保存されますか？",
           answer: "ユーザーのプライバシーを非常に重視しています。画像をアップロードすると、システムは検索可能なURLを生成するために一時的に保存しますが、すべての画像データは24時間以内に自動的に削除されます。お客様の画像を永続的に保存したり、他の目的に使用したりすることはありません。アップロードされた画像は検索サービスの提供にのみ使用され、生成されたURLを通じてのみアクセスできます。"
         }
+      ],
+      es: [
+        {
+          question: "¿Por qué los resultados de búsqueda a veces son inexactos?",
+          answer: "La precisión de la búsqueda de imagen inversa depende de varios factores, incluyendo la calidad de la imagen, la cobertura de la base de datos del motor de búsqueda y la singularidad de la imagen. Si tu imagen tiene baja resolución, ha sido recortada o modificada, o es un tipo de imagen muy común (como cielo azul, pasto, etc.), la precisión de búsqueda puede disminuir. Para mejores resultados, recomendamos usar imágenes originales claras y completas, y probar múltiples motores de búsqueda para comparación, ya que diferentes motores tienen diferentes algoritmos y bases de datos."
+        },
+        {
+          question: "¿Cómo uso la búsqueda de imagen inversa en móvil?",
+          answer: "Nuestra herramienta soporta completamente dispositivos móviles. En tu teléfono, puedes tocar 'Subir Imagen' para seleccionar una foto de tu galería o tomar una nueva foto. Para dispositivos iOS, también puedes compartir imágenes directamente desde la app de Fotos a nuestro sitio web. Los usuarios de Android pueden mantener presionada una imagen y elegir compartirla a un navegador para abrir nuestra herramienta. Además, si has copiado una imagen a tu portapapeles, puedes mantener presionado directamente en el área de subida y seleccionar 'Pegar'."
+        },
+        {
+          question: "¿Cómo elijo el motor de búsqueda más adecuado?",
+          answer: "Diferentes motores de búsqueda tienen sus especialidades: Google Lens es bueno para identificar objetos, productos y puntos de referencia; Bing sobresale encontrando imágenes de alta resolución y fondos de pantalla; Yandex funciona excepcionalmente bien identificando rostros y rastreando imágenes modificadas; SauceNAO se especializa en anime, manga e ilustraciones. Recomendamos elegir motores basados en tus necesidades específicas o usar múltiples motores simultáneamente para obtener los resultados más comprensivos. Para búsquedas importantes, recomendamos usar al menos Google y Yandex para comparación."
+        },
+        {
+          question: "¿Hay riesgos legales al usar búsqueda de imagen inversa?",
+          answer: "Los usuarios deben ser conscientes de cómo y por qué usan esta herramienta. Buscar imágenes con derechos de autor para referencia personal e investigación típicamente cae bajo uso justo. Sin embargo, si planeas usar imágenes encontradas comercialmente, por favor asegúrate de obtener las licencias apropiadas o elegir imágenes libres de derechos de autor. Además, por favor respeta la privacidad de otros y evita usar esta herramienta para invadir la privacidad de otros o violar leyes locales. Nuestra herramienta solo proporciona servicios de búsqueda, y los usuarios son responsables de asegurar que su uso cumpla con las leyes y regulaciones relevantes."
+        },
+        {
+          question: "¿Cómo se procesan las imágenes subidas? ¿Se guardan?",
+          answer: "Tomamos la privacidad del usuario muy en serio. Cuando subes una imagen, el sistema la almacena temporalmente para generar una URL buscable, pero todos los datos de imagen se eliminan automáticamente dentro de 24 horas. No almacenamos permanentemente tus imágenes ni las usamos para ningún otro propósito. Las imágenes subidas solo se usan para proporcionar servicios de búsqueda, y solo tú puedes acceder a ellas a través de la URL generada."
+        }
       ]
     }
   },
@@ -289,79 +361,92 @@ const imageSearchContentTranslations = {
     title: {
       zh: "為什麼選擇我們的以圖搜圖工具？",
       en: "Why Choose Our Reverse Image Search Tool?",
-      jp: "なぜ当画像検索ツールを選ぶのか？"
+      jp: "なぜ当画像検索ツールを選ぶのか？",
+      es: "¿Por Qué Elegir Nuestra Herramienta de Búsqueda de Imagen Inversa?"
     },
     features: {
       multiEngine: {
         title: {
           zh: "多引擎整合",
           en: "Multi-Engine Integration",
-          jp: "マルチエンジン統合"
+          jp: "マルチエンジン統合",
+          es: "Integración Multi-Motor"
         },
         content: {
           zh: "一站式訪問Google、Bing、Yandex和SauceNAO等主流搜尋引擎，無需切換網站，節省時間和精力。",
           en: "One-stop access to mainstream search engines like Google, Bing, Yandex, and SauceNAO without switching websites, saving time and effort.",
-          jp: "Google、Bing、Yandex、SauceNAOなどの主流検索エンジンにウェブサイトを切り替えることなくワンストップでアクセスでき、時間と労力を節約できます。"
+          jp: "Google、Bing、Yandex、SauceNAOなどの主流検索エンジンにウェブサイトを切り替えることなくワンストップでアクセスでき、時間と労力を節約できます。",
+          es: "Acceso integral a motores de búsqueda principales como Google, Bing, Yandex y SauceNAO sin cambiar de sitios web, ahorrando tiempo y esfuerzo."
         }
       },
       free: {
         title: {
           zh: "完全免費",
           en: "Completely Free",
-          jp: "完全無料"
+          jp: "完全無料",
+          es: "Completamente Gratis"
         },
         content: {
           zh: "所有功能均可免費使用，無隱藏費用，無需註冊帳號，也不顯示任何廣告，提供純淨的搜尋體驗。",
           en: "All features are free to use with no hidden costs, no account registration required, and no advertisements displayed, providing a pure search experience.",
-          jp: "すべての機能は隠れたコストなしで無料で使用でき、アカウント登録は不要で、広告も表示されないため、純粋な検索体験を提供します。"
+          jp: "すべての機能は隠れたコストなしで無料で使用でき、アカウント登録は不要で、広告も表示されないため、純粋な検索体験を提供します。",
+          es: "Todas las funciones son gratuitas sin costos ocultos, no requieren registro de cuenta, y no muestran anuncios, proporcionando una experiencia de búsqueda pura."
         }
       },
       crossPlatform: {
         title: {
           zh: "跨平台支援",
           en: "Cross-Platform Support",
-          jp: "クロスプラットフォームサポート"
+          jp: "クロスプラットフォームサポート",
+          es: "Soporte Multiplataforma"
         },
         content: {
           zh: "完美支援電腦、手機和平板，實現隨時隨地搜圖，且具有針對行動裝置優化的響應式介面設計。",
           en: "Perfect support for computers, phones, and tablets, enabling image searches anytime, anywhere, with a responsive interface optimized for mobile devices.",
-          jp: "パソコン、スマートフォン、タブレットを完璧にサポートし、いつでもどこでも画像検索が可能で、モバイルデバイス向けに最適化されたレスポンシブインターフェースを備えています。"
+          jp: "パソコン、スマートフォン、タブレットを完璧にサポートし、いつでもどこでも画像検索が可能で、モバイルデバイス向けに最適化されたレスポンシブインターフェースを備えています。",
+          es: "Soporte perfecto para computadoras, teléfonos y tablets, permitiendo búsquedas de imágenes en cualquier momento y lugar, con una interfaz responsive optimizada para dispositivos móviles."
         }
       },
       easyToUse: {
         title: {
           zh: "便捷操作",
           en: "Convenient Operation",
-          jp: "便利な操作"
+          jp: "便利な操作",
+          es: "Operación Conveniente"
         },
         content: {
           zh: "支持URL輸入、本地上傳和剪貼板直接貼圖，操作簡單直觀，幾秒鐘內即可完成搜尋過程。",
           en: "Supports URL input, local uploads, and direct clipboard pasting. Simple and intuitive operation completes the search process in seconds.",
-          jp: "URL入力、ローカルアップロード、クリップボードからの直接貼り付けをサポート。シンプルで直感的な操作で数秒で検索プロセスを完了します。"
+          jp: "URL入力、ローカルアップロード、クリップボードからの直接貼り付けをサポート。シンプルで直感的な操作で数秒で検索プロセスを完了します。",
+          es: "Soporta entrada de URL, subidas locales y pegado directo del portapapeles. Operación simple e intuitiva completa el proceso de búsqueda en segundos."
         }
       },
       privacy: {
         title: {
           zh: "隱私保護",
           en: "Privacy Protection",
-          jp: "プライバシー保護"
+          jp: "プライバシー保護",
+          es: "Protección de Privacidad"
         },
         content: {
           zh: "圖片僅臨時儲存用於生成可搜尋URL，24小時內自動刪除，從不用於其他用途或分享給第三方。",
           en: "Images are only temporarily stored to generate searchable URLs and automatically deleted within 24 hours, never used for other purposes or shared with third parties.",
-          jp: "画像は検索可能なURLを生成するためだけに一時的に保存され、24時間以内に自動的に削除されます。他の目的に使用されたり、第三者と共有されることはありません。"
+          jp: "画像は検索可能なURLを生成するためだけに一時的に保存され、24時間以内に自動的に削除されます。他の目的に使用されたり、第三者と共有されることはありません。",
+          es: "Las imágenes solo se almacenan temporalmente para generar URLs buscables y se eliminan automáticamente dentro de 24 horas, nunca se usan para otros propósitos ni se comparten con terceros."
         }
       },
       clean: {
         title: {
           zh: "簡潔無干擾",
           en: "Clean and Distraction-Free",
-          jp: "クリーンで邪魔のない"
+          jp: "クリーンで邪魔のない",
+          es: "Limpio y Sin Distracciones"
         },
         content: {
           zh: "清爽簡潔的介面設計，沒有干擾使用者的彈窗和提示，聚焦於搜尋功能本身，提供專業高效的使用者體驗。",
           en: "Clean, simple interface design without distracting pop-ups and prompts, focusing on search functionality and providing a professional, efficient user experience.",
-          jp: "クリーンでシンプルなインターフェースデザインで、邪魔なポップアップやプロンプトがなく、検索機能に焦点を当て、プロフェッショナルで効率的なユーザー体験を提供します。"
+          jp: "クリーンでシンプルなインターフェースデザインで、邪魔なポップアップやプロンプトがなく、検索機能に焦点を当て、プロフェッショナルで効率的なユーザー体験を提供します。",
+          es: "Diseño de interfaz limpio y simple sin ventanas emergentes y avisos que distraigan, enfocándose en la funcionalidad de búsqueda y proporcionando una experiencia de usuario profesional y eficiente."
         }
       }
     },
@@ -369,19 +454,21 @@ const imageSearchContentTranslations = {
       title: {
         zh: "立即體驗最全面的以圖搜圖工具",
         en: "Experience the most comprehensive reverse image search tool now",
-        jp: "今すぐ最も包括的な画像検索ツールを体験"
+        jp: "今すぐ最も包括的な画像検索ツールを体験",
+        es: "Experimenta ahora la herramienta de búsqueda de imagen inversa más completa"
       },
       subtitle: {
         zh: "簡單上傳或輸入URL，開啟多引擎圖像搜尋",
         en: "Simply upload or enter a URL to start multi-engine intelligent image search",
-        jp: "シンプルにアップロードするかURLを入力して、マルチエンジンインテリジェント画像検索を開始"
+        jp: "シンプルにアップロードするかURLを入力して、マルチエンジンインテリジェント画像検索を開始",
+        es: "Simplemente sube o ingresa una URL para comenzar la búsqueda inteligente de imagen multi-motor"
       }
     }
   }
 };
 
 export default function ArticleContent({ locale }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
   return (
     <>

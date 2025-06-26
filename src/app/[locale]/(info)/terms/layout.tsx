@@ -5,13 +5,15 @@ import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/l
 const titles = {
   zh: '使用條款',
   en: 'Terms of Service',
-  jp: '利用規約'
+  jp: '利用規約',
+  es: 'Términos de Servicio'
 };
 
 const descriptions = {
   zh: '使用 fyimg 網站及其服務前，請閱讀我們的使用條款和條件。',
   en: 'Please read our terms and conditions before using the fyimg website and its services.',
-  jp: 'fyimgウェブサイトとそのサービスを使用する前に、利用規約をお読みください。'
+  jp: 'fyimgウェブサイトとそのサービスを使用する前に、利用規約をお読みください。',
+  es: 'Por favor lea nuestros términos y condiciones antes de usar el sitio web de fyimg y sus servicios.'
 };
 
 // 預覽圖片
@@ -40,7 +42,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? 'fyimg使用條款' : 
                locale === 'en' ? 'fyimg Terms of Service' : 
-               'fyimg利用規約',
+               locale === 'jp' ? 'fyimg利用規約' :
+               locale === 'es' ? 'fyimg Términos de Servicio' : 'fyimg Terms of Service',
           type: 'image/png',
         },
       ],
@@ -63,13 +66,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/terms'),
         'en': getFullUrl('/en/terms'),
         'ja': getFullUrl('/jp/terms'),
+        'es': getFullUrl('/es/terms'),
       },
     },
     
     // 關鍵字、作者及發布者信息
     keywords: locale === 'zh' ? '使用條款, 服務條款, fyimg, 用戶條款, 網站規範' : 
               locale === 'en' ? 'terms of service, terms and conditions, fyimg, user terms, website rules' :
-              '利用規約, サービス条件, fyimg, ユーザー条件, ウェブサイトルール',
+              locale === 'jp' ? '利用規約, サービス条件, fyimg, ユーザー条件, ウェブサイトルール' :
+              locale === 'es' ? 'términos de servicio, términos y condiciones, fyimg, términos de usuario, reglas del sitio web' :
+              'terms of service, terms and conditions, fyimg, user terms, website rules',
     authors: [{ name: 'fyimg開發團隊' }],
     creator: 'fyimg開發團隊',
     publisher: 'fyimg',

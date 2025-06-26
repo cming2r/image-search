@@ -5,13 +5,15 @@ import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/l
 const titles = {
   zh: '聯絡我們',
   en: 'Contact Us',
-  jp: 'お問い合わせ'
+  jp: 'お問い合わせ',
+  es: 'Contáctanos'
 };
 
 const descriptions = {
   zh: '有任何問題、建議或回饋嗎？請與我們聯絡，我們會盡快回覆您。',
   en: 'Have questions, suggestions, or feedback? Please contact us, and we will get back to you as soon as possible.',
-  jp: 'ご質問、ご提案、またはフィードバックがありますか？お問い合わせください。できるだけ早くご返信いたします。'
+  jp: 'ご質問、ご提案、またはフィードバックがありますか？お問い合わせください。できるだけ早くご返信いたします。',
+  es: '¿Tiene preguntas, sugerencias o comentarios? Contáctenos y le responderemos lo antes posible.'
 };
 
 // 預覽圖片
@@ -40,7 +42,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? 'fyimg聯絡我們' : 
                locale === 'en' ? 'fyimg Contact Us' : 
-               'fyimgお問い合わせ',
+               locale === 'jp' ? 'fyimgお問い合わせ' :
+               locale === 'es' ? 'fyimg Contáctanos' : 'fyimg Contact Us',
           type: 'image/png',
         },
       ],
@@ -63,13 +66,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/contact'),
         'en': getFullUrl('/en/contact'),
         'ja': getFullUrl('/jp/contact'),
+        'es': getFullUrl('/es/contact'),
       },
     },
     
     // 關鍵字、作者及發布者信息
     keywords: locale === 'zh' ? '聯絡我們, 客戶服務, 回饋, 意見反饋, 問題諮詢' : 
               locale === 'en' ? 'contact us, customer service, feedback, inquiry, support' :
-              'お問い合わせ, カスタマーサービス, フィードバック, お問い合わせフォーム, サポート',
+              locale === 'jp' ? 'お問い合わせ, カスタマーサービス, フィードバック, お問い合わせフォーム, サポート' :
+              locale === 'es' ? 'contáctanos, servicio al cliente, comentarios, consulta, soporte' :
+              'contact us, customer service, feedback, inquiry, support',
     authors: [{ name: 'fyimg開發團隊' }],
     creator: 'fyimg開發團隊',
     publisher: 'fyimg',

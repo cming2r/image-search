@@ -11,7 +11,7 @@ import { metaTranslations } from './components/meta-translations';
 export default function DueDatePage() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [currentWeeks, setCurrentWeeks] = useState<number>(4);
   

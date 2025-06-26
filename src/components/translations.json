@@ -73,5 +73,30 @@
         "privacy": "プライバシーポリシー"
       }
     }
+  },
+  "es": {
+    "header": {
+      "home": "Inicio",
+      "tools": "Herramientas en Línea",
+      "imageSearch": "Buscar por Imagen",
+      "calculator": "Calculadora de Fechas",
+      "dueDate": "Calculadora de Fecha de Parto",
+      "giftExchange": "Sorteo de Intercambio de Regalos",
+      "about": "Acerca de",
+      "contact": "Contáctanos",
+      "terms": "Términos de Uso",
+      "privacy": "Política de Privacidad",
+      "admin": "Panel de Administración",
+      "logout": "Cerrar Sesión",
+      "urlShortener": "Servicio de Acortador de URL"
+    },
+    "footer": {
+      "disclaimer": "Esta herramienta es solo para uso educativo y personal. Por favor, respeta los derechos de autor y cumple con los términos de uso de cada motor de búsqueda. Este sitio web no almacena ningún registro de búsqueda de imágenes, solo proporciona funcionalidad de búsqueda. Los servicios de búsqueda de imágenes son proporcionados por motores de búsqueda de terceros como Google, Bing, Yandex, etc.",
+      "links": {
+        "contact": "Contáctanos",
+        "terms": "Términos de Uso",
+        "privacy": "Política de Privacidad"
+      }
+    }
   }
 }

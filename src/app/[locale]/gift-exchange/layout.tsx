@@ -12,7 +12,8 @@ import { giftExchangeTranslations } from './components/meta-translations';
 const keywordsList = {
   zh: ['交換禮物', '抽籤', '輪盤', '秘密聖誕老人', '團隊活動'],
   en: ['gift exchange', 'drawing', 'wheel', 'secret santa', 'team event'],
-  jp: ['ギフト交換', '抽選', 'ホイール', 'シークレットサンタ', 'チームイベント']
+  jp: ['ギフト交換', '抽選', 'ホイール', 'シークレットサンタ', 'チームイベント'],
+  es: ['intercambio de regalos', 'sorteo', 'ruleta', 'amigo secreto', 'evento de equipo']
 };
 
 // 多語言FAQ數據
@@ -118,6 +119,40 @@ const faqsData = {
         text: 'はい、当社のシステムは完全にクロスプラットフォーム互換です。デスクトップコンピュータでイベントを作成し、その後スマートフォンやタブレットで続行できます。すべての参加者は共有リンクのみで、ウェブブラウザを備えた任意のデバイスでイベントを表示・参加できます。この柔軟性は、リモートまたはハイブリッドワーク環境でのチームアクティビティ、または家族や友人間の長距離コミュニケーションに特に適しています。'
       }
     }
+  ],
+  es: [
+    {
+      '@type': 'Question',
+      name: '¿Cómo se asegura la equidad de los resultados de la ruleta?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Nuestra ruleta utiliza el algoritmo de barajado Fisher-Yates para asegurar que cada resultado de giro sea completamente aleatorio e impredecible. El efecto de animación de la ruleta no solo añade diversión sino que también permite a todos los participantes presenciar la transparencia del proceso de sorteo, evitando cualquier duda. El sistema también soporta la opción "Aleatorizar orden de participantes" para mejorar aún más la equidad.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo establecer y gestionar los rangos de precios de los regalos?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Aunque el sistema en sí no establece límites de precio directamente, se recomienda comunicarse con los participantes al crear un evento y llegar a un consenso sobre el rango de presupuesto. Una práctica común es acordar un rango de precios adecuado para todos (por ejemplo, $20 o $50) antes de comenzar. Esto asegura que todos los regalos tengan un valor similar, evita situaciones incómodas y hace que la experiencia de intercambio sea más justa y agradable.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo se guardan y comparten los resultados del sorteo?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Todos los resultados del sorteo se asocian automáticamente con su código de evento y se guardan temporalmente. Después de completar el evento, puede ver la lista completa de emparejamientos en la página de resultados. El sistema también proporciona una función de compartir conveniente: solo necesita hacer clic en el botón de compartir para enviar el enlace del evento a todos los participantes. Todos los datos se limpiarán automáticamente después de un período tras el final del evento, asegurando su privacidad y seguridad.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Puedo usar el mismo evento en diferentes dispositivos?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sí, nuestro sistema es completamente compatible entre plataformas. Puede crear un evento en una computadora de escritorio y luego continuar en un teléfono o tableta. Todos los participantes solo necesitan el enlace compartido para ver y participar en el evento en cualquier dispositivo con un navegador web. Esta flexibilidad es particularmente adecuada para actividades de equipo en entornos de trabajo remoto o híbrido, o para comunicación a larga distancia entre familiares y amigos.'
+      }
+    }
   ]
 };
 
@@ -128,7 +163,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 // 社交媒體分享圖片
@@ -144,7 +180,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'zh' ? `交換禮物抽籤` : 
                 locale === 'en' ? `Gift Exchange Draw` : 
-                `ギフト交換抽選`;
+                locale === 'jp' ? `ギフト交換抽選` :
+                locale === 'es' ? `Sorteo de Intercambio de Regalos` : `Gift Exchange Draw`;
 
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -163,7 +200,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? '交換禮物抽籤工具界面' : 
                locale === 'en' ? 'Gift Exchange Draw Tool Interface' :
-               'ギフト交換抽選ツールインターフェース',
+               locale === 'jp' ? 'ギフト交換抽選ツールインターフェース' :
+               locale === 'es' ? 'Interfaz de Herramienta de Sorteo de Intercambio de Regalos' : 'Gift Exchange Draw Tool Interface',
           type: 'image/png',
         },
       ],
@@ -186,6 +224,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/gift-exchange'),
         'en': getFullUrl('/en/gift-exchange'),
         'ja': getFullUrl('/jp/gift-exchange'),
+        'es': getFullUrl('/es/gift-exchange'),
       },
     },
     
@@ -244,7 +283,8 @@ export default async function GiftExchangeLayout({
     '/gift-exchange',
     locale === 'zh' ? '交換禮物轉盤工具' :
     locale === 'en' ? 'Gift Exchange Wheel Tool' :
-    'ギフト交換ホイールツール',
+    locale === 'jp' ? 'ギフト交換ホイールツール' :
+    locale === 'es' ? 'Herramienta de Ruleta de Intercambio de Regalos' : 'Gift Exchange Wheel Tool',
     description,
     'SocialApplication',
     '4.9',           // 評分值

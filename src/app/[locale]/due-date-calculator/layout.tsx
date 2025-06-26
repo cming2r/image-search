@@ -12,7 +12,8 @@ import { metaTranslations } from './components/meta-translations';
 const keywordsList = {
   zh: ['預產期計算', '懷孕週數', '生產日期', '孕期追蹤'],
   en: ['due date calculator', 'pregnancy weeks', 'delivery date', 'pregnancy tracker'],
-  jp: ['出産予定日計算', '妊娠週数', '分娩日', '妊娠追跡']
+  jp: ['出産予定日計算', '妊娠週数', '分娩日', '妊娠追跡'],
+  es: ['calculadora de fecha de parto', 'semanas de embarazo', 'fecha de parto', 'seguimiento del embarazo']
 };
 
 // 多語言FAQ數據
@@ -118,6 +119,40 @@ const faqsData = {
         text: '米国女性健康局によると、通常の産前検診の推奨頻度は次のとおりです：4週から28週の間は月に1回、28週から36週の間は月に2回、36週から出産までは週に1回。ハイリスク妊娠の女性はより頻繁な産前ケアと監視が必要な場合があります。'
       }
     }
+  ],
+  es: [
+    {
+      '@type': 'Question',
+      name: '¿Cómo se calcula la fecha de parto?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'El cálculo de la fecha de parto típicamente utiliza la regla de Naegele, donde se toma el primer día de su último período menstrual, se añade un año, se restan tres meses y se añaden siete días. Por ejemplo, si el primer día de su último período fue el 1 de junio, su fecha de parto sería el 8 de marzo del año siguiente. Esto equivale a añadir 280 días al primer día de su último período. Este método asume un ciclo menstrual de 28 días con ovulación ocurriendo en el día 14.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo se calculan las semanas de embarazo?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'El embarazo se calcula comenzando desde el primer día de su último período menstrual, con la fecha de parto aproximadamente 40 semanas después. Para cuando la mayoría de mujeres saben que están embarazadas, típicamente están en la semana 5 o 6. Si está planificando un embarazo, se recomienda usar la aplicación de Salud de su teléfono para registrar sus ciclos menstruales. Durante su primera visita obstétrica, el médico usualmente preguntará por el primer día de su último período para calcular su fecha de parto.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Qué condiciones se consideran embarazos de alto riesgo?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Un embarazo de alto riesgo indica una mayor probabilidad de complicaciones. Los factores que pueden aumentar el riesgo incluyen: ser muy joven o mayor de 35 años, tener sobrepeso o bajo peso, haber tenido problemas en embarazos anteriores, condiciones de salud preexistentes (como presión arterial alta, diabetes, enfermedades autoinmunes), y estar embarazada de gemelos o múltiples. Condiciones como diabetes gestacional o preeclampsia que se desarrollan durante el embarazo también pueden llevar a un estatus de alto riesgo. Si tiene preocupaciones sobre embarazo de alto riesgo, consulte a su médico.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Con qué frecuencia deben programarse los controles prenatales?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Según la Oficina de Salud de la Mujer, la frecuencia recomendada para controles prenatales normales es: una vez al mes entre las semanas 4 y 28, dos veces al mes entre las semanas 28 y 36, y una vez por semana desde la semana 36 hasta el parto. Las mujeres con embarazos de alto riesgo pueden necesitar atención prenatal y monitoreo más frecuente.'
+      }
+    }
   ]
 };
 
@@ -128,7 +163,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 // 社交媒體分享圖片
@@ -144,7 +180,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'zh' ? `預產期計算器` : 
                 locale === 'en' ? `Due Date Calculator` : 
-                `出産予定日計算機`;
+                locale === 'jp' ? `出産予定日計算機` :
+                locale === 'es' ? `Calculadora de Fecha de Parto` : `Due Date Calculator`;
 
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -163,7 +200,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           height: 630,
           alt: locale === 'zh' ? '預產期計算器工具界面' : 
                locale === 'en' ? 'Due Date Calculator Tool Interface' :
-               '出産予定日計算機ツールインターフェース',
+               locale === 'jp' ? '出産予定日計算機ツールインターフェース' :
+               locale === 'es' ? 'Interfaz de Herramienta Calculadora de Fecha de Parto' : 'Due Date Calculator Tool Interface',
           type: 'image/webp',
         },
       ],
@@ -186,6 +224,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'zh-TW': getFullUrl('/due-date-calculator'),
         'en': getFullUrl('/en/due-date-calculator'),
         'ja': getFullUrl('/jp/due-date-calculator'),
+        'es': getFullUrl('/es/due-date-calculator'),
       },
     },
     
@@ -244,7 +283,8 @@ export default async function DueDateCalculatorLayout({
     '/due-date-calculator',
     locale === 'zh' ? '懷孕預產期計算工具' :
     locale === 'en' ? 'Pregnancy Due Date Calculator Tool' :
-    '妊娠出産予定日計算ツール',
+    locale === 'jp' ? '妊娠出産予定日計算ツール' :
+    locale === 'es' ? 'Herramienta Calculadora de Fecha de Parto del Embarazo' : 'Pregnancy Due Date Calculator Tool',
     description,
     'MedicalApplication',
     '4.8',           // 評分值

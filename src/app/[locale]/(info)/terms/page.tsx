@@ -13,6 +13,7 @@ export default function Terms() {
   const isZhLocale = locale === 'zh';
   const isEnLocale = locale === 'en';
   const isJpLocale = locale === 'jp';
+  const isEsLocale = locale === 'es';
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -20,7 +21,10 @@ export default function Terms() {
       <main className="flex-grow w-full">
         <div className="container mx-auto max-w-4xl px-4 py-8">
           <h1 className="text-3xl font-bold mb-8">
-            {isZhLocale ? "使用條款" : isEnLocale ? "Terms of Service" : "利用規約"}
+            {isZhLocale ? "使用條款" : 
+             isEnLocale ? "Terms of Service" : 
+             isJpLocale ? "利用規約" : 
+             isEsLocale ? "Términos de Servicio" : "Terms of Service"}
           </h1>
 
           <div className="prose prose-lg max-w-none">
@@ -162,6 +166,53 @@ export default function Terms() {
                 
                 <h2 className="text-2xl font-semibold mb-3 mt-6">10. お問い合わせ</h2>
                 <p>これらの規約についてご質問やご意見がある場合は、<Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">お問い合わせページ</Link>を通じてご連絡ください。</p>
+              </div>
+            )}
+            
+            {isEsLocale && (
+              <div>
+                <p>Bienvenido a fyimg.com (en adelante &quot;este sitio web&quot;). Al acceder o usar este sitio web, usted acepta estar sujeto a estos términos y condiciones. Si no está de acuerdo con cualquier parte de estos términos, por favor no use este sitio web.</p>
+                
+                <p className="text-gray-500 mb-6">Última actualización: 1 de enero de 2025</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">1. Descripción del Servicio</h2>
+                <p>Este sitio web proporciona varias herramientas en línea, incluyendo pero no limitado a búsqueda de imágenes, calculadora de fechas, calculadora de fecha de parto y herramientas de sorteo de intercambio de regalos. Estas herramientas están diseñadas para proporcionar conveniencia y asistencia, pero no garantizan la precisión o idoneidad de los resultados.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">2. Restricciones de Uso</h2>
+                <p>Usted acepta usar nuestros servicios únicamente para propósitos legales y en cumplimiento con todas las leyes y regulaciones aplicables. Usted no puede:</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>Usar este sitio web para actividades fraudulentas, ilegales o no autorizadas</li>
+                  <li>Subir o transmitir cualquier material que contenga virus, código malicioso u otro contenido dañino</li>
+                  <li>Intentar interferir o interrumpir la operación normal de este sitio web</li>
+                  <li>Recolectar o almacenar información personal de otros usuarios de este sitio web</li>
+                  <li>Eludir, deshabilitar o interferir de otro modo con las funciones relacionadas con la seguridad de este sitio web</li>
+                </ul>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">3. Derechos de Propiedad Intelectual</h2>
+                <p>Este sitio web y su contenido (incluyendo pero no limitado a texto, gráficos, logotipos, íconos, imágenes, clips de audio, compilaciones de datos y software) son propiedad de fyimg o sus proveedores de contenido y están protegidos por leyes internacionales de derechos de autor, marcas comerciales, patentes y otras leyes de propiedad intelectual.</p>
+                <p>No puede copiar, modificar, publicar, transmitir, distribuir, vender, mostrar o explotar de otro modo cualquier contenido de este sitio web sin permiso explícito.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">4. Política de Privacidad</h2>
+                <p>Valoramos su privacidad y estamos comprometidos a proteger su información personal. Nuestra <Link href={`/${locale}/privacy-policy`} className="text-blue-600 hover:underline">Política de Privacidad</Link> detalla cómo recolectamos, usamos y protegemos sus datos.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">5. Exención de Responsabilidad</h2>
+                <p>Este sitio web y su contenido se proporcionan &quot;tal como están&quot; sin garantías de ningún tipo. No garantizamos la precisión, confiabilidad o disponibilidad de nuestros servicios.</p>
+                <p>fyimg no es responsable por ningún daño directo, indirecto, incidental, especial o consecuencial que pueda resultar del uso de este sitio web o sus servicios.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">6. Enlaces de Terceros</h2>
+                <p>Este sitio web puede contener enlaces a sitios web o servicios de terceros. Estos enlaces se proporcionan únicamente para su conveniencia y no implican que fyimg respalde estos sitios web o servicios de terceros. fyimg no es responsable del contenido, políticas de privacidad o prácticas de estos sitios web o servicios de terceros.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">7. Modificación de Términos</h2>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los términos modificados serán efectivos inmediatamente después de su publicación en el sitio web. El uso continuado de nuestros servicios constituye la aceptación de estos cambios.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">8. Terminación</h2>
+                <p>fyimg se reserva el derecho de terminar o restringir su acceso a este sitio web por cualquier razón en cualquier momento, sin previo aviso.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">9. Ley Aplicable</h2>
+                <p>Estos términos y su uso de este sitio web se rigen por las leyes locales, sin consideración a sus principios de conflicto de leyes.</p>
+                
+                <h2 className="text-2xl font-semibold mb-3 mt-6">10. Contáctanos</h2>
+                <p>Si tiene alguna pregunta o comentario sobre estos términos, contáctenos a través de nuestra <Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">Página de Contacto</Link>.</p>
               </div>
             )}
           </div>

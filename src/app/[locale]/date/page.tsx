@@ -13,7 +13,7 @@ export default function DatePage() {
   const locale = (params?.locale as string) || 'zh';
   
 
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   return (
     <>
