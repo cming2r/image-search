@@ -74,6 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const LANGUAGES: LanguageConfig[] = [
     { code: '', hreflang: 'zh' }, // 中文（根路徑）
     { code: 'en', hreflang: 'en' }, // 英文
+    { code: 'es', hreflang: 'es' }, // 西班牙文
     { code: 'jp', hreflang: 'ja' }, // 日文
   ];
 
@@ -84,56 +85,63 @@ export default function sitemap(): MetadataRoute.Sitemap {
       name: '首頁',
       priority: 1.0,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'ja'] // 支持所有語言
+      supportedLanguages: ['zh', 'en', 'es', 'ja'] // 支持所有語言
     },
     { 
       path: '/image-search', 
       name: '圖片搜尋',
       priority: 0.9,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/date', 
       name: '日期計算器',
       priority: 0.8,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/due-date-calculator', 
       name: '預產期計算器',
       priority: 0.8,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/gift-exchange', 
       name: '禮物交換',
       priority: 0.7,
       changeFrequency: 'weekly', 
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
+    },
+    { 
+      path: '/shorturl', 
+      name: '短網址',
+      priority: 0.7,
+      changeFrequency: 'weekly', 
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/contact', 
       name: '聯繫我們',
       priority: 0.5,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/privacy-policy', 
       name: '隱私政策',
       priority: 0.3,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
       path: '/terms', 
       name: '服務條款',
       priority: 0.3,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'ja']
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
   ];
 
