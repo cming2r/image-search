@@ -199,9 +199,9 @@ const Header: FC = () => {
                   </Link>
                 </div>
               </div>
-              <a href="https://vvrl.cc" className="text-lg text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+              <Link href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`} className="text-lg text-gray-600 hover:text-blue-600 transition-colors">
                 {t.header.urlShortener}
-              </a>
+              </Link>
             </div>
           </nav>
           
@@ -459,15 +459,13 @@ const Header: FC = () => {
                 </div>
               </li>
               <li>
-                <a 
-                  href="https://vvrl.cc" 
+                <Link 
+                  href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
                   className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
                   onClick={closeMenu}
                 >
                   {t.header.urlShortener}
-                </a>
+                </Link>
               </li>
               
               {/* 如果用戶已登入，顯示管理頁面和登出選項 */}
