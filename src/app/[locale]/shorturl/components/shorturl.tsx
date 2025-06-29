@@ -261,10 +261,10 @@ export default function ShortUrl() {
             {/* 自訂縮網址按鈕 */}
             <div className="mt-4 flex justify-center">
               <button
-                onClick={() => window.open('https://vvrl.cc', '_blank')}
+                onClick={() => window.open('https://vvrl.cc/custom', '_blank')}
                 onAuxClick={(e) => {
                   if (e.button === 1) { // 中鍵點擊
-                    window.open('https://vvrl.cc', '_blank');
+                    window.open('https://vvrl.cc/custom', '_blank');
                   }
                 }}
                 className="py-2 px-4 rounded-md transition-all duration-300 hover:scale-105"
