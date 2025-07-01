@@ -7,15 +7,17 @@ export interface ShortUrlData {
   created_at: string;
   title: string;
   click_count: number;
+  add_from: string;
 }
 
 export interface CreateShortUrlParams {
   original_url: string;
   title?: string;
+  add_from?: string;
 }
 
 function generateShortCode(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   for (let i = 0; i < 6; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -25,7 +27,7 @@ function generateShortCode(): string {
 
 export async function createShortUrl(params: CreateShortUrlParams): Promise<{ success: boolean; data?: ShortUrlData; error?: string }> {
   try {
-    const { original_url, title } = params;
+    const { original_url, title, add_from } = params;
     
     if (!original_url) {
       return { success: false, error: '網址不能為空' };
@@ -67,7 +69,8 @@ export async function createShortUrl(params: CreateShortUrlParams): Promise<{ su
         original_url,
         title: title || '',
         created_at: new Date().toISOString(),
-        click_count: 0
+        click_count: 0,
+        add_from: add_from || ''
       })
       .select()
       .single();

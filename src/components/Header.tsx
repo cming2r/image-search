@@ -6,7 +6,87 @@ import { supabase } from '@/lib/supabase';
 import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { useParams } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
-import translations from './translations.json';
+// Header translations
+const headerTranslations = {
+  home: {
+    zh: "首頁",
+    en: "Home", 
+    jp: "ホーム",
+    es: "Inicio"
+  },
+  tools: {
+    zh: "線上工具",
+    en: "Online Tools",
+    jp: "オンラインツール", 
+    es: "Herramientas en Línea"
+  },
+  imageSearch: {
+    zh: "以圖搜圖",
+    en: "Image Search",
+    jp: "画像検索",
+    es: "Buscar por Imagen"
+  },
+  calculator: {
+    zh: "日期計算器",
+    en: "Date Calculator",
+    jp: "日付計算機",
+    es: "Calculadora de Fechas"
+  },
+  dueDate: {
+    zh: "預產期計算器",
+    en: "Due Date Calculator", 
+    jp: "出産予定日計算機",
+    es: "Calculadora de Fecha de Parto"
+  },
+  giftExchange: {
+    zh: "交換禮物抽籤",
+    en: "Gift Exchange Draw",
+    jp: "ギフト交換抽選",
+    es: "Sorteo de Intercambio de Regalos"
+  },
+  about: {
+    zh: "關於",
+    en: "About",
+    jp: "について", 
+    es: "Acerca de"
+  },
+  contact: {
+    zh: "聯絡我們",
+    en: "Contact Us",
+    jp: "お問い合わせ",
+    es: "Contáctanos"
+  },
+  terms: {
+    zh: "使用條款",
+    en: "Terms of Use",
+    jp: "利用規約",
+    es: "Términos de Uso"
+  },
+  privacy: {
+    zh: "隱私權政策",
+    en: "Privacy Policy",
+    jp: "プライバシーポリシー",
+    es: "Política de Privacidad"
+  },
+  admin: {
+    zh: "管理頁面",
+    en: "Admin Panel",
+    jp: "管理ページ",
+    es: "Panel de Administración"
+  },
+  logout: {
+    zh: "登出",
+    en: "Logout",
+    jp: "ログアウト", 
+    es: "Cerrar Sesión"
+  },
+  urlShortener: {
+    zh: "縮網址服務",
+    en: "URL Shortener",
+    jp: "URL短縮サービス",
+    es: "Servicio de Acortador de URL"
+  }
+};
 
 // 簡單的防抖函數
 function debounce(func: () => void, wait: number) {
@@ -25,8 +105,10 @@ const Header: FC = () => {
   // 從路徑參數中獲取當前語言
   const locale = (params?.locale as string) || 'zh';
   
-  // 獲取對應語言的翻譯
-  const t = translations[locale as keyof typeof translations] || translations.zh;
+  // 獲取翻譯文字的函數
+  const getTranslation = (key: keyof typeof headerTranslations) => {
+    return headerTranslations[key][locale as keyof typeof headerTranslations[typeof key]] || headerTranslations[key].zh;
+  };
   
   // 切換選單狀態
   const toggleMenu = () => {
@@ -126,7 +208,7 @@ const Header: FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </span>
-                {t.header.imageSearch}
+                {getTranslation('imageSearch')}
               </Link>
               <div className="relative group" ref={dateDropdownRef}>
                 <Link href={`/${locale === 'zh' ? '' : locale + '/'}date`}
@@ -134,7 +216,7 @@ const Header: FC = () => {
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
-                  {t.header.calculator}
+                  {getTranslation('calculator')}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
@@ -156,14 +238,14 @@ const Header: FC = () => {
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    {t.header.calculator}
+                    {getTranslation('calculator')}
                   </Link>
                   <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    {t.header.dueDate}
+                    {getTranslation('dueDate')}
                   </Link>
                 </div>
               </div>
@@ -174,7 +256,7 @@ const Header: FC = () => {
                   aria-expanded="false"
                   aria-haspopup="true"
                 >
-                  {t.header.tools}
+                  {getTranslation('tools')}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
@@ -195,12 +277,12 @@ const Header: FC = () => {
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
-                    {t.header.giftExchange}
+                    {getTranslation('giftExchange')}
                   </Link>
                 </div>
               </div>
               <Link href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`} className="text-lg text-gray-600 hover:text-blue-600 transition-colors">
-                {t.header.urlShortener}
+                {getTranslation('urlShortener')}
               </Link>
             </div>
           </nav>
@@ -292,8 +374,8 @@ const Header: FC = () => {
             <Link 
               href={`/${locale === 'zh' ? '' : locale + '/'}contact`}
               className="hidden md:block text-gray-600 hover:text-blue-600 transition-colors"
-              aria-label={t.header.contact}
-              title={t.header.contact}
+              aria-label={getTranslation('contact')}
+              title={getTranslation('contact')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -306,8 +388,8 @@ const Header: FC = () => {
                 <Link 
                   href="/admin" 
                   className="hidden md:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
-                  aria-label={t.header.admin}
-                  title={t.header.admin}
+                  aria-label={getTranslation('admin')}
+                  title={getTranslation('admin')}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
@@ -330,8 +412,8 @@ const Header: FC = () => {
                     }
                   }}
                   className="hidden md:block ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
-                  aria-label={t.header.logout}
-                  title={t.header.logout}
+                  aria-label={getTranslation('logout')}
+                  title={getTranslation('logout')}
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -368,7 +450,7 @@ const Header: FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </span>
-                  {t.header.imageSearch}
+                  {getTranslation('imageSearch')}
                 </Link>
               </li>
               <li>
@@ -378,7 +460,7 @@ const Header: FC = () => {
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    {t.header.calculator}
+                    {getTranslation('calculator')}
                   </Link>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
@@ -407,14 +489,14 @@ const Header: FC = () => {
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    {t.header.calculator}
+                    {getTranslation('calculator')}
                   </Link>
                   <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    {t.header.dueDate}
+                    {getTranslation('dueDate')}
                   </Link>
                 </div>
               </li>
@@ -425,7 +507,7 @@ const Header: FC = () => {
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    {t.header.tools}
+                    {getTranslation('tools')}
                   </Link>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
@@ -454,7 +536,7 @@ const Header: FC = () => {
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
-                    {t.header.giftExchange}
+                    {getTranslation('giftExchange')}
                   </Link>
                 </div>
               </li>
@@ -464,7 +546,7 @@ const Header: FC = () => {
                   className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600" 
                   onClick={closeMenu}
                 >
-                  {t.header.urlShortener}
+                  {getTranslation('urlShortener')}
                 </Link>
               </li>
               
@@ -487,7 +569,7 @@ const Header: FC = () => {
                           </g>
                         </svg>
                       </span>
-                      {t.header.admin}
+                      {getTranslation('admin')}
                     </Link>
                   </li>
                   <li>
@@ -510,7 +592,7 @@ const Header: FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                       </span>
-                      {t.header.logout}
+                      {getTranslation('logout')}
                     </button>
                   </li>
                 </>

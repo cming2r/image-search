@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
 
     const result = await createShortUrl({ 
       original_url,
-      title: title || ''
+      title: title || '',
+      add_from: 'fyimg'
     });
 
     if (!result.success) {

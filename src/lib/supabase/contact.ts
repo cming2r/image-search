@@ -22,10 +22,8 @@ export function validateContactForm(data: ContactFormData) {
     errors.name = '姓名为必填字段';
   }
   
-  // 验证电子邮件
-  if (!data.email || data.email.trim() === '') {
-    errors.email = '电子邮件为必填字段';
-  } else {
+  // 验证电子邮件（选填）
+  if (data.email && data.email.trim() !== '') {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
       errors.email = '请输入有效的电子邮件地址';

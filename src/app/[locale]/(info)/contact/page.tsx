@@ -112,14 +112,16 @@ export default function Contact() {
 
     try {
       // 檢查必填欄位
-      if (!formData.name || !formData.email || !formData.message) {
+      if (!formData.name || !formData.message) {
         throw new Error(validationMessages.requiredFields);
       }
 
-      // 驗證電子郵件格式
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        throw new Error(validationMessages.invalidEmail);
+      // 驗證電子郵件格式（如果有提供的話）
+      if (formData.email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          throw new Error(validationMessages.invalidEmail);
+        }
       }
 
       // 提交到 API 端點
@@ -205,7 +207,7 @@ export default function Contact() {
 
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-                  {formLabels.email} <span className="text-red-500">*</span>
+                  {formLabels.email}
                 </label>
                 <input
                   type="email"
@@ -214,7 +216,6 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
                 />
               </div>
 
