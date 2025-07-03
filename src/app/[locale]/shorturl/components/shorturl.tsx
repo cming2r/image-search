@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import QRCode from 'qrcode';
+import { Download, ExternalLink, Copy, QrCode, Check } from 'lucide-react';
 
 const translations = {
   urlLabel: {
@@ -96,6 +99,10 @@ export default function ShortUrl() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [showQrCode, setShowQrCode] = useState(false);
+  const [includeUrl, setIncludeUrl] = useState(false);
+  const [qrLoading, setQrLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,6 +138,110 @@ export default function ShortUrl() {
     }
   };
 
+  // 生成 QR Code（可選擇是否包含網址文字）
+  const generateQRCode = async (url: string, shouldIncludeUrl?: boolean) => {
+    const includeUrlOption = shouldIncludeUrl !== undefined ? shouldIncludeUrl : includeUrl;
+    setQrLoading(true);
+    try {
+      if (!includeUrlOption) {
+        // 只生成純 QR Code
+        const qrCodeDataUrl = await QRCode.toDataURL(url, {
+          width: 200,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
+        });
+        setQrCodeUrl(qrCodeDataUrl);
+        setQrLoading(false);
+        return;
+      }
+
+      // 生成帶有網址文字的版本
+      const qrCodeDataUrl = await QRCode.toDataURL(url, {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+
+      // 創建 Canvas 來合成圖片
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new window.Image();
+
+      img.onload = () => {
+        // 使用高 DPI 比例來改善畫質
+        const pixelRatio = window.devicePixelRatio || 1;
+        const scaledWidth = 200 * pixelRatio;
+        const scaledHeight = 240 * pixelRatio;
+
+        // 設定 Canvas 實際尺寸
+        canvas.width = scaledWidth;
+        canvas.height = scaledHeight;
+        
+        // 設定 Canvas 顯示尺寸
+        canvas.style.width = '200px';
+        canvas.style.height = '240px';
+
+        // 縮放 context 以匹配像素比例
+        ctx!.scale(pixelRatio, pixelRatio);
+
+        // 啟用文字抗鋸齒
+        ctx!.imageSmoothingEnabled = true;
+        ctx!.imageSmoothingQuality = 'high';
+
+        // 填充白色背景
+        ctx!.fillStyle = '#FFFFFF';
+        ctx!.fillRect(0, 0, 200, 240);
+
+        // 繪製 QR Code
+        ctx!.drawImage(img, 0, 0, 200, 200);
+
+        // 繪製網址文字 - 使用更大的字體和更好的設定
+        ctx!.fillStyle = '#000000';
+        ctx!.font = 'bold 18px -apple-system, BlinkMacSystemFont, "Segoe UI", monospace';
+        ctx!.textAlign = 'center';
+        ctx!.textBaseline = 'middle';
+        
+        const displayUrl = url.replace('https://', '');
+        ctx!.fillText(displayUrl, 100, 220);
+
+        // 轉換為高品質 PNG
+        const combinedDataUrl = canvas.toDataURL('image/png', 1.0);
+        setQrCodeUrl(combinedDataUrl);
+      };
+
+      img.src = qrCodeDataUrl;
+    } catch (error) {
+      console.error('QR Code generation failed:', error);
+    } finally {
+      setQrLoading(false);
+    }
+  };
+
+  // 處理 QR Code 按鈕點擊
+  const handleQrCodeToggle = async () => {
+    if (!showQrCode && !qrCodeUrl) {
+      // 第一次點擊時生成 QR Code
+      await generateQRCode(shortUrl);
+    }
+    setShowQrCode(!showQrCode);
+  };
+
+  // 處理包含 URL 選項變更
+  const handleIncludeUrlChange = async (checked: boolean) => {
+    setIncludeUrl(checked);
+    // 如果 QR Code 已經生成且正在顯示，重新生成
+    if (qrCodeUrl && showQrCode) {
+      // 用新的設定重新生成（不清除，避免閃爍）
+      await generateQRCode(shortUrl, checked);
+    }
+  };
+
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shortUrl);
@@ -139,6 +250,18 @@ export default function ShortUrl() {
     } catch (error) {
       console.error('Copy failed:', error);
     }
+  };
+
+  // 下載 QR Code 圖片
+  const downloadQRCode = () => {
+    if (!qrCodeUrl) return;
+    
+    const link = document.createElement('a');
+    link.href = qrCodeUrl;
+    link.download = `qrcode-${shortUrl.replace('https://', '').replace('/', '-')}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -215,9 +338,7 @@ export default function ShortUrl() {
                 className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
                 title={locale === 'zh' ? '前往' : locale === 'en' ? 'Visit' : locale === 'jp' ? '移動' : 'Visitar'}
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
+                <ExternalLink size={24} />
               </button>
               <button
                 onClick={copyToClipboard}
@@ -229,19 +350,91 @@ export default function ShortUrl() {
                 title={showSuccess ? (locale === 'zh' ? '已複製！' : locale === 'en' ? 'Copied!' : locale === 'jp' ? 'コピー済み！' : '¡Copiado!') : (locale === 'zh' ? '複製' : locale === 'en' ? 'Copy' : locale === 'jp' ? 'コピー' : 'Copiar')}
               >
                 {showSuccess ? (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Check size={24} />
                 ) : (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
+                  <Copy size={24} />
                 )}
+              </button>
+              <button
+                onClick={handleQrCodeToggle}
+                className={`px-3 py-2 rounded-md transition-colors flex items-center justify-center ${
+                  showQrCode 
+                    ? 'bg-black text-white' 
+                    : 'bg-black text-white hover:bg-gray-800'
+                }`}
+                title={locale === 'zh' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
+              >
+                <QrCode size={24} />
               </button>
             </div>
             <p className="text-sm text-gray-500 mt-2">
               {translations.successMessage[lang]}
             </p>
+            
+            {/* QR Code 顯示區域 */}
+            {showQrCode && qrCodeUrl && (
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h4 className="text-lg font-medium text-gray-900 mb-3 text-center">
+                  {locale === 'zh' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
+                </h4>
+                
+                <div className="flex justify-center">
+                  <div className="bg-white p-4 rounded-lg shadow-sm border relative">
+                    {qrLoading && (
+                      <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
+                        <div className="flex items-center">
+                          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                          <span className="ml-2 text-sm text-gray-600">
+                            {locale === 'zh' ? '生成中...' : 
+                             locale === 'en' ? 'Generating...' : 
+                             locale === 'jp' ? '生成中...' : 
+                             'Generando...'}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    <Image 
+                      src={qrCodeUrl} 
+                      alt={includeUrl ? "QR Code with URL" : "QR Code"} 
+                      width={200}
+                      height={includeUrl ? 240 : 200}
+                      className={`max-w-full h-auto ${qrLoading ? 'opacity-50' : ''}`}
+                    />
+                  </div>
+                </div>
+                
+                {/* 包含 URL 選項 */}
+                <div className="flex justify-center mt-4 mb-3">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={includeUrl}
+                      onChange={(e) => handleIncludeUrlChange(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">
+                      {locale === 'zh' ? '包含 URL' : 
+                       locale === 'en' ? 'Include URL' : 
+                       locale === 'jp' ? 'URLを含める' : 
+                       'Incluir URL'}
+                    </span>
+                  </label>
+                </div>
+                
+                <div className="flex justify-center">
+                  <button
+                    onClick={downloadQRCode}
+                    className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors flex items-center justify-center"
+                    title={locale === 'zh' ? '下載圖片' : 
+                           locale === 'en' ? 'Download Image' : 
+                           locale === 'jp' ? '画像をダウンロード' : 
+                           'Descargar Imagen'}
+                  >
+                    <Download size={24} />
+                  </button>
+                </div>
+              </div>
+            )}
             
             {/* 返回按鈕 */}
             <div className="mt-4 pt-4 border-t border-gray-200">
@@ -251,6 +444,10 @@ export default function ShortUrl() {
                   setUrl('');
                   setError('');
                   setShowSuccess(false);
+                  setQrCodeUrl('');
+                  setShowQrCode(false);
+                  setIncludeUrl(false);
+                  setQrLoading(false);
                 }}
                 className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
               >
