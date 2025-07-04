@@ -203,7 +203,7 @@ export default function ShortUrl() {
 
         // 繪製網址文字 - 使用更大的字體和更好的設定
         ctx!.fillStyle = '#000000';
-        ctx!.font = 'bold 18px -apple-system, BlinkMacSystemFont, "Segoe UI", monospace';
+        ctx!.font = '18px -apple-system, BlinkMacSystemFont, "Segoe UI", monospace';
         ctx!.textAlign = 'center';
         ctx!.textBaseline = 'middle';
         
@@ -335,14 +335,14 @@ export default function ShortUrl() {
                     window.open(shortUrl, '_blank');
                   }
                 }}
-                className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+                className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
                 title={locale === 'zh' ? '前往' : locale === 'en' ? 'Visit' : locale === 'jp' ? '移動' : 'Visitar'}
               >
                 <ExternalLink size={24} />
               </button>
               <button
                 onClick={copyToClipboard}
-                className={`px-3 py-2 rounded-md transition-colors flex items-center justify-center ${
+                className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
                   showSuccess 
                     ? 'bg-green-600 text-white' 
                     : 'bg-green-600 text-white hover:bg-green-700'
@@ -357,7 +357,7 @@ export default function ShortUrl() {
               </button>
               <button
                 onClick={handleQrCodeToggle}
-                className={`px-3 py-2 rounded-md transition-colors flex items-center justify-center ${
+                className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
                   showQrCode 
                     ? 'bg-black text-white' 
                     : 'bg-black text-white hover:bg-gray-800'
