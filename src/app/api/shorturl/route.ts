@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createShortUrl } from '@/lib/supabase';
 
+function extractGoogleSearchQuery(url: string): string {
+  try {
+    const urlObj = new URL(url);
+    const searchQuery = urlObj.searchParams.get('q');
+    if (searchQuery) {
+      return decodeURIComponent(searchQuery);
+    }
+    return '';
+  } catch (error) {
+    console.error('Error extracting Google search query:', error);
+    return '';
+  }
+}
+
 async function fetchWebpageTitle(url: string): Promise<string> {
   try {
     const controller = new AbortController();
@@ -50,6 +64,14 @@ async function fetchWebpageTitle(url: string): Promise<string> {
     }
     
     if (title) {
+      // Special handling for Google search results
+      if (title === 'Google Search' && url.includes('google.com/search')) {
+        const searchQuery = extractGoogleSearchQuery(url);
+        if (searchQuery) {
+          title = `${searchQuery} - Google Search`;
+        }
+      }
+      
       // Decode HTML entities
       title = title
         .replace(/&quot;/g, '"')
@@ -62,9 +84,6 @@ async function fetchWebpageTitle(url: string): Promise<string> {
       
       // Clean up extra whitespace
       title = title.replace(/\s+/g, ' ').trim();
-      
-      // Log the extracted title for debugging
-      console.log('Extracted title:', title);
       
       return title;
     }
@@ -90,6 +109,7 @@ export async function POST(request: NextRequest) {
 
     // Fetch webpage title if not provided
     let webpageTitle = title || '';
+    
     if (!webpageTitle) {
       webpageTitle = await fetchWebpageTitle(original_url);
     }
