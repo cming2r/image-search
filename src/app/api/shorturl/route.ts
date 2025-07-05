@@ -1,6 +1,81 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createShortUrl } from '@/lib/supabase';
 
+async function fetchWebpageTitle(url: string): Promise<string> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+      },
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      return '';
+    }
+    
+    const html = await response.text();
+    
+    // Try multiple patterns to extract title
+    let title = '';
+    
+    // Pattern 1: Standard title tag
+    let titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    if (titleMatch && titleMatch[1]) {
+      title = titleMatch[1].trim();
+    }
+    
+    // Pattern 2: Title with CDATA
+    if (!title) {
+      titleMatch = html.match(/<title[^>]*><!\[CDATA\[([^\]]+)\]\]><\/title>/i);
+      if (titleMatch && titleMatch[1]) {
+        title = titleMatch[1].trim();
+      }
+    }
+    
+    // Pattern 3: Title with nested tags (remove inner HTML)
+    if (!title) {
+      titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+      if (titleMatch && titleMatch[1]) {
+        title = titleMatch[1].replace(/<[^>]*>/g, '').trim();
+      }
+    }
+    
+    if (title) {
+      // Decode HTML entities
+      title = title
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)))
+        .replace(/&#x([a-fA-F0-9]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+      
+      // Clean up extra whitespace
+      title = title.replace(/\s+/g, ' ').trim();
+      
+      // Log the extracted title for debugging
+      console.log('Extracted title:', title);
+      
+      return title;
+    }
+    
+    return '';
+  } catch (error) {
+    console.error('Error fetching webpage title:', error);
+    return '';
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -13,9 +88,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Fetch webpage title if not provided
+    let webpageTitle = title || '';
+    if (!webpageTitle) {
+      webpageTitle = await fetchWebpageTitle(original_url);
+    }
+
     const result = await createShortUrl({ 
       original_url,
-      title: title || '',
+      title: webpageTitle,
       add_from: 'fyimg'
     });
 
