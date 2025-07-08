@@ -91,8 +91,8 @@ const localeContents: Record<string, LocaleContent> = {
         description: '所有工具無需付費，無需註冊即可使用'
       },
       secure: {
-        title: '安全無廣告',
-        description: '不保存敏感資料，無追蹤，無惱人廣告'
+        title: '隱私保護',
+        description: '不保存敏感資料，無追蹤，保護用戶隱私'
       },
       mobile: {
         title: '支援手機',
@@ -137,8 +137,8 @@ const localeContents: Record<string, LocaleContent> = {
         description: 'All tools are free to use without payment or registration'
       },
       secure: {
-        title: 'Safe and Ad-Free',
-        description: 'No sensitive data storage, no tracking, no annoying ads'
+        title: 'Privacy Protected',
+        description: 'No sensitive data storage, no tracking, protects user privacy'
       },
       mobile: {
         title: 'Mobile Support',
@@ -183,8 +183,8 @@ const localeContents: Record<string, LocaleContent> = {
         description: 'すべてのツールは支払いや登録なしで無料で使用できます'
       },
       secure: {
-        title: '安全で広告なし',
-        description: '機密データを保存せず、追跡なし、迷惑な広告なし'
+        title: 'プライバシー保護',
+        description: '機密データを保存せず、追跡なし、ユーザープライバシーを保護'
       },
       mobile: {
         title: 'モバイル対応',
@@ -229,8 +229,8 @@ const localeContents: Record<string, LocaleContent> = {
         description: 'Todas las herramientas son gratuitas sin pago ni registro requerido'
       },
       secure: {
-        title: 'Seguro y Sin Anuncios',
-        description: 'No almacena datos sensibles, sin rastreo, sin anuncios molestos'
+        title: 'Privacidad Protegida',
+        description: 'No almacena datos sensibles, sin rastreo, protege la privacidad del usuario'
       },
       mobile: {
         title: 'Compatible con Móviles',

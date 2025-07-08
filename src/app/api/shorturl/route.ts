@@ -98,7 +98,7 @@ async function fetchWebpageTitle(url: string): Promise<string> {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { original_url, title } = body;
+    const { original_url, title, device_info } = body;
 
     if (!original_url) {
       return NextResponse.json(
@@ -117,7 +117,12 @@ export async function POST(request: NextRequest) {
     const result = await createShortUrl({ 
       original_url,
       title: webpageTitle,
-      add_from: 'fyimg'
+      add_from: 'fyimg',
+      country_code: device_info?.country_code || '',
+      device_type: device_info?.device_type || '',
+      browser: device_info?.browser || '',
+      os: device_info?.os || '',
+      ip_address: device_info?.ip_address || ''
     });
 
     if (!result.success) {

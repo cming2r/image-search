@@ -113,6 +113,10 @@ export default function ShortUrl() {
     setShortUrl('');
     
     try {
+      // 獲取設備資訊
+      const deviceInfoResponse = await fetch('/api/device-info');
+      const deviceInfo = await deviceInfoResponse.json();
+      
       const response = await fetch('/api/shorturl', {
         method: 'POST',
         headers: {
@@ -120,6 +124,7 @@ export default function ShortUrl() {
         },
         body: JSON.stringify({ 
           original_url: url,
+          device_info: deviceInfo
         }),
       });
 

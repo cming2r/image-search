@@ -8,12 +8,22 @@ export interface ShortUrlData {
   title: string;
   click_count: number;
   add_from: string;
+  country_code?: string;
+  device_type?: string;
+  browser?: string;
+  os?: string;
+  ip_address?: string;
 }
 
 export interface CreateShortUrlParams {
   original_url: string;
   title?: string;
   add_from?: string;
+  country_code?: string;
+  device_type?: string;
+  browser?: string;
+  os?: string;
+  ip_address?: string;
 }
 
 function generateShortCode(): string {
@@ -27,7 +37,7 @@ function generateShortCode(): string {
 
 export async function createShortUrl(params: CreateShortUrlParams): Promise<{ success: boolean; data?: ShortUrlData; error?: string }> {
   try {
-    const { original_url, title, add_from } = params;
+    const { original_url, title, add_from, country_code, device_type, browser, os, ip_address } = params;
     
     if (!original_url) {
       return { success: false, error: '網址不能為空' };
@@ -70,7 +80,12 @@ export async function createShortUrl(params: CreateShortUrlParams): Promise<{ su
         title: title || '',
         created_at: new Date().toISOString(),
         click_count: 0,
-        add_from: add_from || ''
+        add_from: add_from || '',
+        country_code: country_code || '',
+        device_type: device_type || '',
+        browser: browser || '',
+        os: os || '',
+        ip_address: ip_address || ''
       })
       .select()
       .single();
