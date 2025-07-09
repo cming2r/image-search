@@ -2,7 +2,7 @@
 
 import { FC, useState, ReactElement } from 'react';
 import { useParams } from 'next/navigation';
-import { saveSearchRecord, getDeviceType } from '@/lib/supabase/imageSearch';
+import { saveSearchRecord } from '@/lib/supabase/imageSearch';
 import { track } from '@vercel/analytics';
 import Image from 'next/image';
 
@@ -45,21 +45,17 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }
     
     try {
-      // 獲取設備類型
-      const deviceType = getDeviceType();
-      
       // Vercel Analytics 追蹤 - 為每個搜尋引擎創建獨立事件
       const trackingEventName = `${engineName.toLowerCase().replace('.', '')}_search_click`;
       track(trackingEventName, {
-        device_type: deviceType,
         locale: locale
       });
       
-      // 紀錄到Supabase
+      // 紀錄到Supabase（設備檢測在 saveSearchRecord 內部處理）
       saveSearchRecord({
         image_url: imageUrl,
         search_engine: [engineName], // 只記錄當前點擊的搜尋引擎
-        device_type: deviceType
+        device_type: '' // 將由 API 自動檢測
       }).catch(err => {
         console.error('保存搜索引擎失敗:', err);
       });

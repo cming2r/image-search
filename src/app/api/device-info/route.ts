@@ -35,21 +35,61 @@ function getBrowser(userAgent: string): string {
 }
 
 function getOS(userAgent: string): string {
-  if (userAgent.includes('Windows')) {
-    return 'Windows';
-  }
-  if (userAgent.includes('Mac')) {
-    return 'MacOS';
-  }
-  if (userAgent.includes('Linux')) {
-    return 'Linux';
-  }
-  if (userAgent.includes('Android')) {
-    return 'Android';
-  }
-  if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+  const ua = userAgent.toLowerCase();
+  
+  // iOS 設備（需要在 Mac 之前檢查，因為 iOS 也包含 Mac 字串）
+  if (ua.includes('iphone') || ua.includes('ipod') || ua.includes('ipad')) {
     return 'iOS';
   }
+  
+  // Android 系統
+  if (ua.includes('android')) {
+    return 'Android';
+  }
+  
+  // Windows 系統（包含所有版本）
+  if (ua.includes('windows')) {
+    return 'Windows';
+  }
+  
+  // macOS 系統
+  if (ua.includes('mac os x') || ua.includes('macos') || ua.includes('macintosh')) {
+    return 'macOS';
+  }
+  
+  // Linux 系統（統一為 GNU/Linux）
+  if (ua.includes('ubuntu') || ua.includes('debian') || ua.includes('fedora') || 
+      ua.includes('centos') || ua.includes('red hat') || ua.includes('suse') || 
+      ua.includes('mint') || ua.includes('arch') || ua.includes('linux')) {
+    return 'GNU/Linux';
+  }
+  
+  // Chrome OS
+  if (ua.includes('cros')) {
+    return 'Chrome OS';
+  }
+  
+  // Symbian
+  if (ua.includes('symbian') || ua.includes('symbos') || ua.includes('s60')) {
+    return 'Symbian';
+  }
+  
+  // BlackBerry
+  if (ua.includes('blackberry') || ua.includes('bb10')) {
+    return 'BlackBerry';
+  }
+  
+  // 其他系統
+  if (ua.includes('freebsd')) {
+    return 'FreeBSD';
+  }
+  if (ua.includes('webos')) {
+    return 'webOS';
+  }
+  if (ua.includes('tizen')) {
+    return 'Tizen';
+  }
+  
   return 'Unknown';
 }
 
@@ -99,54 +139,75 @@ async function getLocationInfo(request: NextRequest): Promise<{ country_code: st
       }
     }
     
-    // 方法 4: 使用外部 IP 地理位置服務 (如果有 IP)
-    if (ip && ip !== '' && ip !== '127.0.0.1' && ip !== '::1') {
-      try {
-        // 使用 ipapi.co
-        const controller1 = new AbortController();
-        const timeoutId1 = setTimeout(() => controller1.abort(), 3000);
-        
-        const response1 = await fetch(`https://ipapi.co/${ip}/json/`, {
-          signal: controller1.signal
-        });
-        
-        clearTimeout(timeoutId1);
-        
-        if (response1.ok) {
-          const data = await response1.json();
-          if (data.country_code && data.country_code !== 'XX') {
-            return {
-              country_code: data.country_code,
-              ip_address: data.ip || ip
-            };
+    // 方法 4: 使用外部 IP 地理位置服務
+    // 本地環境：先嘗試獲取真實 IP，再進行地理位置查詢
+    const shouldTryGeoLocation = ip && ip !== '' && ip !== '127.0.0.1' && ip !== '::1';
+    const isLocalhost = ip === '127.0.0.1' || ip === '::1';
+    
+    if (shouldTryGeoLocation || isLocalhost) {
+      let targetIP = ip;
+      
+      // 本地環境：先獲取真實 IP
+      if (isLocalhost) {
+        try {
+          const ipifyResponse = await fetch('https://api.ipify.org?format=json');
+          if (ipifyResponse.ok) {
+            const ipData = await ipifyResponse.json();
+            targetIP = ipData.ip;
           }
+        } catch (error) {
+          console.error('Failed to get real IP:', error);
         }
-      } catch (error) {
-        console.error('ipapi.co error:', error);
       }
       
-      try {
-        // 備用方案：使用 ipwho.is
-        const controller2 = new AbortController();
-        const timeoutId2 = setTimeout(() => controller2.abort(), 3000);
-        
-        const response2 = await fetch(`https://ipwho.is/${ip}`, {
-          signal: controller2.signal
-        });
-        
-        clearTimeout(timeoutId2);
-        
-        if (response2.ok) {
-          const data = await response2.json();
-          if (data.country_code && data.country_code !== 'XX') {
-            return {
-              country_code: data.country_code,
-              ip_address: data.ip || ip
-            };
+      if (targetIP && targetIP !== '127.0.0.1' && targetIP !== '::1') {
+        try {
+          // 使用 ipapi.co
+          const controller1 = new AbortController();
+          const timeoutId1 = setTimeout(() => controller1.abort(), 3000);
+          
+          const response1 = await fetch(`https://ipapi.co/${targetIP}/json/`, {
+            signal: controller1.signal
+          });
+          
+          clearTimeout(timeoutId1);
+          
+          if (response1.ok) {
+            const data = await response1.json();
+            if (data.country_code && data.country_code !== 'XX') {
+              return {
+                country_code: data.country_code,
+                ip_address: data.ip || targetIP
+              };
+            }
           }
+        } catch (error) {
+          console.error('ipapi.co error:', error);
         }
-      } catch (error) {
-        console.error('ipwho.is error:', error);
+        
+        try {
+          // 備用方案：使用 ipwho.is
+          const controller2 = new AbortController();
+          const timeoutId2 = setTimeout(() => controller2.abort(), 3000);
+          
+          const response2 = await fetch(`https://ipwho.is/${targetIP}`, {
+            signal: controller2.signal
+          });
+          
+          clearTimeout(timeoutId2);
+          
+          if (response2.ok) {
+            const data = await response2.json();
+            if (data.country_code && data.country_code !== 'XX') {
+              return {
+                country_code: data.country_code,
+                ip_address: data.ip || targetIP
+              };
+            }
+          }
+        } catch (error) {
+          console.error('ipwho.is error:', error);
+        }
       }
     }
     

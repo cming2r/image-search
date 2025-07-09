@@ -17,7 +17,7 @@ export function createClientForBrowser() {
 }
 
 // 從其他文件導入所有 Supabase 功能
-import { saveImageUrl, saveSearchRecord, getDeviceType, getUserAgentInfo } from './imageSearch';
+import { saveImageUrl, saveSearchRecord } from './imageSearch';
 import { createGiftExchange, updateGiftExchangeResult, getGiftExchange } from './giftExchange';
 import { saveContactMessage, validateContactForm } from './contact';
 import { 
@@ -35,8 +35,6 @@ export {
   // 图像搜索功能
   saveImageUrl,
   saveSearchRecord,
-  getDeviceType,
-  getUserAgentInfo,
   
   // 礼物交换功能
   createGiftExchange,
