@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
+import { Globe } from 'lucide-react';
 import { locales } from '@/app/[locale]/metadata';
 
 interface LanguageSwitcherProps {
@@ -15,12 +16,19 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-  // 語言顯示名稱
+  // 語言顯示名稱和代碼
   const languageNames: Record<string, string> = {
     zh: '中文',
     en: 'English',
     jp: '日本語',
     es: 'Español',
+  };
+  
+  const languageCodes: Record<string, string> = {
+    zh: '中文',
+    en: 'EN',
+    jp: '日本語',
+    es: 'ES',
   };
   
   // 處理點擊外部關閉下拉菜單
@@ -94,17 +102,11 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
         onMouseEnter={() => setIsOpen(true)}
         aria-expanded={isOpen}
         aria-haspopup="true"
+        aria-label={`Current language: ${languageNames[currentLocale]}`}
+        title={`Current language: ${languageNames[currentLocale]}`}
       >
-        <span>{languageNames[currentLocale]}</span>
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className={`h-4 w-4 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''} group-hover:rotate-180`}
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <Globe className="h-5 w-5" />
+        <span className="ml-1 text-sm font-medium">{languageCodes[currentLocale]}</span>
       </button>
       
       {/* 下拉選單 - 添加hover功能 */}

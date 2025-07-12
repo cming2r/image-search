@@ -115,7 +115,21 @@ export default function ShortUrl() {
     try {
       // 獲取設備資訊
       const deviceInfoResponse = await fetch('/api/device-info');
-      const deviceInfo = await deviceInfoResponse.json();
+      
+      if (!deviceInfoResponse.ok) {
+        console.warn('Device info API failed, using fallback');
+      }
+      
+      const deviceInfo = deviceInfoResponse.ok 
+        ? await deviceInfoResponse.json()
+        : {
+            country_code: 'XX',
+            device_type: 'unknown',
+            browser: 'unknown',
+            os: 'unknown',
+            ip_address: '',
+            timestamp: new Date().toISOString()
+          };
       
       const response = await fetch('/api/shorturl', {
         method: 'POST',
