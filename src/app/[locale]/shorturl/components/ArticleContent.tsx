@@ -1,5 +1,7 @@
 'use client';
 
+import { shorturlTranslations } from './meta-translations';
+
 interface ArticleContentProps {
   locale: string;
 }
@@ -15,25 +17,25 @@ const shorturlContentTranslations = {
     steps: {
       zh: [
         "在輸入框中貼上或輸入您想要縮短的長網址",
-        "點擊「縮短網址」按鈕",
+        "點擊「縮短網址」按鈕生成短連結",
         "複製產生的短網址並分享給其他人",
         "點擊「自訂縮網址」可前往 vvrl.cc 進行進階設定"
       ],
       en: [
         "Paste or enter the long URL you want to shorten in the input field",
-        "Click the \"Shorten URL\" button",
+        "Click the \"Shorten URL\" button to generate a short link",
         "Copy the generated short URL and share it with others",
         "Click \"Custom Short URL\" to go to vvrl.cc for advanced settings"
       ],
       jp: [
         "入力フィールドに短縮したい長いURLを貼り付けまたは入力します",
-        "「URL短縮」ボタンをクリックします",
+        "「URL短縮」ボタンをクリックして短いリンクを生成します",
         "生成された短いURLをコピーして他の人と共有します",
         "「カスタム短縮URL」をクリックしてvvrl.ccで高度な設定を行います"
       ],
       es: [
         "Pega o ingresa la URL larga que quieres acortar en el campo de entrada",
-        "Haz clic en el botón \"Acortar URL\"",
+        "Haz clic en el botón \"Acortar URL\" para generar un enlace corto",
         "Copia la URL corta generada y compártela con otros",
         "Haz clic en \"URL Corta Personalizada\" para ir a vvrl.cc para configuraciones avanzadas"
       ]
@@ -45,10 +47,10 @@ const shorturlContentTranslations = {
       es: "Consejo:"
     },
     tipContent: {
-      zh: "確保您輸入的是完整且有效的網址，並包含 http:// 或 https://",
-      en: "Make sure you enter a complete and valid URL, including http:// or https://",
-      jp: "http://またはhttps://を含む完全で有効なURLを入力してください",
-      es: "Asegúrate de ingresar una URL completa y válida, incluyendo http:// o https://"
+      zh: "確保您輸入的是完整且有效的網址，並包含 http:// 或 https://。短網址會永久有效且無使用次數限制。",
+      en: "Make sure you enter a complete and valid URL, including http:// or https://. Short URLs are permanently valid with no usage limits.",
+      jp: "http://またはhttps://を含む完全で有効なURLを入力してください。短縮URLは永続的に有効で使用回数制限はありません。",
+      es: "Asegúrate de ingresar una URL completa y válida, incluyendo http:// o https://. Las URLs cortas son válidas permanentemente sin límites de uso."
     }
   },
   whatIs: {
@@ -188,6 +190,72 @@ const shorturlContentTranslations = {
         }
       }
     }
+  },
+  useCases: {
+    title: {
+      zh: "短網址應用場景",
+      en: "Short URL Use Cases",
+      jp: "短縮URLの使用ケース",
+      es: "Casos de Uso de URL Corta"
+    },
+    scenarios: {
+      social: {
+        title: {
+          zh: "社交媒體分享",
+          en: "Social Media Sharing",
+          jp: "ソーシャルメディア共有",
+          es: "Compartir en Redes Sociales"
+        },
+        content: {
+          zh: "在 Facebook、Instagram、Twitter、LINE 等社交平台分享時，短網址能節省字符空間，讓貼文看起來更簡潔美觀。",
+          en: "When sharing on social platforms like Facebook, Instagram, Twitter, LINE, short URLs save character space and make posts look cleaner.",
+          jp: "Facebook、Instagram、Twitter、LINEなどのソーシャルプラットフォームで共有する際、短縮URLは文字スペースを節約し、投稿をより簡潔に見せます。",
+          es: "Al compartir en plataformas sociales como Facebook, Instagram, Twitter, LINE, las URLs cortas ahorran espacio de caracteres y hacen que las publicaciones se vean más limpias."
+        }
+      },
+      marketing: {
+        title: {
+          zh: "行銷推廣",
+          en: "Marketing Promotion",
+          jp: "マーケティングプロモーション",
+          es: "Promoción de Marketing"
+        },
+        content: {
+          zh: "在廣告文案、DM、名片或海報上使用短網址，讓顧客更容易記憶和輸入，提高轉換率和品牌形象。",
+          en: "Use short URLs in advertising copy, DMs, business cards, or posters to make them easier for customers to remember and type, improving conversion rates and brand image.",
+          jp: "広告コピー、DM、名刺、ポスターで短縮URLを使用することで、顧客が覚えやすく入力しやすくなり、コンバージョン率とブランドイメージが向上します。",
+          es: "Use URLs cortas en copias publicitarias, DMs, tarjetas de visita o carteles para que sean más fáciles de recordar y escribir para los clientes, mejorando las tasas de conversión y la imagen de marca."
+        }
+      },
+      messaging: {
+        title: {
+          zh: "訊息傳送",
+          en: "Messaging",
+          jp: "メッセージング",
+          es: "Mensajería"
+        },
+        content: {
+          zh: "在 WhatsApp、Telegram、微信等即時通訊軟體中傳送連結時，短網址避免了訊息被過長的網址佔據，保持對話的整潔性。",
+          en: "When sending links in instant messaging apps like WhatsApp, Telegram, WeChat, short URLs prevent messages from being dominated by overly long URLs, maintaining conversation clarity.",
+          jp: "WhatsApp、Telegram、WeChatなどのインスタントメッセージングアプリでリンクを送信する際、短縮URLは過度に長いURLによってメッセージが支配されることを防ぎ、会話の明瞭性を保ちます。",
+          es: "Al enviar enlaces en aplicaciones de mensajería instantánea como WhatsApp, Telegram, WeChat, las URLs cortas evitan que los mensajes sean dominados por URLs excesivamente largas, manteniendo la claridad de la conversación."
+        }
+      },
+      print: {
+        title: {
+          zh: "印刷品應用",
+          en: "Print Applications",
+          jp: "印刷物への応用",
+          es: "Aplicaciones Impresas"
+        },
+        content: {
+          zh: "在雜誌、報紙、傳單、手冊等印刷媒體上，短網址易於閱讀和手動輸入，大大提升了線下到線上的轉換效果。",
+          en: "In print media such as magazines, newspapers, flyers, brochures, short URLs are easy to read and manually input, greatly improving offline-to-online conversion effectiveness.",
+          jp: "雑誌、新聞、チラシ、パンフレットなどの印刷メディアでは、短縮URLは読みやすく手動入力しやすく、オフラインからオンラインへの変換効果を大幅に向上させます。",
+          es: "En medios impresos como revistas, periódicos, volantes, folletos, las URLs cortas son fáciles de leer e ingresar manualmente, mejorando enormemente la efectividad de conversión offline-a-online."
+        }
+      }
+    }
   }
 };
 
@@ -235,6 +303,74 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </ul>
       </div>
 
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+        <h2 className="text-xl font-bold mb-3">{shorturlContentTranslations.useCases.title[lang]}</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+            <div className="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h3a1 1 0 011 1v2h4a1 1 0 011 1v3a1 1 0 01-1 1h-3v11a2 2 0 01-2 2H8a2 2 0 01-2-2V9H3a1 1 0 01-1-1V5a1 1 0 011-1h4z" />
+              </svg>
+              <h3 className="font-medium text-blue-700">{shorturlContentTranslations.useCases.scenarios.social.title[lang]}</h3>
+            </div>
+            <p className="text-blue-700 text-sm">
+              {shorturlContentTranslations.useCases.scenarios.social.content[lang]}
+            </p>
+          </div>
+          
+          <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+            <div className="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              <h3 className="font-medium text-green-700">{shorturlContentTranslations.useCases.scenarios.marketing.title[lang]}</h3>
+            </div>
+            <p className="text-green-700 text-sm">
+              {shorturlContentTranslations.useCases.scenarios.marketing.content[lang]}
+            </p>
+          </div>
+          
+          <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+            <div className="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <h3 className="font-medium text-purple-700">{shorturlContentTranslations.useCases.scenarios.messaging.title[lang]}</h3>
+            </div>
+            <p className="text-purple-700 text-sm">
+              {shorturlContentTranslations.useCases.scenarios.messaging.content[lang]}
+            </p>
+          </div>
+          
+          <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+            <div className="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+              <h3 className="font-medium text-amber-700">{shorturlContentTranslations.useCases.scenarios.print.title[lang]}</h3>
+            </div>
+            <p className="text-amber-700 text-sm">
+              {shorturlContentTranslations.useCases.scenarios.print.content[lang]}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+        <h2 className="text-xl font-bold mb-3">{shorturlTranslations.faq.title[lang]}</h2>
+        
+        <div className="space-y-6">
+          {shorturlTranslations.faq.questions[lang].map((item, index) => (
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
+              <p className="mt-2">
+                {item.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
         <h2 className="text-xl font-bold mb-3">{shorturlContentTranslations.whyChooseUs.title[lang]}</h2>

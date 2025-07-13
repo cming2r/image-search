@@ -1,5 +1,7 @@
 'use client';
 
+import { metaTranslations } from './meta-translations';
+
 interface ArticleContentProps {
   locale: string;
 }
@@ -193,86 +195,6 @@ const content = {
       es: "La calculadora de fechas simplifica los cálculos tediosos de fechas, haciendo que la gestión del tiempo sea más fácil y eficiente. Ya sea que usted sea un profesional o un usuario general, puede beneficiarse de su conveniencia."
     }
   },
-  faqs: {
-    title: {
-      zh: "常見問題",
-      en: "Frequently Asked Questions",
-      jp: "よくある質問",
-      es: "Preguntas Frecuentes"
-    },
-    questions: [
-      {
-        question: {
-          zh: "日期計算器是否考慮閏年？",
-          en: "Does the date calculator consider leap years?",
-          jp: "日付計算機はうるう年を考慮しますか？",
-          es: "¿La calculadora de fechas considera los años bisiestos?"
-        },
-        answer: {
-          zh: "是的，我們的日期計算器會自動考慮閏年的影響。當您進行跨年度的日期計算時，系統會準確計算包括2月29日在內的所有日期，確保結果的準確性。",
-          en: "Yes, our date calculator automatically takes leap years into account. When performing calculations across years, the system accurately calculates all dates including February 29th, ensuring accurate results.",
-          jp: "はい、私たちの日付計算機は自動的にうるう年を考慮します。年をまたぐ日付計算を行う際、システムは2月29日を含むすべての日付を正確に計算し、結果の正確性を保証します。",
-          es: "Sí, nuestra calculadora de fechas considera automáticamente los años bisiestos. Al realizar cálculos que abarcan varios años, el sistema calcula con precisión todas las fechas, incluyendo el 29 de febrero, garantizando resultados exactos."
-        }
-      },
-      {
-        question: {
-          zh: "可以計算過去的日期嗎？",
-          en: "Can I calculate dates in the past?",
-          jp: "過去の日付を計算できますか？",
-          es: "¿Puedo calcular fechas en el pasado?"
-        },
-        answer: {
-          zh: "當然可以！您可以輸入負數天數來計算過去的日期，或者選擇兩個過去的日期來計算它們之間的間隔。這對於計算已過去的時間或歷史事件非常有用。",
-          en: "Of course! You can enter negative days to calculate past dates, or select two past dates to calculate the interval between them. This is very useful for calculating elapsed time or historical events.",
-          jp: "もちろんできます！負の日数を入力して過去の日付を計算したり、2つの過去の日付を選択してその間隔を計算したりできます。これは経過時間や歴史的な出来事を計算するのに非常に便利です。",
-          es: "¡Por supuesto! Puede ingresar días negativos para calcular fechas pasadas, o seleccionar dos fechas pasadas para calcular el intervalo entre ellas. Esto es muy útil para calcular tiempo transcurrido o eventos históricos."
-        }
-      },
-      {
-        question: {
-          zh: "計算結果會顯示星期幾嗎？",
-          en: "Will the calculation results show the day of the week?",
-          jp: "計算結果には曜日が表示されますか？",
-          es: "¿Los resultados del cálculo mostrarán el día de la semana?"
-        },
-        answer: {
-          zh: "是的，所有計算結果都會顯示對應的星期幾。這個功能對於安排會議、活動或旅行計劃特別有幫助，讓您能夠更好地規劃時間。",
-          en: "Yes, all calculation results will display the corresponding day of the week. This feature is particularly helpful for scheduling meetings, events, or travel plans, allowing you to better plan your time.",
-          jp: "はい、すべての計算結果に対応する曜日が表示されます。この機能は、会議、イベント、旅行計画のスケジューリングに特に役立ち、時間をより良く計画することができます。",
-          es: "Sí, todos los resultados del cálculo mostrarán el día de la semana correspondiente. Esta función es particularmente útil para programar reuniones, eventos o planes de viaje, permitiéndole planificar mejor su tiempo."
-        }
-      },
-      {
-        question: {
-          zh: "日期計算器支援哪些日期格式？",
-          en: "What date formats does the calculator support?",
-          jp: "計算機はどの日付形式をサポートしていますか？",
-          es: "¿Qué formatos de fecha admite la calculadora?"
-        },
-        answer: {
-          zh: "我們的日期選擇器提供直觀的日曆介面，您只需點選即可選擇日期，無需擔心格式問題。系統會根據您的地區設定自動顯示適合的日期格式。",
-          en: "Our date picker provides an intuitive calendar interface where you can simply click to select dates without worrying about format issues. The system automatically displays the appropriate date format based on your regional settings.",
-          jp: "私たちの日付ピッカーは直感的なカレンダーインターフェースを提供し、フォーマットの問題を心配することなく、クリックするだけで日付を選択できます。システムは地域設定に基づいて適切な日付形式を自動的に表示します。",
-          es: "Nuestro selector de fechas proporciona una interfaz de calendario intuitiva donde puede simplemente hacer clic para seleccionar fechas sin preocuparse por problemas de formato. El sistema muestra automáticamente el formato de fecha apropiado según su configuración regional."
-        }
-      },
-      {
-        question: {
-          zh: "是否可以保存計算記錄？",
-          en: "Can I save calculation history?",
-          jp: "計算履歴を保存できますか？",
-          es: "¿Puedo guardar el historial de cálculos?"
-        },
-        answer: {
-          zh: "目前的版本專注於提供快速、準確的即時計算功能。每次計算都是獨立的，不會保存歷史記錄。如果您需要保留計算結果，建議截圖或手動記錄重要的日期資訊。",
-          en: "The current version focuses on providing fast and accurate real-time calculation functionality. Each calculation is independent and does not save history. If you need to keep calculation results, we recommend taking screenshots or manually recording important date information.",
-          jp: "現在のバージョンは、高速で正確なリアルタイム計算機能の提供に焦点を当てています。各計算は独立しており、履歴は保存されません。計算結果を保持する必要がある場合は、スクリーンショットを撮るか、重要な日付情報を手動で記録することをお勧めします。",
-          es: "La versión actual se enfoca en proporcionar funcionalidad de cálculo en tiempo real rápida y precisa. Cada cálculo es independiente y no guarda historial. Si necesita conservar los resultados del cálculo, recomendamos tomar capturas de pantalla o registrar manualmente la información de fechas importantes."
-        }
-      }
-    ]
-  },
   whyChooseUs: {
     title: {
       zh: "為什麼選擇我們的日期計算器？",
@@ -462,13 +384,13 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
       {/* 常見問題 */}
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-bold mb-3">{content.faqs.title[lang]}</h2>
+        <h2 className="text-xl font-bold mb-3">{metaTranslations.faq.title[lang]}</h2>
         
         <div className="space-y-6">
-          {content.faqs.questions.map((faq, index) => (
+          {metaTranslations.faq.questions[lang].map((faq, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium text-blue-700">{faq.question[lang]}</h3>
-              <p className="mt-2">{faq.answer[lang]}</p>
+              <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
+              <p className="mt-2">{faq.answer}</p>
             </div>
           ))}
         </div>

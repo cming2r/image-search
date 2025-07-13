@@ -1,6 +1,7 @@
 'use client';
 
 import PregnancyTimeline from "./PregnancyTimeline";
+import { metaTranslations } from './meta-translations';
 
 interface ArticleContentProps {
   locale: string;
@@ -645,6 +646,19 @@ export default function ArticleContent({ locale, currentWeeks }: ArticleContentP
         <p>
           {content.highRiskPregnancy.content4[lang]}
         </p>
+        
+        <h2>{metaTranslations.faq.title[lang]}</h2>
+        
+        <div className="space-y-6">
+          {metaTranslations.faq.questions[lang].map((faq, index) => (
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
+              <p className="mt-2">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -6,20 +6,7 @@ import {
   generateWebApplicationSchema,
   formatJSON
 } from '@/lib/schema';
-
-const titles = {
-  zh: '短網址產生器 - 縮短網址工具',
-  en: 'URL Shortener - Short Link Generator',
-  jp: 'URL短縮ツール - 短縮リンクジェネレーター',
-  es: 'Acortador de URL - Generador de Enlaces Cortos'
-};
-
-const descriptions = {
-  zh: '免費短網址產生器，快速將長網址縮短為簡潔易分享的短連結，支援自訂短網址、點擊統計與安全連結管理。',
-  en: 'Free URL shortener to quickly convert long URLs into concise, shareable short links. Features custom URLs, click analytics, and secure link management.',
-  jp: '無料のURL短縮ツールで、長いURLを簡潔で共有しやすい短いリンクに素早く変換できます。カスタムURL、クリック分析、安全なリンク管理機能付き。',
-  es: 'Acortador de URL gratuito para convertir rápidamente URLs largas en enlaces cortos concisos y fáciles de compartir. Incluye URLs personalizadas, análisis de clics y gestión segura de enlaces.'
-};
+import { shorturlTranslations } from './components/meta-translations';
 
 const keywordsList = {
   zh: ['短網址', '縮短網址', '短連結產生器', 'URL縮短工具'],
@@ -28,107 +15,30 @@ const keywordsList = {
   es: ['acortador de url', 'enlace corto', 'acortador de enlaces', 'generador de url corta']
 };
 
-const faqsData = {
-  zh: [
-    {
-      '@type': 'Question',
-      name: '什麼是短網址？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '短網址是將冗長的網址轉換成簡短連結的服務，讓網址更容易分享、記憶和輸入，常用於社交媒體、行銷活動和即時通訊。'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: '如何使用短網址工具？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '使用很簡單：1) 將長網址貼到輸入框中，2) 點擊「縮短網址」按鈕，3) 複製產生的短網址並分享。確保輸入的網址包含 http:// 或 https://。'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: '短網址有什麼優點？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '短網址讓分享更方便，減少字符數量，在社交媒體上看起來更簡潔，容易記憶和輸入，還可以追蹤點擊統計（即將推出）。'
-      }
+// 從meta-translations轉換FAQ數據格式以符合結構化數據需求
+const convertFaqForSchema = (faqData: typeof shorturlTranslations.faq.questions.zh) => {
+  return faqData.map(item => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer
     }
-  ],
-  en: [
-    {
-      '@type': 'Question',
-      name: 'What is a URL shortener?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'A URL shortener is a service that converts long URLs into short, easy-to-share links that are perfect for social media, marketing campaigns, and messaging apps.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'How do I use the URL shortener tool?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Its simple: 1) Paste your long URL into the input field, 2) Click the "Shorten URL" button, 3) Copy the generated short URL and share it. Make sure your URL includes http:// or https://.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'What are the benefits of short URLs?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Short URLs make sharing more convenient, reduce character count, look cleaner on social media, are easier to remember and type, and can provide click analytics (coming soon).'
-      }
-    }
-  ],
-  jp: [
-    {
-      '@type': 'Question',
-      name: 'URL短縮とは何ですか？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'URL短縮は、長いURLを短くて共有しやすいリンクに変換するサービスで、ソーシャルメディア、マーケティングキャンペーン、メッセージングアプリに最適です。'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'URL短縮ツールの使い方は？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '簡単です：1) 長いURLを入力フィールドに貼り付け、2) 「URL短縮」ボタンをクリック、3) 生成された短いURLをコピーして共有します。URLにhttp://またはhttps://が含まれていることを確認してください。'
-      }
-    }
-  ],
-  es: [
-    {
-      '@type': 'Question',
-      name: '¿Qué es un acortador de URL?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Un acortador de URL es un servicio que convierte URLs largas en enlaces cortos y fáciles de compartir, perfectos para redes sociales, campañas de marketing y aplicaciones de mensajería.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: '¿Cómo uso la herramienta acortadora de URL?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Es simple: 1) Pega tu URL larga en el campo de entrada, 2) Haz clic en el botón "Acortar URL", 3) Copia la URL corta generada y compártela. Asegúrate de que tu URL incluya http:// o https://.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: '¿Cuáles son los beneficios de las URLs cortas?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Las URLs cortas hacen que compartir sea más conveniente, reducen el conteo de caracteres, se ven más limpias en redes sociales, son más fáciles de recordar y escribir, y pueden proporcionar análisis de clics (próximamente).'
-      }
-    }
-  ]
+  }));
 };
 
+// 多語言FAQ數據（基於meta-translations）
+const faqsData = {
+  zh: convertFaqForSchema(shorturlTranslations.faq.questions.zh),
+  en: convertFaqForSchema(shorturlTranslations.faq.questions.en),
+  jp: convertFaqForSchema(shorturlTranslations.faq.questions.jp),
+  es: convertFaqForSchema(shorturlTranslations.faq.questions.es)
+};
+
+// 從Git歷史取得頁面發布與更新日期
 const { created: datePublished, modified: dateModified } = getPageDates('src/app/[locale]/shorturl/page.tsx');
 
+// 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
   'zh': 'zh-TW',
   'en': 'en',
@@ -136,24 +46,25 @@ const langMap = {
   'es': 'es'
 };
 
+// 社交媒體分享圖片
 const imageUrl = getFullUrl('/images/og-image.png');
 
+// 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'zh' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
+  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
-  const ogTitle = locale === 'zh' ? `短網址產生器` : 
-                  locale === 'en' ? `URL Shortener` : 
-                  locale === 'es' ? `Acortador de URL` :
-                  `URL短縮ツール`;
+  // OpenGraph 標題根據語言不同
+  const ogTitle = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
 
   return {
     metadataBase: new URL(getBaseUrl()),
     title,
     description,
     
+    // OpenGraph 配置（優化社交媒體分享體驗）
     openGraph: {
       title: ogTitle,
       description,
@@ -172,6 +83,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ],
     },
     
+    // Twitter/X 平台卡片設定
     twitter: {
       card: 'summary_large_image',
       title,
@@ -181,6 +93,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: [imageUrl],
     },
     
+    // 規範連結（確保SEO正確性）
     alternates: {
       canonical: getFullUrl(locale === 'zh' ? '/shorturl' : `/${locale}/shorturl`),
       languages: {
@@ -191,6 +104,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       },
     },
     
+    // 關鍵字、作者及發布者信息
     keywords,
     authors: [{ name: 'fyimg開發團隊' }],
     creator: 'fyimg開發團隊',
@@ -198,6 +112,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
+/**
+ * 短網址頁面佈局
+ * 
+ * 包含多種結構化數據以優化搜索引擎理解和索引:
+ * - BreadcrumbSchema: 提供頁面導航層次結構
+ * - FAQSchema: 增強搜尋結果顯示常見問題
+ * - ArticleSchema: 標記內容為資訊性文章
+ * - WebApplicationSchema: 標識工具功能性質
+ */
 export default async function ShortUrlLayout({
   children,
   params,
@@ -205,15 +128,19 @@ export default async function ShortUrlLayout({
   children: React.ReactNode,
   params: Promise<{ locale: string }>
 }) {
+  // 取得當前語言
   const { locale = 'zh' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  // 根據當前語言取得相應標題與描述
+  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
+  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
+  // 根據語言選擇正確的FAQ資料
   const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
   
+  // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/shorturl', title, locale);
   const faqSchema = generateFAQSchema(faqItems);
   const articleSchema = generateArticleSchema(
@@ -224,8 +151,8 @@ export default async function ShortUrlLayout({
     datePublished,
     dateModified,
     language,
-    keywords,
-    2100,
+    keywords,      // 多語言關鍵字
+    2500,          // 字數統計 (估計值)
     locale
   );
   const webApplicationSchema = generateWebApplicationSchema(
@@ -236,32 +163,36 @@ export default async function ShortUrlLayout({
     'URL短縮ツール',
     description,
     'WebApplication',
-    '4.8',
-    '156',
-    datePublished,
-    language,
-    locale
+    '4.8',           // 評分值
+    '156',           // 評分數量
+    datePublished,   // 使用頁面發布日期作為有效日期起點
+    language,        // 頁面語言
+    locale           // 當前語言代碼
   );
   
   return (
     <>
+      {/* 結構化數據標記 - 為每個數據類型使用獨立標記 */}
       <script
         type="application/ld+json"
       >{`
 ${formatJSON(breadcrumbSchema)}
 `}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
 
       <script
         type="application/ld+json"
       >{`
 ${formatJSON(faqSchema)}
 `}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
 
       <script
         type="application/ld+json"
       >{`
 ${formatJSON(articleSchema)}
 `}</script>
+      {/* 分隔符以確保正確的HTML格式化 */}
 
       <script
         type="application/ld+json"

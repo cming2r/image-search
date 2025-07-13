@@ -1,5 +1,10 @@
 'use client';
 
+import { giftExchangeTranslations } from './meta-translations';
+
+interface ArticleContentProps {
+  locale: string;
+}
 
 const content = {
   howToUse: {
@@ -218,86 +223,6 @@ const content = {
       es: "Usar nuestra herramienta de ruleta para el sorteo hace que todo el proceso sea más justo, divertido y lleno de expectativa, agregando más atmósfera festiva e interactividad a su evento."
     }
   },
-  faqs: {
-    title: {
-      zh: "交換禮物轉盤常見問題",
-      en: "Gift Exchange Wheel Frequently Asked Questions",
-      jp: "ギフト交換ホイールに関するよくある質問",
-      es: "Preguntas Frecuentes sobre la Ruleta de Intercambio de Regalos"
-    },
-    questions: [
-      {
-        question: {
-          zh: "如何確保轉盤結果的公平性？",
-          en: "How is the fairness of wheel results ensured?",
-          jp: "ホイール結果の公平性はどのように確保されていますか？",
-          es: "¿Cómo se asegura la equidad de los resultados de la ruleta?"
-        },
-        answer: {
-          zh: "我們的轉盤使用Fisher-Yates洗牌算法，確保每次轉動結果都完全隨機且不可預測。轉盤動畫效果不僅增加趣味性，還能讓所有參與者親眼見證抽籤過程的透明度，避免任何疑慮。系統還支持「隨機分佈參與者順序」選項，進一步增強公平性。",
-          en: "Our wheel uses the Fisher-Yates shuffling algorithm to ensure each spin result is completely random and unpredictable. The wheel animation effect not only adds fun but also allows all participants to witness the transparency of the drawing process, avoiding any doubts. The system also supports the \"Randomize participant order\" option to further enhance fairness.",
-          jp: "当社のホイールはフィッシャー-イェーツシャッフルアルゴリズムを使用して、各スピン結果が完全にランダムで予測不可能であることを確保しています。ホイールのアニメーション効果は楽しさを加えるだけでなく、すべての参加者が抽選プロセスの透明性を目撃できるようにし、疑問を避けます。システムはまた、「参加者の順序をランダム化」オプションをサポートして公平性をさらに強化します。",
-          es: "Nuestra ruleta utiliza el algoritmo de barajado Fisher-Yates para asegurar que cada resultado de giro sea completamente aleatorio e impredecible. El efecto de animación de la ruleta no solo añade diversión sino que también permite a todos los participantes presenciar la transparencia del proceso de sorteo, evitando cualquier duda. El sistema también soporta la opción \"Aleatorizar orden de participantes\" para mejorar aún más la equidad."
-        }
-      },
-      {
-        question: {
-          zh: "如何設置和管理禮物價格範圍？",
-          en: "How do I set and manage gift price ranges?",
-          jp: "ギフトの価格帯はどのように設定・管理しますか？",
-          es: "¿Cómo establezco y gestiono los rangos de precios de regalos?"
-        },
-        answer: {
-          zh: "雖然系統本身不直接設置價格限制，但建議在創建活動時與參與者溝通並達成一致的預算範圍。常見的做法是在開始前商定一個適合所有人的價格區間（例如200或500元）。這能確保所有人的禮物價值相近，避免尷尬情況，讓交換體驗更加公平愉快。",
-          en: "While the system itself doesn't directly set price limits, it's recommended to communicate with participants when creating an event and reach a consensus on budget range. A common practice is to agree on a price range suitable for everyone (e.g., $20 or $50) before starting. This ensures all gifts are of similar value, avoids awkward situations, and makes the exchange experience more fair and enjoyable.",
-          jp: "システム自体は直接価格制限を設定しませんが、イベントを作成する際に参加者とコミュニケーションを取り、予算範囲に関するコンセンサスに達することをお勧めします。一般的な方法は、開始前に全員に適した価格帯（例：2000円または5000円）に同意することです。これにより、すべてのギフトが同様の価値を持ち、ぎこちない状況を避け、交換体験をより公平で楽しいものにします。",
-          es: "Aunque el sistema en sí no establece límites de precio directamente, se recomienda comunicarse con los participantes al crear un evento y llegar a un consenso sobre el rango de presupuesto. Una práctica común es acordar un rango de precios adecuado para todos (por ejemplo, $20 o $50) antes de comenzar. Esto asegura que todos los regalos tengan un valor similar, evita situaciones incómodas y hace que la experiencia de intercambio sea más justa y agradable."
-        }
-      },
-      {
-        question: {
-          zh: "抽籤結果如何保存和分享？",
-          en: "How are drawing results saved and shared?",
-          jp: "抽選結果はどのように保存・共有されますか？",
-          es: "¿Cómo se guardan y comparten los resultados del sorteo?"
-        },
-        answer: {
-          zh: "所有抽籤結果會自動與您的活動代碼關聯並暫時保存。活動完成後，您可以在結果頁面查看完整的配對清單。同時，系統提供方便的分享功能，您只需點擊分享按鈕，即可將活動連結發送給所有參與者。所有數據會在活動結束一段時間後自動清理，確保您的隱私安全。",
-          en: "All drawing results are automatically associated with your event code and temporarily saved. After the event is completed, you can view the complete pairing list on the results page. The system also provides a convenient sharing function - you just need to click the share button to send the event link to all participants. All data will be automatically cleared after a period following the event's end, ensuring your privacy and security.",
-          jp: "すべての抽選結果は自動的にイベントコードに関連付けられ、一時的に保存されます。イベント完了後、結果ページで完全なペアリングリストを表示できます。システムは便利な共有機能も提供しています。共有ボタンをクリックするだけで、イベントリンクをすべての参加者に送信できます。すべてのデータはイベント終了後一定期間経過すると自動的にクリアされ、プライバシーとセキュリティを確保します。",
-          es: "Todos los resultados del sorteo se asocian automáticamente con su código de evento y se guardan temporalmente. Después de que se complete el evento, puede ver la lista completa de emparejamientos en la página de resultados. El sistema también proporciona una función de compartir conveniente: solo necesita hacer clic en el botón de compartir para enviar el enlace del evento a todos los participantes. Todos los datos se borrarán automáticamente después de un período siguiente al final del evento, asegurando su privacidad y seguridad."
-        }
-      },
-      {
-        question: {
-          zh: "可以在不同裝置上使用同一個活動嗎？",
-          en: "Can I use the same event on different devices?",
-          jp: "異なるデバイスで同じイベントを使用できますか？",
-          es: "¿Puedo usar el mismo evento en diferentes dispositivos?"
-        },
-        answer: {
-          zh: "是的，我們的系統完全跨平台兼容。您可以在桌面電腦創建活動，然後在手機或平板上繼續進行。所有參與者只需通過分享的連結，就能在任何具有網頁瀏覽器的設備上查看和參與活動。這種靈活性特別適合遠程或混合工作環境下的團隊活動，或是家人朋友間的遠距離交流。",
-          en: "Yes, our system is fully cross-platform compatible. You can create an event on a desktop computer and then continue on a phone or tablet. All participants only need the shared link to view and participate in the event on any device with a web browser. This flexibility is particularly suitable for team activities in remote or hybrid work environments, or for long-distance communication between family and friends.",
-          jp: "はい、当社のシステムは完全にクロスプラットフォーム互換です。デスクトップコンピュータでイベントを作成し、その後スマートフォンやタブレットで続行できます。すべての参加者は共有リンクのみで、ウェブブラウザを備えた任意のデバイスでイベントを表示・参加できます。この柔軟性は、リモートまたはハイブリッドワーク環境でのチームアクティビティ、または家族や友人間の長距離コミュニケーションに特に適しています。",
-          es: "Sí, nuestro sistema es completamente compatible entre plataformas. Puede crear un evento en una computadora de escritorio y luego continuar en un teléfono o tableta. Todos los participantes solo necesitan el enlace compartido para ver y participar en el evento en cualquier dispositivo con un navegador web. Esta flexibilidad es particularmente adecuada para actividades de equipo en entornos de trabajo remoto o híbrido, o para comunicación a larga distancia entre familiares y amigos."
-        }
-      },
-      {
-        question: {
-          zh: "可以取消或修改已完成的抽籤嗎？",
-          en: "Can I cancel or modify completed drawings?",
-          jp: "完了した抽選をキャンセルまたは変更できますか？",
-          es: "¿Puedo cancelar o modificar sorteos completados?"
-        },
-        answer: {
-          zh: "為保證公平性，一旦配對完成，系統目前不支持直接修改抽籤結果。不過，您可以選擇創建新的活動並重新抽籤。如有特殊情況，例如某位參與者無法繼續參加，建議在線下協商替代方案，或利用「隨機分佈」和「直接顯示結果」功能快速創建新的抽籤活動。",
-          en: "To ensure fairness, once pairing is complete, the system currently doesn't support directly modifying drawing results. However, you can choose to create a new event and redraw. In special circumstances, such as when a participant can no longer attend, it's recommended to negotiate alternative solutions offline or use the \"Randomize\" and \"Show final results directly\" functions to quickly create a new drawing event.",
-          jp: "公平性を確保するため、ペアリング完了後、システムは現在抽選結果を直接変更することをサポートしていません。ただし、新しいイベントを作成して再抽選することもできます。特別な状況、例えば参加者が参加できなくなった場合など、オフラインで代替案を交渉するか、「ランダム化」と「最終結果を直接表示」機能を使用して新しい抽選イベントを迅速に作成することをお勧めします。",
-          es: "Para asegurar la equidad, una vez que se completa el emparejamiento, el sistema actualmente no soporta modificar directamente los resultados del sorteo. Sin embargo, puede elegir crear un nuevo evento y volver a sortear. En circunstancias especiales, como cuando un participante ya no puede asistir, se recomienda negociar soluciones alternativas fuera de línea o usar las funciones \"Aleatorizar\" y \"Mostrar resultados finales directamente\" para crear rápidamente un nuevo evento de sorteo."
-        }
-      }
-    ]
-  },
   whyChooseUs: {
     title: {
       zh: "為什麼選擇我們的交換禮物轉盤工具？",
@@ -408,10 +333,6 @@ const content = {
   }
 };
 
-interface ArticleContentProps {
-  locale: string;
-}
-
 export default function ArticleContent({ locale }: ArticleContentProps) {
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
@@ -480,14 +401,14 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-bold mb-3">{content.faqs.title[lang]}</h2>
+        <h2 className="text-xl font-bold mb-3">{giftExchangeTranslations.faq.title[lang]}</h2>
         
         <div className="space-y-6">
-          {content.faqs.questions.map((faq, index) => (
+          {giftExchangeTranslations.faq.questions[lang].map((faq, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium text-blue-700">{faq.question[lang]}</h3>
+              <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
               <p className="mt-2">
-                {faq.answer[lang]}
+                {faq.answer}
               </p>
             </div>
           ))}
