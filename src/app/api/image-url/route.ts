@@ -15,10 +15,16 @@ export async function POST(req: NextRequest) {
       );
     }
     
-    // Check if it's an image
-    if (!file.type.startsWith('image/')) {
+    // Check if it's an image (including HEIC/HEIF support)
+    const isImage = file.type.startsWith('image/') || 
+                   file.type === 'image/heic' || 
+                   file.type === 'image/heif' ||
+                   file.name.toLowerCase().endsWith('.heic') ||
+                   file.name.toLowerCase().endsWith('.heif');
+                   
+    if (!isImage) {
       return NextResponse.json(
-        { success: false, error: '只支持圖片文件' },
+        { success: false, error: '只支持圖片文件（支援 JPEG、PNG、GIF、WebP、HEIC 等格式）' },
         { status: 400 }
       );
     }

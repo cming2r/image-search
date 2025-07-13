@@ -1,16 +1,16 @@
 export const imageUrlTranslations = {
   meta: {
     title: {
-      zh: '圖片網址產生器 - 上傳圖片獲取連結',
-      en: 'Image URL Generator - Upload Images Get Links',
-      jp: '画像URLジェネレーター - 画像アップロードでリンク取得',
-      es: 'Generador de URL de Imagen - Subir Imágenes Obtener Enlaces'
+      zh: '圖片網址產生器',
+      en: 'Image URL Generator',
+      jp: '画像URLジェネレーター',
+      es: 'Generador de URL de Imagen'
     },
     description: {
-      zh: '免費圖片網址產生器，快速上傳圖片並獲取永久連結，支援多種圖片格式，適合網站、部落格、社交媒體使用。',
-      en: 'Free image URL generator to quickly upload images and get permanent links. Supports multiple image formats, perfect for websites, blogs, and social media.',
-      jp: '無料の画像URLジェネレーターで、画像を素早くアップロードして永続的なリンクを取得できます。複数の画像形式に対応し、ウェブサイト、ブログ、ソーシャルメディアに最適です。',
-      es: 'Generador gratuito de URL de imagen para subir rápidamente imágenes y obtener enlaces permanentes. Soporta múltiples formatos de imagen, perfecto para sitios web, blogs y redes sociales.'
+      zh: '免費上傳圖片，快速獲取永久連結，支援多種格式。',
+      en: 'Free image upload with instant permanent links. Multiple formats supported.',
+      jp: '無料で画像をアップロードし、永続的なリンクを即座に取得。多形式対応。',
+      es: 'Subida gratuita de imágenes con enlaces permanentes instantáneos. Múltiples formatos compatibles.'
     }
   },
   faq: {
@@ -167,10 +167,16 @@ export const imageUrlTranslations = {
       es: 'Formatos compatibles: JPEG, PNG, GIF, WebP (Máx. 10MB)'
     },
     dragDrop: {
-      zh: '拖拽檔案到此處或點擊選擇',
-      en: 'Drag and drop files here or click to select',
-      jp: 'ファイルをここにドラッグ＆ドロップするか、クリックして選択',
-      es: 'Arrastra y suelta archivos aquí o haz clic para seleccionar'
+      zh: '拖曳圖片到這裡、ctrl+V 貼上或',
+      en: 'Drag and drop image here, paste with ctrl+V, or',
+      jp: 'ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または',
+      es: 'Arrastra y suelta la imagen aquí, pega con ctrl+V, o'
+    },
+    clickUpload: {
+      zh: '點擊上傳',
+      en: 'click to upload',
+      jp: 'クリックしてアップロード',
+      es: 'haz clic para subir'
     },
     error: {
       zh: '上傳失敗，請重試',
@@ -189,6 +195,12 @@ export const imageUrlTranslations = {
       en: 'Short URL',
       jp: '短縮URL',
       es: 'URL Corta'
+    },
+    preview: {
+      zh: '圖片預覽(beta)',
+      en: 'Image Preview(beta)',
+      jp: '画像プレビュー(beta)',
+      es: 'Vista Previa de Imagen(beta)'
     },
   }
 };

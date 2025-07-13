@@ -16,9 +16,9 @@ export default function ImageUrlPage() {
     <>
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
-        <section className="max-w-4xl mx-auto">
+        <section className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            <h1>
               {imageUrlTranslations.meta.title[lang]}
             </h1>
             <p className="text-lg text-gray-600">

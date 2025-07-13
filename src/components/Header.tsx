@@ -85,6 +85,12 @@ const headerTranslations = {
     en: "URL Shortener",
     jp: "URL短縮サービス",
     es: "Servicio de Acortador de URL"
+  },
+  imageUrl: {
+    zh: "圖片網址產生器",
+    en: "Image URL Generator",
+    jp: "画像URLジェネレーター",
+    es: "Generador de URL de Imagen"
   }
 };
 
@@ -281,9 +287,44 @@ const Header: FC = () => {
                   </Link>
                 </div>
               </div>
-              <Link href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`} className="text-lg text-gray-600 hover:text-blue-600 transition-colors">
-                {getTranslation('urlShortener')}
-              </Link>
+              <div className="relative group">
+                <Link href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  {getTranslation('urlShortener')}
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Link>
+                
+                <div 
+                  className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
+                  role="menu"
+                >
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('urlShortener')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('imageUrl')}
+                  </Link>
+                </div>
+              </div>
             </div>
           </nav>
           
@@ -541,13 +582,51 @@ const Header: FC = () => {
                 </div>
               </li>
               <li>
-                <Link 
-                  href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
-                  className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600" 
-                  onClick={closeMenu}
-                >
-                  {getTranslation('urlShortener')}
-                </Link>
+                <div className="flex w-full items-center justify-between">
+                  <Link
+                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('urlShortener')}
+                  </Link>
+                  <button
+                    className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={() => {
+                      // 展開子選單實現方式
+                      const subMenu = document.getElementById('url-submenu');
+                      if (subMenu) {
+                        subMenu.classList.toggle('hidden');
+                      }
+                    }}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="url-submenu" className="hidden pl-4 bg-gray-50">
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('urlShortener')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('imageUrl')}
+                  </Link>
+                </div>
               </li>
               
               {/* 如果用戶已登入，顯示管理頁面和登出選項 */}
