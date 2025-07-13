@@ -4,7 +4,69 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
 import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download } from 'lucide-react';
-import { imageUrlTranslations } from './meta-translations';
+
+const uiTranslations = {
+  uploadTitle: {
+    zh: '上傳圖片',
+    en: 'Upload Image',
+    jp: '画像をアップロード',
+    es: 'Subir Imagen'
+  },
+  uploading: {
+    zh: '上傳中...',
+    en: 'Uploading...',
+    jp: 'アップロード中...',
+    es: 'Subiendo...'
+  },
+  supportedFormats: {
+    zh: '支援格式：JPEG, PNG, GIF, WebP (最大 10MB)',
+    en: 'Supported formats: JPEG, PNG, GIF, WebP (Max 10MB)',
+    jp: '対応形式：JPEG、PNG、GIF、WebP（最大10MB）',
+    es: 'Formatos compatibles: JPEG, PNG, GIF, WebP (Máx. 10MB)'
+  },
+  dragDrop: {
+    zh: '拖曳圖片到這裡、ctrl+V 貼上或',
+    en: 'Drag and drop image here, paste with ctrl+V, or',
+    jp: 'ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または',
+    es: 'Arrastra y suelta la imagen aquí, pega con ctrl+V, o'
+  },
+  clickUpload: {
+    zh: '點擊上傳',
+    en: 'click to upload',
+    jp: 'クリックしてアップロード',
+    es: 'haz clic para subir'
+  },
+  error: {
+    zh: '上傳失敗，請重試',
+    en: 'Upload failed, please try again',
+    jp: 'アップロードに失敗しました。再試行してください',
+    es: 'Error al subir, por favor inténtalo de nuevo'
+  },
+  shortUrl: {
+    zh: '短網址',
+    en: 'Short URL',
+    jp: '短縮URL',
+    es: 'URL Corta'
+  },
+  preview: {
+    zh: '圖片預覽',
+    en: 'Image Preview',
+    jp: '画像プレビュー',
+    es: 'Vista Previa de Imagen'
+  },
+  backButton: {
+    zh: '返回',
+    en: 'Back',
+    jp: '戻る',
+    es: 'Volver'
+  },
+  customImageUrl: {
+    zh: '設定圖片URL密碼',
+    en: 'Set Image URL Password',
+    jp: '画像URLパスワード設定',
+    es: 'Configurar Contraseña de URL de Imagen'
+  }
+};
 
 interface ImageUrlUploadProps {
   locale: string;
@@ -25,7 +87,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
-  const t = imageUrlTranslations.ui;
+  const t = uiTranslations;
 
   const handleUpload = useCallback(async (uploadFile?: File) => {
     const fileToUpload = uploadFile || file;
@@ -184,12 +246,12 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
           // Add URL text below QR code
           ctx.fillStyle = '#000000';
-          ctx.font = '10px Arial';
+          ctx.font = '18px -apple-system, BlinkMacSystemFont, "Segoe UI", monospace';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
 
-          // Truncate long URLs
-          const displayUrl = url.length > 30 ? url.substring(0, 27) + '...' : url;
+          // Remove https:// and format URL like shorturl
+          const displayUrl = url.replace('https://', '');
           ctx.fillText(displayUrl, 100, 220);
 
           setQrCodeUrl(canvas.toDataURL());
@@ -235,7 +297,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div>
       {/* Upload Area - Hidden when upload is successful */}
       {!shortUrl && (
         <>
@@ -306,146 +368,218 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
         </div>
       )}
 
-      {/* Image Preview Section - shown first when upload successful */}
-      {shortUrl && file && localImageUrl && (
-        <div className="mt-6 bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-lg font-medium text-gray-900 mb-3">{t.preview[lang]}</h3>
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              value="test"
-              readOnly
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Result Section */}
+      {/* Results - Multiple sections like shorturl */}
       {shortUrl && (
-        <div className="mt-6 bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-lg font-medium text-gray-900 mb-3">{t.shortUrl[lang]}</h3>
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              value={shortUrl}
-              readOnly
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
-            />
-            
-            {/* Action Buttons */}
-            <div className="flex items-center space-x-2">
-              {/* Visit Button */}
-              <button
-                onClick={() => window.open(shortUrl, '_blank')}
-                onAuxClick={(e) => {
-                  if (e.button === 1) { // Middle click support
-                    window.open(shortUrl, '_blank');
-                  }
-                }}
-                className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
-                title={lang === 'zh' ? '前往' : lang === 'en' ? 'Visit' : lang === 'jp' ? '移動' : 'Visitar'}
-              >
-                <ExternalLink size={24} />
-              </button>
-              
-              {/* Copy Button */}
-              <button
-                onClick={() => handleCopy(shortUrl)}
-                className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
-                  copied 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-green-600 text-white hover:bg-green-700'
-                }`}
-                title={copied ? (lang === 'zh' ? '已複製！' : lang === 'en' ? 'Copied!' : lang === 'jp' ? 'コピー済み！' : '¡Copiado!') : (lang === 'zh' ? '複製' : lang === 'en' ? 'Copy' : lang === 'jp' ? 'コピー' : 'Copiar')}
-              >
-                {copied ? (
-                  <Check size={24} />
-                ) : (
-                  <Copy size={24} />
-                )}
-              </button>
-              
-              {/* QR Code Button */}
-              <button
-                onClick={handleQrCodeToggle}
-                className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
-                  showQrCode 
-                    ? 'bg-black text-white' 
-                    : 'bg-black text-white hover:bg-gray-800'
-                }`}
-                title={lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
-              >
-                <QrCode size={24} />
-              </button>
-            </div>
-          </div>
-
-          {/* QR Code Display */}
-          {showQrCode && qrCodeUrl && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h4 className="text-lg font-medium text-gray-900 mb-3 text-center">
-                {lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
-              </h4>
-              
+        <div className="space-y-6">
+          {/* Image Preview Section */}
+          {file && localImageUrl && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-lg font-medium text-gray-900 mb-3">{t.preview[lang]}</h3>
               <div className="flex justify-center">
-                <div className="bg-white p-4 rounded-lg shadow-sm border relative">
-                  {/* Loading overlay */}
-                  {qrLoading && (
-                    <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
-                      <div className="flex items-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
-                        <span className="ml-2 text-sm text-gray-700">
-                          {lang === 'zh' ? '生成中...' : lang === 'en' ? 'Generating...' : lang === 'jp' ? '生成中...' : 'Generando...'}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                  {/* QR Code image */}
+                <div className="relative max-w-full max-h-64">
                   <Image
-                    src={qrCodeUrl}
-                    alt={includeUrl ? "QR Code with URL" : "QR Code"}
-                    width={200}
-                    height={includeUrl ? 240 : 200}
-                    className={`max-w-full h-auto ${qrLoading ? 'opacity-50' : ''}`}
+                    src={localImageUrl}
+                    alt="Uploaded image preview"
+                    width={400}
+                    height={300}
+                    className="max-w-full h-auto max-h-64 rounded-md shadow-sm"
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
               </div>
+            </div>
+          )}
+          
+          {/* Short URL Section */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-3">{t.shortUrl[lang]}</h3>
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                value={shortUrl}
+                readOnly
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
+              />
               
-              {/* Checkbox for including URL */}
-              <div className="flex justify-center mt-4 mb-3">
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={includeUrl}
-                    onChange={(e) => handleIncludeUrlChange(e.target.checked)}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">
-                    {lang === 'zh' ? '在 QR Code 下方顯示網址' : 
-                     lang === 'en' ? 'Include URL below QR Code' : 
-                     lang === 'jp' ? 'QRコードの下にURLを表示' : 
-                     'Incluir URL debajo del código QR'}
-                  </span>
-                </label>
-              </div>
-              
-              {/* Download button */}
-              <div className="flex justify-center">
+              {/* Action Buttons */}
+              <div className="flex items-center space-x-2">
+                {/* Visit Button */}
                 <button
-                  onClick={downloadQRCode}
-                  className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors flex items-center justify-center"
-                  title={lang === 'zh' ? '下載 QR Code' : 
-                         lang === 'en' ? 'Download QR Code' : 
-                         lang === 'jp' ? 'QRコードをダウンロード' : 
-                         'Descargar código QR'}
+                  onClick={() => window.open(shortUrl, '_blank')}
+                  onAuxClick={(e) => {
+                    if (e.button === 1) { // Middle click support
+                      window.open(shortUrl, '_blank');
+                    }
+                  }}
+                  className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+                  title={lang === 'zh' ? '前往' : lang === 'en' ? 'Visit' : lang === 'jp' ? '移動' : 'Visitar'}
                 >
-                  <Download size={24} />
+                  <ExternalLink size={24} />
+                </button>
+                
+                {/* Copy Button */}
+                <button
+                  onClick={() => handleCopy(shortUrl)}
+                  className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
+                    copied 
+                      ? 'bg-green-600 text-white' 
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
+                  title={copied ? (lang === 'zh' ? '已複製！' : lang === 'en' ? 'Copied!' : lang === 'jp' ? 'コピー済み！' : '¡Copiado!') : (lang === 'zh' ? '複製' : lang === 'en' ? 'Copy' : lang === 'jp' ? 'コピー' : 'Copiar')}
+                >
+                  {copied ? (
+                    <Check size={24} />
+                  ) : (
+                    <Copy size={24} />
+                  )}
+                </button>
+                
+                {/* QR Code Button */}
+                <button
+                  onClick={handleQrCodeToggle}
+                  className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
+                    showQrCode 
+                      ? 'bg-black text-white' 
+                      : 'bg-black text-white hover:bg-gray-800'
+                  }`}
+                  title={lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
+                >
+                  <QrCode size={24} />
                 </button>
               </div>
             </div>
-          )}
 
+            {/* QR Code Display */}
+            {showQrCode && qrCodeUrl && (
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h4 className="text-lg font-medium text-gray-900 mb-3 text-center">
+                  {lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
+                </h4>
+                
+                <div className="flex justify-center">
+                  <div className="bg-white p-4 rounded-lg shadow-sm border relative">
+                    {/* Loading overlay */}
+                    {qrLoading && (
+                      <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
+                        <div className="flex items-center">
+                          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
+                          <span className="ml-2 text-sm text-gray-700">
+                            {lang === 'zh' ? '生成中...' : lang === 'en' ? 'Generating...' : lang === 'jp' ? '生成中...' : 'Generando...'}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {/* QR Code image */}
+                    <Image
+                      src={qrCodeUrl}
+                      alt={includeUrl ? "QR Code with URL" : "QR Code"}
+                      width={200}
+                      height={includeUrl ? 240 : 200}
+                      className={`max-w-full h-auto ${qrLoading ? 'opacity-50' : ''}`}
+                    />
+                  </div>
+                </div>
+                
+                {/* URL display below QR Code when not included in image */}
+                {!includeUrl && (
+                  <div className="text-center mt-3">
+                    <p className="text-sm text-gray-600">
+                      {shortUrl.replace('https://', '')}
+                    </p>
+                  </div>
+                )}
+                
+                {/* Checkbox for including URL */}
+                <div className="flex justify-center mt-4 mb-3">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={includeUrl}
+                      onChange={(e) => handleIncludeUrlChange(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">
+                      {lang === 'zh' ? '包含 URL' : 
+                       lang === 'en' ? 'Include URL' : 
+                       lang === 'jp' ? 'URLを含める' : 
+                       'Incluir URL'}
+                    </span>
+                  </label>
+                </div>
+                
+                {/* Download button */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={downloadQRCode}
+                    className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors flex items-center justify-center"
+                    title={lang === 'zh' ? '下載 QR Code' : 
+                           lang === 'en' ? 'Download QR Code' : 
+                           lang === 'jp' ? 'QRコードをダウンロード' : 
+                           'Descargar código QR'}
+                  >
+                    <Download size={24} />
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {/* 返回按鈕 */}
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <button
+                onClick={() => {
+                  setShortUrl('');
+                  setFile(null);
+                  setLocalImageUrl('');
+                  setError('');
+                  setQrCodeUrl('');
+                  setShowQrCode(false);
+                  setIncludeUrl(false);
+                  setQrLoading(false);
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                  }
+                }}
+                className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
+              >
+                {t.backButton[lang]}
+              </button>
+            </div>
+            
+            {/* 自訂圖片網址按鈕 */}
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => {
+                  const baseUrl = 'https://vvrl.cc';
+                  const imageUrl = lang === 'zh' ? `${baseUrl}/zh/image` : 
+                                 lang === 'en' ? `${baseUrl}/image` :
+                                 lang === 'jp' ? `${baseUrl}/jp/image` :
+                                 lang === 'es' ? `${baseUrl}/es/image` :
+                                 `${baseUrl}/image`;
+                  window.open(imageUrl, '_blank');
+                }}
+                onAuxClick={(e) => {
+                  if (e.button === 1) { // 中鍵點擊
+                    const baseUrl = 'https://vvrl.cc';
+                    const imageUrl = lang === 'zh' ? `${baseUrl}/zh/image` : 
+                                   lang === 'en' ? `${baseUrl}/image` :
+                                   lang === 'jp' ? `${baseUrl}/jp/image` :
+                                   lang === 'es' ? `${baseUrl}/es/image` :
+                                   `${baseUrl}/image`;
+                    window.open(imageUrl, '_blank');
+                  }
+                }}
+                className="py-2 px-4 rounded-md transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
+                  color: 'white',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em'
+                }}
+              >
+                {t.customImageUrl[lang]}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

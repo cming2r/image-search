@@ -87,10 +87,10 @@ const headerTranslations = {
     es: "Servicio de Acortador de URL"
   },
   imageUrl: {
-    zh: "圖片網址產生器",
-    en: "Image URL Generator",
-    jp: "画像URLジェネレーター",
-    es: "Generador de URL de Imagen"
+    zh: "圖片URL",
+    en: "Image URL Shortener",
+    jp: "画像URL",
+    es: "Image URL Shortener"
   }
 };
 

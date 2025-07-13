@@ -1,10 +1,10 @@
 export const imageUrlTranslations = {
   meta: {
     title: {
-      zh: '圖片網址產生器',
-      en: 'Image URL Generator',
-      jp: '画像URLジェネレーター',
-      es: 'Generador de URL de Imagen'
+      zh: '圖片URL',
+      en: 'Image URL Shortener',
+      jp: '画像URL',
+      es: 'Image URL Shortener'
     },
     description: {
       zh: '免費上傳圖片，快速獲取永久連結，支援多種格式。',
@@ -110,97 +110,5 @@ export const imageUrlTranslations = {
         }
       ]
     }
-  },
-  ui: {
-    uploadTitle: {
-      zh: '上傳圖片',
-      en: 'Upload Image',
-      jp: '画像をアップロード',
-      es: 'Subir Imagen'
-    },
-    uploadDescription: {
-      zh: '選擇圖片檔案並上傳，立即獲取可分享的圖片網址',
-      en: 'Select image file and upload to get a shareable image URL instantly',
-      jp: '画像ファイルを選択してアップロードし、すぐに共有可能な画像URLを取得',
-      es: 'Selecciona un archivo de imagen y súbelo para obtener una URL de imagen compartible al instante'
-    },
-    selectFile: {
-      zh: '選擇檔案',
-      en: 'Select File',
-      jp: 'ファイルを選択',
-      es: 'Seleccionar Archivo'
-    },
-    upload: {
-      zh: '上傳',
-      en: 'Upload',
-      jp: 'アップロード',
-      es: 'Subir'
-    },
-    uploading: {
-      zh: '上傳中...',
-      en: 'Uploading...',
-      jp: 'アップロード中...',
-      es: 'Subiendo...'
-    },
-    result: {
-      zh: '圖片網址',
-      en: 'Image URL',
-      jp: '画像URL',
-      es: 'URL de Imagen'
-    },
-    copy: {
-      zh: '複製',
-      en: 'Copy',
-      jp: 'コピー',
-      es: 'Copiar'
-    },
-    copied: {
-      zh: '已複製！',
-      en: 'Copied!',
-      jp: 'コピーしました！',
-      es: '¡Copiado!'
-    },
-    supportedFormats: {
-      zh: '支援格式：JPEG, PNG, GIF, WebP (最大 10MB)',
-      en: 'Supported formats: JPEG, PNG, GIF, WebP (Max 10MB)',
-      jp: '対応形式：JPEG、PNG、GIF、WebP（最大10MB）',
-      es: 'Formatos compatibles: JPEG, PNG, GIF, WebP (Máx. 10MB)'
-    },
-    dragDrop: {
-      zh: '拖曳圖片到這裡、ctrl+V 貼上或',
-      en: 'Drag and drop image here, paste with ctrl+V, or',
-      jp: 'ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または',
-      es: 'Arrastra y suelta la imagen aquí, pega con ctrl+V, o'
-    },
-    clickUpload: {
-      zh: '點擊上傳',
-      en: 'click to upload',
-      jp: 'クリックしてアップロード',
-      es: 'haz clic para subir'
-    },
-    error: {
-      zh: '上傳失敗，請重試',
-      en: 'Upload failed, please try again',
-      jp: 'アップロードに失敗しました。再試行してください',
-      es: 'Error al subir, por favor inténtalo de nuevo'
-    },
-    success: {
-      zh: '上傳成功！',
-      en: 'Upload Successful!',
-      jp: 'アップロード成功！',
-      es: '¡Subida Exitosa!'
-    },
-    shortUrl: {
-      zh: '短網址',
-      en: 'Short URL',
-      jp: '短縮URL',
-      es: 'URL Corta'
-    },
-    preview: {
-      zh: '圖片預覽(beta)',
-      en: 'Image Preview(beta)',
-      jp: '画像プレビュー(beta)',
-      es: 'Vista Previa de Imagen(beta)'
-    },
   }
 };

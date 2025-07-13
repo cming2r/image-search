@@ -422,6 +422,15 @@ export default function ShortUrl() {
                   </div>
                 </div>
                 
+                {/* URL display below QR Code when not included in image */}
+                {!includeUrl && (
+                  <div className="text-center mt-3">
+                    <p className="text-sm text-gray-600">
+                      {shortUrl.replace('https://', '')}
+                    </p>
+                  </div>
+                )}
+                
                 {/* 包含 URL 選項 */}
                 <div className="flex justify-center mt-4 mb-3">
                   <label className="flex items-center cursor-pointer">
@@ -477,10 +486,24 @@ export default function ShortUrl() {
             {/* 自訂縮網址按鈕 */}
             <div className="mt-4 flex justify-center">
               <button
-                onClick={() => window.open('https://vvrl.cc/custom', '_blank')}
+                onClick={() => {
+                  const baseUrl = 'https://vvrl.cc';
+                  const customUrl = locale === 'zh' ? `${baseUrl}/zh/custom` : 
+                                   locale === 'en' ? `${baseUrl}/custom` :
+                                   locale === 'jp' ? `${baseUrl}/jp/custom` :
+                                   locale === 'es' ? `${baseUrl}/es/custom` :
+                                   `${baseUrl}/custom`;
+                  window.open(customUrl, '_blank');
+                }}
                 onAuxClick={(e) => {
                   if (e.button === 1) { // 中鍵點擊
-                    window.open('https://vvrl.cc/custom', '_blank');
+                    const baseUrl = 'https://vvrl.cc';
+                    const customUrl = locale === 'zh' ? `${baseUrl}/zh/custom` : 
+                                     locale === 'en' ? `${baseUrl}/custom` :
+                                     locale === 'jp' ? `${baseUrl}/jp/custom` :
+                                     locale === 'es' ? `${baseUrl}/es/custom` :
+                                     `${baseUrl}/custom`;
+                    window.open(customUrl, '_blank');
                   }
                 }}
                 className="py-2 px-4 rounded-md transition-all duration-300 hover:scale-105"
