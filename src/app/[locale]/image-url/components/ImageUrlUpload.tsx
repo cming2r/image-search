@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
 import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download } from 'lucide-react';
+import Toast from '@/components/Toast';
 
 const uiTranslations = {
   uploadTitle: {
@@ -11,6 +12,24 @@ const uiTranslations = {
     en: 'Upload Image',
     jp: '画像をアップロード',
     es: 'Subir Imagen'
+  },
+  processing: {
+    zh: '上傳中...',
+    en: 'Uploading...',
+    jp: 'アップロード中...',
+    es: 'Subiendo...'
+  },
+  successUpload: {
+    zh: '圖片上傳成功',
+    en: 'Image uploaded successfully',
+    jp: '画像が正常にアップロードされました',
+    es: 'Imagen subida exitosamente'
+  },
+  errorUpload: {
+    zh: '圖片上傳失敗，請稍後再試',
+    en: 'Failed to upload image, please try again later',
+    jp: '画像のアップロードに失敗しました。後でもう一度お試しください',
+    es: 'Error al subir la imagen, por favor inténtalo de nuevo más tarde'
   },
   uploading: {
     zh: '上傳中...',
@@ -74,7 +93,6 @@ interface ImageUrlUploadProps {
 
 export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
   const [shortUrl, setShortUrl] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [copied, setCopied] = useState(false);
@@ -84,6 +102,11 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const [showQrCode, setShowQrCode] = useState(false);
   const [includeUrl, setIncludeUrl] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
+  const [toast, setToast] = useState<{message: string; isVisible: boolean; type: 'success' | 'error' | 'info'}>({
+    message: '', 
+    isVisible: false, 
+    type: 'info'
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
@@ -93,8 +116,10 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     const fileToUpload = uploadFile || file;
     if (!fileToUpload) return;
 
-    setUploading(true);
     setError('');
+    
+    // 顯示處理中的 toast
+    setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
       const formData = new FormData();
@@ -109,16 +134,19 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
       if (result.success && result.data) {
         setShortUrl(result.data.shortUrl);
-        // Keep local image URL for preview in success section
+        // 顯示成功 toast
+        setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
       } else {
-        setError(result.error || t.error[lang]);
+        const errorMessage = result.error || t.error[lang];
+        setError(errorMessage);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
       }
     } catch {
-      setError(t.error[lang]);
-    } finally {
-      setUploading(false);
+      const errorMessage = t.error[lang];
+      setError(errorMessage);
+      setToast({message: errorMessage, isVisible: true, type: 'error'});
     }
-  }, [file, t.error, lang]);
+  }, [file, t.error, t.processing, t.successUpload, lang]);
 
   const handleFileSelect = useCallback(async (selectedFile: File) => {
     setFile(selectedFile);
@@ -298,9 +326,9 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
   return (
     <div>
-      {/* Upload Area - Hidden when upload is successful */}
-      {!shortUrl && (
-        <>
+      {!shortUrl ? (
+        // 未上傳成功時顯示上傳區域
+        <div className="space-y-6">
           <div className="mb-6">
             <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
               <Upload className="h-5 w-5 mr-2" />
@@ -310,7 +338,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
           {/* File Upload Area */}
           <div
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer min-h-[200px] flex flex-col justify-center ${
               isDragOver
                 ? 'border-blue-400 bg-blue-50'
                 : 'border-gray-300 hover:border-gray-400'
@@ -348,43 +376,34 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
           {/* Supported Formats */}
           <p className="text-sm text-gray-500 mt-3 text-center">{t.supportedFormats[lang]}</p>
-        </>
-      )}
 
-      {/* Uploading Status */}
-      {uploading && (
-        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
-          <p className="text-blue-800 text-sm flex items-center">
-            <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-800 mr-2 inline-block"></span>
-            {t.uploading[lang]}
-          </p>
+          {/* Error Messages - only show if not using toast */}
+          {error && !toast.isVisible && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+              <p className="text-red-800 text-sm">{error}</p>
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Error Message */}
-      {error && (
-        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-red-800 text-sm">{error}</p>
-        </div>
-      )}
-
-      {/* Results - Multiple sections like shorturl */}
-      {shortUrl && (
+      ) : (
+        // 上傳成功後顯示結果區域
         <div className="space-y-6">
           {/* Image Preview Section */}
           {file && localImageUrl && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-medium text-gray-900 mb-3">{t.preview[lang]}</h3>
               <div className="flex justify-center">
-                <div className="relative max-w-full max-h-64">
-                  <Image
-                    src={localImageUrl}
-                    alt="Uploaded image preview"
-                    width={400}
-                    height={300}
-                    className="max-w-full h-auto max-h-64 rounded-md shadow-sm"
-                    style={{ objectFit: 'contain' }}
-                  />
+                <div className="w-full max-w-md">
+                  <div className="border rounded p-4 bg-gray-50 flex justify-center relative">
+                    <div className="relative w-full h-48">
+                      <Image
+                        src={localImageUrl}
+                        alt="Uploaded image preview"
+                        fill
+                        className="object-contain"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -582,6 +601,16 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
           </div>
         </div>
       )}
+      
+      {/* Toast 通知 */}
+      <Toast 
+        message={toast.message}
+        isVisible={toast.isVisible}
+        type={toast.type}
+        onClose={() => setToast(prev => ({...prev, isVisible: false}))}
+        position="top-center"
+        duration={3000}
+      />
     </div>
   );
 }
