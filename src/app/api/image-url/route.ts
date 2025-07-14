@@ -1,5 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 獲取設備資訊的函數 - 重用 device-info API
+async function getDeviceInfo(request: NextRequest) {
+  try {
+    // 構造內部請求到 device-info API
+    const deviceInfoRequest = new NextRequest(
+      new URL('/api/device-info', request.url),
+      {
+        method: 'GET',
+        headers: request.headers
+      }
+    );
+    
+    // 動態導入 device-info API 的處理函數
+    const { GET: deviceInfoHandler } = await import('../device-info/route');
+    const deviceInfoResponse = await deviceInfoHandler(deviceInfoRequest);
+    
+    if (deviceInfoResponse.ok) {
+      const deviceInfo = await deviceInfoResponse.json();
+      return {
+        device_type: deviceInfo.device_type,
+        browser: deviceInfo.browser,
+        os: deviceInfo.os,
+        country_code: deviceInfo.country_code,
+        ip_address: deviceInfo.ip_address
+      };
+    } else {
+      throw new Error('Device info API failed');
+    }
+  } catch (error) {
+    console.error('Device info detection error:', error);
+    return {
+      device_type: 'Unknown',
+      browser: 'Unknown',
+      os: 'Unknown',
+      country_code: 'XX',
+      ip_address: ''
+    };
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     // Parse FormData
@@ -7,6 +47,7 @@ export async function POST(req: NextRequest) {
     const file = formData.get('file') as File | null;
     const password = formData.get('password') as string | null;
     const shortCode = formData.get('shortCode') as string | null;
+    const userInfoString = formData.get('userInfo') as string | null;
     
     if (!file) {
       return NextResponse.json(
@@ -59,6 +100,32 @@ export async function POST(req: NextRequest) {
     
     if (shortCode) {
       vvrlFormData.append('shortCode', shortCode);
+    }
+    
+    // 處理用戶設備資訊
+    let userInfo: {
+      device_type: string;
+      browser: string;
+      os: string;
+      country_code: string;
+      ip_address: string;
+    } | null = null;
+    if (userInfoString) {
+      try {
+        userInfo = JSON.parse(userInfoString);
+      } catch (error) {
+        console.error('Invalid userInfo JSON:', error);
+        // 如果 JSON 解析失敗，使用自動檢測
+        userInfo = await getDeviceInfo(req);
+      }
+    } else {
+      // 如果沒有提供 userInfo，自動檢測
+      userInfo = await getDeviceInfo(req);
+    }
+    
+    // 將設備資訊添加到 FormData
+    if (userInfo) {
+      vvrlFormData.append('userInfo', JSON.stringify(userInfo));
     }
     
     // Call vvrl.cc API

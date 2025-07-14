@@ -1,9 +1,49 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 獲取設備資訊的函數 - 內部調用 device-info API
+async function getDeviceInfo(request: NextRequest) {
+  try {
+    // 構造內部請求到 device-info API
+    const deviceInfoRequest = new NextRequest(
+      new URL('/api/device-info', request.url),
+      {
+        method: 'GET',
+        headers: request.headers
+      }
+    );
+    
+    // 動態導入 device-info API 的處理函數
+    const { GET: deviceInfoHandler } = await import('../device-info/route');
+    const deviceInfoResponse = await deviceInfoHandler(deviceInfoRequest);
+    
+    if (deviceInfoResponse.ok) {
+      const deviceInfo = await deviceInfoResponse.json();
+      return {
+        device_type: deviceInfo.device_type,
+        browser: deviceInfo.browser,
+        os: deviceInfo.os,
+        country_code: deviceInfo.country_code,
+        ip_address: deviceInfo.ip_address
+      };
+    } else {
+      throw new Error('Device info API failed');
+    }
+  } catch (error) {
+    console.error('Device info detection error:', error);
+    return {
+      device_type: 'Unknown',
+      browser: 'Unknown',
+      os: 'Unknown',
+      country_code: 'XX',
+      ip_address: ''
+    };
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { url, customCode } = body;
+    const { url, customCode, userInfo } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -13,9 +53,29 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare request body for external API
-    const requestBody: { url: string; customCode?: string } = { url };
+    const requestBody: { 
+      url: string; 
+      customCode?: string; 
+      userInfo?: {
+        device_type: string;
+        browser: string;
+        os: string;
+        country_code: string;
+        ip_address: string;
+      }
+    } = { url };
+    
     if (customCode) {
       requestBody.customCode = customCode;
+    }
+    
+    // 如果客戶端提供了 userInfo，使用它；否則自動檢測
+    if (userInfo) {
+      requestBody.userInfo = userInfo;
+    } else {
+      // 自動檢測設備資訊
+      const detectedUserInfo = await getDeviceInfo(request);
+      requestBody.userInfo = detectedUserInfo;
     }
 
     // Call external API
