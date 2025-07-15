@@ -16,8 +16,7 @@ export default function LoginPage() {
     try {
       await supabase.auth.signOut();
       window.location.href = '/'; // 重定向到首頁
-    } catch (err) {
-      console.log('登出失敗:', err);
+    } catch {
       // 即使登出失敗，仍然嘗試跳轉到首頁
       window.location.href = '/';
     }
@@ -30,7 +29,6 @@ export default function LoginPage() {
         // 檢查 hash 中是否有 access_token（Supabase OAuth 回調）
         const hash = window.location.hash;
         if (hash && hash.includes('access_token')) {
-          console.log('檢測到 OAuth 回調，處理登入...');
           
           try {
             // 手動處理 OAuth 回調
@@ -45,7 +43,6 @@ export default function LoginPage() {
             }
             
             // 如果成功獲取 session，讓 checkAuthStatus 處理後續邏輯
-            console.log('OAuth 回調處理成功，等待身份驗證檢查...');
             // 清除 URL 中的 hash
             window.history.replaceState({}, document.title, window.location.pathname);
             return;
@@ -61,14 +58,11 @@ export default function LoginPage() {
         const error = urlParams.get('error');
         
         if (error === 'not_admin') {
-          console.log('非管理員帳戶嘗試訪問管理頁面');
           setLoginError('您的帳戶沒有管理員權限，將在5秒後自動登出並返回首頁');
           setCountdown(5);
         } else if (error === 'auth_check_failed') {
-          console.log('身份驗證檢查失敗');
           setLoginError('身份驗證檢查失敗，請稍後再試');
         } else if (error) {
-          console.log(`登入錯誤: ${error}`);
           setLoginError('登入過程中發生錯誤，請稍後再試');
         }
       }
@@ -81,12 +75,10 @@ export default function LoginPage() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        console.log('檢查登入狀態...');
         
         // 如果 URL 中有 hash token，先等待一下讓 Supabase 處理
         const hash = window.location.hash;
         if (hash && hash.includes('access_token')) {
-          console.log('等待 Supabase 處理 OAuth 回調...');
           // 給 Supabase 時間處理 hash 中的 token
           await new Promise(resolve => setTimeout(resolve, 1000));
         }
@@ -94,7 +86,6 @@ export default function LoginPage() {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session) {
-          console.log('用戶已登入，檢查是否為管理員');
           // 管理員電子郵件列表
           const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',') || [];
           
@@ -102,23 +93,16 @@ export default function LoginPage() {
           const userEmail = session.user.email;
           const isAdminUser = userEmail ? adminEmails.includes(userEmail) : false;
           
-          console.log('User email:', userEmail);
-          console.log('Is admin:', isAdminUser);
-          console.log('Admin emails:', adminEmails);
           
           if (isAdminUser) {
-            console.log('用戶是管理員，重定向到管理頁面');
             router.push('/admin');
           } else {
-            console.log('用戶不是管理員，開始倒數計時');
             setLoginError('您的帳戶沒有管理員權限，將在5秒後自動登出並返回首頁');
             setCountdown(5);
           }
         } else {
-          console.log('用戶未登入');
         }
-      } catch (err) {
-        console.log('檢查身份驗證狀態失敗:', err);
+      } catch {
       } finally {
         setIsCheckingAuth(false);
       }
@@ -173,7 +157,6 @@ export default function LoginPage() {
         window.location.href = data.url;
       }
     } catch (error) {
-      console.log('登入失敗詳細資訊:', error);
       // 輸出更詳細的錯誤日誌
       console.error('登入失敗:', {
         error,
@@ -200,8 +183,7 @@ export default function LoginPage() {
     try {
       await supabase.auth.signOut();
       window.location.reload(); // 重新載入頁面
-    } catch (err) {
-      console.log('登出失敗:', err);
+    } catch {
     }
   };
 

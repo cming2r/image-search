@@ -88,7 +88,6 @@ export async function POST(req: NextRequest) {
       );
     }
     
-    console.log('API Key found:', apiKey.substring(0, 8) + '...');
     
     // Prepare form data for vvrl.cc API
     const vvrlFormData = new FormData();
@@ -129,7 +128,6 @@ export async function POST(req: NextRequest) {
     }
     
     // Call vvrl.cc API
-    console.log('Calling vvrl.cc API...');
     const response = await fetch('https://vvrl.cc/api/external/image/upload', {
       method: 'POST',
       headers: {
@@ -138,9 +136,7 @@ export async function POST(req: NextRequest) {
       body: vvrlFormData,
     });
     
-    console.log('vvrl.cc API response status:', response.status);
     const result = await response.json();
-    console.log('vvrl.cc API response:', result);
     
     if (!response.ok) {
       // Handle different error status codes

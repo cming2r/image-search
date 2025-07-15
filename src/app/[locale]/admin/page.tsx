@@ -50,37 +50,30 @@ export default function AdminPage() {
       try {
         // 獲取當前 session
         const { data: { session } } = await supabase.auth.getSession();
-        console.log('Auth session:', session ? '有會話' : '無會話');
         
         if (session) {
           setIsAuthenticated(true);
           
           // 管理員電子郵件列表
           const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',') || [];
-          console.log('Admin emails:', adminEmails);
           
           // 檢查用戶是否為管理員 (檢查電子郵件)
           const userEmail = session.user.email;
           const isAdminUser = userEmail ? adminEmails.includes(userEmail) : false;
           
-          console.log('User email:', userEmail);
-          console.log('Is admin:', isAdminUser);
           
           setIsAdmin(isAdminUser);
           
           // 如果不是管理員，重定向到登入頁面
           if (!isAdminUser) {
-            console.log('用戶不是管理員，重定向到登入頁面');
-            window.location.href = '/admin/login?error=not_admin'; // 使用window.location以確保完整頁面刷新
+              window.location.href = '/admin/login?error=not_admin'; // 使用window.location以確保完整頁面刷新
           }
         } else {
           setIsAuthenticated(false);
           setIsAdmin(false);
-          console.log('用戶未登入，重定向到登入頁面');
           window.location.href = '/admin/login';
         }
-      } catch (err) {
-        console.log('檢查身份驗證狀態失敗:', err);
+      } catch {
         setIsAuthenticated(false);
         setIsAdmin(false);
         window.location.href = '/admin/login?error=auth_check_failed';
@@ -93,7 +86,6 @@ export default function AdminPage() {
     
     // 監聽身份驗證狀態變化
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session: Session | null) => {
-      console.log('Auth state changed:', event);
       
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         setIsAuthenticated(true);
@@ -106,15 +98,12 @@ export default function AdminPage() {
           const userEmail = session.user.email;
           const isAdminUser = userEmail ? adminEmails.includes(userEmail) : false;
           
-          console.log('User email:', userEmail);
-          console.log('Is admin:', isAdminUser);
           
           setIsAdmin(isAdminUser);
           
           // 如果不是管理員，重定向到登入頁面
           if (!isAdminUser) {
-            console.log('用戶不是管理員，重定向到登入頁面');
-            window.location.href = '/admin/login?error=not_admin'; // 使用window.location以確保完整頁面刷新
+              window.location.href = '/admin/login?error=not_admin'; // 使用window.location以確保完整頁面刷新
           }
         }
       } else if (event === 'SIGNED_OUT') {
@@ -149,7 +138,6 @@ export default function AdminPage() {
       setError(null);
       
       try {
-        console.log('開始獲取搜尋記錄...');
         
         // 檢查表是否存在
         const { error: tableError } = await supabase
@@ -157,13 +145,11 @@ export default function AdminPage() {
           .select('id', { count: 'exact', head: true });
           
         if (tableError) {
-          console.log('檢查數據表錯誤:', tableError);
           
           // 檢查是否是權限錯誤 (RLS)
           if (tableError.code === 'PGRST301' || 
               tableError.message?.includes('permission denied') || 
               tableError.message?.includes('access denied')) {
-            console.log('這似乎是 Row-Level Security (RLS) 權限問題');
             supabase.auth.getUser().then(({ data: { user }}) => {
               setError(`權限錯誤: 你的帳戶 (${user?.email}) 沒有權限訪問數據表。請確保 Supabase 後端已將此帳戶設置為管理員。`);
             });
@@ -200,16 +186,13 @@ export default function AdminPage() {
           .select('*', { count: 'exact', head: true });
         
         if (countError) {
-          console.log('獲取記錄總數錯誤:', countError);
           throw countError;
         }
           
         if (count !== null) {
-          console.log(`總記錄數: ${count}`);
           setTotalRecords(count);
           setTotalPages(Math.ceil(count / recordsPerPage));
         } else {
-          console.log('沒有獲取到記錄總數');
         }
         
         // 獲取當前頁的記錄
@@ -220,14 +203,11 @@ export default function AdminPage() {
           .range(from, to);
         
         if (dataError) {
-          console.log('獲取記錄數據錯誤:', dataError);
           throw dataError;
         }
         
-        console.log(`獲取到 ${data?.length || 0} 條記錄`);
         setSearches(data || []);
       } catch (err) {
-        console.log('加載搜尋記錄失敗:', err);
         setError('加載搜尋記錄時發生錯誤: ' + (err instanceof Error ? err.message : String(err)));
       } finally {
         setIsLoading(false);

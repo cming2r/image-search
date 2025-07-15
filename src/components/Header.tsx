@@ -133,14 +133,7 @@ const Header: FC = () => {
     // 初始檢查
     const checkAuthStatus = async () => {
       try {
-        console.log('Header: 檢查用戶登入狀態...');
-        
         const { data: { session } } = await supabase.auth.getSession();
-        console.log('Header: 會話檢查結果:', !!session);
-        
-        if (session) {
-          console.log(`Header: 用戶已登入: ${session.user.email}`);
-        }
         
         setIsLoggedIn(!!session);
       } catch (err) {
@@ -152,13 +145,7 @@ const Header: FC = () => {
     checkAuthStatus();
     
     // 設置監聽器，當身份驗證狀態發生變化時觸發
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-      console.log(`Header: 身份驗證狀態變化, 事件=${event}, 是否有會話=${!!session}`);
-      
-      if (session) {
-        console.log(`Header: 用戶已登入: ${session.user.email}`);
-      }
-      
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
       setIsLoggedIn(!!session);
     });
     

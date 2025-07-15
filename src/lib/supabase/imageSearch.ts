@@ -73,9 +73,6 @@ function prepareRecordData(imageUrl: string, searchEngine?: string | string[]) {
 
 // 保存或更新搜索记录函数 - 使用原子更新操作
 export async function saveSearchRecord(record: SearchRecord) {
-  if (process.env.NODE_ENV === 'development') {
-    console.log('正在保存搜索记录:', record);
-  }
   
   try {
     // 获取完整的設備資訊（包括 IP、地理位置等）
@@ -126,9 +123,6 @@ export async function saveSearchRecord(record: SearchRecord) {
 // 记录图片上传或URL输入，初始搜索引擎为空数组
 export async function saveImageUrl(imageUrl: string) {
   try {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('保存图片URL:', imageUrl);
-    }
     
     // 获取完整的設備資訊（包括 IP、地理位置等）
     const deviceInfo = await fetchDeviceInfo();
@@ -159,12 +153,6 @@ export async function saveImageUrl(imageUrl: string) {
       return { success: false, error: rpcError };
     }
     
-    if (process.env.NODE_ENV === 'development') {
-      console.log('初始图片记录创建成功', {
-        ip_address: ip_address || '(无)',
-        country_code: country_code || '(无)'
-      });
-    }
     return { success: true };
   } catch (error) {
     console.error('保存图片URL时出现异常:', error);
