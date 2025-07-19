@@ -157,8 +157,8 @@ const Header: FC = () => {
   // 監聽螢幕寬度變化，使用防抖優化性能
   useEffect(() => {
     const handleResize = debounce(() => {
-      // 當螢幕寬度大於等於 768px 時自動關閉行動版選單
-      if (window.innerWidth >= 768) {
+      // 當螢幕寬度大於等於 1024px 時自動關閉行動版選單
+      if (window.innerWidth >= 1024) {
         setIsMenuOpen(false);
       }
     }, 200);
@@ -191,7 +191,7 @@ const Header: FC = () => {
           </div>
           
           {/* 中間的導航菜單 */}
-          <nav className="hidden md:flex items-center justify-center flex-grow mx-8">
+          <nav className="hidden lg:flex items-center justify-center flex-grow mx-8">
             <div className="flex space-x-8">
               <Link href={`/${locale === 'zh' ? '' : locale + '/'}image-search`}
                 className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
@@ -328,7 +328,7 @@ const Header: FC = () => {
             {/* 聯絡我們圖標 - 手機版放在選單按鈕左邊 */}
             <Link 
               href="/contact" 
-              className="md:hidden mr-4 text-gray-600 hover:text-blue-600 transition-colors"
+              className="lg:hidden mr-4 text-gray-600 hover:text-blue-600 transition-colors"
               aria-label="聯絡我們"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -338,7 +338,7 @@ const Header: FC = () => {
             
             {/* 登入狀態 Google 圖標和登出按鈕 - 手機版 */}
             {isLoggedIn && (
-              <div className="md:hidden flex items-center">
+              <div className="lg:hidden flex items-center">
                 <Link 
                   href="/admin" 
                   className="mr-3 text-gray-600 hover:text-blue-600 transition-colors"
@@ -378,7 +378,7 @@ const Header: FC = () => {
             
             {/* 行動版選單按鈕 */}
             <button 
-              className="md:hidden flex items-center"
+              className="lg:hidden flex items-center"
               onClick={toggleMenu}
               aria-label={isMenuOpen ? '關閉選單' : '開啟選單'}
               aria-expanded={isMenuOpen}
@@ -401,7 +401,7 @@ const Header: FC = () => {
             {/* 聯絡我們圖標 - 桌面版放在最右邊 */}
             <Link 
               href={`/${locale === 'zh' ? '' : locale + '/'}contact`}
-              className="hidden md:block text-gray-600 hover:text-blue-600 transition-colors"
+              className="hidden lg:block text-gray-600 hover:text-blue-600 transition-colors"
               aria-label={getTranslation('contact')}
               title={getTranslation('contact')}
             >
@@ -415,7 +415,7 @@ const Header: FC = () => {
               <>
                 <Link 
                   href="/admin" 
-                  className="hidden md:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
+                  className="hidden lg:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
                   aria-label={getTranslation('admin')}
                   title={getTranslation('admin')}
                 >
@@ -439,7 +439,7 @@ const Header: FC = () => {
                       console.error('登出失敗:', err);
                     }
                   }}
-                  className="hidden md:block ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
+                  className="hidden lg:block ml-3 text-gray-600 hover:text-red-600 transition-colors tooltip"
                   aria-label={getTranslation('logout')}
                   title={getTranslation('logout')}
                 >
@@ -454,17 +454,9 @@ const Header: FC = () => {
         
         {/* 行動版下拉選單 */}
         <div 
-          className={`md:hidden bg-white py-4 mt-2 rounded-lg shadow-lg border border-gray-100 transform transition-transform duration-200 ease-in-out ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 hidden'}`}
+          className={`lg:hidden py-4 mt-2 transform transition-transform duration-200 ease-in-out ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 hidden'}`}
           role="navigation"
         >
-            {/* 行動版語言切換器 */}
-            <div className="px-4 py-2 mb-3 border-b border-gray-100">
-              <p className="text-sm text-gray-500 mb-2">選擇語言:</p>
-              <LanguageSwitcher 
-                currentLocale={locale} 
-                className="text-sm flex justify-start" 
-              />
-            </div>
             
             <ul className="flex flex-col space-y-3">
               <li>
