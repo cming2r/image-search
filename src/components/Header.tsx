@@ -91,6 +91,12 @@ const headerTranslations = {
     en: "Image URL Shortener",
     jp: "画像URL",
     es: "Image URL Shortener"
+  },
+  fileUrl: {
+    zh: "檔案URL",
+    en: "File URL Shortener",
+    jp: "ファイルURL",
+    es: "File URL Shortener"
   }
 };
 
@@ -309,6 +315,13 @@ const Header: FC = () => {
                     role="menuitem"
                   >
                     {getTranslation('imageUrl')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('fileUrl')}
                   </Link>
                 </div>
               </div>
@@ -604,6 +617,13 @@ const Header: FC = () => {
                     onClick={closeMenu}
                   >
                     {getTranslation('imageUrl')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('fileUrl')}
                   </Link>
                 </div>
               </li>

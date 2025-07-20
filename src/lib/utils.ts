@@ -109,6 +109,11 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-06-26 21:00:51 +0800",
     routePath: "/gift-exchange",
   },
+  "/src/app/[locale]/file-url/page.tsx": {
+    created: "2025-07-20T14:17:22.414Z",
+    modified: "2025-07-20T14:17:22.415Z",
+    routePath: "/file-url",
+  },
   "/src/app/[locale]/due-date-calculator/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-06-26 21:00:51 +0800",

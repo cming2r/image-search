@@ -123,6 +123,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       supportedLanguages: ['zh', 'en', 'es', 'ja']
     },
     { 
+      path: '/image-url', 
+      name: '圖片網址',
+      priority: 0.7,
+      changeFrequency: 'weekly', 
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
+    },
+    { 
+      path: '/file-url', 
+      name: '檔案網址',
+      priority: 0.7,
+      changeFrequency: 'weekly', 
+      supportedLanguages: ['zh', 'en', 'es', 'ja']
+    },
+    { 
       path: '/contact', 
       name: '聯繫我們',
       priority: 0.5,
