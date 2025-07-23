@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { cleanupOldImages } from '@/lib/blob';
-import { generatePreviousDayStats } from '@/lib/supabase/dailyStats';
 
 
 // 驗證請求是否來自 Vercel Cron
@@ -60,24 +59,13 @@ export async function GET(request: Request) {
     }
     
     // 使用 blob.ts 中的 cleanupOldImages 函數（批次處理，每次最多100個檔案）
-    const cleanupResult = await cleanupOldImages(24, 100);
+    const result = await cleanupOldImages(24, 100);
     
-    // 產生前一日的搜尋統計
-    console.log('開始產生前一日統計...');
-    const statsResult = await generatePreviousDayStats();
-    
-    // 準備回應結果
-    const result = {
-      cleanup: cleanupResult,
-      dailyStats: {
-        success: statsResult,
-        message: statsResult ? '前一日統計產生成功' : '前一日統計產生失敗'
-      },
+    // 返回清理結果
+    return NextResponse.json({
+      ...result,
       timestamp: new Date().toISOString()
-    };
-    
-    // 返回結合的結果
-    return NextResponse.json(result);
+    });
     
   } catch (error) {
     console.error('清理檔案時發生錯誤:', error);
