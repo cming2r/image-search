@@ -63,12 +63,27 @@ export async function cleanupOldImages(
     const cutoffDate = new Date();
     cutoffDate.setHours(cutoffDate.getHours() - hoursOld);
     
-    // 列出所有 blob
-    const { blobs } = await list();
-    console.log(`找到 ${blobs.length} 個檔案`);
+    // 列出所有 blob（使用分頁獲取完整列表）
+    let allBlobs: BlobWithContentType[] = [];
+    let cursor: string | undefined;
+    let hasMore = true;
+    
+    console.log('開始獲取所有檔案列表...');
+    while (hasMore) {
+      const listOptions = cursor ? { cursor } : {};
+      const { blobs, cursor: nextCursor, hasMore: more } = await list(listOptions);
+      
+      allBlobs = allBlobs.concat(blobs as unknown as BlobWithContentType[]);
+      cursor = nextCursor;
+      hasMore = more;
+      
+      console.log(`已獲取 ${allBlobs.length} 個檔案...`);
+    }
+    
+    console.log(`總共找到 ${allBlobs.length} 個檔案`);
     
     // 刪除前的數量
-    const initialCount = blobs.length;
+    const initialCount = allBlobs.length;
     
     // 刪除操作計數和結果
     let deletedCount = 0;
@@ -81,8 +96,8 @@ export async function cleanupOldImages(
       error?: string;
     }> = [];
     
-    // 過濾出需要刪除的檔案
-    const filesToDelete = (blobs as unknown as BlobWithContentType[])
+    // 過濾出需要刪除的檔案，並按時間排序（最舊的優先）
+    const filesToDelete = allBlobs
       .filter(blob => {
         // 檢查是否是圖片（根據 pathname 或 contentType）
         const isImage = blob.pathname.match(/\.(jpg|jpeg|png|gif|webp)$/i) || 
@@ -93,6 +108,10 @@ export async function cleanupOldImages(
         const isOld = createdAt < cutoffDate;
         
         return isImage && isOld;
+      })
+      .sort((a, b) => {
+        // 按上傳時間排序：最舊的在前面
+        return new Date(a.uploadedAt).getTime() - new Date(b.uploadedAt).getTime();
       })
       .slice(0, maxBatch); // 限制批次大小
     

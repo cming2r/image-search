@@ -58,8 +58,8 @@ export async function GET(request: Request) {
       );
     }
     
-    // 使用 blob.ts 中的 cleanupOldImages 函數（批次處理，每次最多5000個檔案）
-    const result = await cleanupOldImages(24, 5000);
+    // 使用 blob.ts 中的 cleanupOldImages 函數（批次處理，每次最多1000個檔案）
+    const result = await cleanupOldImages(4, 1000);
     
     // 返回清理結果
     return NextResponse.json({
