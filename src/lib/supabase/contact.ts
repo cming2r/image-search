@@ -53,6 +53,21 @@ export interface DeviceInfo {
 }
 
 /**
+ * 資料庫插入資料介面
+ */
+interface ContactMessageInsert {
+  name: string;
+  email: string;
+  message: string;
+  created_at: string;
+  device_type?: string;
+  browser?: string;
+  os?: string;
+  country_code?: string;
+  ip_address?: string;
+}
+
+/**
  * 保存联系表单消息到数据库
  * @param data 表单数据
  * @param deviceInfo 設備資訊
@@ -73,21 +88,18 @@ export async function saveContactMessage(data: ContactFormData, deviceInfo?: Dev
     const { name, email, message } = data;
     
     // 準備插入資料
-    const insertData: any = {
-      name,
-      email,
-      message,
-      created_at: new Date().toISOString()
+    const insertData: ContactMessageInsert = {
+      name: name!, // 通過驗證後確保存在
+      email: email || '', // email 可以為空字符串
+      message: message!, // 通過驗證後確保存在
+      created_at: new Date().toISOString(),
+      // 如果有設備資訊，則添加到插入資料中
+      device_type: deviceInfo?.device_type,
+      browser: deviceInfo?.browser,
+      os: deviceInfo?.os,
+      country_code: deviceInfo?.country_code,
+      ip_address: deviceInfo?.ip_address
     };
-
-    // 如果有設備資訊，則添加到插入資料中
-    if (deviceInfo) {
-      insertData.device_type = deviceInfo.device_type;
-      insertData.browser = deviceInfo.browser;
-      insertData.os = deviceInfo.os;
-      insertData.country_code = deviceInfo.country_code;
-      insertData.ip_address = deviceInfo.ip_address;
-    }
 
     // 存储到 Supabase
     const { error } = await supabase

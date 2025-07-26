@@ -83,7 +83,11 @@ NEXT_PUBLIC_ADMIN_EMAILS=admin1@example.com,admin2@example.com
 - **Due Date Calculator**: Pregnancy timeline calculator
 - **Gift Exchange**: Random participant assignment with unique IDs
 - **Short URL**: URL shortening service with click tracking
+- **Image URL**: Image file upload with short URL generation (Cloudflare R2)
+- **Video URL**: Video file upload with streaming and short URL generation (Bunny.net)
+- **File URL**: General file upload with short URL generation (Cloudflare R2)
 - **Color Picker**: Color selection and conversion tool
+- **Contact Form**: User inquiry form with device info tracking
 
 ### Database Schema (Supabase)
 ```sql
@@ -100,12 +104,17 @@ CREATE TABLE image_searches (
   ip_address TEXT
 );
 
--- Table for storing contact form messages
+-- Table for storing contact form messages with device tracking
 CREATE TABLE contact_messages (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   message TEXT NOT NULL,
+  device_type TEXT,
+  browser TEXT,
+  os TEXT,
+  country_code TEXT,
+  ip_address TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
@@ -133,9 +142,16 @@ CREATE TABLE gift_exchange_wheel (
 - Static file and API route bypassing
 - Special handling for auth callbacks
 
+### Device Information Tracking
+- **Automatic Collection**: All upload forms and contact form collect device info via `/api/device-info`
+- **Data Points**: Device type (desktop/mobile/tablet), browser, OS, country code, IP address
+- **Privacy**: IP addresses are anonymized for privacy compliance
+- **Fallback**: Forms work even if device info collection fails
+
 ### Important Notes
 - All user-facing content is multilingual (zh/en/jp/es)
 - SEO dates are automatically maintained via Git integration
-- Image uploads are limited to 5MB
+- Image uploads are limited to 5MB, video uploads to 100MB, general files to 15MB
 - Admin areas require Supabase authentication
 - All API routes include proper error handling and validation
+- Device information is automatically tracked for analytics and debugging
