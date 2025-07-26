@@ -3,12 +3,12 @@ import { videoUrlTranslations } from './components/meta-translations';
 
 interface VideoUrlLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const locale = params.locale || 'zh';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const lang = (locale || 'zh') as 'zh' | 'en' | 'jp' | 'es';
   
   const translations = videoUrlTranslations.meta;
   
