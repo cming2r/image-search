@@ -97,6 +97,12 @@ const headerTranslations = {
     en: "File URL Shortener",
     jp: "ファイルURL",
     es: "File URL Shortener"
+  },
+  videoUrl: {
+    zh: "影片URL",
+    en: "Video URL",
+    jp: "動画URL",
+    es: "Video URL"
   }
 };
 
@@ -182,7 +188,7 @@ const Header: FC = () => {
   }, []);
   
   return (
-    <header className="bg-white shadow-sm block">
+    <header className="bg-white shadow-sm block relative z-50">
       <div className="container mx-auto px-4 py-4 block">
         <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
           {/* 左側 Logo */}
@@ -315,6 +321,13 @@ const Header: FC = () => {
                     role="menuitem"
                   >
                     {getTranslation('imageUrl')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}video-url`}
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('videoUrl')}
                   </Link>
                   <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
@@ -617,6 +630,13 @@ const Header: FC = () => {
                     onClick={closeMenu}
                   >
                     {getTranslation('imageUrl')}
+                  </Link>
+                  <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}video-url`}
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('videoUrl')}
                   </Link>
                   <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}

@@ -5,9 +5,10 @@ export async function POST(req: Request) {
   try {
     // 解析请求体
     const body = await req.json();
+    const { deviceInfo, ...formData } = body;
     
-    // 使用模块化函数保存联系表单消息
-    const result = await saveContactMessage(body as ContactFormData);
+    // 使用模块化函数保存联系表单消息，包含設備資訊
+    const result = await saveContactMessage(formData as ContactFormData, deviceInfo);
     
     if (!result.success) {
       // 验证失败

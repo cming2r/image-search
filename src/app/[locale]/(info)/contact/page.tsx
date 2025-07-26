@@ -124,6 +124,17 @@ export default function Contact() {
         }
       }
 
+      // 獲取設備資訊
+      let deviceInfo = null;
+      try {
+        const deviceResponse = await fetch('/api/device-info');
+        if (deviceResponse.ok) {
+          deviceInfo = await deviceResponse.json();
+        }
+      } catch (error) {
+        console.warn('Failed to get device info:', error);
+      }
+
       // 提交到 API 端點
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -133,7 +144,8 @@ export default function Contact() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          message: formData.message
+          message: formData.message,
+          deviceInfo: deviceInfo
         }),
       });
 

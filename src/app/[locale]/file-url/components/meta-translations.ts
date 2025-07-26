@@ -7,10 +7,10 @@ export const fileUrlTranslations = {
       es: 'Generador de URL de Archivo'
     },
     description: {
-      zh: '免費檔案網址產生器，支援多種檔案格式上傳並產生短網址連結。快速分享文件、圖片、音訊、影片等檔案，支援密碼保護，安全可靠。',
-      en: 'Free file URL generator supporting multiple file formats to upload and generate short URL links. Quickly share documents, images, audio, videos and other files with password protection, safe and reliable.',
-      jp: '複数のファイル形式をサポートし、ショートURLリンクを生成する無料ファイルURLジェネレーター。文書、画像、音声、動画などのファイルを素早く共有でき、パスワード保護に対応し、安全で信頼性があります。',
-      es: 'Generador gratuito de URL de archivos que admite múltiples formatos de archivo para cargar y generar enlaces de URL cortas. Comparte rápidamente documentos, imágenes, audio, videos y otros archivos con protección por contraseña, seguro y confiable.'
+      zh: '免費檔案網址產生器，快速分享文件、圖片、音訊、影片等檔案。',
+      en: 'Free file URL generator, quickly share documents, images, audio, videos and other files.',
+      jp: '無料ファイルURLジェネレーター、文書、画像、音声、動画などのファイルを素早く共有。',
+      es: 'Generador gratuito de URL de archivos, comparte rápidamente documentos, imágenes, audio, videos y otros archivos.'
     }
   },
   faq: {

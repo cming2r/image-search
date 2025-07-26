@@ -328,9 +328,9 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     <div>
       {!shortUrl ? (
         // 未上傳成功時顯示上傳區域
-        <div className="space-y-6">
-          <div className="mb-6">
-            <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+        <div className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-medium text-gray-800 flex items-center">
               <Upload className="h-5 w-5 mr-2" />
               {t.uploadTitle[lang]}
             </h2>
@@ -356,9 +356,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               className="hidden"
             />
             
-            <div className="mb-4">
-              <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
-            </div>
+            <ImageIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             
             {file ? (
               <div className="mb-4">

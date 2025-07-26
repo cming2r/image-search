@@ -42,11 +42,23 @@ export function validateContactForm(data: ContactFormData) {
 }
 
 /**
+ * 設備資訊介面
+ */
+export interface DeviceInfo {
+  device_type?: string;
+  browser?: string;
+  os?: string;
+  country_code?: string;
+  ip_address?: string;
+}
+
+/**
  * 保存联系表单消息到数据库
  * @param data 表单数据
+ * @param deviceInfo 設備資訊
  * @returns 保存结果
  */
-export async function saveContactMessage(data: ContactFormData) {
+export async function saveContactMessage(data: ContactFormData, deviceInfo?: DeviceInfo) {
   try {
     // 验证数据
     const validation = validateContactForm(data);
@@ -60,17 +72,27 @@ export async function saveContactMessage(data: ContactFormData) {
     
     const { name, email, message } = data;
     
+    // 準備插入資料
+    const insertData: any = {
+      name,
+      email,
+      message,
+      created_at: new Date().toISOString()
+    };
+
+    // 如果有設備資訊，則添加到插入資料中
+    if (deviceInfo) {
+      insertData.device_type = deviceInfo.device_type;
+      insertData.browser = deviceInfo.browser;
+      insertData.os = deviceInfo.os;
+      insertData.country_code = deviceInfo.country_code;
+      insertData.ip_address = deviceInfo.ip_address;
+    }
+
     // 存储到 Supabase
     const { error } = await supabase
       .from('contact_messages')
-      .insert([
-        { 
-          name,
-          email,
-          message,
-          created_at: new Date().toISOString()
-        }
-      ]);
+      .insert([insertData]);
     
     if (error) {
       console.error('Supabase 存储错误:', error);
