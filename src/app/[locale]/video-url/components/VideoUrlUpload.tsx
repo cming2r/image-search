@@ -206,7 +206,19 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
         body: formData,
       });
 
-      const responseData = await response.json();
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (parseError) {
+        console.error('Failed to parse response as JSON:', parseError);
+        const errorMessage = lang === 'zh' ? '服務器回應格式錯誤' :
+                             lang === 'en' ? 'Invalid server response format' :
+                             lang === 'jp' ? 'サーバーレスポンス形式エラー' :
+                             'Formato de respuesta del servidor inválido';
+        setError(errorMessage);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+        return;
+      }
 
       if (response.ok && responseData.success) {
         setResult(responseData.data);
@@ -217,8 +229,12 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
         setError(errorMessage);
         setToast({message: errorMessage, isVisible: true, type: 'error'});
       }
-    } catch {
-      const errorMessage = t.error[lang];
+    } catch (networkError) {
+      console.error('Network error:', networkError);
+      const errorMessage = lang === 'zh' ? '網路連線錯誤，請稍後再試' :
+                           lang === 'en' ? 'Network error, please try again later' :
+                           lang === 'jp' ? 'ネットワークエラー、後でもう一度お試しください' :
+                           'Error de red, por favor inténtalo de nuevo más tarde';
       setError(errorMessage);
       setToast({message: errorMessage, isVisible: true, type: 'error'});
     } finally {
@@ -299,9 +315,17 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
       document.body.appendChild(textArea);
+      textArea.focus();
       textArea.select();
-      document.execCommand('copy');
+      try {
+        document.execCommand('copy');
+      } catch (execError) {
+        console.error('Fallback copy failed:', execError);
+      }
       document.body.removeChild(textArea);
       setCopied(type);
       setTimeout(() => setCopied(null), 2000);

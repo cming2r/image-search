@@ -76,7 +76,31 @@ export async function POST(request: NextRequest) {
       body: externalFormData,
     });
 
-    const result = await response.json();
+    // 檢查回應的 Content-Type
+    const contentType = response.headers.get('content-type');
+    let result;
+    
+    try {
+      if (contentType && contentType.includes('application/json')) {
+        result = await response.json();
+      } else {
+        // 如果不是 JSON，讀取為文本
+        const textResponse = await response.text();
+        console.error('Non-JSON response from external API:', textResponse);
+        result = {
+          success: false,
+          error: 'Invalid response format',
+          message: `External API returned non-JSON response. Status: ${response.status}`
+        };
+      }
+    } catch (parseError) {
+      console.error('Failed to parse response:', parseError);
+      result = {
+        success: false,
+        error: 'Response parse error',
+        message: 'Failed to parse external API response'
+      };
+    }
 
     if (response.ok && result.success) {
       return NextResponse.json({
@@ -88,7 +112,7 @@ export async function POST(request: NextRequest) {
         { 
           success: false, 
           error: result.error || 'Upload failed',
-          message: result.message || 'Unknown error occurred'
+          message: result.message || 'External API error occurred'
         },
         { status: response.status || 500 }
       );
