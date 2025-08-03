@@ -1,63 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// 獲取設備資訊的函數 - 重用 device-info API
-async function getDeviceInfo(request: NextRequest) {
-  try {
-    // 構造內部請求到 device-info API
-    const deviceInfoRequest = new NextRequest(
-      new URL('/api/device-info', request.url),
-      {
-        method: 'GET',
-        headers: request.headers
-      }
-    );
-    
-    // 動態導入 device-info API 的處理函數
-    const { GET: deviceInfoHandler } = await import('../device-info/route');
-    const deviceInfoResponse = await deviceInfoHandler(deviceInfoRequest);
-    
-    if (deviceInfoResponse.ok) {
-      const deviceInfo = await deviceInfoResponse.json();
-      return {
-        device_type: deviceInfo.device_type,
-        browser: deviceInfo.browser,
-        os: deviceInfo.os,
-        country_code: deviceInfo.country_code,
-        ip_address: deviceInfo.ip_address
-      };
-    } else {
-      throw new Error('Device info API failed');
-    }
-  } catch (error) {
-    console.error('Device info detection error:', error);
-    return {
-      device_type: 'Unknown',
-      browser: 'Unknown',
-      os: 'Unknown',
-      country_code: 'XX',
-      ip_address: ''
-    };
-  }
-}
+const UPLOAD_CONFIG_URL = 'https://vvrl.cc/api/external/file/upload';
+const UPLOAD_COMPLETE_URL = 'https://vvrl.cc/api/external/file/upload-complete';
+const API_KEY = process.env.VVRL_API_KEY || 'f8e7d6c5b4a39281706f5e4d3c2b1a0987654321fedcba0987654321fedcba09';
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
+  let uploadConfig: {
+    uploadUrl: string;
+    shortCode: string;
+    [key: string]: unknown;
+  } | null = null;
+  
   try {
-    // Parse FormData
-    const formData = await req.formData();
-    const file = formData.get('file') as File | null;
-    const password = formData.get('password') as string | null;
-    const shortCode = formData.get('shortCode') as string | null;
-    const userInfoString = formData.get('userInfo') as string | null;
-    
+    // 檢查 API Key 是否存在
+    if (!API_KEY) {
+      return NextResponse.json(
+        { success: false, error: 'API configuration error' },
+        { status: 500 }
+      );
+    }
+
+    // 獲取 FormData
+    const formData = await request.formData();
+    const file = formData.get('file') as File;
+
     if (!file) {
       return NextResponse.json(
-        { success: false, error: '沒有提供文件' },
+        { success: false, error: 'No file provided' },
         { status: 400 }
       );
     }
-    
-    // 支援的檔案格式檢查（更寬鬆的檢查）
-    const supportedTypes = [
+
+    // 檢查檔案大小 (20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      return NextResponse.json(
+        { success: false, error: 'File size exceeds 20MB limit' },
+        { status: 400 }
+      );
+    }
+
+    // 檢查檔案類型 - 支援更多格式
+    const allowedTypes = [
       // 文件格式
       'application/pdf',
       'application/msword',
@@ -75,154 +58,188 @@ export async function POST(req: NextRequest) {
       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       'application/vnd.oasis.opendocument.presentation',
       // 圖片
-      'image/',
+      'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/webp', 'image/svg+xml', 'image/tiff',
       // 音訊
-      'audio/',
+      'audio/mpeg', 'audio/wav', 'audio/aac', 'audio/flac', 'audio/ogg', 'audio/m4a', 'audio/mp4',
       // 影片
-      'video/',
+      'video/mp4', 'video/avi', 'video/mov', 'video/quicktime', 'video/x-msvideo', 'video/x-ms-wmv',
+      'video/x-flv', 'video/x-matroska', 'video/webm',
       // 壓縮檔
-      'application/zip',
-      'application/x-rar-compressed',
-      'application/x-7z-compressed',
-      'application/x-tar',
-      'application/gzip'
+      'application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed',
+      'application/x-tar', 'application/gzip'
     ];
     
-    const isSupported = supportedTypes.some(type => 
-      file.type.startsWith(type) || file.type === type
-    );
-    
-    if (!isSupported) {
+    if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { success: false, error: '不支援的檔案格式' },
+        { success: false, error: 'Unsupported file format' },
         { status: 400 }
       );
     }
-    
-    // Check file size (15MB limit)
-    if (file.size > 15 * 1024 * 1024) {
-      return NextResponse.json(
-        { success: false, error: '文件大小不能超過15MB' },
-        { status: 400 }
-      );
-    }
-    
-    // Check API key
-    const apiKey = process.env.VVRL_API_KEY;
-    if (!apiKey) {
-      console.error('VVRL_API_KEY 環境變數未設置');
-      return NextResponse.json(
-        { success: false, error: 'API配置錯誤：缺少 API Key' },
-        { status: 500 }
-      );
-    }
-    
-    
-    // Prepare form data for vvrl.cc API
-    const vvrlFormData = new FormData();
-    vvrlFormData.append('file', file);
-    
+
+    // 步驟 1：獲取上傳配置
+    console.log('Step 1: Getting upload configuration...');
+    const configPayload: {
+      filename: string;
+      fileSize: number;
+      mimeType: string;
+      password?: string;
+      shortCode?: string;
+      expiresIn?: string;
+      deviceInfo?: object;
+    } = {
+      filename: file.name,
+      fileSize: file.size,
+      mimeType: file.type
+    };
+
+    // 添加可選參數
+    const password = formData.get('password');
     if (password) {
-      vvrlFormData.append('password', password);
+      configPayload.password = password as string;
     }
-    
+
+    const shortCode = formData.get('shortCode');
     if (shortCode) {
-      vvrlFormData.append('shortCode', shortCode);
+      configPayload.shortCode = shortCode as string;
     }
-    
-    // 處理用戶設備資訊
-    let userInfo: {
-      device_type: string;
-      browser: string;
-      os: string;
-      country_code: string;
-      ip_address: string;
-    } | null = null;
-    if (userInfoString) {
+
+    const expiresIn = formData.get('expiresIn');
+    if (expiresIn) {
+      configPayload.expiresIn = expiresIn as string;
+    }
+
+    const deviceInfo = formData.get('device-info');
+    if (deviceInfo) {
       try {
-        userInfo = JSON.parse(userInfoString);
-      } catch (error) {
-        console.error('Invalid userInfo JSON:', error);
-        // 如果 JSON 解析失敗，使用自動檢測
-        userInfo = await getDeviceInfo(req);
+        configPayload.deviceInfo = JSON.parse(deviceInfo as string);
+      } catch (e) {
+        console.warn('Failed to parse device info:', e);
       }
-    } else {
-      // 如果沒有提供 userInfo，自動檢測
-      userInfo = await getDeviceInfo(req);
     }
-    
-    // 將設備資訊添加到 FormData
-    if (userInfo) {
-      vvrlFormData.append('userInfo', JSON.stringify(userInfo));
-    }
-    
-    // Call vvrl.cc API for file upload
-    const response = await fetch('https://vvrl.cc/api/external/file/upload', {
+
+    const configResponse = await fetch(UPLOAD_CONFIG_URL, {
       method: 'POST',
       headers: {
-        'X-API-Key': apiKey,
+        'X-API-Key': API_KEY,
+        'Content-Type': 'application/json'
       },
-      body: vvrlFormData,
+      body: JSON.stringify(configPayload)
     });
-    
-    const result = await response.json();
-    
-    if (!response.ok) {
-      // Handle different error status codes
-      if (response.status === 401) {
-        return NextResponse.json(
-          { success: false, error: 'API認證失敗' },
-          { status: 500 }
-        );
-      } else if (response.status === 409) {
-        return NextResponse.json(
-          { success: false, error: '短代碼已存在，請嘗試其他代碼' },
-          { status: 400 }
-        );
-      } else {
-        return NextResponse.json(
-          { success: false, error: result.message || '上傳失敗，請重試' },
-          { status: response.status }
-        );
-      }
-    }
-    
-    if (result.success && result.data) {
-      return NextResponse.json({
-        success: true,
-        data: {
-          shortUrl: result.data.shortUrl,
-          shortCode: result.data.shortCode,
-          filename: result.data.filename,
-          fileSize: result.data.fileSize,
-          mimeType: result.data.mimeType,
-          createdAt: result.data.createdAt,
-          hasPassword: result.data.hasPassword
-        }
-      });
-    } else {
+
+    if (!configResponse.ok) {
+      const errorText = await configResponse.text();
+      console.error('Config request failed:', errorText);
       return NextResponse.json(
-        { success: false, error: '上傳失敗，請重試' },
+        { 
+          success: false, 
+          error: 'Failed to get upload configuration',
+          message: `Status: ${configResponse.status}`
+        },
+        { status: configResponse.status }
+      );
+    }
+
+    const configData = await configResponse.json();
+    uploadConfig = configData.uploadConfig;
+
+    if (!uploadConfig || !uploadConfig.uploadUrl) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid upload configuration received' },
         { status: 500 }
       );
     }
+
+    let uploadSuccess = false;
     
-  } catch (error) {
-    console.error('檔案上傳錯誤:', error);
-    
-    // Handle specific fetch errors
-    if (error instanceof TypeError && error.message.includes('fetch')) {
+    try {
+      // 步驟 2：直接上傳到 R2
+      console.log('Step 2: Uploading to R2...');
+      const uploadResponse = await fetch(uploadConfig.uploadUrl, {
+        method: 'PUT',
+        body: file
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`R2 upload failed with status: ${uploadResponse.status}`);
+      }
+      
+      uploadSuccess = true;
+    } catch (r2Error) {
+      console.error('R2 upload failed:', r2Error);
+      uploadSuccess = false;
+    }
+
+    // 步驟 3：確認上傳完成（無論成功或失敗都要調用）
+    try {
+      console.log('Step 3: Confirming upload...');
+      const completeResponse = await fetch(UPLOAD_COMPLETE_URL, {
+        method: 'POST',
+        headers: {
+          'X-API-Key': API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          shortCode: uploadConfig.shortCode,
+          success: uploadSuccess
+        })
+      });
+
+      const result = await completeResponse.json();
+      
+      if (uploadSuccess && result.success) {
+        console.log('Upload completed successfully!');
+        return NextResponse.json({
+          success: true,
+          data: result.data
+        });
+      } else {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: uploadSuccess ? 
+              (result.message || 'Upload completion failed') : 
+              'File upload to storage failed'
+          },
+          { status: 500 }
+        );
+      }
+    } catch (completeError) {
+      console.error('Upload completion failed:', completeError);
       return NextResponse.json(
-        { success: false, error: '無法連接到上傳服務，請檢查網路連接' },
-        { status: 503 }
+        { 
+          success: false, 
+          error: `Upload completion failed: ${completeError instanceof Error ? completeError.message : 'Unknown error'}`
+        },
+        { status: 500 }
       );
     }
+
+  } catch (error) {
+    // 如果在步驟 1 成功後發生錯誤，嘗試清理記錄
+    if (uploadConfig) {
+      try {
+        await fetch(UPLOAD_COMPLETE_URL, {
+          method: 'POST',
+          headers: {
+            'X-API-Key': API_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            shortCode: uploadConfig.shortCode,
+            success: false
+          })
+        });
+      } catch (cleanupError) {
+        console.error('Failed to cleanup after error:', cleanupError);
+      }
+    }
     
+    console.error('File upload error:', error);
     return NextResponse.json(
       { 
         success: false, 
-        error: '伺服器錯誤，請重試',
-        details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : '未知錯誤') : undefined
+        error: 'Internal server error',
+        message: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     );

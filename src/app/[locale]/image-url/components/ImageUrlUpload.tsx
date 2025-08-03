@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download } from 'lucide-react';
+import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download, Lock, Clock } from 'lucide-react';
 import Toast from '@/components/Toast';
 
 const uiTranslations = {
@@ -31,17 +31,11 @@ const uiTranslations = {
     jp: '画像のアップロードに失敗しました。後でもう一度お試しください',
     es: 'Error al subir la imagen, por favor inténtalo de nuevo más tarde'
   },
-  uploading: {
-    zh: '上傳中...',
-    en: 'Uploading...',
-    jp: 'アップロード中...',
-    es: 'Subiendo...'
-  },
   supportedFormats: {
-    zh: '支援格式：JPEG, PNG, GIF, WebP (最大 10MB)',
-    en: 'Supported formats: JPEG, PNG, GIF, WebP (Max 10MB)',
-    jp: '対応形式：JPEG、PNG、GIF、WebP（最大10MB）',
-    es: 'Formatos compatibles: JPEG, PNG, GIF, WebP (Máx. 10MB)'
+    zh: '支援圖片格式 (最大 10MB)',
+    en: 'Supported image formats (Max 10MB)',
+    jp: '対応画像形式（最大10MB）',
+    es: 'Formatos de imagen compatibles (Máx. 10MB)'
   },
   dragDrop: {
     zh: '拖曳圖片到這裡、ctrl+V 貼上或',
@@ -54,6 +48,12 @@ const uiTranslations = {
     en: 'click to upload',
     jp: 'クリックしてアップロード',
     es: 'haz clic para subir'
+  },
+  uploadButton: {
+    zh: '開始上傳',
+    en: 'Start Upload',
+    jp: 'アップロード開始',
+    es: 'Iniciar Subida'
   },
   error: {
     zh: '上傳失敗，請重試',
@@ -84,16 +84,68 @@ const uiTranslations = {
     en: 'Set Image URL Password',
     jp: '画像URLパスワード設定',
     es: 'Configurar Contraseña de URL de Imagen'
+  },
+  passwordProtection: {
+    zh: '密碼保護',
+    en: 'Password Protection',
+    jp: 'パスワード保護',
+    es: 'Protección con Contraseña'
+  },
+  passwordPlaceholder: {
+    zh: '最多4位數字',
+    en: 'Max 4 digits',
+    jp: '最大4桁',
+    es: 'Máx. 4 dígitos'
+  },
+  none: {
+    zh: '無',
+    en: 'None',
+    jp: 'なし',
+    es: 'Ninguno'
+  },
+  expiresIn: {
+    zh: '有效期限（可選）',
+    en: 'Expires In (Optional)',
+    jp: '有効期限（任意）',
+    es: 'Expira En (Opcional)'
+  },
+  expiration: {
+    zh: '有效期限',
+    en: 'Expiration',
+    jp: '有効期限',
+    es: 'Expiración'
   }
 };
+
+const expirationOptions = [
+  { value: '', label: { zh: '預設', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
+  { value: '1hr', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
+  { value: '3hr', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
+  { value: '6hr', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
+  { value: '12hr', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
+  { value: '1day', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
+  { value: '3days', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
+  { value: '7days', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
+];
 
 interface ImageUrlUploadProps {
   locale: string;
 }
 
+interface UploadResult {
+  shortCode: string;
+  shortUrl: string;
+  filename: string;
+  fileSize: number;
+  mimeType: string;
+  createdAt: string;
+  expiresAt?: string;
+  hasPassword: boolean;
+}
+
 export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [shortUrl, setShortUrl] = useState<string>('');
+  const [result, setResult] = useState<UploadResult | null>(null);
   const [error, setError] = useState<string>('');
   const [copied, setCopied] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -102,6 +154,10 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const [showQrCode, setShowQrCode] = useState(false);
   const [includeUrl, setIncludeUrl] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [expiresIn, setExpiresIn] = useState('');
+  const [countdown, setCountdown] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
   const [toast, setToast] = useState<{message: string; isVisible: boolean; type: 'success' | 'error' | 'info'}>({
     message: '', 
     isVisible: false, 
@@ -112,45 +168,173 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   const t = uiTranslations;
 
+  // 倒數計時邏輯
+  useEffect(() => {
+    if (result?.expiresAt) {
+      const updateCountdown = () => {
+        const now = new Date().getTime();
+        const expireTime = new Date(result.expiresAt!).getTime();
+        const distance = expireTime - now;
+
+        if (distance > 0) {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+          let countdownText = '';
+          if (days > 0) {
+            countdownText = lang === 'zh' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${days}d ${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${days}日 ${hours}時間 ${minutes}分` :
+                           `${days}d ${hours}h ${minutes}m`;
+          } else if (hours > 0) {
+            countdownText = lang === 'zh' ? `${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${hours}時間 ${minutes}分` :
+                           `${hours}h ${minutes}m`;
+          } else if (minutes > 0) {
+            countdownText = lang === 'zh' ? `${minutes}分鐘` :
+                           lang === 'en' ? `${minutes}m` :
+                           lang === 'jp' ? `${minutes}分` :
+                           `${minutes}m`;
+          } else {
+            countdownText = lang === 'zh' ? '不到1分鐘' :
+                           lang === 'en' ? 'Less than 1m' :
+                           lang === 'jp' ? '1分未満' :
+                           'Menos de 1m';
+          }
+
+          setCountdown(countdownText);
+        } else {
+          setCountdown(lang === 'zh' ? '已過期' :
+                      lang === 'en' ? 'Expired' :
+                      lang === 'jp' ? '期限切れ' :
+                      'Expirado');
+        }
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 60000); // 每分鐘更新一次
+
+      return () => clearInterval(interval);
+    } else {
+      setCountdown('');
+    }
+  }, [result?.expiresAt, lang]);
+
   const handleUpload = useCallback(async (uploadFile?: File) => {
     const fileToUpload = uploadFile || file;
     if (!fileToUpload) return;
 
     setError('');
+    setIsUploading(true);
     
-    // 顯示處理中的 toast
+    // 顯示處理中的 toast，設置為 0 表示不自動關閉
     setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
       const formData = new FormData();
       formData.append('file', fileToUpload);
+      
+      if (password) {
+        formData.append('password', password);
+      }
+      
+      if (expiresIn) {
+        formData.append('expiresIn', expiresIn);
+      }
+
+      // 添加設備資訊
+      const deviceInfo = {
+        device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        browser: getBrowserName(),
+        os: getOSName(),
+        country_code: 'TW' // 可以根據實際需求獲取
+      };
+      formData.append('device-info', JSON.stringify(deviceInfo));
 
       const response = await fetch('/api/image-url', {
         method: 'POST',
         body: formData,
       });
 
-      const result = await response.json();
-
-      if (result.success && result.data) {
-        setShortUrl(result.data.shortUrl);
-        // 顯示成功 toast
-        setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
-      } else {
-        const errorMessage = result.error || t.error[lang];
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (parseError) {
+        console.error('Failed to parse response as JSON:', parseError);
+        const errorMessage = lang === 'zh' ? '服務器回應格式錯誤' :
+                             lang === 'en' ? 'Invalid server response format' :
+                             lang === 'jp' ? 'サーバーレスポンス形式エラー' :
+                             'Formato de respuesta del servidor inválido';
         setError(errorMessage);
         setToast({message: errorMessage, isVisible: true, type: 'error'});
+        return;
       }
-    } catch {
-      const errorMessage = t.error[lang];
+
+      if (response.ok && responseData.success) {
+        setResult(responseData.data);
+        // 先關閉進度中的 toast，然後顯示成功 toast
+        setToast({message: '', isVisible: false, type: 'info'});
+        setTimeout(() => {
+          setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
+        }, 100);
+      } else {
+        const errorMessage = responseData.message || responseData.error || t.error[lang];
+        setError(errorMessage);
+        // 先關閉進度中的 toast，然後顯示錯誤 toast
+        setToast({message: '', isVisible: false, type: 'info'});
+        setTimeout(() => {
+          setToast({message: errorMessage, isVisible: true, type: 'error'});
+        }, 100);
+      }
+    } catch (networkError) {
+      console.error('Network error:', networkError);
+      const errorMessage = lang === 'zh' ? '網路連線錯誤，請稍後再試' :
+                           lang === 'en' ? 'Network error, please try again later' :
+                           lang === 'jp' ? 'ネットワークエラー、後でもう一度お試しください' :
+                           'Error de red, por favor inténtalo de nuevo más tarde';
+      setError(errorMessage);
+      // 先關閉進度中的 toast，然後顯示錯誤 toast
+      setToast({message: '', isVisible: false, type: 'info'});
+      setTimeout(() => {
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+      }, 100);
+    } finally {
+      setIsUploading(false);
+    }
+  }, [file, password, expiresIn, t.error, t.processing, t.successUpload, lang]);
+
+  const handleFileSelect = useCallback((selectedFile: File) => {
+    // 檢查檔案大小 (10MB)
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      const errorMessage = lang === 'zh' ? '檔案大小超過10MB限制' :
+                           lang === 'en' ? 'File size exceeds 10MB limit' :
+                           lang === 'jp' ? 'ファイルサイズが10MBの上限を超えています' :
+                           'El tamaño del archivo excede el límite de 10MB';
       setError(errorMessage);
       setToast({message: errorMessage, isVisible: true, type: 'error'});
+      return;
     }
-  }, [file, t.error, t.processing, t.successUpload, lang]);
 
-  const handleFileSelect = useCallback(async (selectedFile: File) => {
+    // 檢查檔案類型
+    const allowedTypes = [
+      'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
+      'image/heic', 'image/heif'
+    ];
+    
+    if (!allowedTypes.includes(selectedFile.type)) {
+      const errorMessage = lang === 'zh' ? '不支援的圖片格式' :
+                           lang === 'en' ? 'Unsupported image format' :
+                           lang === 'jp' ? 'サポートされていない画像形式' :
+                           'Formato de imagen no compatible';
+      setError(errorMessage);
+      setToast({message: errorMessage, isVisible: true, type: 'error'});
+      return;
+    }
+
     setFile(selectedFile);
-    setShortUrl('');
+    setResult(null);
     setError('');
     
     // Create local URL for preview
@@ -159,10 +343,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     }
     const url = URL.createObjectURL(selectedFile);
     setLocalImageUrl(url);
-    
-    // Auto upload
-    await handleUpload(selectedFile);
-  }, [localImageUrl, handleUpload]);
+  }, [localImageUrl, lang]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -298,8 +479,10 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
   // QR Code toggle handler
   const handleQrCodeToggle = () => {
+    if (!result) return;
+    
     if (!showQrCode && !qrCodeUrl) {
-      generateQRCode(shortUrl, includeUrl);
+      generateQRCode(result.shortUrl, includeUrl);
     }
     setShowQrCode(!showQrCode);
   };
@@ -307,10 +490,30 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   // Include URL change handler
   const handleIncludeUrlChange = (checked: boolean) => {
     setIncludeUrl(checked);
-    if (shortUrl) {
-      generateQRCode(shortUrl, checked);
+    if (result?.shortUrl) {
+      generateQRCode(result.shortUrl, checked);
     }
   };
+
+  // Helper functions
+  function getBrowserName() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes('Chrome')) return 'Chrome';
+    if (userAgent.includes('Firefox')) return 'Firefox';
+    if (userAgent.includes('Safari')) return 'Safari';
+    if (userAgent.includes('Edge')) return 'Edge';
+    return 'Unknown';
+  }
+
+  function getOSName() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes('Windows')) return 'Windows';
+    if (userAgent.includes('Mac')) return 'macOS';
+    if (userAgent.includes('Linux')) return 'Linux';
+    if (userAgent.includes('Android')) return 'Android';
+    if (userAgent.includes('iOS')) return 'iOS';
+    return 'Unknown';
+  }
 
   // Download QR Code function
   const downloadQRCode = () => {
@@ -326,7 +529,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
   return (
     <div>
-      {!shortUrl ? (
+      {!result ? (
         // 未上傳成功時顯示上傳區域
         <div className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
           <div className="flex items-center justify-between mb-6">
@@ -341,12 +544,12 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
             className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer min-h-[200px] flex flex-col justify-center ${
               isDragOver
                 ? 'border-blue-400 bg-blue-50'
-                : 'border-gray-300 hover:border-gray-400'
-            }`}
+                : 'border-gray-300 hover:border-gray-400 bg-white'
+            } ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => !isUploading && fileInputRef.current?.click()}
           >
             <input
               ref={fileInputRef}
@@ -354,6 +557,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               accept="image/*,.heic,.heif"
               onChange={handleFileChange}
               className="hidden"
+              disabled={isUploading}
             />
             
             <ImageIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
@@ -366,14 +570,80 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                 </p>
               </div>
             ) : (
-              <p className="text-gray-600 mb-4">
-                {t.dragDrop[lang]} <span className="text-blue-600 font-medium">{t.clickUpload[lang]}</span>
-              </p>
+              <>
+                <p className="text-gray-600 mb-3">
+                  {t.dragDrop[lang]} <span className="text-blue-600 font-medium">{t.clickUpload[lang]}</span>
+                </p>
+                <p className="text-sm text-gray-500">{t.supportedFormats[lang]}</p>
+              </>
+            )}
+
+            {isUploading && (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <span className="ml-2 text-blue-600">{t.processing[lang]}</span>
+              </div>
             )}
           </div>
 
-          {/* Supported Formats */}
-          <p className="text-sm text-gray-500 mt-3 text-center">{t.supportedFormats[lang]}</p>
+          {/* 選項設置區域 - 現代化設計 */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6 mt-4 shadow-sm">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 密碼保護選項 */}
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Lock className="h-4 w-4 text-orange-600 mr-2" />
+                  <label className="text-sm font-medium text-gray-700">{t.passwordProtection[lang]}</label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value.slice(0, 4))}
+                    maxLength={4}
+                    placeholder={t.passwordPlaceholder[lang]}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                  />
+                </div>
+              </div>
+              {/* 過期時間選項 */}
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 text-green-600 mr-2" />
+                  <label className="text-sm font-medium text-gray-700">{t.expiration[lang]}</label>
+                </div>
+                <div className="relative">
+                  <select
+                    value={expiresIn}
+                    onChange={(e) => setExpiresIn(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white appearance-none cursor-pointer"
+                  >
+                    {expirationOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label[lang]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Upload Button */}
+            {file && !isUploading && (
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => handleUpload(file)}
+                    className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center"
+                  >
+                    <Upload className="h-5 w-5 mr-2" />
+                    {t.uploadButton[lang]}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Error Messages - only show if not using toast */}
           {error && !toast.isVisible && (
@@ -407,13 +677,52 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
             </div>
           )}
           
+          {/* Image Info Section */}
+          {result && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-lg font-medium text-gray-900 mb-3 flex items-center">
+                <ImageIcon className="h-5 w-5 mr-2" />
+                圖片資訊
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-gray-700">檔案名稱：</span>
+                  <span className="text-gray-600">{result.filename}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">檔案大小：</span>
+                  <span className="text-gray-600">{(result.fileSize / 1024 / 1024).toFixed(2)} MB</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">格式：</span>
+                  <span className="text-gray-600">{result.mimeType}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">{t.passwordProtection[lang]}：</span>
+                  <span className="text-gray-600">{result.hasPassword ? (password || '****') : t.none[lang]}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">{t.expiration[lang]}：</span>
+                  <span className={`text-gray-600 ${countdown && result.expiresAt && !countdown.includes('已過期') && !countdown.includes('Expired') && !countdown.includes('期限切れ') && !countdown.includes('Expirado') ? 'font-mono' : ''}`}>
+                    {result.expiresAt 
+                      ? countdown || new Date(result.expiresAt).toLocaleString()
+                      : expiresIn 
+                        ? (expirationOptions.find(option => option.value === expiresIn)?.label[lang] || expiresIn)
+                        : t.none[lang]
+                    }
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+          
           {/* Short URL Section */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-lg font-medium text-gray-900 mb-3">{t.shortUrl[lang]}</h3>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-4">
               <input
                 type="text"
-                value={shortUrl}
+                value={result?.shortUrl || ''}
                 readOnly
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
               />
@@ -422,10 +731,10 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               <div className="flex items-center space-x-2">
                 {/* Visit Button */}
                 <button
-                  onClick={() => window.open(shortUrl, '_blank')}
+                  onClick={() => result && window.open(result.shortUrl, '_blank')}
                   onAuxClick={(e) => {
-                    if (e.button === 1) { // Middle click support
-                      window.open(shortUrl, '_blank');
+                    if (e.button === 1 && result) { // Middle click support
+                      window.open(result.shortUrl, '_blank');
                     }
                   }}
                   className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
@@ -436,7 +745,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                 
                 {/* Copy Button */}
                 <button
-                  onClick={() => handleCopy(shortUrl)}
+                  onClick={() => result && handleCopy(result.shortUrl)}
                   className={`px-2 py-2 rounded-md transition-colors flex items-center justify-center ${
                     copied 
                       ? 'bg-green-600 text-white' 
@@ -493,15 +802,16 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                       width={200}
                       height={includeUrl ? 240 : 200}
                       className={`max-w-full h-auto ${qrLoading ? 'opacity-50' : ''}`}
+                      unoptimized
                     />
                   </div>
                 </div>
                 
                 {/* URL display below QR Code when not included in image */}
-                {!includeUrl && (
+                {!includeUrl && result && (
                   <div className="text-center mt-3">
                     <p className="text-sm text-gray-600">
-                      {shortUrl.replace('https://', '')}
+                      {result.shortUrl.replace('https://', '')}
                     </p>
                   </div>
                 )}
@@ -544,10 +854,13 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
             <div className="mt-4 pt-4 border-t border-gray-200">
               <button
                 onClick={() => {
-                  setShortUrl('');
+                  setResult(null);
                   setFile(null);
                   setLocalImageUrl('');
                   setError('');
+                  setPassword('');
+                  setExpiresIn('');
+                  setCountdown('');
                   setQrCodeUrl('');
                   setShowQrCode(false);
                   setIncludeUrl(false);
@@ -607,7 +920,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
         type={toast.type}
         onClose={() => setToast(prev => ({...prev, isVisible: false}))}
         position="top-center"
-        duration={3000}
+        duration={toast.type === 'info' ? 0 : 3000}
       />
     </div>
   );

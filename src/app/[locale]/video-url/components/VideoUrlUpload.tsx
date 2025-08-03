@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import { Upload, VideoIcon, Copy, Check, ExternalLink, QrCode, Download, Settings } from 'lucide-react';
+import { Upload, VideoIcon, Copy, Check, ExternalLink, QrCode, Download, Lock, Clock } from 'lucide-react';
 import Toast from '@/components/Toast';
 
 const uiTranslations = {
@@ -49,6 +49,18 @@ const uiTranslations = {
     jp: 'クリックしてアップロード',
     es: 'haz clic para subir'
   },
+  uploadButton: {
+    zh: '開始上傳',
+    en: 'Start Upload',
+    jp: 'アップロード開始',
+    es: 'Iniciar Subida'
+  },
+  selectFile: {
+    zh: '選擇檔案',
+    en: 'Select File',
+    jp: 'ファイル選択',
+    es: 'Seleccionar Archivo'
+  },
   error: {
     zh: '上傳失敗，請重試',
     en: 'Upload failed, please try again',
@@ -86,7 +98,7 @@ const uiTranslations = {
     es: 'Máx. 4 dígitos'
   },
   expiresIn: {
-    zh: '過期時間（可選）',
+    zh: '有效期限（可選）',
     en: 'Expires In (Optional)',
     jp: '有効期限（任意）',
     es: 'Expira En (Opcional)'
@@ -104,7 +116,7 @@ const uiTranslations = {
     es: 'Protección con Contraseña'
   },
   expiration: {
-    zh: '過期時間',
+    zh: '有效期限',
     en: 'Expiration',
     jp: '有効期限',
     es: 'Expiración'
@@ -155,10 +167,10 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
   const [showQrCode, setShowQrCode] = useState(false);
   const [includeUrl, setIncludeUrl] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
   const [password, setPassword] = useState('');
   const [expiresIn, setExpiresIn] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [countdown, setCountdown] = useState<string>('');
   const [toast, setToast] = useState<{message: string; isVisible: boolean; type: 'success' | 'error' | 'info'}>({
     message: '', 
     isVisible: false, 
@@ -169,6 +181,60 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   const t = uiTranslations;
 
+  // 倒數計時邏輯
+  useEffect(() => {
+    if (result?.expiresAt) {
+      const updateCountdown = () => {
+        const now = new Date().getTime();
+        const expireTime = new Date(result.expiresAt!).getTime();
+        const distance = expireTime - now;
+
+        if (distance > 0) {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+          let countdownText = '';
+          if (days > 0) {
+            countdownText = lang === 'zh' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${days}d ${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${days}日 ${hours}時間 ${minutes}分` :
+                           `${days}d ${hours}h ${minutes}m`;
+          } else if (hours > 0) {
+            countdownText = lang === 'zh' ? `${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${hours}時間 ${minutes}分` :
+                           `${hours}h ${minutes}m`;
+          } else if (minutes > 0) {
+            countdownText = lang === 'zh' ? `${minutes}分鐘` :
+                           lang === 'en' ? `${minutes}m` :
+                           lang === 'jp' ? `${minutes}分` :
+                           `${minutes}m`;
+          } else {
+            countdownText = lang === 'zh' ? '不到1分鐘' :
+                           lang === 'en' ? 'Less than 1m' :
+                           lang === 'jp' ? '1分未満' :
+                           'Menos de 1m';
+          }
+
+          setCountdown(countdownText);
+        } else {
+          setCountdown(lang === 'zh' ? '已過期' :
+                      lang === 'en' ? 'Expired' :
+                      lang === 'jp' ? '期限切れ' :
+                      'Expirado');
+        }
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 60000); // 每分鐘更新一次
+
+      return () => clearInterval(interval);
+    } else {
+      setCountdown('');
+    }
+  }, [result?.expiresAt, lang]);
+
   const handleUpload = useCallback(async (uploadFile?: File) => {
     const fileToUpload = uploadFile || file;
     if (!fileToUpload) return;
@@ -176,7 +242,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
     setError('');
     setIsUploading(true);
     
-    // 顯示處理中的 toast
+    // 顯示處理中的 toast，設置為 0 表示不自動關閉
     setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
@@ -186,7 +252,6 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
       if (password) {
         formData.append('password', password);
       }
-      
       
       if (expiresIn) {
         formData.append('expiresIn', expiresIn);
@@ -222,12 +287,19 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
 
       if (response.ok && responseData.success) {
         setResult(responseData.data);
-        // 顯示成功 toast
-        setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
+        // 先關閉進度中的 toast，然後顯示成功 toast
+        setToast({message: '', isVisible: false, type: 'info'});
+        setTimeout(() => {
+          setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
+        }, 100);
       } else {
         const errorMessage = responseData.message || responseData.error || t.error[lang];
         setError(errorMessage);
-        setToast({message: errorMessage, isVisible: true, type: 'error'});
+        // 先關閉進度中的 toast，然後顯示錯誤 toast
+        setToast({message: '', isVisible: false, type: 'info'});
+        setTimeout(() => {
+          setToast({message: errorMessage, isVisible: true, type: 'error'});
+        }, 100);
       }
     } catch (networkError) {
       console.error('Network error:', networkError);
@@ -236,13 +308,17 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                            lang === 'jp' ? 'ネットワークエラー、後でもう一度お試しください' :
                            'Error de red, por favor inténtalo de nuevo más tarde';
       setError(errorMessage);
-      setToast({message: errorMessage, isVisible: true, type: 'error'});
+      // 先關閉進度中的 toast，然後顯示錯誤 toast
+      setToast({message: '', isVisible: false, type: 'info'});
+      setTimeout(() => {
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+      }, 100);
     } finally {
       setIsUploading(false);
     }
   }, [file, password, expiresIn, t.error, t.processing, t.successUpload, lang]);
 
-  const handleFileSelect = useCallback(async (selectedFile: File) => {
+  const handleFileSelect = useCallback((selectedFile: File) => {
     // 檢查檔案大小 (100MB)
     if (selectedFile.size > 100 * 1024 * 1024) {
       const errorMessage = lang === 'zh' ? '檔案大小超過100MB限制' :
@@ -274,10 +350,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
     setFile(selectedFile);
     setResult(null);
     setError('');
-    
-    // Auto upload
-    await handleUpload(selectedFile);
-  }, [handleUpload, lang]);
+  }, [lang]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -454,53 +527,8 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
               <Upload className="h-5 w-5 mr-2" />
               {t.uploadTitle[lang]}
             </h2>
-            <button
-              onClick={() => setShowOptions(!showOptions)}
-              className="flex items-center text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              {t.options[lang]}
-            </button>
           </div>
 
-          {/* Options Panel */}
-          {showOptions && (
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4 mb-6">
-              {/* Password */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.password[lang]}
-                </label>
-                <input
-                  type="text"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value.slice(0, 4))}
-                  maxLength={4}
-                  placeholder={t.passwordPlaceholder[lang]}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-
-              {/* Expiration */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.expiresIn[lang]}
-                </label>
-                <select
-                  value={expiresIn}
-                  onChange={(e) => setExpiresIn(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {expirationOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label[lang]}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
 
           {/* File Upload Area */}
           <div
@@ -533,9 +561,12 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                 </p>
               </div>
             ) : (
-              <p className="text-gray-600 mb-4">
-                {t.dragDrop[lang]} <span className="text-blue-600 font-medium">{t.clickUpload[lang]}</span>
-              </p>
+              <>
+                <p className="text-gray-600 mb-3">
+                  {t.dragDrop[lang]} <span className="text-blue-600 font-medium">{t.clickUpload[lang]}</span>
+                </p>
+                <p className="text-sm text-gray-500">{t.supportedFormats[lang]}</p>
+              </>
             )}
 
             {isUploading && (
@@ -546,8 +577,65 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
             )}
           </div>
 
-          {/* Supported Formats */}
-          <p className="text-sm text-gray-500 mt-3 text-center">{t.supportedFormats[lang]}</p>
+          {/* 選項設置區域 - 現代化設計 */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6 mt-4 shadow-sm">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 密碼保護選項 */}
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Lock className="h-4 w-4 text-orange-600 mr-2" />
+                  <label className="text-sm font-medium text-gray-700">{t.passwordProtection[lang]}</label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value.slice(0, 4))}
+                    maxLength={4}
+                    placeholder={t.passwordPlaceholder[lang]}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                  />
+                </div>
+              </div>
+
+              {/* 有效期限選項 */}
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 text-green-600 mr-2" />
+                  <label className="text-sm font-medium text-gray-700">{t.expiration[lang]}</label>
+                </div>
+                <div className="relative">
+                  <select
+                    value={expiresIn}
+                    onChange={(e) => setExpiresIn(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white appearance-none cursor-pointer"
+                  >
+                    {expirationOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label[lang]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Upload Button */}
+            {file && !isUploading && (
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => handleUpload(file)}
+                    className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center"
+                  >
+                    <Upload className="h-5 w-5 mr-2" />
+                    {t.uploadButton[lang]}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Error Messages - only show if not using toast */}
           {error && !toast.isVisible && (
@@ -582,10 +670,12 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">{t.expiration[lang]}：</span>
-                  <span className="text-gray-600">
+                  <span className={`text-gray-600 ${countdown && result.expiresAt && !countdown.includes('已過期') && !countdown.includes('Expired') && !countdown.includes('期限切れ') && !countdown.includes('Expirado') ? 'font-mono' : ''}`}>
                     {result.expiresAt 
-                      ? new Date(result.expiresAt).toLocaleString()
-                      : expirationOptions.find(option => option.value === expiresIn)?.label[lang] || t.defaultOption[lang]
+                      ? countdown || new Date(result.expiresAt).toLocaleString()
+                      : expiresIn 
+                        ? (expirationOptions.find(option => option.value === expiresIn)?.label[lang] || expiresIn)
+                        : t.none[lang]
                     }
                   </span>
                 </div>
@@ -730,11 +820,11 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                   setError('');
                   setPassword('');
                   setExpiresIn('');
+                  setCountdown('');
                   setQrCodeUrl('');
                   setShowQrCode(false);
                   setIncludeUrl(false);
                   setQrLoading(false);
-                  setShowOptions(false);
                   if (fileInputRef.current) {
                     fileInputRef.current.value = '';
                   }
@@ -755,7 +845,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
         type={toast.type}
         onClose={() => setToast(prev => ({...prev, isVisible: false}))}
         position="top-center"
-        duration={3000}
+        duration={toast.type === 'info' ? 0 : 3000}
       />
     </div>
   );

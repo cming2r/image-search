@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const EXTERNAL_API_URL = 'https://vvrl.cc/api/external/video/upload';
+const UPLOAD_CONFIG_URL = 'https://vvrl.cc/api/external/video/upload';
+const UPLOAD_COMPLETE_URL = 'https://vvrl.cc/api/external/video/upload-complete';
 const API_KEY = process.env.VVRL_API_KEY || 'f8e7d6c5b4a39281706f5e4d3c2b1a0987654321fedcba0987654321fedcba09';
 
 export async function POST(request: NextRequest) {
+  let uploadConfig: {
+    bunnyUploadUrl: string;
+    bunnyApiKey: string;
+    shortCode: string;
+    [key: string]: unknown;
+  } | null = null;
+  
   try {
     // 檢查 API Key 是否存在
     if (!API_KEY) {
@@ -46,79 +54,168 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 創建新的 FormData 轉發到外部 API
-    const externalFormData = new FormData();
-    externalFormData.append('file', file);
+    // 步驟 1：獲取上傳配置
+    console.log('Step 1: Getting upload configuration...');
+    const configPayload: {
+      filename: string;
+      fileSize: number;
+      mimeType: string;
+      password?: string;
+      shortCode?: string;
+      expiresIn?: string;
+      deviceInfo?: object;
+    } = {
+      filename: file.name,
+      fileSize: file.size,
+      mimeType: file.type
+    };
 
-    // 轉發其他可選參數
+    // 添加可選參數
     const password = formData.get('password');
     if (password) {
-      externalFormData.append('password', password as string);
+      configPayload.password = password as string;
     }
 
+    const shortCode = formData.get('shortCode');
+    if (shortCode) {
+      configPayload.shortCode = shortCode as string;
+    }
 
     const expiresIn = formData.get('expiresIn');
     if (expiresIn) {
-      externalFormData.append('expiresIn', expiresIn as string);
+      configPayload.expiresIn = expiresIn as string;
     }
 
     const deviceInfo = formData.get('device-info');
     if (deviceInfo) {
-      externalFormData.append('device-info', deviceInfo as string);
+      try {
+        configPayload.deviceInfo = JSON.parse(deviceInfo as string);
+      } catch (e) {
+        console.warn('Failed to parse device info:', e);
+      }
     }
 
-    // 調用外部 API
-    const response = await fetch(EXTERNAL_API_URL, {
+    const configResponse = await fetch(UPLOAD_CONFIG_URL, {
       method: 'POST',
       headers: {
         'X-API-Key': API_KEY,
+        'Content-Type': 'application/json'
       },
-      body: externalFormData,
+      body: JSON.stringify(configPayload)
     });
 
-    // 檢查回應的 Content-Type
-    const contentType = response.headers.get('content-type');
-    let result;
-    
-    try {
-      if (contentType && contentType.includes('application/json')) {
-        result = await response.json();
-      } else {
-        // 如果不是 JSON，讀取為文本
-        const textResponse = await response.text();
-        console.error('Non-JSON response from external API:', textResponse);
-        result = {
-          success: false,
-          error: 'Invalid response format',
-          message: `External API returned non-JSON response. Status: ${response.status}`
-        };
-      }
-    } catch (parseError) {
-      console.error('Failed to parse response:', parseError);
-      result = {
-        success: false,
-        error: 'Response parse error',
-        message: 'Failed to parse external API response'
-      };
-    }
-
-    if (response.ok && result.success) {
-      return NextResponse.json({
-        success: true,
-        data: result.data
-      });
-    } else {
+    if (!configResponse.ok) {
+      const errorText = await configResponse.text();
+      console.error('Config request failed:', errorText);
       return NextResponse.json(
         { 
           success: false, 
-          error: result.error || 'Upload failed',
-          message: result.message || 'External API error occurred'
+          error: 'Failed to get upload configuration',
+          message: `Status: ${configResponse.status}`
         },
-        { status: response.status || 500 }
+        { status: configResponse.status }
+      );
+    }
+
+    const configData = await configResponse.json();
+    uploadConfig = configData.uploadConfig;
+
+    if (!uploadConfig || !uploadConfig.bunnyUploadUrl || !uploadConfig.bunnyApiKey) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid upload configuration received' },
+        { status: 500 }
+      );
+    }
+
+    let uploadSuccess = false;
+    
+    try {
+      // 步驟 2：直接上傳到 Bunny.net
+      console.log('Step 2: Uploading to Bunny.net...');
+      const uploadResponse = await fetch(uploadConfig.bunnyUploadUrl, {
+        method: 'PUT',
+        headers: {
+          'AccessKey': uploadConfig.bunnyApiKey,
+          'Content-Type': 'application/octet-stream'
+        },
+        body: file
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Upload to Bunny.net failed: ${uploadResponse.statusText}`);
+      }
+      
+      uploadSuccess = true;
+    } catch (bunnyError) {
+      console.error('Bunny.net upload failed:', bunnyError);
+      uploadSuccess = false;
+    }
+
+    // 步驟 3：確認上傳完成（無論成功或失敗都要調用）
+    try {
+      console.log('Step 3: Confirming upload...');
+      const completeResponse = await fetch(UPLOAD_COMPLETE_URL, {
+        method: 'POST',
+        headers: {
+          'X-API-Key': API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          shortCode: uploadConfig.shortCode,
+          success: uploadSuccess
+        })
+      });
+
+      const result = await completeResponse.json();
+      
+      if (uploadSuccess && result.success) {
+        console.log('Upload completed successfully!');
+        return NextResponse.json({
+          success: true,
+          data: result.data
+        });
+      } else {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: uploadSuccess ? 
+              (result.message || 'Upload completion failed') : 
+              'Video upload to Bunny.net failed'
+          },
+          { status: 500 }
+        );
+      }
+    } catch (completeError) {
+      console.error('Upload completion failed:', completeError);
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: `Upload completion failed: ${completeError instanceof Error ? completeError.message : 'Unknown error'}`
+        },
+        { status: 500 }
       );
     }
 
   } catch (error) {
+    // 如果在步驟 1 成功後發生錯誤，嘗試清理記錄
+    if (uploadConfig) {
+      try {
+        await fetch(UPLOAD_COMPLETE_URL, {
+          method: 'POST',
+          headers: {
+            'X-API-Key': API_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            shortCode: uploadConfig.shortCode,
+            success: false
+          })
+        });
+      } catch (cleanupError) {
+        console.error('Failed to cleanup after error:', cleanupError);
+      }
+    }
+    
     console.error('Video upload error:', error);
     return NextResponse.json(
       { 
