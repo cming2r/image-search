@@ -233,60 +233,111 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
-      const formData = new FormData();
-      formData.append('file', fileToUpload);
-      
-      if (password) {
-        formData.append('password', password);
-      }
-      
-      if (expiresIn) {
-        formData.append('expiresIn', expiresIn);
-      }
-
-      // 添加設備資訊
+      // 準備設備資訊
       const deviceInfo = {
         device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
         browser: getBrowserName(),
         os: getOSName(),
-        country_code: 'TW' // 可以根據實際需求獲取
+        country_code: 'TW'
       };
-      formData.append('device-info', JSON.stringify(deviceInfo));
 
-      const response = await fetch('/api/image-url', {
+      // 步驟 1：獲取上傳配置（只發送 JSON，不發送檔案）
+      console.log('Step 1: Getting upload configuration...');
+      const configPayload = {
+        filename: fileToUpload.name,
+        fileSize: fileToUpload.size,
+        mimeType: fileToUpload.type,
+        ...(password && { password }),
+        ...(expiresIn && { expiresIn }),
+        deviceInfo
+      };
+
+      const configResponse = await fetch('/api/image-url', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(configPayload)
       });
 
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch (parseError) {
-        console.error('Failed to parse response as JSON:', parseError);
-        const errorMessage = lang === 'zh' ? '服務器回應格式錯誤' :
-                             lang === 'en' ? 'Invalid server response format' :
-                             lang === 'jp' ? 'サーバーレスポンス形式エラー' :
-                             'Formato de respuesta del servidor inválido';
+      if (!configResponse.ok) {
+        const errorData = await configResponse.json().catch(() => ({}));
+        const errorMessage = errorData.message || errorData.error || 
+                            (lang === 'zh' ? `配置獲取失敗 (${configResponse.status})` :
+                             lang === 'en' ? `Configuration failed (${configResponse.status})` :
+                             lang === 'jp' ? `設定取得失敗 (${configResponse.status})` :
+                             `Error de configuración (${configResponse.status})`);
         setError(errorMessage);
         setToast({message: errorMessage, isVisible: true, type: 'error'});
         return;
       }
 
-      if (response.ok && responseData.success) {
-        setResult(responseData.data);
+      const configData = await configResponse.json();
+      if (!configData.success || !configData.uploadConfig) {
+        const errorMessage = lang === 'zh' ? '無效的上傳配置' :
+                             lang === 'en' ? 'Invalid upload configuration' :
+                             lang === 'jp' ? '無効なアップロード設定' :
+                             'Configuración de subida inválida';
+        setError(errorMessage);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+        return;
+      }
+
+      const { uploadConfig } = configData;
+
+      // 步驟 2：直接上傳到 R2（繞過 Vercel Function）
+      console.log('Step 2: Uploading directly to R2...');
+      const r2Response = await fetch(uploadConfig.uploadUrl, {
+        method: 'PUT',
+        body: fileToUpload  // 直接上傳檔案到 R2
+      });
+
+      if (!r2Response.ok) {
+        console.error('R2 upload failed:', r2Response.status, r2Response.statusText);
+        const errorMessage = lang === 'zh' ? '檔案上傳到存儲服務失敗' :
+                             lang === 'en' ? 'Failed to upload file to storage service' :
+                             lang === 'jp' ? 'ストレージサービスへのファイルアップロードに失敗しました' :
+                             'Error al subir archivo al servicio de almacenamiento';
+        setError(errorMessage);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+        return;
+      }
+
+      // 步驟 3：確認上傳完成
+      console.log('Step 3: Confirming upload completion...');
+      const completeResponse = await fetch('/api/image-url/complete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          shortCode: uploadConfig.shortCode,
+          success: true
+        })
+      });
+
+      if (!completeResponse.ok) {
+        const errorMessage = lang === 'zh' ? '上傳確認失敗' :
+                             lang === 'en' ? 'Upload confirmation failed' :
+                             lang === 'jp' ? 'アップロード確認に失敗しました' :
+                             'Error en confirmación de subida';
+        setError(errorMessage);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
+        return;
+      }
+
+      const completeData = await completeResponse.json();
+      if (completeData.success) {
+        setResult(completeData.data);
         // 先關閉進度中的 toast，然後顯示成功 toast
         setToast({message: '', isVisible: false, type: 'info'});
         setTimeout(() => {
           setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
         }, 100);
       } else {
-        const errorMessage = responseData.message || responseData.error || t.error[lang];
+        const errorMessage = completeData.message || completeData.error || t.error[lang];
         setError(errorMessage);
-        // 先關閉進度中的 toast，然後顯示錯誤 toast
-        setToast({message: '', isVisible: false, type: 'info'});
-        setTimeout(() => {
-          setToast({message: errorMessage, isVisible: true, type: 'error'});
-        }, 100);
+        setToast({message: errorMessage, isVisible: true, type: 'error'});
       }
     } catch (networkError) {
       console.error('Network error:', networkError);
@@ -564,7 +615,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
             
             {file ? (
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-900">{file.name}</p>
+                <p className="text-sm font-medium text-red-600">{file.name}</p>
                 <p className="text-xs text-gray-500">
                   {(file.size / 1024 / 1024).toFixed(2)} MB
                 </p>

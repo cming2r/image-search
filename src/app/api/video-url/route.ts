@@ -1,17 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const UPLOAD_CONFIG_URL = 'https://vvrl.cc/api/external/video/upload';
-const UPLOAD_COMPLETE_URL = 'https://vvrl.cc/api/external/video/upload-complete';
 const API_KEY = process.env.VVRL_API_KEY || 'f8e7d6c5b4a39281706f5e4d3c2b1a0987654321fedcba0987654321fedcba09';
 
 export async function POST(request: NextRequest) {
-  let uploadConfig: {
-    bunnyUploadUrl: string;
-    bunnyApiKey: string;
-    shortCode: string;
-    [key: string]: unknown;
-  } | null = null;
-  
   try {
     // 檢查 API Key 是否存在
     if (!API_KEY) {
@@ -21,19 +13,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 獲取 FormData
-    const formData = await request.formData();
-    const file = formData.get('file') as File;
+    // 獲取 JSON 數據（不再處理 FormData 和檔案）
+    const body = await request.json();
+    const { filename, fileSize, mimeType, password, shortCode, expiresIn, deviceInfo } = body;
 
-    if (!file) {
+    if (!filename || !fileSize || !mimeType) {
       return NextResponse.json(
-        { success: false, error: 'No file provided' },
+        { success: false, error: 'Missing required fields: filename, fileSize, mimeType' },
         { status: 400 }
       );
     }
 
     // 檢查檔案大小 (100MB)
-    if (file.size > 100 * 1024 * 1024) {
+    if (fileSize > 100 * 1024 * 1024) {
       return NextResponse.json(
         { success: false, error: 'File size exceeds 100MB limit' },
         { status: 400 }
@@ -47,7 +39,7 @@ export async function POST(request: NextRequest) {
       'video/x-m4v', 'video/m4v'
     ];
     
-    if (!allowedTypes.includes(file.type)) {
+    if (!allowedTypes.includes(mimeType)) {
       return NextResponse.json(
         { success: false, error: 'Unsupported video format' },
         { status: 400 }
@@ -65,34 +57,26 @@ export async function POST(request: NextRequest) {
       expiresIn?: string;
       deviceInfo?: object;
     } = {
-      filename: file.name,
-      fileSize: file.size,
-      mimeType: file.type
+      filename,
+      fileSize,
+      mimeType
     };
 
     // 添加可選參數
-    const password = formData.get('password');
     if (password) {
-      configPayload.password = password as string;
+      configPayload.password = password;
     }
 
-    const shortCode = formData.get('shortCode');
     if (shortCode) {
-      configPayload.shortCode = shortCode as string;
+      configPayload.shortCode = shortCode;
     }
 
-    const expiresIn = formData.get('expiresIn');
     if (expiresIn) {
-      configPayload.expiresIn = expiresIn as string;
+      configPayload.expiresIn = expiresIn;
     }
 
-    const deviceInfo = formData.get('device-info');
     if (deviceInfo) {
-      try {
-        configPayload.deviceInfo = JSON.parse(deviceInfo as string);
-      } catch (e) {
-        console.warn('Failed to parse device info:', e);
-      }
+      configPayload.deviceInfo = deviceInfo;
     }
 
     const configResponse = await fetch(UPLOAD_CONFIG_URL, {
@@ -118,7 +102,7 @@ export async function POST(request: NextRequest) {
     }
 
     const configData = await configResponse.json();
-    uploadConfig = configData.uploadConfig;
+    const { uploadConfig } = configData;
 
     if (!uploadConfig || !uploadConfig.bunnyUploadUrl || !uploadConfig.bunnyApiKey) {
       return NextResponse.json(
@@ -127,96 +111,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let uploadSuccess = false;
-    
-    try {
-      // 步驟 2：直接上傳到 Bunny.net
-      console.log('Step 2: Uploading to Bunny.net...');
-      const uploadResponse = await fetch(uploadConfig.bunnyUploadUrl, {
-        method: 'PUT',
-        headers: {
-          'AccessKey': uploadConfig.bunnyApiKey,
-          'Content-Type': 'application/octet-stream'
-        },
-        body: file
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error(`Upload to Bunny.net failed: ${uploadResponse.statusText}`);
+    // 返回上傳配置給前端（步驟 1 完成）
+    console.log('Step 1 completed: Upload configuration ready');
+    return NextResponse.json({
+      success: true,
+      uploadConfig: {
+        bunnyUploadUrl: uploadConfig.bunnyUploadUrl,
+        bunnyApiKey: uploadConfig.bunnyApiKey,
+        shortCode: uploadConfig.shortCode
       }
-      
-      uploadSuccess = true;
-    } catch (bunnyError) {
-      console.error('Bunny.net upload failed:', bunnyError);
-      uploadSuccess = false;
-    }
-
-    // 步驟 3：確認上傳完成（無論成功或失敗都要調用）
-    try {
-      console.log('Step 3: Confirming upload...');
-      const completeResponse = await fetch(UPLOAD_COMPLETE_URL, {
-        method: 'POST',
-        headers: {
-          'X-API-Key': API_KEY,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          shortCode: uploadConfig.shortCode,
-          success: uploadSuccess
-        })
-      });
-
-      const result = await completeResponse.json();
-      
-      if (uploadSuccess && result.success) {
-        console.log('Upload completed successfully!');
-        return NextResponse.json({
-          success: true,
-          data: result.data
-        });
-      } else {
-        return NextResponse.json(
-          { 
-            success: false, 
-            error: uploadSuccess ? 
-              (result.message || 'Upload completion failed') : 
-              'Video upload to Bunny.net failed'
-          },
-          { status: 500 }
-        );
-      }
-    } catch (completeError) {
-      console.error('Upload completion failed:', completeError);
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: `Upload completion failed: ${completeError instanceof Error ? completeError.message : 'Unknown error'}`
-        },
-        { status: 500 }
-      );
-    }
+    });
 
   } catch (error) {
-    // 如果在步驟 1 成功後發生錯誤，嘗試清理記錄
-    if (uploadConfig) {
-      try {
-        await fetch(UPLOAD_COMPLETE_URL, {
-          method: 'POST',
-          headers: {
-            'X-API-Key': API_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            shortCode: uploadConfig.shortCode,
-            success: false
-          })
-        });
-      } catch (cleanupError) {
-        console.error('Failed to cleanup after error:', cleanupError);
-      }
-    }
-    
-    console.error('Video upload error:', error);
+    console.error('Video upload configuration error:', error);
     return NextResponse.json(
       { 
         success: false, 

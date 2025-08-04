@@ -273,60 +273,88 @@ export default function FileUrlUpload({ locale }: FileUrlUploadProps) {
     setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
-      const formData = new FormData();
-      formData.append('file', fileToUpload);
-      
-      if (password) {
-        formData.append('password', password);
-      }
-      
-      if (expiresIn) {
-        formData.append('expiresIn', expiresIn);
-      }
-
-      // Add user device info
-      const userInfo = {
+      // 獲取裝置資訊
+      const deviceInfo = {
         device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
         browser: getBrowserName(),
         os: getOSName(),
-        country_code: 'TW' // Could be enhanced with geolocation API
+        country_code: 'TW'
       };
-      formData.append('userInfo', JSON.stringify(userInfo));
 
-      const response = await fetch('/api/file-url', {
+      // 步驟 1：獲取上傳配置
+      const configPayload = {
+        filename: fileToUpload.name,
+        fileSize: fileToUpload.size,
+        mimeType: fileToUpload.type,
+        ...(password && { password }),
+        ...(expiresIn && { expiresIn }),
+        deviceInfo
+      };
+
+      const configResponse = await fetch('/api/file-url', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(configPayload),
       });
 
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch (parseError) {
-        console.error('Failed to parse response as JSON:', parseError);
-        const errorMessage = lang === 'zh' ? '服務器回應格式錯誤' :
-                             lang === 'en' ? 'Invalid server response format' :
-                             lang === 'jp' ? 'サーバーレスポンス形式エラー' :
-                             'Formato de respuesta del servidor inválido';
+      if (!configResponse.ok) {
+        const errorText = await configResponse.text();
+        console.error('Config request failed:', errorText);
+        const errorMessage = lang === 'zh' ? `設定獲取失敗 (${configResponse.status})` :
+                             lang === 'en' ? `Config failed (${configResponse.status})` :
+                             lang === 'jp' ? `設定取得失敗 (${configResponse.status})` :
+                             `Error de configuración (${configResponse.status})`;
         setError(errorMessage);
         setToast({message: errorMessage, isVisible: true, type: 'error'});
         return;
       }
 
-      if (response.ok && responseData.success) {
-        setResult(responseData.data);
+      const configData = await configResponse.json();
+      if (!configData.success || !configData.uploadConfig) {
+        throw new Error('Invalid upload configuration received');
+      }
+
+      const { uploadConfig } = configData;
+
+      // 步驟 2：直接上傳到 R2 儲存
+      const uploadResponse = await fetch(uploadConfig.uploadUrl, {
+        method: 'PUT',
+        body: fileToUpload
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`R2 upload failed with status: ${uploadResponse.status}`);
+      }
+
+      // 步驟 3：確認上傳完成
+      const completeResponse = await fetch('/api/file-url/complete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          shortCode: uploadConfig.shortCode,
+          success: true
+        })
+      });
+
+      if (!completeResponse.ok) {
+        throw new Error(`Upload confirmation failed with status: ${completeResponse.status}`);
+      }
+
+      const result = await completeResponse.json();
+      
+      if (result.success && result.data) {
+        setResult(result.data);
         // 先關閉進度中的 toast，然後顯示成功 toast
         setToast({message: '', isVisible: false, type: 'info'});
         setTimeout(() => {
           setToast({message: t.successUpload[lang], isVisible: true, type: 'success'});
         }, 100);
       } else {
-        const errorMessage = responseData.message || responseData.error || t.error[lang];
-        setError(errorMessage);
-        // 先關閉進度中的 toast，然後顯示錯誤 toast
-        setToast({message: '', isVisible: false, type: 'info'});
-        setTimeout(() => {
-          setToast({message: errorMessage, isVisible: true, type: 'error'});
-        }, 100);
+        throw new Error(result.error || 'Upload confirmation failed');
       }
     } catch (networkError) {
       console.error('Network error:', networkError);
@@ -343,7 +371,7 @@ export default function FileUrlUpload({ locale }: FileUrlUploadProps) {
     } finally {
       setIsUploading(false);
     }
-  }, [file, password, expiresIn, t.error, t.processing, t.successUpload, lang]);
+  }, [file, password, expiresIn, t.processing, t.successUpload, lang]);
 
   const handleFileSelect = useCallback((selectedFile: File) => {
     // 檢查檔案大小 (20MB)
@@ -564,7 +592,7 @@ export default function FileUrlUpload({ locale }: FileUrlUploadProps) {
             
             {file ? (
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-900">{file.name}</p>
+                <p className="text-sm font-medium text-red-600">{file.name}</p>
                 <p className="text-xs text-gray-500">
                   {formatFileSize(file.size)}
                 </p>
