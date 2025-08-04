@@ -24,11 +24,6 @@ export default function FileUrlPage() {
             <p className="text-lg text-gray-600">
               {fileUrlTranslations.meta.description[lang]}
             </p>
-  <a href="https://vvrl.cc/file">
-    <button className="mt-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-400 text-white font-semibold rounded-lg shadow-md hover:from-orange-600 hover:to-orange-500 hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
-Page testing... Visit vvrl.cc
-    </button>
-  </a>
           </div>
 
           <FileUrlUpload locale={locale} />
