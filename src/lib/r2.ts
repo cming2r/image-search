@@ -154,7 +154,7 @@ export async function cleanupOldImagesFromR2(
     console.log(`找到 ${filesToDelete.length} 個需要刪除的舊圖片檔案`);
 
     let deletedCount = 0;
-    let skippedCount = Math.max(0, allImages.filter(image => image.lastModified < cutoffDate).length - maxBatch);
+    const skippedCount = Math.max(0, allImages.filter(image => image.lastModified < cutoffDate).length - maxBatch);
 
     // 批次刪除檔案
     for (const image of filesToDelete) {

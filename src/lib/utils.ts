@@ -109,11 +109,6 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-06-26 21:00:51 +0800",
     routePath: "/gift-exchange",
   },
-  "/src/app/[locale]/file-url/page.tsx": {
-    created: "2025-07-20 22:39:12 +0800",
-    modified: "2025-08-04 18:09:36 +0800",
-    routePath: "/file-url",
-  },
   "/src/app/[locale]/image-search/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-06-26 21:00:51 +0800",
@@ -129,15 +124,20 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-06-26 21:00:51 +0800",
     routePath: "/date",
   },
-  "/src/app/[locale]/color-picker/page.tsx": {
-    created: "2025-06-19 23:50:16 +0800",
-    modified: "2025-06-19 23:50:16 +0800",
-    routePath: "/color-picker",
-  },
   "/src/app/[locale]/admin/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-07-15 19:40:19 +0800",
     routePath: "/admin",
+  },
+  "/src/app/[locale]/file-url/page.tsx": {
+    created: "2025-07-20 22:39:12 +0800",
+    modified: "2025-08-04 18:09:36 +0800",
+    routePath: "/file-url",
+  },
+  "/src/app/[locale]/color-picker/page.tsx": {
+    created: "2025-06-19 23:50:16 +0800",
+    modified: "2025-06-19 23:50:16 +0800",
+    routePath: "/color-picker",
   },
   "/src/app/[locale]/gift-exchange/[id]/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
@@ -154,15 +154,15 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-06-26 21:00:51 +0800",
     routePath: "/terms",
   },
-  "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-06-26 21:00:51 +0800",
-    routePath: "/privacy-policy",
-  },
   "/src/app/[locale]/(info)/contact/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-07-26 11:24:37 +0800",
     routePath: "/contact",
+  },
+  "/src/app/[locale]/(info)/privacy-policy/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-06-26 21:00:51 +0800",
+    routePath: "/privacy-policy",
   },
 };
 

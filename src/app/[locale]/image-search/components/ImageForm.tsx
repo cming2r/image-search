@@ -237,7 +237,7 @@ const ImageForm: FC = () => {
       setToast({message: formTranslations.processing[lang], isVisible: true, type: 'info'});
       
       // 步驟 1: 獲取預簽名 URL
-      const configResponse = await fetch('/api/image-upload', {
+      const configResponse = await fetch('/api/image-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
