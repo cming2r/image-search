@@ -32,7 +32,13 @@ Create `.env.local` with:
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-# Vercel Blob Configuration
+# Cloudflare R2 Configuration (for image-search)
+R2_ACCESS_KEY_ID=your-r2-access-key-id
+R2_SECRET_ACCESS_KEY=your-r2-secret-access-key
+R2_ENDPOINT=https://your-account-id.r2.cloudflarestorage.com
+R2_PUBLIC_URL=https://pub-b6115e36a46b41fabf861504393ee5e8.r2.dev  # R2 public URL or custom domain
+
+# Vercel Blob Configuration (for other services)
 BLOB_READ_WRITE_TOKEN=your-vercel-blob-token
 
 # Base URL Configuration
@@ -151,7 +157,7 @@ CREATE TABLE gift_exchange_wheel (
 ### Important Notes
 - All user-facing content is multilingual (zh/en/jp/es)
 - SEO dates are automatically maintained via Git integration
-- Image uploads are limited to 5MB, video uploads to 100MB, general files to 15MB
+- Image uploads are limited to 10MB, video uploads to 100MB, general files to 20MB
 - Admin areas require Supabase authentication
 - All API routes include proper error handling and validation
 - Device information is automatically tracked for analytics and debugging

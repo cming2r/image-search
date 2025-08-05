@@ -87,10 +87,10 @@ const headerTranslations = {
     es: "Servicio de Acortador de URL"
   },
   imageUrl: {
-    zh: "圖片URL",
-    en: "Image URL Shortener",
-    jp: "画像URL",
-    es: "Image URL Shortener"
+    zh: "圖片網址生成器",
+    en: "Image URL Generator",
+    jp: "画像URL生成器",
+    es: "Generador de URL de Imagen"
   },
   fileUrl: {
     zh: "檔案URL",
@@ -316,6 +316,13 @@ const Header: FC = () => {
                     {getTranslation('urlShortener')}
                   </Link>
                   <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('fileUrl')}
+                  </Link>
+                  <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
@@ -328,13 +335,6 @@ const Header: FC = () => {
                     role="menuitem"
                   >
                     {getTranslation('videoUrl')}
-                  </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                    role="menuitem"
-                  >
-                    {getTranslation('fileUrl')}
                   </Link>
                 </div>
               </div>
@@ -625,6 +625,13 @@ const Header: FC = () => {
                     {getTranslation('urlShortener')}
                   </Link>
                   <Link 
+                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('fileUrl')}
+                  </Link>
+                  <Link 
                     href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
@@ -637,13 +644,6 @@ const Header: FC = () => {
                     onClick={closeMenu}
                   >
                     {getTranslation('videoUrl')}
-                  </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
-                    className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                    onClick={closeMenu}
-                  >
-                    {getTranslation('fileUrl')}
                   </Link>
                 </div>
               </li>

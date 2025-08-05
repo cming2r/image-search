@@ -1,10 +1,10 @@
 export const imageUrlTranslations = {
   meta: {
     title: {
-      zh: '圖片URL',
-      en: 'Image URL Shortener',
-      jp: '画像URL',
-      es: 'Image URL Shortener'
+      zh: '圖片網址生成器',
+      en: 'Image URL Generator',
+      jp: '画像URL生成器',
+      es: 'Generador de URL de Imagen'
     },
     description: {
       zh: '免費上傳圖片，快速獲取永久連結，支援多種格式。',

@@ -81,10 +81,10 @@ const formTranslations = {
     es: "haz clic para subir"
   },
   supportedFormats: {
-    zh: "支援 JPG, PNG, WEBP 等格式，最大5MB",
-    en: "Supports JPG, PNG, WEBP and other formats, max 5MB",
-    jp: "JPG、PNG、WEBPなどの形式をサポート、最大5MB",
-    es: "Soporta JPG, PNG, WEBP y otros formatos, máx 5MB"
+    zh: "支援 JPG, PNG, WEBP 等格式，最大10MB",
+    en: "Supports JPG, PNG, WEBP and other formats, max 10MB",
+    jp: "JPG、PNG、WEBPなどの形式をサポート、最大10MB",
+    es: "Soporta JPG, PNG, WEBP y otros formatos, máx 10MB"
   },
   validUrlError: {
     zh: "請輸入有效的圖片URL",
@@ -105,10 +105,10 @@ const formTranslations = {
     es: "Por favor sube un archivo de imagen"
   },
   uploadErrorSize: {
-    zh: "圖片大小不能超過5MB",
-    en: "Image size cannot exceed 5MB",
-    jp: "画像サイズは5MBを超えることはできません",
-    es: "El tamaño de la imagen no puede exceder 5MB"
+    zh: "圖片大小不能超過10MB",
+    en: "Image size cannot exceed 10MB",
+    jp: "画像サイズは10MBを超えることはできません",
+    es: "El tamaño de la imagen no puede exceder 10MB"
   },
   imageUrlInfo: {
     zh: "圖片網址:",
@@ -224,8 +224,8 @@ const ImageForm: FC = () => {
       return;
     }
     
-    // 檢查文件大小 (不超過5MB)
-    if (file.size > 5 * 1024 * 1024) {
+    // 檢查文件大小 (不超過10MB)
+    if (file.size > 10 * 1024 * 1024) {
       setError(formTranslations.uploadErrorSize[lang]);
       return;
     }
@@ -236,28 +236,44 @@ const ImageForm: FC = () => {
       // 顯示處理中的提示
       setToast({message: formTranslations.processing[lang], isVisible: true, type: 'info'});
       
-      // 創建FormData
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      // 發送到上傳API
-      const response = await fetch('/api/upload', {
+      // 步驟 1: 獲取預簽名 URL
+      const configResponse = await fetch('/api/image-upload', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filename: file.name,
+          fileSize: file.size,
+          mimeType: file.type,
+        }),
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || '上傳失敗');
+      if (!configResponse.ok) {
+        const errorData = await configResponse.json();
+        throw new Error(errorData.error || '獲取上傳配置失敗');
       }
       
-      const data = await response.json();
+      const { uploadConfig } = await configResponse.json();
       
-      // 直接設置上傳後的圖片URL，不影響輸入框
-      setUploadedImageUrl(data.url);
+      // 步驟 2: 直接上傳到 R2 (避開 Vercel Function)
+      const uploadResponse = await fetch(uploadConfig.presignedUrl, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+      
+      if (!uploadResponse.ok) {
+        throw new Error(`上傳失敗: ${uploadResponse.status}`);
+      }
+      
+      // 直接設置上傳後的圖片URL
+      setUploadedImageUrl(uploadConfig.publicUrl);
       
       // 在上傳成功時記錄圖片URL到Supabase
-      saveImageUrl(data.url).catch(err => {
+      saveImageUrl(uploadConfig.publicUrl).catch(err => {
         console.error('保存圖片URL失敗:', err);
         // 但不影響使用者繼續使用
       });
@@ -360,7 +376,7 @@ const ImageForm: FC = () => {
                           return;
                         }
                         
-                        if (file.size > 5 * 1024 * 1024) {
+                        if (file.size > 10 * 1024 * 1024) {
                           setError(formTranslations.uploadErrorSize[lang]);
                           return;
                         }
