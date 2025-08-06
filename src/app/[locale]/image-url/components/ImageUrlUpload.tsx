@@ -233,13 +233,23 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     setToast({message: t.processing[lang], isVisible: true, type: 'info'});
 
     try {
-      // 準備設備資訊
-      const deviceInfo = {
-        device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-        browser: getBrowserName(),
-        os: getOSName(),
-        country_code: 'TW'
-      };
+      // 獲取設備資訊
+      let deviceInfo = {};
+      try {
+        const deviceResponse = await fetch('/api/device-info');
+        if (deviceResponse.ok) {
+          deviceInfo = await deviceResponse.json();
+        }
+      } catch (error) {
+        console.warn('Failed to get device info:', error);
+        // 使用本地備用方法
+        deviceInfo = {
+          device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+          browser: getBrowserName(),
+          os: getOSName(),
+          country_code: 'XX'
+        };
+      }
 
       // 步驟 1：獲取上傳配置（只發送 JSON，不發送檔案）
       console.log('Step 1: Getting upload configuration...');

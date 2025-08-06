@@ -274,12 +274,22 @@ export default function FileUrlUpload({ locale }: FileUrlUploadProps) {
 
     try {
       // 獲取裝置資訊
-      const deviceInfo = {
-        device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-        browser: getBrowserName(),
-        os: getOSName(),
-        country_code: 'TW'
-      };
+      let deviceInfo = {};
+      try {
+        const deviceResponse = await fetch('/api/device-info');
+        if (deviceResponse.ok) {
+          deviceInfo = await deviceResponse.json();
+        }
+      } catch (error) {
+        console.warn('Failed to get device info:', error);
+        // 使用本地備用方法
+        deviceInfo = {
+          device_type: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+          browser: getBrowserName(),
+          os: getOSName(),
+          country_code: 'XX'
+        };
+      }
 
       // 步驟 1：獲取上傳配置
       const configPayload = {
