@@ -3,6 +3,7 @@
 import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import { Clipboard } from 'lucide-react';
 import SearchButtons from './SearchButtons';
 import { saveImageUrl } from '@/lib/supabase/imageSearch';
 import Toast from '@/components/Toast';
@@ -337,11 +338,44 @@ const ImageForm: FC = () => {
         <div className="space-y-8">
           {/* 圖片上傳區塊 */}
           <div className="pb-8 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-              </svg>
-              {formTranslations.uploadImageTab[lang]}
+            <h2 className="text-lg font-medium text-gray-800 mb-4 flex items-center justify-between">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                {formTranslations.uploadImageTab[lang]}
+              </div>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const clipboardItems = await navigator.clipboard.read();
+                    for (const item of clipboardItems) {
+                      for (const type of item.types) {
+                        if (type.startsWith('image/')) {
+                          const blob = await item.getType(type);
+                          const file = new File([blob], 'pasted-image.png', { type });
+                          await processFile(file);
+                          break;
+                        }
+                      }
+                    }
+                  } catch (err) {
+                    console.error('貼上失敗:', err);
+                    setError(lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' : 
+                             lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
+                             lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
+                             'Error al pegar, asegúrese de que el portapapeles tenga una imagen');
+                  }
+                }}
+                className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <Clipboard className="h-4 w-4 mr-1.5" />
+                {lang === 'zh' ? '貼上' : 
+                 lang === 'en' ? 'Paste' : 
+                 lang === 'jp' ? '貼り付け' : 
+                 'Pegar'}
+              </button>
             </h2>
             
             <div className="md:flex md:space-x-4">
