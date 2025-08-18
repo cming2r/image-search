@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download, Lock, Clock } from 'lucide-react';
+import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download, Lock, Clock, Clipboard } from 'lucide-react';
 import Toast from '@/components/Toast';
 
 const uiTranslations = {
@@ -114,6 +114,12 @@ const uiTranslations = {
     en: 'Expiration',
     jp: '有効期限',
     es: 'Expiración'
+  },
+  pasteButton: {
+    zh: '貼上',
+    en: 'Paste',
+    jp: '貼り付け',
+    es: 'Pegar'
   }
 };
 
@@ -598,6 +604,36 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               <Upload className="h-5 w-5 mr-2" />
               {t.uploadTitle[lang]}
             </h2>
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  const clipboardItems = await navigator.clipboard.read();
+                  for (const item of clipboardItems) {
+                    for (const type of item.types) {
+                      if (type.startsWith('image/')) {
+                        const blob = await item.getType(type);
+                        const file = new File([blob], 'pasted-image.png', { type });
+                        handleFileSelect(file);
+                        return;
+                      }
+                    }
+                  }
+                } catch (err) {
+                  console.error('貼上失敗:', err);
+                  const errorMessage = lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' : 
+                                     lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
+                                     lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
+                                     'Error al pegar, asegúrese de que el portapapeles tenga una imagen';
+                  setError(errorMessage);
+                  setToast({message: errorMessage, isVisible: true, type: 'error'});
+                }
+              }}
+              className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <Clipboard className="h-4 w-4 mr-1.5" />
+              {t.pasteButton[lang]}
+            </button>
           </div>
 
           {/* File Upload Area */}
