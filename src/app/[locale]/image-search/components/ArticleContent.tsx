@@ -47,10 +47,10 @@ const imageSearchContentTranslations = {
       es: "Consejo:"
     },
     tipContent: {
-      zh: "透過複製其他網站的圖片，可以直接用Ctrl + V 貼上在上傳圖片的頁面。",
-      en: "You can directly paste images from other websites using Ctrl + V in the image upload section.",
-      jp: "他のウェブサイトから画像をコピーして、アップロード画面でCtrl + Vで直接貼り付けることができます。",
-      es: "Puedes pegar directamente imágenes de otros sitios web usando Ctrl + V en la sección de subida de imagen."
+      zh: "透過複製其他網站的圖片，可以直接用 Ctrl + V 貼上在上傳圖片的頁面。或者使用「貼上」按鈕，從剪貼簿直接貼上圖片。",
+      en: "You can directly paste images from other websites using Ctrl + V in the image upload section. Or use the 'Paste' button to paste images directly from the clipboard.",
+      jp: "他のウェブサイトから画像をコピーして、アップロード画面で Ctrl + V で直接貼り付けることができます。または「貼り付け」ボタンを使用して、クリップボードから直接画像を貼り付けることもできます。",
+      es: "Puedes pegar directamente imágenes de otros sitios web usando Ctrl + V en la sección de subida de imagen. O usa el botón 'Pegar' para pegar imágenes directamente desde el portapapeles."
     }
   },
   whatIs: {

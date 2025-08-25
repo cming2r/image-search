@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import QRCode from 'qrcode';
-import { Download, ExternalLink, Copy, QrCode, Check } from 'lucide-react';
+import { Download, ExternalLink, Copy, QrCode, Check, Lock, Clock } from 'lucide-react';
 
 const translations = {
   urlLabel: {
@@ -12,6 +12,30 @@ const translations = {
     en: 'Enter your long URL *',
     jp: '長いURLを入力 *',
     es: 'Ingresa tu URL larga *'
+  },
+  passwordProtection: {
+    zh: '密碼保護',
+    en: 'Password Protection',
+    jp: 'パスワード保護',
+    es: 'Protección con Contraseña'
+  },
+  passwordPlaceholder: {
+    zh: '最多4位數字',
+    en: 'Max 4 digits',
+    jp: '最大4桁',
+    es: 'Máx. 4 dígitos'
+  },
+  expiresIn: {
+    zh: '有效期限',
+    en: 'Expiration',
+    jp: '有効期限',
+    es: 'Expiración'
+  },
+  none: {
+    zh: '無',
+    en: 'None',
+    jp: 'なし',
+    es: 'Ninguno'
   },
   urlPlaceholder: {
     zh: 'https://example.com/very/long/url',
@@ -89,6 +113,17 @@ const translations = {
   }
 };
 
+const expirationOptions = [
+  { value: '', label: { zh: '預設', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
+  { value: 'hour1', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
+  { value: 'hours3', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
+  { value: 'hours6', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
+  { value: 'hours12', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
+  { value: 'day1', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
+  { value: 'days3', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
+  { value: 'days7', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
+];
+
 export default function ShortUrl() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
@@ -103,6 +138,64 @@ export default function ShortUrl() {
   const [showQrCode, setShowQrCode] = useState(false);
   const [includeUrl, setIncludeUrl] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [expirationTime, setExpirationTime] = useState('');
+  const [result, setResult] = useState<any>(null);
+  const [countdown, setCountdown] = useState<string>('');
+
+  // 倒數計時邏輯
+  useEffect(() => {
+    if (result?.expiresAt) {
+      const updateCountdown = () => {
+        const now = new Date().getTime();
+        const expireTime = new Date(result.expiresAt!).getTime();
+        const distance = expireTime - now;
+
+        if (distance > 0) {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+          let countdownText = '';
+          if (days > 0) {
+            countdownText = lang === 'zh' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${days}d ${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${days}日 ${hours}時間 ${minutes}分` :
+                           `${days}d ${hours}h ${minutes}m`;
+          } else if (hours > 0) {
+            countdownText = lang === 'zh' ? `${hours}小時 ${minutes}分鐘` :
+                           lang === 'en' ? `${hours}h ${minutes}m` :
+                           lang === 'jp' ? `${hours}時間 ${minutes}分` :
+                           `${hours}h ${minutes}m`;
+          } else if (minutes > 0) {
+            countdownText = lang === 'zh' ? `${minutes}分鐘` :
+                           lang === 'en' ? `${minutes}m` :
+                           lang === 'jp' ? `${minutes}分` :
+                           `${minutes}m`;
+          } else {
+            countdownText = lang === 'zh' ? '不到1分鐘' :
+                           lang === 'en' ? 'Less than 1m' :
+                           lang === 'jp' ? '1分未満' :
+                           'Menos de 1m';
+          }
+
+          setCountdown(countdownText);
+        } else {
+          setCountdown(lang === 'zh' ? '已過期' :
+                      lang === 'en' ? 'Expired' :
+                      lang === 'jp' ? '期限切れ' :
+                      'Expirado');
+        }
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 60000); // 每分鐘更新一次
+
+      return () => clearInterval(interval);
+    } else {
+      setCountdown('');
+    }
+  }, [result?.expiresAt, lang]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,6 +204,7 @@ export default function ShortUrl() {
     setLoading(true);
     setError('');
     setShortUrl('');
+    setResult(null);
     
     try {
       const response = await fetch('/api/shorturl', {
@@ -119,16 +213,19 @@ export default function ShortUrl() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          url: url
+          url: url,
+          ...(password && { password }),
+          ...(expirationTime && { expirationTime })
         }),
       });
 
-      const result = await response.json();
+      const data = await response.json();
 
-      if (result.success) {
-        setShortUrl(result.data.shortUrl);
+      if (data.success) {
+        setShortUrl(data.data.shortUrl);
+        setResult(data.data);
       } else {
-        setError(result.error || translations.errorMessages.shortenFailed[lang]);
+        setError(data.error || translations.errorMessages.shortenFailed[lang]);
       }
     } catch (error) {
       console.error('Error shortening URL:', error);
@@ -284,6 +381,44 @@ export default function ShortUrl() {
                   required
                 />
               </div>
+              
+              {/* 選項設置區域 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {/* 密碼保護選項 */}
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <Lock className="h-4 w-4 text-orange-600 mr-2" />
+                    <label className="text-sm font-medium text-gray-700">{translations.passwordProtection[lang]}</label>
+                  </div>
+                  <input
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value.slice(0, 4))}
+                    maxLength={4}
+                    placeholder={translations.passwordPlaceholder[lang]}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white"
+                  />
+                </div>
+                
+                {/* 過期時間選項 */}
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <Clock className="h-4 w-4 text-green-600 mr-2" />
+                    <label className="text-sm font-medium text-gray-700">{translations.expiresIn[lang]}</label>
+                  </div>
+                  <select
+                    value={expirationTime}
+                    onChange={(e) => setExpirationTime(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white appearance-none cursor-pointer"
+                  >
+                    {expirationOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label[lang]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
             
             {error && (
@@ -305,10 +440,10 @@ export default function ShortUrl() {
 
       {shortUrl && (
         <div className="space-y-6">
-          {/* 顯示原始長網址 */}
+          {/* 顯示原始長網址及資訊 */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-lg font-medium text-gray-900 mb-3">{translations.originalUrlTitle[lang]}</h3>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-4">
               <input
                 type="text"
                 value={url}
@@ -316,6 +451,28 @@ export default function ShortUrl() {
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
               />
             </div>
+            
+            {/* 顯示密碼和有效期限資訊 */}
+            {(result?.hasPassword || result?.expiresAt) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm pt-3 border-t border-gray-200">
+                {result?.hasPassword && (
+                  <div className="flex items-center">
+                    <Lock className="h-4 w-4 text-orange-600 mr-2" />
+                    <span className="font-medium text-gray-700">{translations.passwordProtection[lang]}：</span>
+                    <span className="text-gray-600 ml-1">{password || '****'}</span>
+                  </div>
+                )}
+                {result?.expiresAt && (
+                  <div className="flex items-center">
+                    <Clock className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="font-medium text-gray-700">{translations.expiresIn[lang]}：</span>
+                    <span className={`text-gray-600 ml-1 ${countdown && !countdown.includes('已過期') && !countdown.includes('Expired') && !countdown.includes('期限切れ') && !countdown.includes('Expirado') ? 'font-mono' : ''}`}>
+                      {countdown || new Date(result.expiresAt).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           
           {/* 顯示短網址 */}
@@ -457,6 +614,10 @@ export default function ShortUrl() {
                   setShowQrCode(false);
                   setIncludeUrl(false);
                   setQrLoading(false);
+                  setPassword('');
+                  setExpirationTime('');
+                  setResult(null);
+                  setCountdown('');
                 }}
                 className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
               >

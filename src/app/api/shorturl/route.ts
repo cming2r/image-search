@@ -43,7 +43,7 @@ async function getDeviceInfo(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { url, customCode, userInfo } = body;
+    const { url, customCode, userInfo, password, expirationTime } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -55,7 +55,9 @@ export async function POST(request: NextRequest) {
     // Prepare request body for external API
     const requestBody: { 
       url: string; 
-      customCode?: string; 
+      customCode?: string;
+      password?: string;
+      expirationTime?: string;
       userInfo?: {
         device_type: string;
         browser: string;
@@ -67,6 +69,16 @@ export async function POST(request: NextRequest) {
     
     if (customCode) {
       requestBody.customCode = customCode;
+    }
+    
+    // 添加密碼保護
+    if (password) {
+      requestBody.password = password;
+    }
+    
+    // 添加過期時間
+    if (expirationTime) {
+      requestBody.expirationTime = expirationTime;
     }
     
     // 如果客戶端提供了 userInfo，使用它；否則自動檢測
@@ -98,7 +110,9 @@ export async function POST(request: NextRequest) {
           shortUrl: result.data.shortUrl,
           originalUrl: result.data.originalUrl,
           title: result.data.title,
-          createdAt: result.data.createdAt
+          createdAt: result.data.createdAt,
+          hasPassword: result.data.hasPassword || false,
+          expiresAt: result.data.expiresAt || null
         }
       });
     } else {
