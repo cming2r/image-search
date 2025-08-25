@@ -124,6 +124,16 @@ const expirationOptions = [
   { value: 'days7', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
 ];
 
+interface ShortUrlResult {
+  shortCode: string;
+  shortUrl: string;
+  originalUrl: string;
+  title?: string;
+  createdAt: string;
+  hasPassword?: boolean;
+  expiresAt?: string;
+}
+
 export default function ShortUrl() {
   const params = useParams();
   const locale = (params?.locale as string) || 'zh';
@@ -140,7 +150,7 @@ export default function ShortUrl() {
   const [qrLoading, setQrLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [expirationTime, setExpirationTime] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<ShortUrlResult | null>(null);
   const [countdown, setCountdown] = useState<string>('');
 
   // 倒數計時邏輯
