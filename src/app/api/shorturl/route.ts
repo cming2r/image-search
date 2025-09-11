@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
       customCode?: string;
       password?: string;
       expirationTime?: string;
+      add_from?: string;
       userInfo?: {
         device_type: string;
         browser: string;
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
         country_code: string;
         ip_address: string;
       }
-    } = { url };
+    } = { url, add_from: 'fyimg' };
     
     if (customCode) {
       requestBody.customCode = customCode;

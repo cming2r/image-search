@@ -78,11 +78,13 @@ export async function POST(request: NextRequest) {
       password?: string;
       shortCode?: string;
       expiresIn?: string;
+      add_from?: string;
       deviceInfo?: object;
     } = {
       filename,
       fileSize,
-      mimeType
+      mimeType,
+      add_from: 'fyimg'
     };
 
     // 添加可選參數
