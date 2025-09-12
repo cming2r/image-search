@@ -115,13 +115,13 @@ const translations = {
 
 const expirationOptions = [
   { value: '', label: { zh: '預設', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
-  { value: 'hour1', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
-  { value: 'hours3', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
-  { value: 'hours6', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
-  { value: 'hours12', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
-  { value: 'day1', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
-  { value: 'days3', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
-  { value: 'days7', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
+  { value: '1hr', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
+  { value: '3hr', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
+  { value: '6hr', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
+  { value: '12hr', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
+  { value: '1day', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
+  { value: '3days', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
+  { value: '7days', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
 ];
 
 interface ShortUrlResult {
@@ -149,7 +149,7 @@ export default function ShortUrl() {
   const [includeUrl, setIncludeUrl] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
   const [password, setPassword] = useState('');
-  const [expirationTime, setExpirationTime] = useState('');
+  const [expiresIn, setExpiresIn] = useState('');
   const [result, setResult] = useState<ShortUrlResult | null>(null);
   const [countdown, setCountdown] = useState<string>('');
 
@@ -225,7 +225,7 @@ export default function ShortUrl() {
         body: JSON.stringify({ 
           url: url,
           ...(password && { password }),
-          ...(expirationTime && { expirationTime })
+          ...(expiresIn && { expiresIn })
         }),
       });
 
@@ -417,8 +417,8 @@ export default function ShortUrl() {
                     <label className="text-sm font-medium text-gray-700">{translations.expiresIn[lang]}</label>
                   </div>
                   <select
-                    value={expirationTime}
-                    onChange={(e) => setExpirationTime(e.target.value)}
+                    value={expiresIn}
+                    onChange={(e) => setExpiresIn(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white appearance-none cursor-pointer"
                   >
                     {expirationOptions.map((option) => (
@@ -625,7 +625,7 @@ export default function ShortUrl() {
                   setIncludeUrl(false);
                   setQrLoading(false);
                   setPassword('');
-                  setExpirationTime('');
+                  setExpiresIn('');
                   setResult(null);
                   setCountdown('');
                 }}

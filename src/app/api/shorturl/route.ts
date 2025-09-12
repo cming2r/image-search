@@ -43,7 +43,7 @@ async function getDeviceInfo(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { url, customCode, userInfo, password, expirationTime } = body;
+    const { url, customCode, deviceInfo, password, expiresIn } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
       url: string; 
       customCode?: string;
       password?: string;
-      expirationTime?: string;
+      expiresIn?: string;
       add_from?: string;
-      userInfo?: {
+      deviceInfo?: {
         device_type: string;
         browser: string;
         os: string;
@@ -78,17 +78,17 @@ export async function POST(request: NextRequest) {
     }
     
     // 添加過期時間
-    if (expirationTime) {
-      requestBody.expirationTime = expirationTime;
+    if (expiresIn) {
+      requestBody.expiresIn = expiresIn;
     }
     
-    // 如果客戶端提供了 userInfo，使用它；否則自動檢測
-    if (userInfo) {
-      requestBody.userInfo = userInfo;
+    // 如果客戶端提供了 deviceInfo，使用它；否則自動檢測
+    if (deviceInfo) {
+      requestBody.deviceInfo = deviceInfo;
     } else {
       // 自動檢測設備資訊
-      const detectedUserInfo = await getDeviceInfo(request);
-      requestBody.userInfo = detectedUserInfo;
+      const detectedDeviceInfo = await getDeviceInfo(request);
+      requestBody.deviceInfo = detectedDeviceInfo;
     }
 
     // Call external API
