@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // 獲取 JSON 數據（不再處理 FormData 和檔案）
     const body = await request.json();
-    const { filename, fileSize, mimeType, password, shortCode, expiresIn, deviceInfo } = body;
+    const { filename, fileSize, mimeType, password, expiresIn, deviceInfo } = body;
 
     if (!filename || !fileSize || !mimeType) {
       return NextResponse.json(
@@ -54,7 +54,6 @@ export async function POST(request: NextRequest) {
       fileSize: number;
       mimeType: string;
       password?: string;
-      shortCode?: string;
       expiresIn?: string;
       add_from?: string;
       deviceInfo?: object;
@@ -68,10 +67,6 @@ export async function POST(request: NextRequest) {
     // 添加可選參數
     if (password) {
       configPayload.password = password;
-    }
-
-    if (shortCode) {
-      configPayload.shortCode = shortCode;
     }
 
     if (expiresIn) {

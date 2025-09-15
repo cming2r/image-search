@@ -43,7 +43,7 @@ async function getDeviceInfo(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { url, customCode, deviceInfo, password, expiresIn } = body;
+    const { url, deviceInfo, password, expiresIn } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -53,9 +53,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare request body for external API
-    const requestBody: { 
-      url: string; 
-      customCode?: string;
+    const requestBody: {
+      url: string;
       password?: string;
       expiresIn?: string;
       add_from?: string;
@@ -67,10 +66,6 @@ export async function POST(request: NextRequest) {
         ip_address: string;
       }
     } = { url, add_from: 'fyimg' };
-    
-    if (customCode) {
-      requestBody.customCode = customCode;
-    }
     
     // 添加密碼保護
     if (password) {
