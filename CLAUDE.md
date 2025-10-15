@@ -157,7 +157,7 @@ CREATE TABLE gift_exchange_wheel (
 ### Important Notes
 - All user-facing content is multilingual (zh/en/jp/es)
 - SEO dates are automatically maintained via Git integration
-- Image uploads are limited to 10MB, video uploads to 100MB, general files to 20MB
+- Image uploads are limited to 15MB, video uploads to 100MB, general files to 20MB
 - Admin areas require Supabase authentication
 - All API routes include proper error handling and validation
 - Device information is automatically tracked for analytics and debugging

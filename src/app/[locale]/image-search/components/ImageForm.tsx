@@ -82,10 +82,10 @@ const formTranslations = {
     es: "haz clic para subir"
   },
   supportedFormats: {
-    zh: "支援 JPG, PNG, WEBP 等格式，最大10MB",
-    en: "Supports JPG, PNG, WEBP and other formats, max 10MB",
-    jp: "JPG、PNG、WEBPなどの形式をサポート、最大10MB",
-    es: "Soporta JPG, PNG, WEBP y otros formatos, máx 10MB"
+    zh: "支援 JPG, PNG, WEBP 等格式，最大15MB",
+    en: "Supports JPG, PNG, WEBP and other formats, max 15MB",
+    jp: "JPG、PNG、WEBPなどの形式をサポート、最大15MB",
+    es: "Soporta JPG, PNG, WEBP y otros formatos, máx 15MB"
   },
   validUrlError: {
     zh: "請輸入有效的圖片URL",
@@ -106,10 +106,10 @@ const formTranslations = {
     es: "Por favor sube un archivo de imagen"
   },
   uploadErrorSize: {
-    zh: "圖片大小不能超過10MB",
-    en: "Image size cannot exceed 10MB",
-    jp: "画像サイズは10MBを超えることはできません",
-    es: "El tamaño de la imagen no puede exceder 10MB"
+    zh: "圖片大小不能超過15MB",
+    en: "Image size cannot exceed 15MB",
+    jp: "画像サイズは15MBを超えることはできません",
+    es: "El tamaño de la imagen no puede exceder 15MB"
   },
   imageUrlInfo: {
     zh: "圖片網址:",
@@ -218,25 +218,88 @@ const ImageForm: FC = () => {
     }
   };
 
-  const processFile = useCallback(async (file: File): Promise<void> => {
+  // 處理圖片方向並移除 EXIF 資訊
+  const fixImageOrientation = async (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const img = new window.Image();
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          if (!ctx) {
+            reject(new Error('無法創建 canvas context'));
+            return;
+          }
+
+          // 設置 canvas 尺寸為圖片實際尺寸
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          // 繪製圖片到 canvas（這會自動應用 EXIF 方向並移除 EXIF 資訊）
+          ctx.drawImage(img, 0, 0);
+
+          // 將 canvas 轉換為 Blob
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                reject(new Error('無法轉換圖片'));
+                return;
+              }
+
+              // 創建新的 File 對象，保留原始檔名和類型
+              const newFile = new File([blob], file.name, {
+                type: file.type,
+                lastModified: Date.now(),
+              });
+
+              resolve(newFile);
+            },
+            file.type,
+            0.95 // 質量設為 95%
+          );
+        };
+
+        img.onerror = () => {
+          reject(new Error('圖片加載失敗'));
+        };
+
+        img.src = e.target?.result as string;
+      };
+
+      reader.onerror = () => {
+        reject(new Error('檔案讀取失敗'));
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const processFile = useCallback(async (originalFile: File): Promise<void> => {
     // 檢查文件是否為圖片
-    if (!file.type.startsWith('image/')) {
+    if (!originalFile.type.startsWith('image/')) {
       setError(formTranslations.uploadErrorImage[lang]);
       return;
     }
-    
-    // 檢查文件大小 (不超過10MB)
-    if (file.size > 10 * 1024 * 1024) {
+
+    // 檢查文件大小 (不超過15MB)
+    if (originalFile.size > 15 * 1024 * 1024) {
       setError(formTranslations.uploadErrorSize[lang]);
       return;
     }
-    
+
     setError('');
-    
+
     try {
       // 顯示處理中的提示
       setToast({message: formTranslations.processing[lang], isVisible: true, type: 'info'});
-      
+
+      // 修正圖片方向並移除 EXIF 資訊
+      const file = await fixImageOrientation(originalFile);
+
       // 步驟 1: 獲取預簽名 URL
       const configResponse = await fetch('/api/image-search', {
         method: 'POST',
@@ -247,17 +310,18 @@ const ImageForm: FC = () => {
           filename: file.name,
           fileSize: file.size,
           mimeType: file.type,
+          locale: lang, // 傳遞語言參數以獲取本地化的錯誤訊息
         }),
       });
-      
+
       if (!configResponse.ok) {
         const errorData = await configResponse.json();
-        throw new Error(errorData.error || '獲取上傳配置失敗');
+        throw new Error(errorData.error || formTranslations.errorUpload[lang]);
       }
-      
+
       const { uploadConfig } = await configResponse.json();
-      
-      // 步驟 2: 直接上傳到 R2 (避開 Vercel Function)
+
+      // 步驟 2: 直接上傳到 R2 (使用處理過的圖片)
       const uploadResponse = await fetch(uploadConfig.presignedUrl, {
         method: 'PUT',
         body: file,
@@ -265,20 +329,20 @@ const ImageForm: FC = () => {
           'Content-Type': file.type,
         },
       });
-      
+
       if (!uploadResponse.ok) {
-        throw new Error(`上傳失敗: ${uploadResponse.status}`);
+        throw new Error(`${formTranslations.errorUpload[lang]} (${uploadResponse.status})`);
       }
-      
+
       // 直接設置上傳後的圖片URL
       setUploadedImageUrl(uploadConfig.publicUrl);
-      
+
       // 在上傳成功時記錄圖片URL到Supabase
       saveImageUrl(uploadConfig.publicUrl).catch(err => {
         console.error('保存圖片URL失敗:', err);
         // 但不影響使用者繼續使用
       });
-      
+
       // 顯示成功訊息
       setToast({message: formTranslations.successUpload[lang], isVisible: true, type: 'success'});
     } catch (err) {
@@ -410,7 +474,7 @@ const ImageForm: FC = () => {
                           return;
                         }
                         
-                        if (file.size > 10 * 1024 * 1024) {
+                        if (file.size > 15 * 1024 * 1024) {
                           setError(formTranslations.uploadErrorSize[lang]);
                           return;
                         }
