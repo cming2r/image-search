@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useParams } from 'next/navigation';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -24,7 +25,16 @@ export default function ImageSearch() {
             </p>
           </div>
 
-          <ImageForm />
+          <Suspense fallback={
+            <div className="bg-white rounded-lg shadow-sm p-6 text-center">
+              <div className="animate-pulse">
+                <div className="h-8 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+                <div className="h-32 bg-gray-200 rounded mb-4"></div>
+              </div>
+            </div>
+          }>
+            <ImageForm />
+          </Suspense>
 
           <ArticleContent locale={locale} />
         </section>
