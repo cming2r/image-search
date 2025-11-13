@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState, useRef, useEffect, useCallback, ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { Clipboard } from 'lucide-react';
 import SearchButtons from './SearchButtons';
@@ -145,6 +145,7 @@ const formTranslations = {
 
 const ImageForm: FC = () => {
   const params = useParams();
+  const searchParams = useSearchParams();
   const locale = (params?.locale as string) || 'zh';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
@@ -156,17 +157,17 @@ const ImageForm: FC = () => {
   const uploadContainerRef = useRef<HTMLDivElement>(null);
 
   // 檢查輸入的URL是否有效的圖片URL
-  const isValidImageUrl = (url: string): boolean => {
+  const isValidImageUrl = useCallback((url: string): boolean => {
     if (!url) return false;
-    
+
     // 檢查URL格式
     const urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
     if (!urlPattern.test(url)) return false;
-    
+
     // 檢查URL是否以常見圖片格式結尾
     const imageExtensionPattern = /\.(jpe?g|png|gif|bmp|webp|svg|heic|heif|tiff?|avif)(\?.*)?$/i;
     return imageExtensionPattern.test(url);
-  };
+  }, []);
 
   const handleUrlInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const url = e.target.value;
@@ -389,11 +390,52 @@ const ImageForm: FC = () => {
   useEffect(() => {
     // 監聽貼上事件
     document.addEventListener('paste', handlePaste);
-    
+
     return () => {
       document.removeEventListener('paste', handlePaste);
     };
   }, [handlePaste]);
+
+  // 處理 URL 參數中的圖片（支持其他網站跳轉）
+  useEffect(() => {
+    const imgParam = searchParams.get('img');
+    const sourceParam = searchParams.get('source'); // 可選：追蹤來源網站
+
+    if (!imgParam) return;
+
+    if (isValidImageUrl(imgParam)) {
+      // 自動設置圖片 URL
+      setUploadedImageUrl(imgParam);
+      setImageUrl(imgParam);
+
+      // 記錄到 Supabase（包含來源資訊）
+      // 靜默失敗，不影響用戶體驗
+      saveImageUrl(imgParam).then((result) => {
+        if (result.success && sourceParam) {
+          console.log(`Image loaded from external source: ${sourceParam}`);
+        } else if (!result.success) {
+          console.warn('Failed to save image URL to database (non-critical):', result.error);
+        }
+      }).catch(err => {
+        console.warn('Exception while saving image URL (non-critical):', err);
+      });
+
+      // 顯示成功提示
+      setToast({
+        message: formTranslations.successMessage[lang],
+        isVisible: true,
+        type: 'success'
+      });
+    } else {
+      // URL 參數存在但無效
+      setError(formTranslations.validUrlError[lang]);
+      setToast({
+        message: formTranslations.validUrlError[lang],
+        isVisible: true,
+        type: 'error'
+      });
+    }
+  }, [searchParams, lang, isValidImageUrl]);
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">

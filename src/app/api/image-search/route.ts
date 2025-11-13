@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 // R2 配置
 const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
@@ -64,8 +65,49 @@ function getErrorMessage(key: keyof typeof errorMessages, locale: string = 'zh')
   return errorMessages[key][validLocale];
 }
 
-export async function POST(req: Request) {
+// CORS 頭設置
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*', // 允許所有來源，生產環境可以改為特定域名
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Max-Age': '86400', // 24小時
+};
+
+// 處理 OPTIONS 預檢請求
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
+export async function POST(req: NextRequest) {
   try {
+    // 速率限制檢查
+    const rateLimitResult = checkRateLimit(req);
+
+    // 在響應頭中添加速率限制信息
+    const rateLimitHeaders = {
+      ...corsHeaders,
+      'X-RateLimit-Limit': '10',
+      'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+      'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString(),
+    };
+
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        {
+          error: 'Too many requests. Please try again later.',
+          error_zh: '請求過於頻繁，請稍後再試',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        {
+          status: 429,
+          headers: {
+            ...rateLimitHeaders,
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      );
+    }
+
     const body = await req.json();
     const { filename, fileSize, mimeType, locale } = body;
 
@@ -75,7 +117,7 @@ export async function POST(req: Request) {
     if (!filename || !fileSize || !mimeType) {
       return NextResponse.json(
         { error: getErrorMessage('missingParams', lang) },
-        { status: 400 }
+        { status: 400, headers: rateLimitHeaders }
       );
     }
 
@@ -83,7 +125,7 @@ export async function POST(req: Request) {
     if (!mimeType.startsWith('image/')) {
       return NextResponse.json(
         { error: getErrorMessage('onlyImages', lang) },
-        { status: 400 }
+        { status: 400, headers: rateLimitHeaders }
       );
     }
 
@@ -91,7 +133,7 @@ export async function POST(req: Request) {
     if (fileSize > 15 * 1024 * 1024) {
       return NextResponse.json(
         { error: getErrorMessage('fileSizeExceeded', lang) },
-        { status: 400 }
+        { status: 400, headers: rateLimitHeaders }
       );
     }
 
@@ -119,7 +161,7 @@ export async function POST(req: Request) {
         key,
         publicUrl: `${R2_PUBLIC_URL}/${key}`,
       }
-    });
+    }, { headers: rateLimitHeaders });
   } catch (error) {
     console.error('生成預簽名 URL 錯誤:', error);
 
@@ -137,7 +179,7 @@ export async function POST(req: Request) {
         error: getErrorMessage('uploadConfigFailed', lang),
         details: error instanceof Error ? error.message : getErrorMessage('unknownError', lang)
       },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }

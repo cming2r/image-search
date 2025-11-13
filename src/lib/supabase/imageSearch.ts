@@ -102,7 +102,13 @@ export async function saveSearchRecord(record: SearchRecord) {
       .limit(1);
 
     if (selectError) {
-      console.error('查詢現有記錄失敗:', selectError);
+      console.error('查詢現有記錄失敗:', {
+        error: selectError,
+        message: selectError.message,
+        details: selectError.details,
+        hint: selectError.hint,
+        code: selectError.code
+      });
       return { success: false, error: selectError };
     }
 
@@ -129,7 +135,13 @@ export async function saveSearchRecord(record: SearchRecord) {
         .eq('id', existingRecord.id);
 
       if (updateError) {
-        console.error('更新記錄失敗:', updateError);
+        console.error('更新記錄失敗:', {
+          error: updateError,
+          message: updateError.message,
+          details: updateError.details,
+          hint: updateError.hint,
+          code: updateError.code
+        });
         return { success: false, error: updateError };
       }
     } else {
@@ -148,7 +160,13 @@ export async function saveSearchRecord(record: SearchRecord) {
         });
 
       if (insertError) {
-        console.error('插入記錄失敗:', insertError);
+        console.error('插入記錄失敗:', {
+          error: insertError,
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code
+        });
         return { success: false, error: insertError };
       }
     }
@@ -180,7 +198,13 @@ export async function saveImageUrl(imageUrl: string) {
       .limit(1);
 
     if (selectError) {
-      console.error('查詢現有記錄失敗:', selectError);
+      console.error('查詢現有記錄失敗:', {
+        error: selectError,
+        message: selectError.message,
+        details: selectError.details,
+        hint: selectError.hint,
+        code: selectError.code
+      });
       return { success: false, error: selectError };
     }
 
@@ -202,7 +226,13 @@ export async function saveImageUrl(imageUrl: string) {
         });
 
       if (insertError) {
-        console.error('插入初始記錄失敗:', insertError);
+        console.error('插入初始記錄失敗:', {
+          error: insertError,
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code
+        });
         return { success: false, error: insertError };
       }
     }
