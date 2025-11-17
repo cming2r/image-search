@@ -6,7 +6,7 @@
  * <script src="https://your-domain.com/js/image-search-sdk.js"></script>
  * <script>
  *   ImageSearchSDK.init({
- *     locale: 'zh',  // 可選：zh, en, jp, es
+ *     locale: 'en',  // 可選：zh, en, jp, es (默认: en)
  *     source: 'your-website-name'  // 可選：追蹤來源
  *   });
  * </script>
@@ -19,7 +19,7 @@
     config: {
       apiEndpoint: '',  // 將在 init 時自動設置
       pageEndpoint: '',  // 將在 init 時自動設置
-      locale: 'zh',
+      locale: 'en',
       source: '',
       buttonText: {
         zh: '以圖搜圖',
@@ -44,7 +44,7 @@
      */
     init: function(options = {}) {
       // 設置配置
-      this.config.locale = options.locale || 'zh';
+      this.config.locale = options.locale || 'en';
       this.config.source = options.source || window.location.hostname;
 
       // 自動檢測或使用自定義的基礎 URL
@@ -278,7 +278,7 @@
     const script = document.querySelector('script[src*="image-search-sdk.js"]');
     if (script) {
       const autoInit = script.dataset.autoInit !== 'false';
-      const locale = script.dataset.locale || 'zh';
+      const locale = script.dataset.locale || 'en';
       const source = script.dataset.source || '';
       const baseUrl = script.dataset.baseUrl || '';
 

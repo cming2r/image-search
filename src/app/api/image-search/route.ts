@@ -60,8 +60,8 @@ const errorMessages = {
 };
 
 // 獲取本地化的錯誤訊息
-function getErrorMessage(key: keyof typeof errorMessages, locale: string = 'zh'): string {
-  const validLocale = ['zh', 'en', 'jp', 'es'].includes(locale) ? locale as 'zh' | 'en' | 'jp' | 'es' : 'zh';
+function getErrorMessage(key: keyof typeof errorMessages, locale: string = 'en'): string {
+  const validLocale = ['zh', 'en', 'jp', 'es'].includes(locale) ? locale as 'zh' | 'en' | 'jp' | 'es' : 'en';
   return errorMessages[key][validLocale];
 }
 
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
     const { filename, fileSize, mimeType, locale } = body;
 
     // 獲取語言設置（從請求體或默認為中文）
-    const lang = locale || 'zh';
+    const lang = locale || 'en';
 
     if (!filename || !fileSize || !mimeType) {
       return NextResponse.json(
@@ -166,10 +166,10 @@ export async function POST(req: NextRequest) {
     console.error('生成預簽名 URL 錯誤:', error);
 
     // 嘗試從請求體獲取 locale（如果解析失敗則使用默認值）
-    let lang = 'zh';
+    let lang = 'en';
     try {
       const body = await req.clone().json();
-      lang = body.locale || 'zh';
+      lang = body.locale || 'en';
     } catch {
       // 忽略解析錯誤，使用默認語言
     }

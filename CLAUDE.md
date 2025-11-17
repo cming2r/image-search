@@ -59,8 +59,8 @@ NEXT_PUBLIC_ADMIN_EMAILS=admin1@example.com,admin2@example.com
 ### Multi-language Next.js App Router Structure
 - Uses `[locale]` dynamic routing for internationalization (zh, en, jp, es)
 - Middleware handles locale detection and URL rewriting
-- Default locale is 'zh' (Chinese), accessed via root path `/`
-- Other locales use prefixed paths like `/en/`, `/jp/`
+- Default locale is 'en' (English), accessed via root path `/`
+- Other locales use prefixed paths like `/zh/`, `/jp/`, `/es/`
 
 ### Key Technologies
 - **Framework**: Next.js 15 with App Router
