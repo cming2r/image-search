@@ -136,7 +136,7 @@ interface ShortUrlResult {
 
 export default function ShortUrl() {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [url, setUrl] = useState('');
@@ -640,7 +640,7 @@ export default function ShortUrl() {
               <button
                 onClick={() => {
                   const baseUrl = 'https://vvrl.cc';
-                  const customUrl = locale === 'zh' ? `${baseUrl}/zh/custom` : 
+                  const customUrl = locale === 'en' ? `${baseUrl}/zh/custom` : 
                                    locale === 'en' ? `${baseUrl}/custom` :
                                    locale === 'jp' ? `${baseUrl}/jp/custom` :
                                    locale === 'es' ? `${baseUrl}/es/custom` :
@@ -650,7 +650,7 @@ export default function ShortUrl() {
                 onAuxClick={(e) => {
                   if (e.button === 1) { // 中鍵點擊
                     const baseUrl = 'https://vvrl.cc';
-                    const customUrl = locale === 'zh' ? `${baseUrl}/zh/custom` : 
+                    const customUrl = locale === 'en' ? `${baseUrl}/zh/custom` : 
                                      locale === 'en' ? `${baseUrl}/custom` :
                                      locale === 'jp' ? `${baseUrl}/jp/custom` :
                                      locale === 'es' ? `${baseUrl}/es/custom` :

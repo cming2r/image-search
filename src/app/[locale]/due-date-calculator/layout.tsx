@@ -52,13 +52,13 @@ const imageUrl = getFullUrl('/images/og-due-date-calculator.webp');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.zh;
   const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `預產期計算器` : 
+  const ogTitle = locale === 'en' ? `預產期計算器` : 
                 locale === 'en' ? `Due Date Calculator` : 
                 locale === 'jp' ? `出産予定日計算機` :
                 locale === 'es' ? `Calculadora de Fecha de Parto` : `Due Date Calculator`;
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/due-date-calculator' : `/${locale}/due-date-calculator`),
+      url: getFullUrl(locale === 'en' ? '/due-date-calculator' : `/${locale}/due-date-calculator`),
       images: [
         {
           url: imageUrl,
@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/due-date-calculator' : `/${locale}/due-date-calculator`),
+      canonical: getFullUrl(locale === 'en' ? '/due-date-calculator' : `/${locale}/due-date-calculator`),
       languages: {
         'zh-TW': getFullUrl('/due-date-calculator'),
         'en': getFullUrl('/en/due-date-calculator'),
@@ -133,7 +133,7 @@ export default async function DueDateCalculatorLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

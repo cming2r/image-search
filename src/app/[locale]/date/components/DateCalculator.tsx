@@ -94,7 +94,7 @@ const translations = {
 export default function DateCalculator() {
   // 從URL參數中獲取當前語言
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   

@@ -52,13 +52,13 @@ const imageUrl = getFullUrl('/images/og-gift-exchange.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.zh;
   const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `交換禮物抽籤` : 
+  const ogTitle = locale === 'en' ? `交換禮物抽籤` : 
                 locale === 'en' ? `Gift Exchange Draw` : 
                 locale === 'jp' ? `ギフト交換抽選` :
                 locale === 'es' ? `Sorteo de Intercambio de Regalos` : `Gift Exchange Draw`;
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/gift-exchange' : `/${locale}/gift-exchange`),
+      url: getFullUrl(locale === 'en' ? '/gift-exchange' : `/${locale}/gift-exchange`),
       images: [
         {
           url: imageUrl,
@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/gift-exchange' : `/${locale}/gift-exchange`),
+      canonical: getFullUrl(locale === 'en' ? '/gift-exchange' : `/${locale}/gift-exchange`),
       languages: {
         'zh-TW': getFullUrl('/gift-exchange'),
         'en': getFullUrl('/en/gift-exchange'),
@@ -133,7 +133,7 @@ export default async function GiftExchangeLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

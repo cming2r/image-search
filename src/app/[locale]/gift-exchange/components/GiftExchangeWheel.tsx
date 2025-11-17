@@ -100,7 +100,7 @@ import { useParams } from 'next/navigation';
 
 export default function GiftExchangeWheel() {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   // 初始為空數組，避免服務器/客戶端水合問題

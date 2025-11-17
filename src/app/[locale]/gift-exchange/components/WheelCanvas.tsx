@@ -42,7 +42,7 @@ interface WheelCanvasProps {
 
 export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [spinning, setSpinning] = useState(false);

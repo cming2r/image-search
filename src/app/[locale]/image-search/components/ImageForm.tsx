@@ -146,7 +146,7 @@ const formTranslations = {
 const ImageForm: FC = () => {
   const params = useParams();
   const searchParams = useSearchParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
   const [imageUrl, setImageUrl] = useState<string>('');

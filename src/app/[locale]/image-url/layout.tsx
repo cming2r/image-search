@@ -56,13 +56,13 @@ const imageUrl = getFullUrl('/images/og-image.png');
 // 生成多語言元數據配置
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = imageUrlTranslations.meta.title[locale as keyof typeof imageUrlTranslations.meta.title] || imageUrlTranslations.meta.title.zh;
   const description = imageUrlTranslations.meta.description[locale as keyof typeof imageUrlTranslations.meta.description] || imageUrlTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `圖片網址產生器` : 
+  const ogTitle = locale === 'en' ? `圖片網址產生器` : 
                   locale === 'en' ? `Image URL Generator` : 
                   locale === 'es' ? `Generador de URL de Imagen` :
                   `画像URLジェネレーター`;
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/image-url' : `/${locale}/image-url`),
+      url: getFullUrl(locale === 'en' ? '/image-url' : `/${locale}/image-url`),
       images: [
         {
           url: imageUrl,
@@ -103,7 +103,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/image-url' : `/${locale}/image-url`),
+      canonical: getFullUrl(locale === 'en' ? '/image-url' : `/${locale}/image-url`),
       languages: {
         'zh-TW': getFullUrl('/image-url'),
         'en': getFullUrl('/en/image-url'),
@@ -137,7 +137,7 @@ export default async function ImageUrlLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

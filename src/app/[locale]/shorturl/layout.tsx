@@ -51,7 +51,7 @@ const imageUrl = getFullUrl('/images/og-image.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
   const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/shorturl' : `/${locale}/shorturl`),
+      url: getFullUrl(locale === 'en' ? '/shorturl' : `/${locale}/shorturl`),
       images: [
         {
           url: imageUrl,
@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/shorturl' : `/${locale}/shorturl`),
+      canonical: getFullUrl(locale === 'en' ? '/shorturl' : `/${locale}/shorturl`),
       languages: {
         'zh-TW': getFullUrl('/shorturl'),
         'en': getFullUrl('/en/shorturl'),
@@ -129,7 +129,7 @@ export default async function ShortUrlLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

@@ -245,8 +245,8 @@ const localeContents: Record<string, LocaleContent> = {
 // 動態元數據生成函數
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   // 使用 await 解析 params
-  const { locale = 'zh' } = await params;
-  const content = localeContents[locale] || localeContents.zh;
+  const { locale = 'en' } = await params;
+  const content = localeContents[locale] || localeContents.en;
   
   // 設置 OpenGraph 語言格式
   const ogLocale = locale === 'zh' ? 'zh_TW' : locale === 'jp' ? 'ja_JP' : locale === 'es' ? 'es_ES' : 'en_US';
@@ -259,7 +259,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: content.title,
       description: content.description,
-      url: getFullUrl(locale === 'zh' ? '/' : `/${locale}/`),
+      url: getFullUrl(locale === 'en' ? '/' : `/${locale}/`),
       locale: ogLocale,
       images: [
         {
@@ -288,8 +288,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   // 使用 await 解析 params
-  const { locale = 'zh' } = await params;
-  const content = localeContents[locale] || localeContents.zh;
+  const { locale = 'en' } = await params;
+  const content = localeContents[locale] || localeContents.en;
   
   // 生成結構化數據
   const language = locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja' : locale === 'es' ? 'es' : 'en';
@@ -345,7 +345,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             
             {/* 圖片搜尋窗格 */}
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}image-search`} className="block group">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}image-search`} className="block group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full">
                 <div className="h-48 overflow-hidden">
                   <Image 
@@ -374,7 +374,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
 
             {/* 日期計算器窗格 */}
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}date`} className="block group">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}date`} className="block group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full">
                 <div className="h-48 overflow-hidden">
                   <Image 
@@ -403,7 +403,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
 
             {/* 預產期計算器窗格 */}
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`} className="block group">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}due-date-calculator`} className="block group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full">
                 <div className="h-48 overflow-hidden">
                   <Image 
@@ -432,7 +432,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
 
             {/* 禮物交換抽籤窗格 */}
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`} className="block group">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`} className="block group">
               <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full">
                 <div className="h-48 overflow-hidden">
                   <Image 
@@ -504,7 +504,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className="text-gray-700 mb-6">
               {content.commitment}
             </p>
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}contact`} className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}contact`} className="text-blue-600 hover:text-blue-800 font-medium">
               {content.contactSuggestion}
             </Link>
           </div>

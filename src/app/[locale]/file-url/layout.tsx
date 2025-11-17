@@ -56,13 +56,13 @@ const imageUrl = getFullUrl('/images/og-image.png');
 // 生成多語言元數據配置
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = fileUrlTranslations.meta.title[locale as keyof typeof fileUrlTranslations.meta.title] || fileUrlTranslations.meta.title.zh;
   const description = fileUrlTranslations.meta.description[locale as keyof typeof fileUrlTranslations.meta.description] || fileUrlTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `檔案網址產生器` : 
+  const ogTitle = locale === 'en' ? `檔案網址產生器` : 
                   locale === 'en' ? `File URL Generator` : 
                   locale === 'es' ? `Generador de URL de Archivo` :
                   `ファイルURLジェネレーター`;
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/file-url' : `/${locale}/file-url`),
+      url: getFullUrl(locale === 'en' ? '/file-url' : `/${locale}/file-url`),
       images: [
         {
           url: imageUrl,
@@ -103,7 +103,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/file-url' : `/${locale}/file-url`),
+      canonical: getFullUrl(locale === 'en' ? '/file-url' : `/${locale}/file-url`),
       languages: {
         'zh-TW': getFullUrl('/file-url'),
         'en': getFullUrl('/en/file-url'),
@@ -137,7 +137,7 @@ export default async function FileUrlLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

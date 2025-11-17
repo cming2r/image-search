@@ -94,7 +94,7 @@ interface ColorValues {
 
 const ColorPicker: FC = () => {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp';
 
   const [color, setColor] = useState<ColorValues>({

@@ -136,13 +136,13 @@ const imageUrl = getFullUrl('/images/og-color-picker.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = colorPickerTranslations.meta.title[locale as keyof typeof colorPickerTranslations.meta.title] || colorPickerTranslations.meta.title.zh;
   const description = colorPickerTranslations.meta.description[locale as keyof typeof colorPickerTranslations.meta.description] || colorPickerTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `顏色選擇器` : 
+  const ogTitle = locale === 'en' ? `顏色選擇器` : 
                   locale === 'en' ? `Color Picker` : 
                   `カラーピッカー`;
 
@@ -155,7 +155,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/color-picker' : `/${locale}/color-picker`),
+      url: getFullUrl(locale === 'en' ? '/color-picker' : `/${locale}/color-picker`),
       images: [
         {
           url: imageUrl,
@@ -181,7 +181,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/color-picker' : `/${locale}/color-picker`),
+      canonical: getFullUrl(locale === 'en' ? '/color-picker' : `/${locale}/color-picker`),
       languages: {
         'zh-TW': getFullUrl('/color-picker'),
         'en': getFullUrl('/en/color-picker'),
@@ -214,7 +214,7 @@ export default async function ColorPickerLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

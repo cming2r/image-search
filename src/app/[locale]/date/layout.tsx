@@ -53,7 +53,7 @@ const imageUrl = getFullUrl('/images/og-date.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   const title = metaTranslations.meta.title[lang];
   const description = metaTranslations.meta.description[lang];
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/date' : `/${locale}/date`),
+      url: getFullUrl(locale === 'en' ? '/date' : `/${locale}/date`),
       images: [
         {
           url: imageUrl,
@@ -98,7 +98,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/date' : `/${locale}/date`),
+      canonical: getFullUrl(locale === 'en' ? '/date' : `/${locale}/date`),
       languages: {
         'zh-TW': getFullUrl('/date'),
         'en': getFullUrl('/en/date'),
@@ -131,7 +131,7 @@ export default async function DateLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   

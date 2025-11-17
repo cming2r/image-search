@@ -21,7 +21,7 @@ interface SearchEngine {
 
 const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   const [showWarning, setShowWarning] = useState<boolean>(false);
   

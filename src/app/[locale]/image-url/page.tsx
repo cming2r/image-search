@@ -9,7 +9,7 @@ import { imageUrlTranslations } from './components/meta-translations';
 
 export default function ImageUrlPage() {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
 
   return (

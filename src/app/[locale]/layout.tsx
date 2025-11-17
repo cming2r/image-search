@@ -19,10 +19,10 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   // 函數內部準備參數，使用 await 解析 params
-  let htmlLang = 'zh-TW'; // 默認值
-  
+  let htmlLang = 'en'; // 默認值
+
   // 獲取URL中的語言代碼
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   
   // 使用 switch 處理語言代碼
   switch (locale) {

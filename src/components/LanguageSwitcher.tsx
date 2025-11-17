@@ -47,8 +47,8 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
   
   // 根據當前路徑和語言生成新路徑
   const getLocalizedPath = (locale: string) => {
-    // 特殊處理 defaultLocale (zh)
-    if (locale === 'zh') {
+    // 特殊處理 defaultLocale (en)
+    if (locale === 'en') {
       // 從路徑中移除當前語言前綴
       let path = pathname;
       

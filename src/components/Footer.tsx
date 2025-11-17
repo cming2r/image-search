@@ -37,7 +37,7 @@ const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
   const params = useParams();
   // 從路徑參數中獲取當前語言
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   // 獲取翻譯文字的函數
   const getTranslation = (key: 'disclaimer') => {
@@ -64,13 +64,13 @@ const Footer: FC = () => {
             <p className="footer-text">Copyright &copy; {currentYear} - fyimg.com</p>
           </div>
           <div className="md:w-1/3 flex justify-center md:justify-end mt-2 md:mt-0 space-x-4">
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}contact`} className="text-blue-600 hover:underline">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}contact`} className="text-blue-600 hover:underline">
               {getLinkTranslation('contact')}
             </Link>
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}privacy-policy`} className="text-blue-600 hover:underline">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}privacy-policy`} className="text-blue-600 hover:underline">
               {getLinkTranslation('privacy')}
             </Link>
-            <Link href={`/${locale === 'zh' ? '' : locale + '/'}terms`} className="text-blue-600 hover:underline">
+            <Link href={`/${locale === 'en' ? '' : locale + '/'}terms`} className="text-blue-600 hover:underline">
               {getLinkTranslation('terms')}
             </Link>
           </div>

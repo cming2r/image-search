@@ -106,7 +106,7 @@ export const FILE_DATES: Record<string, GitDates> = {
   },
   "/src/app/[locale]/image-search/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-06-26 21:00:51 +0800",
+    modified: "2025-11-13 23:25:15 +0800",
     routePath: "/image-search",
   },
   "/src/app/[locale]/gift-exchange/page.tsx": {
@@ -144,6 +144,11 @@ export const FILE_DATES: Record<string, GitDates> = {
     modified: "2025-06-26 21:00:51 +0800",
     routePath: "/gift-exchange/[id]",
   },
+  "/src/app/[locale]/admin/login/page.tsx": {
+    created: "2025-04-30 23:14:10 +0800",
+    modified: "2025-07-15 19:40:19 +0800",
+    routePath: "/admin/login",
+  },
   "/src/app/[locale]/(info)/terms/page.tsx": {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-06-26 21:00:51 +0800",
@@ -158,11 +163,6 @@ export const FILE_DATES: Record<string, GitDates> = {
     created: "2025-04-30 23:14:10 +0800",
     modified: "2025-07-26 11:24:37 +0800",
     routePath: "/contact",
-  },
-  "/src/app/[locale]/admin/login/page.tsx": {
-    created: "2025-04-30 23:14:10 +0800",
-    modified: "2025-07-15 19:40:19 +0800",
-    routePath: "/admin/login",
   },
 };
 

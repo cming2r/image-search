@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 
 export default function PrivacyPolicy() {
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   // Only display content based on locale
   const isZhLocale = locale === 'zh';

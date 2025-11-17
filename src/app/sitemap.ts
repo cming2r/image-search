@@ -72,8 +72,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   console.log(`========================================\n`);
   // 定義所有語言和對應的 hreflang
   const LANGUAGES: LanguageConfig[] = [
-    { code: '', hreflang: 'zh' }, // 中文（根路徑）
-    { code: 'en', hreflang: 'en' }, // 英文
+    { code: '', hreflang: 'en' }, // 英文（根路徑）
+    { code: 'zh', hreflang: 'zh' }, // 中文
     { code: 'es', hreflang: 'es' }, // 西班牙文
     { code: 'jp', hreflang: 'ja' }, // 日文
   ];

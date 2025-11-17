@@ -57,10 +57,10 @@ export default function LocaleRedirect({ currentLocale }: LocaleRedirectProps) {
       }
     }
     
-    // Add preferred locale prefix (except for zh which uses root path)
+    // Add preferred locale prefix (except for en which uses root path)
     let targetPath: string;
-    if (savedLocale === 'zh') {
-      // For Chinese, use the path without locale prefix
+    if (savedLocale === 'en') {
+      // For English, use the path without locale prefix
       targetPath = newPath;
     } else {
       // For other languages, add the locale prefix

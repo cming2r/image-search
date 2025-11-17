@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { useParams } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
+import { Image as ImageIcon, ChevronDown, Mail, Menu, X, LogOut } from 'lucide-react';
 // Header translations
 const headerTranslations = {
   home: {
@@ -121,7 +122,7 @@ const Header: FC = () => {
   const dateDropdownRef = useRef<HTMLDivElement>(null);
   const params = useParams();
   // 從路徑參數中獲取當前語言
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   // 獲取翻譯文字的函數
   const getTranslation = (key: keyof typeof headerTranslations) => {
@@ -193,9 +194,9 @@ const Header: FC = () => {
         <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
           {/* 左側 Logo */}
           <div className="flex-shrink-0">
-            <Link 
-              href={`/${locale === 'zh' ? '' : locale}`} 
-              className="text-2xl font-bold text-blue-600 flex items-center tracking-wider" 
+            <Link
+              href={`/${locale === 'en' ? '' : locale}`}
+              className="text-2xl font-bold text-blue-600 flex items-center tracking-wider"
               onClick={closeMenu}
             >
               <span>FYimg</span>
@@ -205,48 +206,36 @@ const Header: FC = () => {
           {/* 中間的導航菜單 */}
           <nav className="hidden lg:flex items-center justify-center flex-grow mx-8">
             <div className="flex space-x-8">
-              <Link href={`/${locale === 'zh' ? '' : locale + '/'}image-search`}
+              <Link href={`/${locale === 'en' ? '' : locale + '/'}image-search`}
                 className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
               >
-                <span className="mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </span>
+                <ImageIcon className="h-6 w-6 mr-2" />
                 {getTranslation('imageSearch')}
               </Link>
               <div className="relative group" ref={dateDropdownRef}>
-                <Link href={`/${locale === 'zh' ? '' : locale + '/'}date`}
+                <Link href={`/${locale === 'en' ? '' : locale + '/'}date`}
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
                   {getTranslation('calculator')}
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
                 </Link>
-                
+
                 {/* 下拉選單 - 使用全局CSS類實現延遲效果 */}
-                <div 
+                <div
                   className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
                   role="menu"
                 >
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}date`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
                     {getTranslation('calculator')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
@@ -256,29 +245,21 @@ const Header: FC = () => {
               </div>
               <div className="relative group">
                 <Link
-                  href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
+                  href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="false"
                   aria-haspopup="true"
                 >
                   {getTranslation('tools')}
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
                 </Link>
-                
-                <div 
+
+                <div
                   className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
                   role="menu"
                 >
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
@@ -287,50 +268,42 @@ const Header: FC = () => {
                 </div>
               </div>
               <div className="relative group">
-                <Link href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                <Link href={`/${locale === 'en' ? '' : locale + '/'}shorturl`}
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="false"
                   aria-haspopup="true"
                 >
                   {getTranslation('urlShortener')}
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
                 </Link>
-                
-                <div 
+
+                <div
                   className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
                   role="menu"
                 >
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}shorturl`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
                     {getTranslation('urlShortener')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}file-url`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
                     {getTranslation('fileUrl')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}image-url`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
                     {getTranslation('imageUrl')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}video-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}video-url`}
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     role="menuitem"
                   >
@@ -352,21 +325,19 @@ const Header: FC = () => {
             </div>
             
             {/* 聯絡我們圖標 - 手機版放在選單按鈕左邊 */}
-            <Link 
-              href="/contact" 
+            <Link
+              href={`/${locale === 'en' ? '' : locale + '/'}contact`}
               className="lg:hidden mr-4 text-gray-600 hover:text-blue-600 transition-colors"
               aria-label="聯絡我們"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+              <Mail className="h-6 w-6" />
             </Link>
             
             {/* 登入狀態 Google 圖標和登出按鈕 - 手機版 */}
             {isLoggedIn && (
               <div className="lg:hidden flex items-center">
-                <Link 
-                  href="/admin" 
+                <Link
+                  href={`/${locale === 'en' ? '' : locale + '/'}admin`}
                   className="mr-3 text-gray-600 hover:text-blue-600 transition-colors"
                   aria-label="Admin Panel"
                   title="Admin Panel"
@@ -395,52 +366,40 @@ const Header: FC = () => {
                   aria-label="Logout"
                   title="Logout"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
+                  <LogOut className="w-6 h-6" />
                 </button>
               </div>
             )}
             
             {/* 行動版選單按鈕 */}
-            <button 
+            <button
               className="lg:hidden flex items-center"
               onClick={toggleMenu}
               aria-label={isMenuOpen ? '關閉選單' : '開啟選單'}
               aria-expanded={isMenuOpen}
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-6 w-6 text-gray-600" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-gray-600" />
+              ) : (
+                <Menu className="h-6 w-6 text-gray-600" />
+              )}
             </button>
             
             {/* 聯絡我們圖標 - 桌面版放在最右邊 */}
-            <Link 
-              href={`/${locale === 'zh' ? '' : locale + '/'}contact`}
+            <Link
+              href={`/${locale === 'en' ? '' : locale + '/'}contact`}
               className="hidden lg:block text-gray-600 hover:text-blue-600 transition-colors"
               aria-label={getTranslation('contact')}
               title={getTranslation('contact')}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+              <Mail className="h-6 w-6" />
             </Link>
             
             {/* 登入狀態 Google 圖標和登出按鈕 - 桌面版 */}
             {isLoggedIn && (
               <>
-                <Link 
-                  href="/admin" 
+                <Link
+                  href={`/${locale === 'en' ? '' : locale + '/'}admin`}
                   className="hidden lg:block ml-4 text-gray-600 hover:text-blue-600 transition-colors tooltip"
                   aria-label={getTranslation('admin')}
                   title={getTranslation('admin')}
@@ -469,9 +428,7 @@ const Header: FC = () => {
                   aria-label={getTranslation('logout')}
                   title={getTranslation('logout')}
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
+                  <LogOut className="w-6 h-6" />
                 </button>
               </>
             )}
@@ -486,23 +443,19 @@ const Header: FC = () => {
             
             <ul className="flex flex-col space-y-3">
               <li>
-                <Link 
-                  href={`/${locale === 'zh' ? '' : locale + '/'}image-search`}
+                <Link
+                  href={`/${locale === 'en' ? '' : locale + '/'}image-search`}
                   className="flex items-center px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                   onClick={closeMenu}
                 >
-                  <span className="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </span>
+                  <ImageIcon className="h-6 w-6 mr-2" />
                   {getTranslation('imageSearch')}
                 </Link>
               </li>
               <li>
                 <div className="flex w-full items-center justify-between">
                   <Link
-                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
+                    href={`/${locale === 'en' ? '' : locale + '/'}date`}
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -518,27 +471,19 @@ const Header: FC = () => {
                       }
                     }}
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <ChevronDown className="h-4 w-4" />
                   </button>
                 </div>
                 <div id="date-submenu" className="hidden pl-4 bg-gray-50">
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}date`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}date`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('calculator')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}due-date-calculator`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}due-date-calculator`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -549,7 +494,7 @@ const Header: FC = () => {
               <li>
                 <div className="flex w-full items-center justify-between">
                   <Link
-                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
+                    href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -565,20 +510,12 @@ const Header: FC = () => {
                       }
                     }}
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <ChevronDown className="h-4 w-4" />
                   </button>
                 </div>
                 <div id="tools-submenu" className="hidden pl-4 bg-gray-50">
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}gift-exchange`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -589,7 +526,7 @@ const Header: FC = () => {
               <li>
                 <div className="flex w-full items-center justify-between">
                   <Link
-                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                    href={`/${locale === 'en' ? '' : locale + '/'}shorturl`}
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -605,41 +542,33 @@ const Header: FC = () => {
                       }
                     }}
                   >
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <ChevronDown className="h-4 w-4" />
                   </button>
                 </div>
                 <div id="url-submenu" className="hidden pl-4 bg-gray-50">
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}shorturl`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}shorturl`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('urlShortener')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}file-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}file-url`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('fileUrl')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}image-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}image-url`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('imageUrl')}
                   </Link>
-                  <Link 
-                    href={`/${locale === 'zh' ? '' : locale + '/'}video-url`}
+                  <Link
+                    href={`/${locale === 'en' ? '' : locale + '/'}video-url`}
                     className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
@@ -652,8 +581,8 @@ const Header: FC = () => {
               {isLoggedIn && (
                 <>
                   <li>
-                    <Link 
-                      href="/admin" 
+                    <Link
+                      href={`/${locale === 'en' ? '' : locale + '/'}admin`}
                       className="flex items-center px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                       onClick={closeMenu}
                     >
@@ -671,7 +600,7 @@ const Header: FC = () => {
                     </Link>
                   </li>
                   <li>
-                    <button 
+                    <button
                       className="flex items-center w-full px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-red-600"
                       onClick={async () => {
                         try {
@@ -685,11 +614,7 @@ const Header: FC = () => {
                         }
                       }}
                     >
-                      <span className="mr-2">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                      </span>
+                      <LogOut className="w-6 h-6 mr-2" />
                       {getTranslation('logout')}
                     </button>
                   </li>

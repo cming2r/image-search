@@ -52,13 +52,13 @@ const imageUrl = getFullUrl('/images/og-image-search.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.zh;
   const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.zh;
   const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = locale === 'zh' ? `以圖搜圖` : 
+  const ogTitle = locale === 'en' ? `以圖搜圖` : 
                   locale === 'en' ? `Image Search` : 
                   locale === 'jp' ? `画像検索` :
                   locale === 'es' ? `Búsqueda de Imágenes` : `Image Search`;
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: ogTitle,
       description,
-      url: getFullUrl(locale === 'zh' ? '/image-search' : `/${locale}/image-search`),
+      url: getFullUrl(locale === 'en' ? '/image-search' : `/${locale}/image-search`),
       images: [
         {
           url: imageUrl,
@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/image-search' : `/${locale}/image-search`),
+      canonical: getFullUrl(locale === 'en' ? '/image-search' : `/${locale}/image-search`),
       languages: {
         'zh-TW': getFullUrl('/image-search'),
         'en': getFullUrl('/en/image-search'),
@@ -133,7 +133,7 @@ export default async function ImageSearchLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述

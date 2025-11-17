@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: getFullUrl('/'),
     languages: {
-      'zh-TW': getFullUrl('/'),
-      'en': getFullUrl('/en/'),
+      'en': getFullUrl('/'),
+      'zh-TW': getFullUrl('/zh/'),
       'ja': getFullUrl('/jp/'),
       'es': getFullUrl('/es/'),
     },
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   // 全局OpenGraph基本設置
   openGraph: {
     type: 'website',
-    locale: 'zh_TW',
+    locale: 'en_US',
     siteName: 'fyimg', // 全局設置品牌名稱
   },
 };

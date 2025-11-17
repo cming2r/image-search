@@ -21,7 +21,7 @@ const imageUrl = getFullUrl('/og-image.png');
 
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = titles[locale as keyof typeof titles] || titles.zh;
   const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
   
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: title,
       description,
-      url: getFullUrl(locale === 'zh' ? '/terms' : `/${locale}/terms`),
+      url: getFullUrl(locale === 'en' ? '/terms' : `/${locale}/terms`),
       images: [
         {
           url: imageUrl,
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     
     // 規範連結（確保SEO正確性）
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/terms' : `/${locale}/terms`),
+      canonical: getFullUrl(locale === 'en' ? '/terms' : `/${locale}/terms`),
       languages: {
         'zh-TW': getFullUrl('/terms'),
         'en': getFullUrl('/en/terms'),
@@ -90,7 +90,7 @@ export default async function TermsLayout({
   params: Promise<{ locale: string }>
 }) {
   // 取得當前語言
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   
   // 根據當前語言生成結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/terms', titles[locale as keyof typeof titles] || titles.zh, locale);

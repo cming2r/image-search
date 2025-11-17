@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 
 // 支援的語言列表
 const locales = ['zh', 'en', 'jp', 'es'];
-const defaultLocale = 'zh';
+const defaultLocale = 'en';
 
 // 檢查路徑是否為靜態資源或特殊路徑
 function isStaticOrSpecialPath(pathname: string) {
@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   }
   
   // 特殊處理根路徑
-  // 注意：我們不再將根路徑重定向到 /zh/，而是直接使用根路徑作為中文版
+  // 注意：我們不再將根路徑重定向到 /en/，而是直接使用根路徑作為英文版
   if (pathname === '/') {
     // 將根路徑重寫到默認語言的頁面組件，但保持URL為 /
     const response = NextResponse.rewrite(new URL(`/${defaultLocale}${pathname}`, request.url));
@@ -74,9 +74,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.rewrite(rewriteUrl);
   }
   
-  // 如果路徑不包含有效的語言代碼，則重寫為默認語言內容，但保持URL不變（中文版使用根路徑）
+  // 如果路徑不包含有效的語言代碼，則重寫為默認語言內容，但保持URL不變（英文版使用根路徑）
   if (!locales.includes(firstSegment)) {
-    // 使用重寫而不是重定向，保持URL不變但使用中文版內容
+    // 使用重寫而不是重定向，保持URL不變但使用英文版內容
     const rewriteUrl = new URL(`/${defaultLocale}${pathname}`, request.url);
     
     // 保留所有查詢參數

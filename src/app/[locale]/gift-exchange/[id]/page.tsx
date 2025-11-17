@@ -139,7 +139,7 @@ interface GiftExchangeData {
 export default function GiftExchangeEvent() {
   const params = useParams();
   const code = params.id as string;
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   const lang = locale as 'zh' | 'en' | 'jp' | 'es';
   
   const [eventData, setEventData] = useState<GiftExchangeData | null>(null);
@@ -194,7 +194,7 @@ export default function GiftExchangeEvent() {
           
           // 發送 PATCH 請求，一次性添加所有結果
           for (const participant of autoResults) {
-            const locale = params?.locale || 'zh';
+            const locale = params?.locale || 'en';
             await fetch(`/api/${locale}/gift-exchange`, {
               method: 'PATCH',
               headers: {
@@ -221,7 +221,7 @@ export default function GiftExchangeEvent() {
         }
       } catch {
         // 記錄獲取活動數據錯誤
-        const locale = (params?.locale as string) || 'zh';
+        const locale = (params?.locale as string) || 'en';
         if (locale === 'en') {
           setError('Unable to load event data. Please verify the link is correct.');
         } else if (locale === 'jp') {

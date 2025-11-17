@@ -18,7 +18,7 @@ const giftExchangeEventTranslations = {
 
 // 生成動態 metadata
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale = 'zh' } = await params;
+  const { locale = 'en' } = await params;
   const title = giftExchangeEventTranslations.title[locale as keyof typeof giftExchangeEventTranslations.title] || giftExchangeEventTranslations.title.zh;
   const description = giftExchangeEventTranslations.description[locale as keyof typeof giftExchangeEventTranslations.description] || giftExchangeEventTranslations.description.zh;
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: {
-      canonical: getFullUrl(locale === 'zh' ? '/gift-exchange' : `/${locale}/gift-exchange`),
+      canonical: getFullUrl(locale === 'en' ? '/gift-exchange' : `/${locale}/gift-exchange`),
     },
   };
 }

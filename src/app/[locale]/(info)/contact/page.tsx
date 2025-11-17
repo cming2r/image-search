@@ -15,7 +15,7 @@ interface ContactFormData {
 export default function Contact() {
   const router = useRouter();
   const params = useParams();
-  const locale = (params?.locale as string) || 'zh';
+  const locale = (params?.locale as string) || 'en';
   
   // Determine the current locale
   const isZhLocale = locale === 'zh';
@@ -170,7 +170,7 @@ export default function Contact() {
 
       // 2秒後重導向到首頁
       setTimeout(() => {
-        router.push(`/${locale}`);
+        router.push(locale === 'en' ? '/' : `/${locale}`);
       }, 2000);
     } catch (error) {
       console.error('提交表單時出錯:', error);
