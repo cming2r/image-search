@@ -129,8 +129,8 @@ export async function saveSearchRecord(record: SearchRecord) {
           browser,
           os,
           ip_address,
-          country_code,
-          searched_at: new Date().toISOString() // 直接使用當前時間，避免時區問題
+          country_code
+          // 移除 searched_at，讓 Supabase 自動更新為服務器時間
         })
         .eq('id', existingRecord.id);
 
@@ -155,8 +155,8 @@ export async function saveSearchRecord(record: SearchRecord) {
           browser,
           os,
           ip_address,
-          country_code,
-          searched_at: new Date().toISOString() // 直接使用當前時間，避免時區問題
+          country_code
+          // 移除 searched_at，讓 Supabase 使用 DEFAULT now() 自動生成服務器時間
         });
 
       if (insertError) {
@@ -221,8 +221,8 @@ export async function saveImageUrl(imageUrl: string) {
           browser: deviceInfo.browser,
           os: deviceInfo.os,
           ip_address,
-          country_code,
-          searched_at: new Date().toISOString() // 直接使用當前時間，避免時區問題
+          country_code
+          // 移除 searched_at，讓 Supabase 使用 DEFAULT now() 自動生成服務器時間
         });
 
       if (insertError) {

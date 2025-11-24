@@ -76,13 +76,6 @@ export default function Contact() {
       'Have questions, suggestions, or feedback? Please fill out the form below to get in touch with us, and we\'ll get back to you as soon as possible.',
       'ご質問、ご提案、またはフィードバックがありますか？以下のフォームにご記入いただき、お問い合わせください。できるだけ早くご返信いたします。',
       '¿Tiene preguntas, sugerencias o comentarios? Por favor complete el formulario a continuación para contactarnos, y le responderemos lo antes posible.'
-    ),
-    otherMethodsTitle: getContent('其他聯絡方式', 'Other Contact Methods', 'その他の連絡方法', 'Otros Métodos de Contacto'),
-    otherMethodsContent: getContent(
-      '一般情況下，我們會在2個工作日內回覆您的訊息。如有緊急事項，請發送電子郵件至 support@fyimg.com。',
-      'We typically respond to messages within 2 business days. For urgent matters, please send an email to support@fyimg.com.',
-      '通常、2営業日以内にメッセージに返信いたします。緊急の場合は、support@fyimg.comまでメールをお送りください。',
-      'Normalmente respondemos a los mensajes dentro de 2 días hábiles. Para asuntos urgentes, por favor envíe un email a support@fyimg.com.'
     )
   };
   
@@ -256,13 +249,6 @@ export default function Contact() {
                 </button>
               </div>
             </form>
-          </div>
-
-          <div className="mt-10 bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">{pageContent.otherMethodsTitle}</h2>
-            <p>
-              {pageContent.otherMethodsContent}
-            </p>
           </div>
         </div>
       </main>
