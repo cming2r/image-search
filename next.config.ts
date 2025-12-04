@@ -19,12 +19,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['next', 'react', 'react-dom'],
   },
   // SWC 優化在新版 Next.js 中默認啟用
-
-
-
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
+  // Note: ESLint config moved to eslint.config.mjs (no longer supported in next.config.ts in Next.js 16+)
 };
 
 // 直接導出配置，不使用 withNextIntl

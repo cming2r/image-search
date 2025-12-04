@@ -21,7 +21,7 @@ function isApiRoute(pathname: string) {
   return pathname.startsWith('/api/');
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // 檢查頁面路徑
   const requestUrl = new URL(request.url);
   const pathname = requestUrl.pathname;
