@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node --experimental-modules scripts/update-git-dates.mjs",
-    "dev": "next dev",
-    "build": "node --experimental-modules scripts/update-git-dates.mjs && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "update-dates": "node --experimental-modules scripts/update-git-dates.mjs"
+    "predev": "bun scripts/update-git-dates.mjs",
+    "dev": "bun next dev",
+    "build": "bun scripts/update-git-dates.mjs && bun next build",
+    "start": "bun next start",
+    "lint": "bun next lint",
+    "typecheck": "bun tsc --noEmit",
+    "update-dates": "bun scripts/update-git-dates.mjs"
   },
   "browserslist": [
     "> 0.2%",

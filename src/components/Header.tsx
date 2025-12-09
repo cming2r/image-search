@@ -104,6 +104,12 @@ const headerTranslations = {
     en: "Video URL",
     jp: "動画URL",
     es: "URL de Video"
+  },
+  menuScanner: {
+    zh: "揪團訂餐-菜單掃描器",
+    en: "Group Order - Menu Scanner",
+    jp: "グループ注文 - メニュースキャナー",
+    es: "Pedido Grupal - Escáner de Menú"
   }
 };
 
@@ -251,6 +257,9 @@ const Header: FC = () => {
                   aria-haspopup="true"
                 >
                   {getTranslation('tools')}
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white">
+                    NEW
+                  </span>
                   <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
                 </Link>
 
@@ -265,6 +274,18 @@ const Header: FC = () => {
                   >
                     {getTranslation('giftExchange')}
                   </Link>
+                  <a
+                    href="https://diin.cc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    role="menuitem"
+                  >
+                    {getTranslation('menuScanner')}
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white animate-pulse">
+                      NEW
+                    </span>
+                  </a>
                 </div>
               </div>
               <div className="relative group">
@@ -495,10 +516,13 @@ const Header: FC = () => {
                 <div className="flex w-full items-center justify-between">
                   <Link
                     href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
-                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 flex items-center"
                     onClick={closeMenu}
                   >
                     {getTranslation('tools')}
+                    <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white">
+                      NEW
+                    </span>
                   </Link>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
@@ -521,6 +545,18 @@ const Header: FC = () => {
                   >
                     {getTranslation('giftExchange')}
                   </Link>
+                  <a
+                    href="https://diin.cc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    onClick={closeMenu}
+                  >
+                    {getTranslation('menuScanner')}
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white animate-pulse">
+                      NEW
+                    </span>
+                  </a>
                 </div>
               </li>
               <li>
