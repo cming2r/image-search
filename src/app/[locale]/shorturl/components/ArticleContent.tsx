@@ -18,26 +18,22 @@ const shorturlContentTranslations = {
       zh: [
         "在輸入框中貼上或輸入您想要縮短的長網址",
         "點擊「縮短網址」按鈕生成短連結",
-        "複製產生的短網址並分享給其他人",
-        "點擊「自訂縮網址」可前往 vvrl.cc 進行進階設定"
+        "複製產生的短網址並分享給其他人"
       ],
       en: [
         "Paste or enter the long URL you want to shorten in the input field",
         "Click the \"Shorten URL\" button to generate a short link",
-        "Copy the generated short URL and share it with others",
-        "Click \"Custom Short URL\" to go to vvrl.cc for advanced settings"
+        "Copy the generated short URL and share it with others"
       ],
       jp: [
         "入力フィールドに短縮したい長いURLを貼り付けまたは入力します",
         "「URL短縮」ボタンをクリックして短いリンクを生成します",
-        "生成された短いURLをコピーして他の人と共有します",
-        "「カスタム短縮URL」をクリックしてvvrl.ccで高度な設定を行います"
+        "生成された短いURLをコピーして他の人と共有します"
       ],
       es: [
         "Pega o ingresa la URL larga que quieres acortar en el campo de entrada",
         "Haz clic en el botón \"Acortar URL\" para generar un enlace corto",
-        "Copia la URL corta generada y compártela con otros",
-        "Haz clic en \"URL Corta Personalizada\" para ir a vvrl.cc para configuraciones avanzadas"
+        "Copia la URL corta generada y compártela con otros"
       ]
     },
     tip: {
@@ -95,7 +91,6 @@ const shorturlContentTranslations = {
         "快速將長網址縮短為易於分享的短連結",
         "6位字符代碼，安全可靠",
         "永久有效，無使用次數限制",
-        "支援自訂短網址（透過 vvrl.cc）",
         "適用於各種社交媒體和通訊平台",
         "統計追蹤功能（即將推出）"
       ],
@@ -103,7 +98,6 @@ const shorturlContentTranslations = {
         "Quickly shorten long URLs into easy-to-share short links",
         "6-character code, secure and reliable",
         "Permanently valid, no usage limit",
-        "Support custom short URLs (via vvrl.cc)",
         "Suitable for various social media and communication platforms",
         "Statistics tracking feature (coming soon)"
       ],
@@ -111,7 +105,6 @@ const shorturlContentTranslations = {
         "長いURLを簡単に共有できる短いリンクに素早く短縮",
         "6文字コードで安全かつ信頼性が高い",
         "永久有効、使用回数制限なし",
-        "カスタム短縮URLをサポート（vvrl.cc経由）",
         "様々なソーシャルメディアやコミュニケーションプラットフォームに適用",
         "統計追跡機能（近日公開予定）"
       ],
@@ -119,7 +112,6 @@ const shorturlContentTranslations = {
         "Acorta rápidamente URLs largas en enlaces cortos fáciles de compartir",
         "Código de 6 caracteres, seguro y confiable",
         "Válido permanentemente, sin límite de uso",
-        "Soporte para URLs cortas personalizadas (vía vvrl.cc)",
         "Adecuado para varias redes sociales y plataformas de comunicación",
         "Función de seguimiento de estadísticas (próximamente)"
       ]
@@ -175,20 +167,6 @@ const shorturlContentTranslations = {
           es: "Proporciona servicio gratuito de acortamiento de URL sin límites de uso, sin anuncios, enfocándose en brindar la mejor experiencia de usuario."
         }
       },
-      custom: {
-        title: {
-          zh: "自訂功能",
-          en: "Customization",
-          jp: "カスタマイズ機能",
-          es: "Personalización"
-        },
-        content: {
-          zh: "支援自訂短網址功能，透過 vvrl.cc 可設定個人化的短連結，滿足不同需求。",
-          en: "Supports custom short URL functionality. Through vvrl.cc, you can set personalized short links to meet different needs.",
-          jp: "カスタム短縮URL機能をサポート。vvrl.ccを通じて個人化された短いリンクを設定でき、様々なニーズに対応。",
-          es: "Soporta funcionalidad de URL corta personalizada. A través de vvrl.cc, puedes configurar enlaces cortos personalizados para satisfacer diferentes necesidades."
-        }
-      }
     }
   },
   useCases: {
@@ -412,18 +390,6 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </p>
           </div>
           
-          <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
-            <div className="flex items-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <h3 className="font-medium text-amber-700">{shorturlContentTranslations.whyChooseUs.features.custom.title[lang]}</h3>
-            </div>
-            <p className="text-amber-700 text-sm">
-              {shorturlContentTranslations.whyChooseUs.features.custom.content[lang]}
-            </p>
-          </div>
         </div>
       </div>
     </>

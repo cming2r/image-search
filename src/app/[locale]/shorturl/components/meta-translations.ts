@@ -31,10 +31,6 @@ export const shorturlTranslations = {
           answer: "沒有，我們的短網址服務完全免費且無使用次數限制。您可以根據需要生成任意數量的短網址，無需註冊帳號或付費。我們致力於提供無限制的免費服務。"
         },
         {
-          question: "可以自訂短網址的代碼嗎？",
-          answer: "可以，點擊「自訂縮網址」按鈕會跳轉到 vvrl.cc 平台，在那裡您可以設定個人化的短網址代碼。這讓您能創建更容易記憶的短連結，適合品牌推廣或特定用途。"
-        },
-        {
           question: "短網址是否安全？我的原始網址會被保存嗎？",
           answer: "我們非常重視用戶隱私和安全。生成短網址時，系統僅保存必要的映射關係以確保重定向功能正常運作。我們不會分析或分享您的原始網址內容，也不會用於任何其他商業目的。"
         },
@@ -51,10 +47,6 @@ export const shorturlTranslations = {
         {
           question: "Is there a limit on the number of short URLs I can create?",
           answer: "No, our URL shortening service is completely free with no usage limits. You can generate as many short URLs as needed without registering an account or paying fees. We are committed to providing unlimited free service."
-        },
-        {
-          question: "Can I customize the short URL code?",
-          answer: "Yes, clicking the \"Custom Short URL\" button will redirect you to the vvrl.cc platform, where you can set personalized short URL codes. This allows you to create more memorable short links suitable for brand promotion or specific purposes."
         },
         {
           question: "Are short URLs safe? Is my original URL saved?",
@@ -75,10 +67,6 @@ export const shorturlTranslations = {
           answer: "いいえ、当短縮URLサービスは完全無料で使用回数制限はありません。アカウント登録や料金支払いなしで、必要な数だけ短縮URLを生成できます。無制限の無料サービス提供に努めています。"
         },
         {
-          question: "短縮URLのコードをカスタマイズできますか？",
-          answer: "はい、「カスタム短縮URL」ボタンをクリックするとvvrl.ccプラットフォームにリダイレクトされ、個人化された短縮URLコードを設定できます。これにより、ブランドプロモーションや特定の用途に適したより覚えやすい短いリンクを作成できます。"
-        },
-        {
           question: "短縮URLは安全ですか？元のURLは保存されますか？",
           answer: "ユーザーのプライバシーとセキュリティを非常に重視しています。短縮URL生成時、システムはリダイレクト機能が正常に動作するために必要なマッピング関係のみを保存します。元のURLの内容を分析したり共有したりすることはなく、他の商業目的に使用することもありません。"
         },
@@ -95,10 +83,6 @@ export const shorturlTranslations = {
         {
           question: "¿Hay un límite en el número de URLs cortas que puedo crear?",
           answer: "No, nuestro servicio de acortamiento de URL es completamente gratuito sin límites de uso. Puede generar tantas URLs cortas como necesite sin registrar una cuenta o pagar tarifas. Estamos comprometidos a proporcionar un servicio gratuito ilimitado."
-        },
-        {
-          question: "¿Puedo personalizar el código de la URL corta?",
-          answer: "Sí, hacer clic en el botón \"URL Corta Personalizada\" lo redirigirá a la plataforma vvrl.cc, donde puede configurar códigos de URL corta personalizados. Esto le permite crear enlaces cortos más memorables adecuados para promoción de marca o propósitos específicos."
         },
         {
           question: "¿Son seguras las URLs cortas? ¿Se guarda mi URL original?",

@@ -250,8 +250,10 @@ const Header: FC = () => {
                 </div>
               </div>
               <div className="relative group">
-                <Link
-                  href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
+                <a
+                  href="https://diin.cc"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
                   aria-expanded="false"
                   aria-haspopup="true"
@@ -261,7 +263,7 @@ const Header: FC = () => {
                     NEW
                   </span>
                   <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
-                </Link>
+                </a>
 
                 <div
                   className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 header-dropdown-menu"
@@ -514,8 +516,10 @@ const Header: FC = () => {
               </li>
               <li>
                 <div className="flex w-full items-center justify-between">
-                  <Link
-                    href={`/${locale === 'en' ? '' : locale + '/'}gift-exchange`}
+                  <a
+                    href="https://diin.cc"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 flex items-center"
                     onClick={closeMenu}
                   >
@@ -523,7 +527,7 @@ const Header: FC = () => {
                     <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white">
                       NEW
                     </span>
-                  </Link>
+                  </a>
                   <button
                     className="px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={() => {

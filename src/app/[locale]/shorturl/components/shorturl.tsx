@@ -85,12 +85,6 @@ const translations = {
     jp: '短縮URLが作成されました！上のリンクをコピーして共有できます。',
     es: '¡URL corta creada! Puedes copiar el enlace de arriba para compartir.'
   },
-  customShortUrl: {
-    zh: '自訂縮網址',
-    en: 'Custom Short URL',
-    jp: 'カスタム短縮URL',
-    es: 'URL Corta Personalizada'
-  },
   backButton: {
     zh: '返回',
     en: 'Back',
@@ -632,41 +626,6 @@ export default function ShortUrl() {
                 className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
               >
                 {translations.backButton[lang]}
-              </button>
-            </div>
-            
-            {/* 自訂縮網址按鈕 */}
-            <div className="mt-4 flex justify-center">
-              <button
-                onClick={() => {
-                  const baseUrl = 'https://vvrl.cc';
-                  const customUrl = locale === 'en' ? `${baseUrl}/zh/custom` : 
-                                   locale === 'en' ? `${baseUrl}/custom` :
-                                   locale === 'jp' ? `${baseUrl}/jp/custom` :
-                                   locale === 'es' ? `${baseUrl}/es/custom` :
-                                   `${baseUrl}/custom`;
-                  window.open(customUrl, '_blank');
-                }}
-                onAuxClick={(e) => {
-                  if (e.button === 1) { // 中鍵點擊
-                    const baseUrl = 'https://vvrl.cc';
-                    const customUrl = locale === 'en' ? `${baseUrl}/zh/custom` : 
-                                     locale === 'en' ? `${baseUrl}/custom` :
-                                     locale === 'jp' ? `${baseUrl}/jp/custom` :
-                                     locale === 'es' ? `${baseUrl}/es/custom` :
-                                     `${baseUrl}/custom`;
-                    window.open(customUrl, '_blank');
-                  }
-                }}
-                className="py-2 px-4 rounded-md transition-all duration-300 hover:scale-105"
-                style={{
-                  background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
-                  color: 'white',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em'
-                }}
-              >
-                {translations.customShortUrl[lang]}
               </button>
             </div>
           </div>
