@@ -3,7 +3,6 @@
 import { FC, useState, ReactElement } from 'react';
 import { useParams } from 'next/navigation';
 import { saveSearchRecord } from '@/lib/supabase/imageSearch';
-import { track } from '@vercel/analytics';
 import Image from 'next/image';
 
 interface SearchButtonProps {
@@ -45,12 +44,6 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     }
     
     try {
-      // Vercel Analytics 追蹤 - 為每個搜尋引擎創建獨立事件
-      const trackingEventName = `${engineName.toLowerCase().replace('.', '')}_search_click`;
-      track(trackingEventName, {
-        locale: locale
-      });
-      
       // 紀錄到Supabase（設備檢測在 saveSearchRecord 內部處理）
       saveSearchRecord({
         image_url: imageUrl,
