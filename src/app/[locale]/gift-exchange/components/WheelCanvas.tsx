@@ -32,6 +32,24 @@ const wheelTranslations = {
     en: "Drawing Results",
     jp: "抽選結果",
     es: "Resultados del Sorteo"
+  },
+  quickResult: {
+    zh: "直接抽取",
+    en: "Quick Draw",
+    jp: "直接抽選",
+    es: "Sorteo Directo"
+  },
+  designateResult: {
+    zh: "指定結果",
+    en: "Designate",
+    jp: "指定する",
+    es: "Designar"
+  },
+  selectPlaceholder: {
+    zh: "選擇參與者...",
+    en: "Select participant...",
+    jp: "参加者を選択...",
+    es: "Seleccionar participante..."
   }
 };
 
@@ -51,6 +69,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const [segments, setSegments] = useState(items.length || 6); // 使用項目數量或預設 6 個窗格
   const [clientSegments, setClientSegments] = useState<string[]>([]); // 客戶端渲染的窗格數據
   const [disabled, setDisabled] = useState(false); // 新增禁用狀態，防止連續點擊
+  const [selectedDesignate, setSelectedDesignate] = useState<string>(''); // 指定結果的選擇
 
   // 初始設置輪盤參數，或者在 items 變化時更新
   useEffect(() => {
@@ -68,14 +87,42 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   
   const spinWheel = () => {
     if (spinning || disabled) return;
-    
+
     // 禁用按鈕，防止連續點擊
     setDisabled(true);
-    
+
     // 開始旋轉輪盤
     startSpinning();
   };
-  
+
+  // 快速結果 - 直接選取隨機結果，跳過動畫
+  const quickResult = () => {
+    if (spinning || disabled) return;
+
+    // 禁用按鈕
+    setDisabled(true);
+
+    // 隨機選取一個結果
+    const randomIndex = Math.floor(Math.random() * clientSegments.length);
+
+    // 設置結果
+    setResult(randomIndex);
+
+    // 通知父組件
+    onSpin(clientSegments[randomIndex]);
+
+    // 等待短暫時間後重置
+    setTimeout(() => {
+      setResult(null);
+      setDisabled(false);
+
+      // 通知父組件更新參與者列表
+      if (typeof onSpin === 'function') {
+        onSpin("__UPDATE_WHEEL__");
+      }
+    }, 1500);
+  };
+
   const startSpinning = () => {
     setSpinning(true);
     setResult(null);
@@ -208,7 +255,56 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
         >
           {spinning ? wheelTranslations.spinningText[lang] : disabled ? wheelTranslations.loading[lang] : wheelTranslations.spinButton[lang]}
         </button>
-        
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={quickResult}
+            disabled={spinning || disabled}
+            className={`h-9 px-4 min-w-[120px] text-sm rounded-lg ${
+              spinning || disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            {wheelTranslations.quickResult[lang]}
+          </button>
+          <select
+            value={selectedDesignate}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value) {
+                setSelectedDesignate(value);
+                // 直接執行指定結果
+                setTimeout(() => {
+                  if (spinning || disabled) return;
+                  setDisabled(true);
+                  const selectedIndex = clientSegments.findIndex(s => s === value);
+                  if (selectedIndex !== -1) {
+                    setResult(selectedIndex);
+                    onSpin(value);
+                    setTimeout(() => {
+                      setResult(null);
+                      setDisabled(false);
+                      setSelectedDesignate('');
+                      onSpin("__UPDATE_WHEEL__");
+                    }, 1500);
+                  } else {
+                    setDisabled(false);
+                    setSelectedDesignate('');
+                  }
+                }, 0);
+              }
+            }}
+            disabled={spinning || disabled}
+            className={`h-9 px-3 min-w-[120px] text-sm rounded-lg border cursor-pointer ${
+              spinning || disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'
+            }`}
+          >
+            <option value="">{wheelTranslations.designateResult[lang]}</option>
+            {clientSegments.map((item, index) => (
+              <option key={index} value={item}>{item}</option>
+            ))}
+          </select>
+        </div>
+
         {result !== null && !spinning && (
           <div className="mt-2 p-3 bg-yellow-100 rounded-lg border border-yellow-300">
             <span className="text-lg font-semibold">

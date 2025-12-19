@@ -120,6 +120,12 @@ const uiTranslations = {
     en: 'Paste',
     jp: '貼り付け',
     es: 'Pegar'
+  },
+  multiUpload: {
+    zh: '多圖上傳',
+    en: 'Multi Upload',
+    jp: '複数アップロード',
+    es: 'Subir Múltiples'
   }
 };
 
@@ -604,36 +610,47 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               <Upload className="h-5 w-5 mr-2" />
               {t.uploadTitle[lang]}
             </h2>
-            <button
-              type="button"
-              onClick={async () => {
-                try {
-                  const clipboardItems = await navigator.clipboard.read();
-                  for (const item of clipboardItems) {
-                    for (const type of item.types) {
-                      if (type.startsWith('image/')) {
-                        const blob = await item.getType(type);
-                        const file = new File([blob], 'pasted-image.png', { type });
-                        handleFileSelect(file);
-                        return;
+            <div className="flex items-center space-x-2">
+              <a
+                href={`https://vvrl.cc${lang === 'en' ? '' : `/${lang}`}/image`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-3 py-1.5 text-sm bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <ImageIcon className="h-4 w-4 mr-1.5" />
+                {t.multiUpload[lang]}
+              </a>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const clipboardItems = await navigator.clipboard.read();
+                    for (const item of clipboardItems) {
+                      for (const type of item.types) {
+                        if (type.startsWith('image/')) {
+                          const blob = await item.getType(type);
+                          const file = new File([blob], 'pasted-image.png', { type });
+                          handleFileSelect(file);
+                          return;
+                        }
                       }
                     }
+                  } catch (err) {
+                    console.error('貼上失敗:', err);
+                    const errorMessage = lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' :
+                                       lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
+                                       lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
+                                       'Error al pegar, asegúrese de que el portapapeles tenga una imagen';
+                    setError(errorMessage);
+                    setToast({message: errorMessage, isVisible: true, type: 'error'});
                   }
-                } catch (err) {
-                  console.error('貼上失敗:', err);
-                  const errorMessage = lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' : 
-                                     lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
-                                     lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
-                                     'Error al pegar, asegúrese de que el portapapeles tenga una imagen';
-                  setError(errorMessage);
-                  setToast({message: errorMessage, isVisible: true, type: 'error'});
-                }
-              }}
-              className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <Clipboard className="h-4 w-4 mr-1.5" />
-              {t.pasteButton[lang]}
-            </button>
+                }}
+                className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <Clipboard className="h-4 w-4 mr-1.5" />
+                {t.pasteButton[lang]}
+              </button>
+            </div>
           </div>
 
           {/* File Upload Area */}

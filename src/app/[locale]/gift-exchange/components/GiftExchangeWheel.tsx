@@ -130,29 +130,37 @@ export default function GiftExchangeWheel() {
     }
   };
 
-  // 添加參與者（支持空格分隔多個名字）
+  // 添加參與者（支持空格分隔多個名字，過濾重複）
   const addParticipant = () => {
     if (!newParticipant.trim()) return;
-    
+
     // 按空格分隔輸入，處理多個名字
     const names = newParticipant.split(/\s+/).filter(name => name.trim() !== '');
-    
+
     if (names.length > 0) {
-      const updatedList = [...participants, ...names];
-      updateParticipants(updatedList);
+      // 過濾掉已存在的名字
+      const uniqueNames = names.filter(name => !participants.includes(name));
+      if (uniqueNames.length > 0) {
+        const updatedList = [...participants, ...uniqueNames];
+        updateParticipants(updatedList);
+      }
       setNewParticipant('');
     }
   };
 
-  // 快速添加指定數量的參與者
+  // 快速設定數字參與者為 1 到 N（保留非數字參與者）
   const quickAddParticipants = () => {
     if (!quickAddCount || quickAddCount <= 0) return;
-    
-    // 創建數字參與者
-    const newParticipants = Array.from({ length: quickAddCount }, (_, i) => `${i + 1}`);
-    const updatedList = [...participants, ...newParticipants];
+
+    // 過濾出非純數字的參與者（保留名字）
+    const nonNumberParticipants = participants.filter(p => isNaN(parseInt(p)) || parseInt(p).toString() !== p);
+
+    // 創建 1 到 N 的數字參與者
+    const numberParticipants = Array.from({ length: quickAddCount }, (_, i) => `${i + 1}`);
+
+    // 合併：非數字參與者 + 數字參與者
+    const updatedList = [...nonNumberParticipants, ...numberParticipants];
     updateParticipants(updatedList);
-    setQuickAddCount(6);
   };
 
   // 移除參與者
