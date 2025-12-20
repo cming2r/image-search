@@ -196,8 +196,8 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
 
   // 根據參與者數量計算字體大小（SVG viewBox 100x100）
   const getFontSize = () => {
-    if (segments <= 10) return 6;
-    return 5;
+    if (segments <= 10) return 7.5;
+    return 6.5;
   };
 
   // 沒有項目時顯示提示
