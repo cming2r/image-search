@@ -136,8 +136,8 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
     setRotation(totalRotation);
 
     setTimeout(() => {
-      // 計算結果 (與WheelSelector完全相同的邏輯)
-      const adjustedRotation = (totalRotation + 90) % 360;
+      // 計算結果 (指針在右邊/0度方向)
+      const adjustedRotation = totalRotation % 360;
       const finalSegment = Math.floor((adjustedRotation + 360) % 360 / (360 / segments));
       const result = segments - finalSegment;
       
@@ -171,23 +171,34 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
     }, 5000);
   };
 
+  // 現代化配色（2024 流行色系）
   const segmentColors = [
-    'fill-red-400',
-    'fill-teal-400',
-    'fill-blue-400',
-    'fill-green-400',
-    'fill-yellow-200',
-    'fill-pink-300',
-    'fill-purple-400',
-    'fill-orange-400',
-    'fill-indigo-400',
-    'fill-lime-400',
-    'fill-amber-400',
-    'fill-emerald-400',
+    'fill-[#6366F1]', // Indigo
+    'fill-[#EC4899]', // Pink
+    'fill-[#14B8A6]', // Teal
+    'fill-[#F97316]', // Orange
+    'fill-[#8B5CF6]', // Violet
+    'fill-[#06B6D4]', // Cyan
+    'fill-[#EF4444]', // Red
+    'fill-[#22C55E]', // Green
+    'fill-[#A855F7]', // Purple
+    'fill-[#0EA5E9]', // Sky
+    'fill-[#F59E0B]', // Amber
+    'fill-[#10B981]', // Emerald
+    'fill-[#E11D48]', // Rose
+    'fill-[#3B82F6]', // Blue
+    'fill-[#84CC16]', // Lime
+    'fill-[#D946EF]', // Fuchsia
   ];
 
   // 格式化浮點數，固定 2 位小數
   const round = (num: number) => parseFloat(num.toFixed(2));
+
+  // 根據參與者數量計算字體大小（SVG viewBox 100x100）
+  const getFontSize = () => {
+    if (segments <= 10) return 6;
+    return 5;
+  };
 
   // 沒有項目時顯示提示
   if (items.length === 0) {
@@ -196,7 +207,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="relative w-72 h-72">
+      <div className="relative w-80 h-80 sm:w-96 sm:h-96">
         <svg className="w-full h-full" viewBox="0 0 100 100">
           <g
             style={{
@@ -216,8 +227,18 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
               const y2 = round(50 + 50 * Math.sin(nextAngle));
               const textAngle = angle + 180 / segments;
               const textRadians = (textAngle * Math.PI) / 180;
-              const textX = round(50 + 35 * Math.cos(textRadians));
-              const textY = round(50 + 35 * Math.sin(textRadians));
+              // 文字距離圓心的位置
+              const textRadius = 32;
+              const textX = round(50 + textRadius * Math.cos(textRadians));
+              const textY = round(50 + textRadius * Math.sin(textRadians));
+
+              // 文字沿扇區方向旋轉，並確保始終正向可讀
+              // 計算文字在螢幕上的最終角度
+              const screenAngle = ((textAngle + rotation) % 360 + 360) % 360;
+              // 如果指向左邊（90-270度），需要翻轉 180 度保持可讀
+              const needsFlip = screenAngle > 90 && screenAngle < 270;
+              // 文字旋轉：沿扇區方向 + 翻轉（如需要）
+              const textRotation = textAngle + (needsFlip ? 180 : 0);
 
               return (
                 <g key={index}>
@@ -232,16 +253,17 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
                     y={textY}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="fill-white text-lg font-bold"
-                    transform={`rotate(-${rotation}, ${textX}, ${textY})`}
+                    className="fill-white font-bold"
+                    style={{ fontSize: `${getFontSize()}px` }}
+                    transform={`rotate(${textRotation}, ${textX}, ${textY})`}
                   >
-                    {item}
+                    {item.length > 8 ? item.slice(0, 7) + '…' : item}
                   </text>
                 </g>
               );
             })}
           </g>
-          <polygon points="48,5 52,5 50,15" fill="black" />
+          <polygon points="95,48 95,52 85,50" fill="black" />
         </svg>
       </div>
       
