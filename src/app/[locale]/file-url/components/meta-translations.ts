@@ -1,13 +1,15 @@
 export const fileUrlTranslations = {
   meta: {
     title: {
-      zh: '檔案網址產生器',
+      tw: '檔案網址產生器',
+      cn: '文件网址生成器',
       en: 'File URL Generator',
       jp: 'ファイルURLジェネレーター',
       es: 'Generador de URL de Archivo'
     },
     description: {
-      zh: '免費檔案網址產生器，快速分享文件、圖片、音訊、影片等檔案。',
+      tw: '免費檔案網址產生器，快速分享文件、圖片、音訊、影片等檔案。',
+      cn: '免费文件网址生成器，快速分享文档、图片、音频、视频等文件。',
       en: 'Free file URL generator, quickly share documents, images, audio, videos and other files.',
       jp: '無料ファイルURLジェネレーター、文書、画像、音声、動画などのファイルを素早く共有。',
       es: 'Generador gratuito de URL de archivos, comparte rápidamente documentos, imágenes, audio, videos y otros archivos.'
@@ -15,7 +17,7 @@ export const fileUrlTranslations = {
   },
   faq: {
     questions: {
-      zh: [
+      tw: [
         {
           question: '檔案網址產生器支援哪些檔案格式？',
           answer: '我們支援多種檔案格式，包括：文件（PDF, DOC, DOCX, TXT, RTF, ODT）、電子表格（XLS, XLSX, CSV, ODS）、簡報（PPT, PPTX, ODP）、圖片（JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF）、音訊（MP3, WAV, AAC, FLAC, OGG, M4A）、影片（MP4, AVI, MOV, WMV, FLV, MKV, WEBM）以及壓縮檔（ZIP, RAR, 7Z, TAR, GZ）。'
@@ -39,6 +41,32 @@ export const fileUrlTranslations = {
         {
           question: '檔案上傳安全嗎？',
           answer: '我們使用 Cloudflare R2 雲端存儲服務，提供企業級安全保護。所有檔案傳輸都經過加密，並支援密碼保護功能。'
+        }
+      ],
+      cn: [
+        {
+          question: '文件网址生成器支持哪些文件格式？',
+          answer: '我们支持多种文件格式，包括：文档（PDF, DOC, DOCX, TXT, RTF, ODT）、电子表格（XLS, XLSX, CSV, ODS）、演示文稿（PPT, PPTX, ODP）、图片（JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF）、音频（MP3, WAV, AAC, FLAC, OGG, M4A）、视频（MP4, AVI, MOV, WMV, FLV, MKV, WEBM）以及压缩文件（ZIP, RAR, 7Z, TAR, GZ）。'
+        },
+        {
+          question: '文件大小有什么限制？',
+          answer: '单个文件最大支持 15MB，建议文件大小在 10MB 以下以确保最佳上传体验。'
+        },
+        {
+          question: '可以设置密码保护吗？',
+          answer: '是的，您可以设置最多4位数的密码来保护您的文件。其他人需要输入正确密码才能访问文件。'
+        },
+        {
+          question: '文件会保存多久？',
+          answer: '文件会在云端安全保存，如果14天内未被访问，系统会自动清理以释放存储空间。'
+        },
+        {
+          question: '是否可以自定义短代码？',
+          answer: '是的，您可以设置自定义短代码，长度为4-10字符，只能使用小写英文字母和数字。系统会检查是否重复。'
+        },
+        {
+          question: '文件上传安全吗？',
+          answer: '我们使用 Cloudflare R2 云端存储服务，提供企业级安全保护。所有文件传输都经过加密，并支持密码保护功能。'
         }
       ],
       en: [

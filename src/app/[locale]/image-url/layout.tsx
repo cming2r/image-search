@@ -11,14 +11,15 @@ import { imageUrlTranslations } from './components/meta-translations';
 
 
 const keywordsList = {
-  zh: ['圖片網址', '圖片上傳', '圖片連結產生器', '圖片託管'],
+  tw: ['圖片網址', '圖片上傳', '圖片連結產生器', '圖片託管'],
+  cn: ['图片网址', '图片上传', '图片链接生成器', '图片托管'],
   en: ['image url', 'image upload', 'image link generator', 'image hosting'],
   jp: ['画像URL', '画像アップロード', '画像リンクジェネレーター', '画像ホスティング'],
   es: ['url de imagen', 'subir imagen', 'generador de enlace de imagen', 'alojamiento de imágenes']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof imageUrlTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof imageUrlTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -31,7 +32,8 @@ const convertFaqForSchema = (faqData: typeof imageUrlTranslations.faq.questions.
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(imageUrlTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(imageUrlTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(imageUrlTranslations.faq.questions.cn),
   en: convertFaqForSchema(imageUrlTranslations.faq.questions.en),
   jp: convertFaqForSchema(imageUrlTranslations.faq.questions.jp),
   es: convertFaqForSchema(imageUrlTranslations.faq.questions.es)
@@ -43,7 +45,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 // 語言對應表，將locale映射為HTML語言代碼
 
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -57,9 +60,9 @@ const imageUrl = getFullUrl('/images/og-image.png');
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = imageUrlTranslations.meta.title[locale as keyof typeof imageUrlTranslations.meta.title] || imageUrlTranslations.meta.title.zh;
-  const description = imageUrlTranslations.meta.description[locale as keyof typeof imageUrlTranslations.meta.description] || imageUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = imageUrlTranslations.meta.title[locale as keyof typeof imageUrlTranslations.meta.title] || imageUrlTranslations.meta.title.tw;
+  const description = imageUrlTranslations.meta.description[locale as keyof typeof imageUrlTranslations.meta.description] || imageUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `圖片網址產生器` : 
@@ -82,7 +85,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '圖片網址產生器工具界面' : 
+          alt: locale === 'tw' ? '圖片網址產生器工具界面' :
+               locale === 'cn' ? '图片网址生成器工具界面' :
                locale === 'en' ? 'Image URL Generator Tool Interface' :
                locale === 'es' ? 'Interfaz de Herramienta Generadora de URL de Imagen' :
                '画像URLジェネレーターツールインターフェース',
@@ -105,7 +109,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/image-url' : `/${locale}/image-url`),
       languages: {
-        'zh-TW': getFullUrl('/image-url'),
+        'zh-TW': getFullUrl('/tw/image-url'),
+        'zh-CN': getFullUrl('/cn/image-url'),
         'en': getFullUrl('/en/image-url'),
         'ja': getFullUrl('/jp/image-url'),
         'es': getFullUrl('/es/image-url'),
@@ -141,12 +146,12 @@ export default async function ImageUrlLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = imageUrlTranslations.meta.title[locale as keyof typeof imageUrlTranslations.meta.title] || imageUrlTranslations.meta.title.zh;
-  const description = imageUrlTranslations.meta.description[locale as keyof typeof imageUrlTranslations.meta.description] || imageUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = imageUrlTranslations.meta.title[locale as keyof typeof imageUrlTranslations.meta.title] || imageUrlTranslations.meta.title.tw;
+  const description = imageUrlTranslations.meta.description[locale as keyof typeof imageUrlTranslations.meta.description] || imageUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/image-url', title, locale);
@@ -165,7 +170,8 @@ export default async function ImageUrlLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/image-url',
-    locale === 'zh' ? '圖片網址產生器工具' :
+    locale === 'tw' ? '圖片網址產生器工具' :
+    locale === 'cn' ? '图片网址生成器工具' :
     locale === 'en' ? 'Image URL Generator Tool' :
     locale === 'es' ? 'Herramienta Generadora de URL de Imagen' :
     '画像URLジェネレーターツール',

@@ -31,7 +31,7 @@
 
 ```javascript
 ImageSearchSDK.init({
-  locale: 'en',           // 语言：zh, en, jp, es (默认: en)
+  locale: 'en',           // 语言：tw, cn, en, jp, es (默认: en)
   source: 'your-website', // 来源网站名称（追踪用）
   baseUrl: 'https://fyimg.com' // API 基础 URL（可选，默认自动检测）
 });
@@ -66,7 +66,7 @@ canvas.toBlob((blob) => {
 初始化 SDK 配置。
 
 **参数：**
-- `locale` (string): 语言设置，可选值：`zh`, `en`, `jp`, `es`，默认 `en`
+- `locale` (string): 语言设置，可选值：`tw`, `cn`, `en`, `jp`, `es`，默认 `en`
 - `source` (string): 来源网站名称，用于追踪，默认为当前域名
 - `baseUrl` (string): API 基础 URL，可选，默认自动检测
 

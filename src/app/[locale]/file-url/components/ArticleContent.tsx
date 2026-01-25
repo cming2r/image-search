@@ -10,18 +10,26 @@ interface ArticleContentProps {
 const fileUrlContentTranslations = {
   howToUse: {
     title: {
-      zh: "如何使用此工具？",
+      tw: "如何使用此工具？",
+      cn: "如何使用此工具？",
       en: "How to Use This Tool?",
       jp: "このツールの使い方",
       es: "¿Cómo Usar Esta Herramienta?"
     },
     steps: {
-      zh: [
+      tw: [
         "點擊「選擇檔案」按鈕或直接拖拽檔案到上傳區域",
         "選擇您要上傳的檔案（支援多種格式：PDF、DOC、圖片、音訊、影片等）",
         "可選設定密碼保護和自訂短代碼",
         "點擊「上傳」按鈕開始上傳檔案到雲端",
         "複製生成的檔案網址，即可在任何地方分享使用"
+      ],
+      cn: [
+        "点击「选择文件」按钮或直接拖拽文件到上传区域",
+        "选择您要上传的文件（支持多种格式：PDF、DOC、图片、音频、视频等）",
+        "可选设定密码保护和自定义短代码",
+        "点击「上传」按钮开始上传文件到云端",
+        "复制生成的文件网址，即可在任何地方分享使用"
       ],
       en: [
         "Click the \"Select File\" button or drag and drop files to the upload area",
@@ -46,13 +54,15 @@ const fileUrlContentTranslations = {
       ]
     },
     tip: {
-      zh: "小提示：",
+      tw: "小提示：",
+      cn: "小提示：",
       en: "Tip:",
       jp: "ヒント：",
       es: "Consejo:"
     },
     tipContent: {
-      zh: "設定密碼保護可以確保只有知道密碼的人才能下載您的檔案，增強安全性。",
+      tw: "設定密碼保護可以確保只有知道密碼的人才能下載您的檔案，增強安全性。",
+      cn: "设定密码保护可以确保只有知道密码的人才能下载您的文件，增强安全性。",
       en: "Setting password protection ensures only those who know the password can download your files, enhancing security.",
       jp: "パスワード保護を設定すると、パスワードを知っている人だけがファイルをダウンロードできるようになり、セキュリティが向上します。",
       es: "Establecer protección con contraseña asegura que solo aquellos que conocen la contraseña puedan descargar tus archivos, mejorando la seguridad."
@@ -60,16 +70,22 @@ const fileUrlContentTranslations = {
   },
   whatIs: {
     title: {
-      zh: "什麼是檔案網址產生器？",
+      tw: "什麼是檔案網址產生器？",
+      cn: "什么是文件网址生成器？",
       en: "What is a File URL Generator?",
       jp: "ファイルURLジェネレーターとは？",
       es: "¿Qué es un Generador de URL de Archivo?"
     },
     content: {
-      zh: [
+      tw: [
         "檔案網址產生器是一個現代化的雲端服務工具，讓使用者能夠快速上傳各種類型的檔案並獲取永久的網址連結。這項服務特別適合需要分享文件、圖片、音訊、影片等檔案的個人和企業用戶。透過我們的平台，您可以輕鬆地將本地檔案轉換為可在任何地方存取的網路連結。",
         "現代數位工作環境對於檔案分享的需求日益增長，無論是商業文件交換、教育資源分享、創意作品展示，還是技術文檔傳遞，都需要穩定可靠的檔案託管解決方案。我們的檔案網址產生器正是為了解決這些需求而設計，提供快速、安全且永久的檔案託管服務。",
         "我們的服務使用先進的雲端儲存技術，支援多種檔案格式，包括文件、電子表格、簡報、圖片、音訊、影片以及壓縮檔等。同時，我們重視用戶隱私和安全，提供密碼保護功能，並採用嚴格的安全措施保護您上傳的檔案。"
+      ],
+      cn: [
+        "文件网址生成器是一个现代化的云端服务工具，让用户能够快速上传各种类型的文件并获取永久的网址链接。这项服务特别适合需要分享文档、图片、音频、视频等文件的个人和企业用户。通过我们的平台，您可以轻松地将本地文件转换为可在任何地方访问的网络链接。",
+        "现代数字工作环境对于文件分享的需求日益增长，无论是商业文件交换、教育资源分享、创意作品展示，还是技术文档传递，都需要稳定可靠的文件托管解决方案。我们的文件网址生成器正是为了解决这些需求而设计，提供快速、安全且永久的文件托管服务。",
+        "我们的服务使用先进的云端存储技术，支持多种文件格式，包括文档、电子表格、演示文稿、图片、音频、视频以及压缩文件等。同时，我们重视用户隐私和安全，提供密码保护功能，并采用严格的安全措施保护您上传的文件。"
       ],
       en: [
         "A File URL Generator is a modern cloud service tool that allows users to quickly upload various types of files and obtain permanent URL links. This service is particularly suitable for individuals and business users who need to share documents, images, audio, video and other files. Through our platform, you can easily convert local files into network links accessible from anywhere.",
@@ -90,22 +106,28 @@ const fileUrlContentTranslations = {
   },
   features: {
     title: {
-      zh: "功能特色與優勢",
+      tw: "功能特色與優勢",
+      cn: "功能特色与优势",
       en: "Features and Advantages",
       jp: "機能の特徴と利点",
       es: "Características y Ventajas"
     },
     upload: {
       title: {
-        zh: "多格式支援上傳",
+        tw: "多格式支援上傳",
+        cn: "多格式支持上传",
         en: "Multi-Format Upload Support",
         jp: "マルチフォーマットアップロードサポート",
         es: "Soporte de Carga Multi-Formato"
       },
       content: {
-        zh: [
+        tw: [
           "支援文件（PDF、DOC、DOCX、TXT、RTF、ODT）、電子表格（XLS、XLSX、CSV、ODS）、簡報（PPT、PPTX、ODP）、圖片（JPEG、PNG、GIF、BMP、WEBP、SVG、TIFF）、音訊（MP3、WAV、AAC、FLAC、OGG、M4A）、影片（MP4、AVI、MOV、WMV、FLV、MKV、WEBM）以及壓縮檔（ZIP、RAR、7Z、TAR、GZ）等多種格式。",
           "系統採用先進的並行上傳技術，支援最大 15MB 的檔案，通常可在數秒內完成上傳。支援拖拽上傳和點擊選擇兩種上傳方式，讓操作更加便捷。我們的全球CDN網絡確保無論您身在何處，都能享受到快速穩定的上傳服務。"
+        ],
+        cn: [
+          "支持文档（PDF、DOC、DOCX、TXT、RTF、ODT）、电子表格（XLS、XLSX、CSV、ODS）、演示文稿（PPT、PPTX、ODP）、图片（JPEG、PNG、GIF、BMP、WEBP、SVG、TIFF）、音频（MP3、WAV、AAC、FLAC、OGG、M4A）、视频（MP4、AVI、MOV、WMV、FLV、MKV、WEBM）以及压缩文件（ZIP、RAR、7Z、TAR、GZ）等多种格式。",
+          "系统采用先进的并行上传技术，支持最大 15MB 的文件，通常可在数秒内完成上传。支持拖拽上传和点击选择两种上传方式，让操作更加便捷。我们的全球CDN网络确保无论您身在何处，都能享受到快速稳定的上传服务。"
         ],
         en: [
           "Supports documents (PDF, DOC, DOCX, TXT, RTF, ODT), spreadsheets (XLS, XLSX, CSV, ODS), presentations (PPT, PPTX, ODP), images (JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF), audio (MP3, WAV, AAC, FLAC, OGG, M4A), video (MP4, AVI, MOV, WMV, FLV, MKV, WEBM), and archives (ZIP, RAR, 7Z, TAR, GZ) and many other formats.",
@@ -123,15 +145,20 @@ const fileUrlContentTranslations = {
     },
     storage: {
       title: {
-        zh: "安全雲端儲存",
+        tw: "安全雲端儲存",
+        cn: "安全云端存储",
         en: "Secure Cloud Storage",
         jp: "安全なクラウドストレージ",
         es: "Almacenamiento Seguro en la Nube"
       },
       content: {
-        zh: [
+        tw: [
           "所有上傳的檔案都存儲在企業級的 Cloudflare R2 雲端伺服器上，採用多重備份機制確保資料安全。我們使用業界標準的 HTTPS 加密傳輸，保護您的檔案在傳輸過程中的安全性。每個檔案都會獲得一個獨特的隨機網址，確保隱私安全。",
           "我們的儲存架構支援高可用性和災難恢復，確保您的檔案能夠 24/7 穩定存取。提供密碼保護功能，您可以設定最多4位數字密碼來保護檔案。檔案會在雲端安全保存，如果14天內未被訪問，系統會自動清理以釋放儲存空間。"
+        ],
+        cn: [
+          "所有上传的文件都存储在企业级的 Cloudflare R2 云端服务器上，采用多重备份机制确保数据安全。我们使用业界标准的 HTTPS 加密传输，保护您的文件在传输过程中的安全性。每个文件都会获得一个独特的随机网址，确保隐私安全。",
+          "我们的存储架构支持高可用性和灾难恢复，确保您的文件能够 24/7 稳定访问。提供密码保护功能，您可以设定最多4位数字密码来保护文件。文件会在云端安全保存，如果14天内未被访问，系统会自动清理以释放存储空间。"
         ],
         en: [
           "All uploaded files are stored on enterprise-grade Cloudflare R2 cloud servers with multiple backup mechanisms to ensure data security. We use industry-standard HTTPS encrypted transmission to protect the security of your files during transmission. Each file receives a unique random URL, ensuring privacy and security.",
@@ -149,15 +176,20 @@ const fileUrlContentTranslations = {
     },
     customization: {
       title: {
-        zh: "自訂功能",
+        tw: "自訂功能",
+        cn: "自定义功能",
         en: "Customization Features",
         jp: "カスタマイズ機能",
         es: "Características de Personalización"
       },
       content: {
-        zh: [
+        tw: [
           "支援自訂短代碼功能，您可以設定 4-10 字符的個性化短代碼，使用小寫英文字母和數字組合。系統會自動檢查短代碼是否重複，確保唯一性。這讓您的檔案連結更容易記憶和分享。",
           "提供密碼保護功能，可設定最多4位數字密碼來保護您的檔案。只有輸入正確密碼的人才能下載檔案，為敏感檔案提供額外的安全保障。同時支援設備資訊記錄，幫助您了解檔案的存取來源。"
+        ],
+        cn: [
+          "支持自定义短代码功能，您可以设定 4-10 字符的个性化短代码，使用小写英文字母和数字组合。系统会自动检查短代码是否重复，确保唯一性。这让您的文件链接更容易记忆和分享。",
+          "提供密码保护功能，可设定最多4位数字密码来保护您的文件。只有输入正确密码的人才能下载文件，为敏感文件提供额外的安全保障。同时支持设备信息记录，帮助您了解文件的访问来源。"
         ],
         en: [
           "Supports custom short code functionality, allowing you to set personalized short codes of 4-10 characters using combinations of lowercase letters and numbers. The system automatically checks for duplicate short codes to ensure uniqueness. This makes your file links easier to remember and share.",
@@ -176,7 +208,8 @@ const fileUrlContentTranslations = {
   },
   useCases: {
     title: {
-      zh: "使用場景與應用",
+      tw: "使用場景與應用",
+      cn: "使用场景与应用",
       en: "Use Cases and Applications",
       jp: "使用シナリオとアプリケーション",
       es: "Casos de Uso y Aplicaciones"
@@ -184,13 +217,15 @@ const fileUrlContentTranslations = {
     scenarios: {
       business: {
         title: {
-          zh: "商業文件交換",
+          tw: "商業文件交換",
+          cn: "商业文件交换",
           en: "Business Document Exchange",
           jp: "ビジネス文書交換",
           es: "Intercambio de Documentos Comerciales"
         },
         content: {
-          zh: "企業間文件傳遞、合約分享、報告發送，支援密碼保護確保敏感資料安全。",
+          tw: "企業間文件傳遞、合約分享、報告發送，支援密碼保護確保敏感資料安全。",
+          cn: "企业间文件传递、合同分享、报告发送，支持密码保护确保敏感数据安全。",
           en: "Inter-enterprise document transfer, contract sharing, report sending, with password protection to ensure sensitive data security.",
           jp: "企業間文書転送、契約共有、レポート送信、機密データのセキュリティを確保するパスワード保護付き。",
           es: "Transferencia de documentos entre empresas, compartir contratos, envío de informes, con protección por contraseña para asegurar la seguridad de datos sensibles."
@@ -198,13 +233,15 @@ const fileUrlContentTranslations = {
       },
       education: {
         title: {
-          zh: "教育資源分享",
+          tw: "教育資源分享",
+          cn: "教育资源分享",
           en: "Educational Resource Sharing",
           jp: "教育リソース共有",
           es: "Compartir Recursos Educativos"
         },
         content: {
-          zh: "教材發送、作業提交、課程資料分享，支援多種格式滿足教學需求。",
+          tw: "教材發送、作業提交、課程資料分享，支援多種格式滿足教學需求。",
+          cn: "教材发送、作业提交、课程资料分享，支持多种格式满足教学需求。",
           en: "Teaching material distribution, assignment submission, course material sharing, supporting multiple formats to meet teaching needs.",
           jp: "教材配布、課題提出、コース資料共有、教育ニーズを満たす複数フォーマットをサポート。",
           es: "Distribución de material didáctico, envío de tareas, compartir material del curso, soportando múltiples formatos para satisfacer necesidades educativas."
@@ -212,13 +249,15 @@ const fileUrlContentTranslations = {
       },
       creative: {
         title: {
-          zh: "創意作品展示",
+          tw: "創意作品展示",
+          cn: "创意作品展示",
           en: "Creative Work Display",
           jp: "クリエイティブ作品展示",
           es: "Exhibición de Trabajo Creativo"
         },
         content: {
-          zh: "設計作品分享、音樂作品發佈、影片內容傳播，高品質保存創意成果。",
+          tw: "設計作品分享、音樂作品發佈、影片內容傳播，高品質保存創意成果。",
+          cn: "设计作品分享、音乐作品发布、视频内容传播，高品质保存创意成果。",
           en: "Design work sharing, music release, video content distribution, high-quality preservation of creative results.",
           jp: "デザイン作品共有、音楽リリース、動画コンテンツ配信、クリエイティブ成果の高品質保存。",
           es: "Compartir trabajo de diseño, lanzamiento de música, distribución de contenido de video, preservación de alta calidad de resultados creativos."
@@ -226,13 +265,15 @@ const fileUrlContentTranslations = {
       },
       technical: {
         title: {
-          zh: "技術文檔傳遞",
+          tw: "技術文檔傳遞",
+          cn: "技术文档传递",
           en: "Technical Documentation Delivery",
           jp: "技術文書配信",
           es: "Entrega de Documentación Técnica"
         },
         content: {
-          zh: "API文檔分享、技術規格傳遞、軟體安裝包發佈，支援大檔案上傳。",
+          tw: "API文檔分享、技術規格傳遞、軟體安裝包發佈，支援大檔案上傳。",
+          cn: "API文档分享、技术规格传递、软件安装包发布，支持大文件上传。",
           en: "API documentation sharing, technical specification delivery, software package release, supporting large file uploads.",
           jp: "API文書共有、技術仕様配信、ソフトウェアパッケージリリース、大容量ファイルアップロードをサポート。",
           es: "Compartir documentación de API, entrega de especificaciones técnicas, lanzamiento de paquetes de software, soportando cargas de archivos grandes."
@@ -240,13 +281,15 @@ const fileUrlContentTranslations = {
       },
       personal: {
         title: {
-          zh: "個人檔案備份",
+          tw: "個人檔案備份",
+          cn: "个人文件备份",
           en: "Personal File Backup",
           jp: "個人ファイルバックアップ",
           es: "Respaldo de Archivos Personales"
         },
         content: {
-          zh: "重要文件備份、照片影片儲存、個人資料歸檔，雲端安全保存。",
+          tw: "重要文件備份、照片影片儲存、個人資料歸檔，雲端安全保存。",
+          cn: "重要文件备份、照片视频存储、个人资料归档，云端安全保存。",
           en: "Important document backup, photo and video storage, personal data archiving, secure cloud storage.",
           jp: "重要文書バックアップ、写真動画保存、個人データアーカイブ、安全なクラウドストレージ。",
           es: "Respaldo de documentos importantes, almacenamiento de fotos y videos, archivo de datos personales, almacenamiento seguro en la nube."
@@ -254,13 +297,15 @@ const fileUrlContentTranslations = {
       },
       collaboration: {
         title: {
-          zh: "團隊協作",
+          tw: "團隊協作",
+          cn: "团队协作",
           en: "Team Collaboration",
           jp: "チームコラボレーション",
           es: "Colaboración en Equipo"
         },
         content: {
-          zh: "專案檔案共享、團隊資源交換、協作文檔管理，提升工作效率。",
+          tw: "專案檔案共享、團隊資源交換、協作文檔管理，提升工作效率。",
+          cn: "项目文件共享、团队资源交换、协作文档管理，提升工作效率。",
           en: "Project file sharing, team resource exchange, collaborative document management, improving work efficiency.",
           jp: "プロジェクトファイル共有、チームリソース交換、協調文書管理、作業効率向上。",
           es: "Compartir archivos de proyecto, intercambio de recursos del equipo, gestión de documentos colaborativos, mejorando la eficiencia del trabajo."
@@ -270,7 +315,8 @@ const fileUrlContentTranslations = {
   },
   whyChooseUs: {
     title: {
-      zh: "為什麼選擇我們的檔案網址產生器？",
+      tw: "為什麼選擇我們的檔案網址產生器？",
+      cn: "为什么选择我们的文件网址生成器？",
       en: "Why Choose Our File URL Generator?",
       jp: "なぜ当ファイルURLジェネレーターを選ぶのか？",
       es: "¿Por Qué Elegir Nuestro Generador de URL de Archivo?"
@@ -278,13 +324,15 @@ const fileUrlContentTranslations = {
     features: {
       reliable: {
         title: {
-          zh: "穩定可靠",
+          tw: "穩定可靠",
+          cn: "稳定可靠",
           en: "Stable and Reliable",
           jp: "安定信頼性",
           es: "Estable y Confiable"
         },
         content: {
-          zh: "99.9% 的服務可用性，企業級 Cloudflare R2 基礎設施確保您的檔案始終可訪問。",
+          tw: "99.9% 的服務可用性，企業級 Cloudflare R2 基礎設施確保您的檔案始終可訪問。",
+          cn: "99.9% 的服务可用性，企业级 Cloudflare R2 基础设施确保您的文件始终可访问。",
           en: "99.9% service availability, enterprise-grade Cloudflare R2 infrastructure ensures your files are always accessible.",
           jp: "99.9%のサービス可用性、エンタープライズグレードのCloudflare R2インフラストラクチャがあなたのファイルが常にアクセス可能であることを保証します。",
           es: "99.9% de disponibilidad del servicio, infraestructura Cloudflare R2 de grado empresarial asegura que tus archivos sean siempre accesibles."
@@ -292,13 +340,15 @@ const fileUrlContentTranslations = {
       },
       secure: {
         title: {
-          zh: "安全保護",
+          tw: "安全保護",
+          cn: "安全保护",
           en: "Security Protection",
           jp: "セキュリティ保護",
           es: "Protección de Seguridad"
         },
         content: {
-          zh: "SSL 加密傳輸、密碼保護功能、嚴格的隱私政策保護您的檔案安全。",
+          tw: "SSL 加密傳輸、密碼保護功能、嚴格的隱私政策保護您的檔案安全。",
+          cn: "SSL 加密传输、密码保护功能、严格的隐私政策保护您的文件安全。",
           en: "SSL encrypted transmission, password protection features, strict privacy policy to protect your file security.",
           jp: "SSL暗号化伝送、パスワード保護機能、厳格なプライバシーポリシーがあなたのファイルセキュリティを保護します。",
           es: "Transmisión encriptada SSL, características de protección por contraseña, política de privacidad estricta para proteger la seguridad de tus archivos."
@@ -306,13 +356,15 @@ const fileUrlContentTranslations = {
       },
       versatile: {
         title: {
-          zh: "多格式支援",
+          tw: "多格式支援",
+          cn: "多格式支持",
           en: "Multi-Format Support",
           jp: "マルチフォーマットサポート",
           es: "Soporte Multi-Formato"
         },
         content: {
-          zh: "支援文件、圖片、音訊、影片、壓縮檔等各種格式，滿足不同需求。",
+          tw: "支援文件、圖片、音訊、影片、壓縮檔等各種格式，滿足不同需求。",
+          cn: "支持文档、图片、音频、视频、压缩文件等各种格式，满足不同需求。",
           en: "Supports documents, images, audio, video, archives and other formats to meet different needs.",
           jp: "文書、画像、音声、動画、アーカイブなどの様々な形式をサポートし、異なるニーズを満たします。",
           es: "Soporta documentos, imágenes, audio, video, archivos y otros formatos para satisfacer diferentes necesidades."
@@ -320,13 +372,15 @@ const fileUrlContentTranslations = {
       },
       fast: {
         title: {
-          zh: "極速體驗",
+          tw: "極速體驗",
+          cn: "极速体验",
           en: "Lightning Fast",
           jp: "超高速体験",
           es: "Experiencia Ultrarrápida"
         },
         content: {
-          zh: "全球 CDN 加速，平均上傳時間少於 10 秒，快速穩定的檔案存取。",
+          tw: "全球 CDN 加速，平均上傳時間少於 10 秒，快速穩定的檔案存取。",
+          cn: "全球 CDN 加速，平均上传时间少于 10 秒，快速稳定的文件访问。",
           en: "Global CDN acceleration with average upload time under 10 seconds, fast and stable file access.",
           jp: "グローバルCDN加速により、平均アップロード時間は10秒未満で、高速で安定したファイルアクセス。",
           es: "Aceleración CDN global con tiempo de carga promedio bajo 10 segundos, acceso a archivos rápido y estable."
@@ -334,13 +388,15 @@ const fileUrlContentTranslations = {
       },
       customizable: {
         title: {
-          zh: "個性化設定",
+          tw: "個性化設定",
+          cn: "个性化设定",
           en: "Customizable Settings",
           jp: "カスタマイズ設定",
           es: "Configuraciones Personalizables"
         },
         content: {
-          zh: "自訂短代碼、密碼保護、設備資訊記錄等個性化功能。",
+          tw: "自訂短代碼、密碼保護、設備資訊記錄等個性化功能。",
+          cn: "自定义短代码、密码保护、设备信息记录等个性化功能。",
           en: "Custom short codes, password protection, device information recording and other personalization features.",
           jp: "カスタムショートコード、パスワード保護、デバイス情報記録などのパーソナライゼーション機能。",
           es: "Códigos cortos personalizados, protección por contraseña, grabación de información de dispositivo y otras características de personalización."
@@ -348,13 +404,15 @@ const fileUrlContentTranslations = {
       },
       simple: {
         title: {
-          zh: "操作簡單",
+          tw: "操作簡單",
+          cn: "操作简单",
           en: "Simple Operation",
           jp: "シンプル操作",
           es: "Operación Simple"
         },
         content: {
-          zh: "直觀的操作介面，拖拽上傳，三步完成檔案分享。",
+          tw: "直觀的操作介面，拖拽上傳，三步完成檔案分享。",
+          cn: "直观的操作界面，拖拽上传，三步完成文件分享。",
           en: "Intuitive operation interface, drag and drop upload, complete file sharing in three steps.",
           jp: "直感的な操作インターフェース、ドラッグ＆ドロップアップロード、3ステップでファイル共有完了。",
           es: "Interfaz de operación intuitiva, carga de arrastrar y soltar, completa el compartir archivos en tres pasos."
@@ -363,13 +421,15 @@ const fileUrlContentTranslations = {
     },
     callToAction: {
       title: {
-        zh: "立即體驗最專業的檔案網址產生器",
+        tw: "立即體驗最專業的檔案網址產生器",
+        cn: "立即体验最专业的文件网址生成器",
         en: "Experience the most professional file URL generator now",
         jp: "今すぐ最もプロフェッショナルなファイルURLジェネレーターを体験",
         es: "Experimenta ahora el generador de URL de archivo más profesional"
       },
       subtitle: {
-        zh: "安全上傳，永久連結，讓檔案分享變得更簡單",
+        tw: "安全上傳，永久連結，讓檔案分享變得更簡單",
+        cn: "安全上传，永久链接，让文件分享变得更简单",
         en: "Secure upload, permanent links, making file sharing easier",
         jp: "安全なアップロード、永続リンク、ファイル共有をより簡単に",
         es: "Carga segura, enlaces permanentes, haciendo que compartir archivos sea más fácil"
@@ -379,7 +439,8 @@ const fileUrlContentTranslations = {
 };
 
 export default function ArticleContent({ locale }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
+  const faqLang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   return (
     <>
@@ -548,10 +609,10 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2>{fileUrlTranslations.faq.questions.zh ? '常見問題' : 'FAQ'}</h2>
+        <h2>{fileUrlTranslations.faq.questions.tw ? '常見問題' : 'FAQ'}</h2>
         
         <div className="space-y-6">
-          {fileUrlTranslations.faq.questions[lang].map((item, index) => (
+          {fileUrlTranslations.faq.questions[faqLang].map((item, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">

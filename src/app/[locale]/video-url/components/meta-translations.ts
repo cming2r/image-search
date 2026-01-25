@@ -1,13 +1,15 @@
 export const videoUrlTranslations = {
   meta: {
     title: {
-      zh: '影片網址生成器',
+      tw: '影片網址生成器',
+      cn: '视频网址生成器',
       en: 'Video URL Generator',
       jp: '動画URL生成器',
       es: 'Generador de URL de Video'
     },
     description: {
-      zh: '免費的影片網址生成器，上傳影片文件並獲得短網址連結。',
+      tw: '免費的影片網址生成器，上傳影片文件並獲得短網址連結。',
+      cn: '免费的视频网址生成器，上传视频文件并获得短网址链接。',
       en: 'Free video URL generator. Upload video files and get short URL links.',
       jp: '無料の動画URL生成器。動画ファイルをアップロードして短いURLリンクを取得。',
       es: 'Generador gratuito de URL de video. Sube archivos de video y obtén enlaces de URL cortos.'
@@ -15,7 +17,7 @@ export const videoUrlTranslations = {
   },
   faq: {
     questions: {
-      zh: [
+      tw: [
         {
           question: "支援哪些影片格式？",
           answer: "我們支援主流影片格式，包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等格式，最大文件大小為 100MB。"
@@ -47,6 +49,40 @@ export const videoUrlTranslations = {
         {
           question: "服務是否免費？",
           answer: "是的，我們提供免費的影片網址生成服務。您可以免費上傳影片、生成短網址、設定密碼保護和過期時間等功能。"
+        }
+      ],
+      cn: [
+        {
+          question: "支持哪些视频格式？",
+          answer: "我们支持主流视频格式，包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等格式，最大文件大小为 100MB。"
+        },
+        {
+          question: "上传的视频会保存多久？",
+          answer: "视频的保存时间取决于您设定的过期时间。您可以选择从1小时到7天不等的过期时间，过期后视频会自动删除。如果不设定过期时间，视频将使用默认的保存期限。"
+        },
+        {
+          question: "如何设置密码保护？",
+          answer: "在上传视频时，您可以在选项设置中设置最多4位数字的密码。设置密码后，观看者需要输入正确密码才能播放视频。"
+        },
+        {
+          question: "生成的短网址会重复吗？",
+          answer: "不会。我们的系统会为每个上传的视频生成唯一的随机短网址，确保不会出现重复的情况。"
+        },
+        {
+          question: "可以追踪视频的观看情况吗？",
+          answer: "系统会记录基本的设备信息，包括访问设备类型、浏览器和操作系统等，帮助您了解视频的访问来源。"
+        },
+        {
+          question: "视频播放品质如何？",
+          answer: "我们使用 Bunny.net Stream 企业级串流技术，支持自适应码率串流，会根据观看者的网络条件自动调整视频品质，确保最佳播放体验。"
+        },
+        {
+          question: "可以在手机上使用吗？",
+          answer: "是的，我们的服务完全支持手机和平板设备。您可以直接在手机浏览器中上传和分享视频，同时支持二维码生成功能方便移动分享。"
+        },
+        {
+          question: "服务是否免费？",
+          answer: "是的，我们提供免费的视频网址生成服务。您可以免费上传视频、生成短网址、设置密码保护和过期时间等功能。"
         }
       ],
       en: [

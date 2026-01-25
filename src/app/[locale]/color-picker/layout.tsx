@@ -10,14 +10,16 @@ import {
 import { colorPickerTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['顏色選擇器', '色彩工具', 'HEX轉RGB', 'RGB轉HSL', '線上色彩挑選'],
+  tw: ['顏色選擇器', '色彩工具', 'HEX轉RGB', 'RGB轉HSL', '線上色彩挑選'],
+  cn: ['颜色选择器', '色彩工具', 'HEX转RGB', 'RGB转HSL', '在线色彩挑选'],
   en: ['color picker', 'color tool', 'HEX to RGB', 'RGB to HSL', 'online color selection'],
-  jp: ['カラーピッカー', '色彩ツール', 'HEXからRGB', 'RGBからHSL', 'オンライン色選択']
+  jp: ['カラーピッカー', '色彩ツール', 'HEXからRGB', 'RGBからHSL', 'オンライン色選択'],
+  es: ['selector de color', 'herramienta de color', 'HEX a RGB', 'RGB a HSL', 'selección de color en línea']
 };
 
 // 多語言FAQ數據
 const faqsData = {
-  zh: [
+  tw: [
     {
       '@type': 'Question',
       name: '什麼是顏色選擇器？',
@@ -118,6 +120,74 @@ const faqsData = {
         text: '色を扱う必要があるすべての人に適しています：ウェブデザイナーはCSSカラーコードを迅速に取得できます；UIデザイナーは正確な色調整を行えます；開発者は異なる色形式間で変換できます；一般ユーザーも色の選択とマッチングに使用できます。'
       }
     }
+  ],
+  cn: [
+    {
+      '@type': 'Question',
+      name: '什么是颜色选择器？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '颜色选择器是一个在线工具，帮助用户选择和转换不同格式的颜色代码。支持HEX、RGB、HSL等常见颜色格式之间的相互转换，广泛应用于网页设计、UI设计和数字创作领域。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'HEX、RGB、HSL有什么区别？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'HEX是十六进制颜色代码，常用于网页设计；RGB表示红绿蓝三原色的数值组合；HSL表示色相、饱和度和亮度，更符合人类对颜色的感知方式。每种格式都有其特定的应用场景和优势。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '如何使用这个颜色选择器？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '您可以通过多种方式使用：1) 在任意格式的输入框中输入颜色值，其他格式会自动更新；2) 点击颜色预览区域复制HEX代码；3) 使用各格式区域的复制按钮获取对应的颜色代码。所有操作都是实时同步的。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '这个工具适合什么人使用？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '适合所有需要处理颜色的人群：网页设计师可以快速获取CSS颜色代码；UI设计师可以进行精确的颜色调配；开发者可以在不同颜色格式间转换；普通用户也可以用来选择和匹配颜色。'
+      }
+    }
+  ],
+  es: [
+    {
+      '@type': 'Question',
+      name: '¿Qué es un selector de color?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Un selector de color es una herramienta en línea que ayuda a los usuarios a seleccionar y convertir códigos de color en diferentes formatos. Soporta la conversión mutua entre formatos de color comunes como HEX, RGB, HSL, y se utiliza ampliamente en diseño web, diseño UI y creación digital.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cuál es la diferencia entre HEX, RGB y HSL?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'HEX es un código de color hexadecimal comúnmente usado en diseño web; RGB representa la combinación numérica de los colores primarios rojo, verde y azul; HSL representa tono, saturación y luminosidad, lo cual está más alineado con la percepción humana del color. Cada formato tiene sus escenarios de aplicación y ventajas específicas.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Cómo uso este selector de color?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Puede usarlo de múltiples formas: 1) Ingrese valores de color en cualquier cuadro de entrada de formato, y otros formatos se actualizarán automáticamente; 2) Haga clic en el área de vista previa del color para copiar el código HEX; 3) Use los botones de copiar en cada sección de formato para obtener el código de color correspondiente. Todas las operaciones se sincronizan en tiempo real.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '¿Para quién es adecuada esta herramienta?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Adecuada para cualquier persona que necesite trabajar con colores: los diseñadores web pueden obtener rápidamente códigos de color CSS; los diseñadores UI pueden realizar coincidencias de color precisas; los desarrolladores pueden convertir entre diferentes formatos de color; los usuarios comunes también pueden usarla para seleccionar y combinar colores.'
+      }
+    }
   ]
 };
 
@@ -126,9 +196,11 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
-  'jp': 'ja'
+  'jp': 'ja',
+  'es': 'es'
 };
 
 // 社交媒體分享圖片
@@ -137,9 +209,9 @@ const imageUrl = getFullUrl('/images/og-color-picker.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = colorPickerTranslations.meta.title[locale as keyof typeof colorPickerTranslations.meta.title] || colorPickerTranslations.meta.title.zh;
-  const description = colorPickerTranslations.meta.description[locale as keyof typeof colorPickerTranslations.meta.description] || colorPickerTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = colorPickerTranslations.meta.title[locale as keyof typeof colorPickerTranslations.meta.title] || colorPickerTranslations.meta.title.tw;
+  const description = colorPickerTranslations.meta.description[locale as keyof typeof colorPickerTranslations.meta.description] || colorPickerTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `顏色選擇器` : 
@@ -161,8 +233,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '顏色選擇器工具界面' : 
+          alt: locale === 'tw' ? '顏色選擇器工具界面' :
+               locale === 'cn' ? '颜色选择器工具界面' :
                locale === 'en' ? 'Color Picker Tool Interface' :
+               locale === 'es' ? 'Interfaz de Herramienta Selector de Color' :
                'カラーピッカーツールインターフェース',
           type: 'image/png',
         },
@@ -183,9 +257,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/color-picker' : `/${locale}/color-picker`),
       languages: {
-        'zh-TW': getFullUrl('/color-picker'),
+        'zh-TW': getFullUrl('/tw/color-picker'),
+        'zh-CN': getFullUrl('/cn/color-picker'),
         'en': getFullUrl('/en/color-picker'),
         'ja': getFullUrl('/jp/color-picker'),
+        'es': getFullUrl('/es/color-picker'),
       },
     },
     
@@ -218,12 +294,12 @@ export default async function ColorPickerLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = colorPickerTranslations.meta.title[locale as keyof typeof colorPickerTranslations.meta.title] || colorPickerTranslations.meta.title.zh;
-  const description = colorPickerTranslations.meta.description[locale as keyof typeof colorPickerTranslations.meta.description] || colorPickerTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = colorPickerTranslations.meta.title[locale as keyof typeof colorPickerTranslations.meta.title] || colorPickerTranslations.meta.title.tw;
+  const description = colorPickerTranslations.meta.description[locale as keyof typeof colorPickerTranslations.meta.description] || colorPickerTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/color-picker', title, locale);
@@ -242,8 +318,10 @@ export default async function ColorPickerLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/color-picker',
-    locale === 'zh' ? '線上顏色選擇器工具' :
+    locale === 'tw' ? '線上顏色選擇器工具' :
+    locale === 'cn' ? '在线颜色选择器工具' :
     locale === 'en' ? 'Online Color Picker Tool' :
+    locale === 'es' ? 'Herramienta Selector de Color en Línea' :
     'オンラインカラーピッカーツール',
     description,
     'UtilityApplication',

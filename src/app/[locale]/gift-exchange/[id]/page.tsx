@@ -9,110 +9,128 @@ import Toast from '@/components/Toast';
 import WheelCanvas from '../components/WheelCanvas';
 const eventTranslations = {
   title: {
-    zh: "交換禮物抽籤",
+    tw: "交換禮物抽籤",
+    cn: "交换礼物抽签",
     en: "Gift Exchange Draw",
     jp: "ギフト交換抽選",
     es: "Sorteo de Intercambio de Regalos"
   },
   event: {
     eventCode: {
-      zh: "活動代碼",
+      tw: "活動代碼",
+      cn: "活动代码",
       en: "Event Code",
       jp: "イベントコード",
       es: "Código del Evento"
     },
     eventLink: {
-      zh: "活動連結",
+      tw: "活動連結",
+      cn: "活动链接",
       en: "Event Link",
       jp: "イベントリンク",
       es: "Enlace del Evento"
     },
     copyLinkTitle: {
-      zh: "複製連結",
+      tw: "複製連結",
+      cn: "复制链接",
       en: "Copy Link",
       jp: "リンクをコピー",
       es: "Copiar Enlace"
     },
     shareLinkTitle: {
-      zh: "分享連結",
+      tw: "分享連結",
+      cn: "分享链接",
       en: "Share Link",
       jp: "リンクを共有",
       es: "Compartir Enlace"
     },
     loadingData: {
-      zh: "正在載入活動資料...",
+      tw: "正在載入活動資料...",
+      cn: "正在加载活动资料...",
       en: "Loading event data...",
       jp: "イベントデータを読み込んでいます...",
       es: "Cargando datos del evento..."
     },
     noDataError: {
-      zh: "無法加載活動數據，請確認連結是否正確",
+      tw: "無法加載活動數據，請確認連結是否正確",
+      cn: "无法加载活动数据，请确认链接是否正确",
       en: "Unable to load event data. Please verify the link is correct.",
       jp: "イベントデータを読み込めません。リンクが正しいか確認してください。",
       es: "No se pueden cargar los datos del evento. Por favor verifique que el enlace sea correcto."
     },
     wheelSection: {
-      zh: "抽籤轉盤",
+      tw: "抽籤轉盤",
+      cn: "抽签转盘",
       en: "Drawing Wheel",
       jp: "抽選ホイール",
       es: "Ruleta de Sorteo"
     },
     wheelParticipants: {
-      zh: "轉盤參與者",
+      tw: "轉盤參與者",
+      cn: "转盘参与者",
       en: "Wheel Participants",
       jp: "ホイール参加者",
       es: "Participantes de la Ruleta"
     },
     people: {
-      zh: "人",
+      tw: "人",
+      cn: "人",
       en: "",
       jp: "人",
       es: ""
     },
     noParticipants: {
-      zh: "沒有參與者",
+      tw: "沒有參與者",
+      cn: "没有参与者",
       en: "No Participants",
       jp: "参加者がいません",
       es: "Sin Participantes"
     },
     returnToHome: {
-      zh: "請返回主頁添加參與者",
+      tw: "請返回主頁添加參與者",
+      cn: "请返回主页添加参与者",
       en: "Please return to the home page to add participants",
       jp: "ホームページに戻って参加者を追加してください",
       es: "Por favor regrese a la página principal para agregar participantes"
     },
     backToHome: {
-      zh: "返回主頁",
+      tw: "返回主頁",
+      cn: "返回主页",
       en: "Back to Home",
       jp: "ホームに戻る",
       es: "Volver al Inicio"
     },
     drawingComplete: {
-      zh: "抽籤已完成！最終結果",
+      tw: "抽籤已完成！最終結果",
+      cn: "抽签已完成！最终结果",
       en: "Drawing Complete! Final Results",
       jp: "抽選完了！最終結果",
       es: "¡Sorteo Completado! Resultados Finales"
     },
     drawingRecord: {
-      zh: "抽籤結果記錄",
+      tw: "抽籤結果記錄",
+      cn: "抽签结果记录",
       en: "Drawing Results Record",
       jp: "抽選結果記録",
       es: "Registro de Resultados del Sorteo"
     },
     shareSuccess: {
-      zh: "已複製連結",
+      tw: "已複製連結",
+      cn: "已复制链接",
       en: "Link copied",
       jp: "リンクがコピーされました",
       es: "Enlace copiado"
     },
     shareFailed: {
-      zh: "複製連結失敗",
+      tw: "複製連結失敗",
+      cn: "复制链接失败",
       en: "Failed to copy link",
       jp: "リンクのコピーに失敗しました",
       es: "Error al copiar enlace"
     },
     shareSystemFailed: {
-      zh: "系統分享失敗，已複製連結",
+      tw: "系統分享失敗，已複製連結",
+      cn: "系统分享失败，已复制链接",
       en: "System sharing failed, link copied instead",
       jp: "システム共有に失敗しました、リンクがコピーされました",
       es: "Error al compartir del sistema, enlace copiado en su lugar"
@@ -120,7 +138,8 @@ const eventTranslations = {
   },
   wheel: {
     givesTo: {
-      zh: "送禮給",
+      tw: "送禮給",
+      cn: "送礼给",
       en: "gives to",
       jp: "贈る相手",
       es: "da regalo a"
@@ -140,7 +159,7 @@ export default function GiftExchangeEvent() {
   const params = useParams();
   const code = params.id as string;
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   const [eventData, setEventData] = useState<GiftExchangeData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

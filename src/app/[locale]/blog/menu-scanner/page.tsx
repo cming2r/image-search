@@ -9,10 +9,10 @@ import { Camera, Share2, BarChart3, Settings, ArrowRight, ExternalLink, Utensils
 export default function MenuScannerPage() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   const t = (key: keyof typeof menuScannerTranslations.content) => {
-    return menuScannerTranslations.content[key][lang] || menuScannerTranslations.content[key].zh;
+    return menuScannerTranslations.content[key][lang] || menuScannerTranslations.content[key].tw;
   };
 
   const useCaseIcons = [Utensils, Coffee, Users, Calendar];

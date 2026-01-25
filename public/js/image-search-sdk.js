@@ -22,13 +22,15 @@
       locale: 'en',
       source: '',
       buttonText: {
-        zh: '以圖搜圖',
+        tw: '以圖搜圖',
+        cn: '以图搜图',
         en: 'Search by Image',
         jp: '画像で検索',
         es: 'Buscar por Imagen'
       },
       uploading: {
-        zh: '上傳中...',
+        tw: '上傳中...',
+        cn: '上传中...',
         en: 'Uploading...',
         jp: 'アップロード中...',
         es: 'Subiendo...'
@@ -38,7 +40,7 @@
     /**
      * 初始化 SDK
      * @param {Object} options - 配置選項
-     * @param {string} options.locale - 語言 (zh, en, jp, es)
+     * @param {string} options.locale - 語言 (tw, cn, en, jp, es)
      * @param {string} options.source - 來源網站名稱
      * @param {string} options.baseUrl - 自定義 API 基礎 URL（可選，默認自動檢測）
      */

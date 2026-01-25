@@ -3,14 +3,16 @@ import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/l
 
 // 多語言標題和描述
 const titles = {
-  zh: '使用條款',
+  tw: '使用條款',
+  cn: '使用条款',
   en: 'Terms of Service',
   jp: '利用規約',
   es: 'Términos de Servicio'
 };
 
 const descriptions = {
-  zh: '使用 fyimg 網站及其服務前，請閱讀我們的使用條款和條件。',
+  tw: '使用 fyimg 網站及其服務前，請閱讀我們的使用條款和條件。',
+  cn: '使用 fyimg 网站及其服务前，请阅读我们的使用条款和条件。',
   en: 'Please read our terms and conditions before using the fyimg website and its services.',
   jp: 'fyimgウェブサイトとそのサービスを使用する前に、利用規約をお読みください。',
   es: 'Por favor lea nuestros términos y condiciones antes de usar el sitio web de fyimg y sus servicios.'
@@ -22,8 +24,8 @@ const imageUrl = getFullUrl('/og-image.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = titles[locale as keyof typeof titles] || titles.tw;
+  const description = descriptions[locale as keyof typeof descriptions] || descriptions.tw;
   
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -40,8 +42,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? 'fyimg使用條款' : 
-               locale === 'en' ? 'fyimg Terms of Service' : 
+          alt: locale === 'tw' ? 'fyimg使用條款' :
+               locale === 'cn' ? 'fyimg使用条款' :
+               locale === 'en' ? 'fyimg Terms of Service' :
                locale === 'jp' ? 'fyimg利用規約' :
                locale === 'es' ? 'fyimg Términos de Servicio' : 'fyimg Terms of Service',
           type: 'image/png',
@@ -63,15 +66,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/terms' : `/${locale}/terms`),
       languages: {
-        'zh-TW': getFullUrl('/terms'),
-        'en': getFullUrl('/en/terms'),
+        'zh-TW': getFullUrl('/tw/terms'),
+        'zh-CN': getFullUrl('/cn/terms'),
+        'en': getFullUrl('/terms'),
         'ja': getFullUrl('/jp/terms'),
         'es': getFullUrl('/es/terms'),
       },
     },
-    
+
     // 關鍵字、作者及發布者信息
-    keywords: locale === 'zh' ? '使用條款, 服務條款, fyimg, 用戶條款, 網站規範' : 
+    keywords: locale === 'tw' ? '使用條款, 服務條款, fyimg, 用戶條款, 網站規範' :
+              locale === 'cn' ? '使用条款, 服务条款, fyimg, 用户条款, 网站规范' :
               locale === 'en' ? 'terms of service, terms and conditions, fyimg, user terms, website rules' :
               locale === 'jp' ? '利用規約, サービス条件, fyimg, ユーザー条件, ウェブサイトルール' :
               locale === 'es' ? 'términos de servicio, términos y condiciones, fyimg, términos de usuario, reglas del sitio web' :
@@ -93,11 +98,11 @@ export default async function TermsLayout({
   const { locale = 'en' } = await params;
   
   // 根據當前語言生成結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/terms', titles[locale as keyof typeof titles] || titles.zh, locale);
+  const breadcrumbSchema = generateBreadcrumbSchema('/terms', titles[locale as keyof typeof titles] || titles.tw, locale);
   const webPageSchema = generateWebPageSchema(
     '/terms',
-    titles[locale as keyof typeof titles] || titles.zh,
-    descriptions[locale as keyof typeof descriptions] || descriptions.zh,
+    titles[locale as keyof typeof titles] || titles.tw,
+    descriptions[locale as keyof typeof descriptions] || descriptions.tw,
     locale
   );
   

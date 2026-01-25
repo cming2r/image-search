@@ -4,49 +4,57 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 const wheelTranslations = {
   noParticipantsError: {
-    zh: "請至少輸入兩名參與者",
+    tw: "請至少輸入兩名參與者",
+    cn: "请至少输入两名参与者",
     en: "Please enter at least two participants",
     jp: "少なくとも2人の参加者を入力してください",
     es: "Por favor ingrese al menos dos participantes"
   },
   spinningText: {
-    zh: "轉動中...",
+    tw: "轉動中...",
+    cn: "转动中...",
     en: "Spinning...",
     jp: "回転中...",
     es: "Girando..."
   },
   loading: {
-    zh: "載入中...",
+    tw: "載入中...",
+    cn: "加载中...",
     en: "Loading...",
     jp: "読み込み中...",
     es: "Cargando..."
   },
   spinButton: {
-    zh: "轉動轉盤",
+    tw: "轉動轉盤",
+    cn: "转动转盘",
     en: "Spin the Wheel",
     jp: "ホイールを回す",
     es: "Girar la Ruleta"
   },
   resultsTitle: {
-    zh: "抽籤結果",
+    tw: "抽籤結果",
+    cn: "抽签结果",
     en: "Drawing Results",
     jp: "抽選結果",
     es: "Resultados del Sorteo"
   },
   quickResult: {
-    zh: "直接抽取",
+    tw: "直接抽取",
+    cn: "直接抽取",
     en: "Quick Draw",
     jp: "直接抽選",
     es: "Sorteo Directo"
   },
   designateResult: {
-    zh: "指定結果",
+    tw: "指定結果",
+    cn: "指定结果",
     en: "Designate",
     jp: "指定する",
     es: "Designar"
   },
   selectPlaceholder: {
-    zh: "選擇參與者...",
+    tw: "選擇參與者...",
+    cn: "选择参与者...",
     en: "Select participant...",
     jp: "参加者を選択...",
     es: "Seleccionar participante..."
@@ -61,7 +69,7 @@ interface WheelCanvasProps {
 export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<number | null>(null);

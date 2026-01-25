@@ -11,79 +11,100 @@ const dateInputStyle = {
   paddingRight: '0' as const,
 };
 
+// 語言對應表（用於日期輸入的lang屬性）
+const langMap: Record<string, string> = {
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
+  'en': 'en',
+  'jp': 'ja',
+  'es': 'es'
+};
+
 // 定義多語言內容
 const translations = {
     calculator: {
       tabs: {
         addDays: {
-          zh: "日期加天數",
+          tw: "日期加天數",
+          cn: "日期加天数",
           en: "Add Days to Date",
           jp: "日付に日数を追加",
           es: "Agregar Días a Fecha"
         },
         subtractDates: {
-          zh: "日期相減",
+          tw: "日期相減",
+          cn: "日期相减",
           en: "Calculate Date Difference",
           jp: "日付の差を計算",
           es: "Calcular Diferencia de Fechas"
         }
       },
       startDate: {
-        zh: "起始日期：",
+        tw: "起始日期：",
+        cn: "起始日期：",
         en: "Start Date:",
         jp: "開始日：",
         es: "Fecha de Inicio:"
       },
       startDateAs: {
-        zh: "起始日期為：",
+        tw: "起始日期為：",
+        cn: "起始日期为：",
         en: "Start date as:",
         jp: "開始日を：",
         es: "Fecha de inicio como:"
       },
       day0: {
-        zh: "第0天",
+        tw: "第0天",
+        cn: "第0天",
         en: "Day 0",
         jp: "第0日",
         es: "Día 0"
       },
       day1: {
-        zh: "第1天",
+        tw: "第1天",
+        cn: "第1天",
         en: "Day 1",
-        jp: "第1日", 
+        jp: "第1日",
         es: "Día 1"
       },
       day0Explanation: {
-        zh: "起始日為1月1日，天數3天\n1月1日＋3天 = 1月4日\n第0天：1月1日\n第1天：1月2日\n第2天：1月3日\n第3天：1月4日",
+        tw: "起始日為1月1日，天數3天\n1月1日＋3天 = 1月4日\n第0天：1月1日\n第1天：1月2日\n第2天：1月3日\n第3天：1月4日",
+        cn: "起始日为1月1日，天数3天\n1月1日＋3天 = 1月4日\n第0天：1月1日\n第1天：1月2日\n第2天：1月3日\n第3天：1月4日",
         en: "Start date Jan 1, add 3 days\nJan 1 + 3 days = Jan 4\nDay 0: Jan 1\nDay 1: Jan 2\nDay 2: Jan 3\nDay 3: Jan 4",
         jp: "開始日1月1日、3日追加\n1月1日+3日 = 1月4日\n第0日：1月1日\n第1日：1月2日\n第2日：1月3日\n第3日：1月4日",
         es: "Fecha inicial 1 Ene, agregar 3 días\n1 Ene + 3 días = 4 Ene\nDía 0: 1 Ene\nDía 1: 2 Ene\nDía 2: 3 Ene\nDía 3: 4 Ene"
       },
       day1Explanation: {
-        zh: "起始日為1月1日，天數3天\n第1天：1月1日\n第2天：1月2日\n第3天：1月3日",
-        en: "Start date Jan 1, add 3 days\nDay 1: Jan 1\nDay 2: Jan 2\nDay 3: Jan 3", 
+        tw: "起始日為1月1日，天數3天\n第1天：1月1日\n第2天：1月2日\n第3天：1月3日",
+        cn: "起始日为1月1日，天数3天\n第1天：1月1日\n第2天：1月2日\n第3天：1月3日",
+        en: "Start date Jan 1, add 3 days\nDay 1: Jan 1\nDay 2: Jan 2\nDay 3: Jan 3",
         jp: "開始日1月1日、3日追加\n第1日：1月1日\n第2日：1月2日\n第3日：1月3日",
         es: "Fecha inicial 1 Ene, agregar 3 días\nDía 1: 1 Ene\nDía 2: 2 Ene\nDía 3: 3 Ene"
       },
       days: {
-        zh: "天數：",
+        tw: "天數：",
+        cn: "天数：",
         en: "Days:",
         jp: "日数：",
         es: "Días:"
       },
       endDate: {
-        zh: "結束日期：",
+        tw: "結束日期：",
+        cn: "结束日期：",
         en: "End Date:",
         jp: "終了日：",
         es: "Fecha Final:"
       },
       result: {
-        zh: "計算結果：",
+        tw: "計算結果：",
+        cn: "计算结果：",
         en: "Result:",
         jp: "計算結果：",
         es: "Resultado:"
       },
       weekdays: {
-        zh: ["日", "一", "二", "三", "四", "五", "六"],
+        tw: ["日", "一", "二", "三", "四", "五", "六"],
+        cn: ["日", "一", "二", "三", "四", "五", "六"],
         en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         jp: ["日", "月", "火", "水", "木", "金", "土"],
         es: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
@@ -96,7 +117,7 @@ export default function DateCalculator() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
   
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   // 日期加天數的狀態
   const [startDate, setStartDate] = useState<string>('');
@@ -250,6 +271,7 @@ export default function DateCalculator() {
               <input
                 id="start-date"
                 type="date"
+                lang={langMap[locale] || 'en'}
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 className="text-lg flex-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
@@ -395,6 +417,7 @@ export default function DateCalculator() {
               <input
                 id="start-date2"
                 type="date"
+                lang={langMap[locale] || 'en'}
                 value={startDate2}
                 onChange={(e) => setStartDate2(e.target.value)}
                 className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
@@ -496,6 +519,7 @@ export default function DateCalculator() {
               <input
                 id="end-date"
                 type="date"
+                lang={langMap[locale] || 'en'}
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"

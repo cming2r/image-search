@@ -9,17 +9,24 @@ interface ArticleContentProps {
 const imageSearchContentTranslations = {
   howToUse: {
     title: {
-      zh: "如何使用此工具？",
+      tw: "如何使用此工具？",
+      cn: "如何使用此工具？",
       en: "How to Use This Tool?",
       jp: "このツールの使い方",
       es: "¿Cómo Usar Esta Herramienta?"
     },
     steps: {
-      zh: [
+      tw: [
         "輸入圖片的網址，或點擊「上傳圖片」選擇本地圖片",
         "系統將上傳的圖片轉換為可搜尋的網址",
         "點擊各大搜尋引擎按鈕，立即跳轉至對應搜尋服務",
         "搜尋引擎會基於您提供的圖片尋找網路上的相似內容"
+      ],
+      cn: [
+        "输入图片的网址，或点击「上传图片」选择本地图片",
+        "系统将上传的图片转换为可搜索的网址",
+        "点击各大搜索引擎按钮，立即跳转至对应搜索服务",
+        "搜索引擎会基于您提供的图片寻找网络上的相似内容"
       ],
       en: [
         "Enter an image URL or click \"Upload Image\" to select a local image",
@@ -41,13 +48,15 @@ const imageSearchContentTranslations = {
       ]
     },
     tip: {
-      zh: "小提示：",
+      tw: "小提示：",
+      cn: "小提示：",
       en: "Tip:",
       jp: "ヒント：",
       es: "Consejo:"
     },
     tipContent: {
-      zh: "透過複製其他網站的圖片，可以直接用 Ctrl + V 貼上在上傳圖片的頁面。或者使用「貼上」按鈕，從剪貼簿直接貼上圖片。",
+      tw: "透過複製其他網站的圖片，可以直接用 Ctrl + V 貼上在上傳圖片的頁面。或者使用「貼上」按鈕，從剪貼簿直接貼上圖片。",
+      cn: "通过复制其他网站的图片，可以直接用 Ctrl + V 粘贴在上传图片的页面。或者使用「粘贴」按钮，从剪贴板直接粘贴图片。",
       en: "You can directly paste images from other websites using Ctrl + V in the image upload section. Or use the 'Paste' button to paste images directly from the clipboard.",
       jp: "他のウェブサイトから画像をコピーして、アップロード画面で Ctrl + V で直接貼り付けることができます。または「貼り付け」ボタンを使用して、クリップボードから直接画像を貼り付けることもできます。",
       es: "Puedes pegar directamente imágenes de otros sitios web usando Ctrl + V en la sección de subida de imagen. O usa el botón 'Pegar' para pegar imágenes directamente desde el portapapeles."
@@ -55,16 +64,22 @@ const imageSearchContentTranslations = {
   },
   whatIs: {
     title: {
-      zh: "什麼是以圖搜圖？",
+      tw: "什麼是以圖搜圖？",
+      cn: "什么是以图搜图？",
       en: "What is Reverse Image Search?",
       jp: "画像検索とは？",
       es: "¿Qué es la Búsqueda de Imagen Inversa?"
     },
     content: {
-      zh: [
+      tw: [
         "以圖搜圖（又稱反向圖片搜索，Reverse Image Search）是現代搜尋引擎的重要功能，允許使用者透過上傳圖片或提供圖片URL，搜尋相關圖片及其來源。本工具整合了Google、Bing、Yandex等主流搜尋引擎的以圖搜圖功能，支援在各種裝置（包括電腦、手機和平板）上使用。",
         "以圖搜圖的實用場景包括：尋找圖片的高解析度版本、透過局部圖片找到完整原圖、識別相同人物或物體的不同照片、查找相似場景或素材。對於設計師、研究人員、內容創作者和一般使用者而言，這是一項極具價值的工具。",
         "我們的整合平台簡化了以圖搜圖的流程，無需在多個搜尋引擎間切換。只需一次上傳圖片或輸入URL，即可便捷地使用各大搜尋服務，顯著提高搜尋效率。"
+      ],
+      cn: [
+        "以图搜图（又称反向图片搜索，Reverse Image Search）是现代搜索引擎的重要功能，允许用户通过上传图片或提供图片URL，搜索相关图片及其来源。本工具整合了Google、Bing、Yandex等主流搜索引擎的以图搜图功能，支持在各种设备（包括电脑、手机和平板）上使用。",
+        "以图搜图的实用场景包括：寻找图片的高分辨率版本、通过局部图片找到完整原图、识别相同人物或物体的不同照片、查找相似场景或素材。对于设计师、研究人员、内容创作者和一般用户而言，这是一项极具价值的工具。",
+        "我们的整合平台简化了以图搜图的流程，无需在多个搜索引擎间切换。只需一次上传图片或输入URL，即可便捷地使用各大搜索服务，显著提高搜索效率。"
       ],
       en: [
         "Reverse Image Search is an important feature of modern search engines that allows users to search for related images and their sources by uploading an image or providing an image URL. This tool integrates the reverse image search functionality of Google, Bing, Yandex, and other mainstream search engines, supporting usage on various devices (including computers, phones, and tablets).",
@@ -85,23 +100,30 @@ const imageSearchContentTranslations = {
   },
   searchEngines: {
     title: {
-      zh: "各大搜尋引擎特色",
+      tw: "各大搜尋引擎特色",
+      cn: "各大搜索引擎特色",
       en: "Features of Major Search Engines",
       jp: "主要検索エンジンの特徴",
       es: "Características de los Principales Motores de Búsqueda"
     },
     google: {
       title: {
-        zh: "Google Lens 圖片搜尋",
+        tw: "Google Lens 圖片搜尋",
+        cn: "Google Lens 图片搜索",
         en: "Google Lens Image Search",
         jp: "Google Lens 画像検索",
         es: "Búsqueda de Imágenes Google Lens"
       },
       content: {
-        zh: [
+        tw: [
           "Google Lens 是目前全球使用最廣泛的圖片搜尋服務，以其強大的AI視覺分析技術著稱。在全球搜尋引擎市場，Google佔有超過70%的份額，其行動裝置搜尋滲透率更高達85%，顯示其在全球範圍內的絕對領先地位。",
           "Google的圖片搜尋功能不僅可以找到視覺上相似的圖片，還能識別圖中的物體、文字、地標，甚至提供購物選項。其獨特優勢在於極其龐大的圖片資料庫和先進的機器學習演算法，能夠理解圖片的語義內容並返回高度相關的結果。",
           "對於創作者和設計師，Google還提供了強大的過濾功能，可以根據授權類型搜尋免費可商用圖片資源。其細緻的篩選器系統允許使用者按尺寸、顏色、類型和時間等多維度精確過濾搜尋結果。"
+        ],
+        cn: [
+          "Google Lens 是目前全球使用最广泛的图片搜索服务，以其强大的AI视觉分析技术著称。在全球搜索引擎市场，Google占有超过70%的份额，其移动设备搜索渗透率更高达85%，显示其在全球范围内的绝对领先地位。",
+          "Google的图片搜索功能不仅可以找到视觉上相似的图片，还能识别图中的物体、文字、地标，甚至提供购物选项。其独特优势在于极其庞大的图片数据库和先进的机器学习算法，能够理解图片的语义内容并返回高度相关的结果。",
+          "对于创作者和设计师，Google还提供了强大的过滤功能，可以根据授权类型搜索免费可商用图片资源。其细致的筛选器系统允许用户按尺寸、颜色、类型和时间等多维度精确过滤搜索结果。"
         ],
         en: [
           "Google Lens is currently the most widely used image search service globally, known for its powerful AI visual analysis technology. In the global search engine market, Google holds over 70% market share, with its mobile device search penetration rate reaching as high as 85%, demonstrating its absolute leadership position worldwide.",
@@ -122,16 +144,22 @@ const imageSearchContentTranslations = {
     },
     bing: {
       title: {
-        zh: "Microsoft Bing 圖片搜尋",
+        tw: "Microsoft Bing 圖片搜尋",
+        cn: "Microsoft Bing 图片搜索",
         en: "Microsoft Bing Image Search",
         jp: "Microsoft Bing 画像検索",
         es: "Búsqueda de Imágenes de Microsoft Bing"
       },
       content: {
-        zh: [
+        tw: [
           "Microsoft Bing於2009年推出，經過多次升級迭代，現在已成為全球第二大搜尋引擎。2020年，微軟將其更名為Microsoft Bing（微軟必應），進一步強化了其品牌識別度。",
           "Bing的視覺搜尋功能擁有獨特的優勢，尤其在呈現高解析度圖片方面表現出色。對於需要尋找高品質視覺素材的專業人士，Bing提供了優質的搜尋體驗和結果展示。",
           "Bing Image Search以其簡潔直觀的使用者介面著稱，提供了豐富的過濾選項，包括尺寸、顏色、風格和佈局等。其「相關搜尋」功能推薦使用者可能感興趣的相關主題，而特色的「桌布圖片」類別則為使用者提供了大量高品質的桌面壁紙資源。"
+        ],
+        cn: [
+          "Microsoft Bing于2009年推出，经过多次升级迭代，现在已成为全球第二大搜索引擎。2020年，微软将其更名为Microsoft Bing（微软必应），进一步强化了其品牌识别度。",
+          "Bing的视觉搜索功能拥有独特的优势，尤其在呈现高分辨率图片方面表现出色。对于需要寻找高品质视觉素材的专业人士，Bing提供了优质的搜索体验和结果展示。",
+          "Bing Image Search以其简洁直观的用户界面著称，提供了丰富的过滤选项，包括尺寸、颜色、风格和布局等。其「相关搜索」功能推荐用户可能感兴趣的相关主题，而特色的「桌布图片」类别则为用户提供了大量高品质的桌面壁纸资源。"
         ],
         en: [
           "Microsoft Bing was launched in 2009 and after multiple upgrades and iterations, it has become the world's second-largest search engine. In 2020, Microsoft renamed it to Microsoft Bing, further strengthening its brand recognition.",
@@ -152,16 +180,22 @@ const imageSearchContentTranslations = {
     },
     yandex: {
       title: {
-        zh: "Yandex 圖片搜尋",
+        tw: "Yandex 圖片搜尋",
+        cn: "Yandex 图片搜索",
         en: "Yandex Image Search",
         jp: "Yandex 画像検索",
         es: "Búsqueda de Imágenes de Yandex"
       },
       content: {
-        zh: [
+        tw: [
           "Yandex是俄羅斯及東歐地區最大的搜尋引擎，其圖片搜尋功能在全球範圍內享有盛譽。Yandex的圖片識別技術特別擅長在不同場景、角度和光線條件下識別相同的物體或人物，使其成為尋找特定圖片變體的理想選擇。",
           "Yandex圖片搜尋的核心優勢在於其先進的圖片處理演算法，能夠精確識別照片中的商標、地標和人物。即使圖片經過裁剪、旋轉或顏色調整等修改，Yandex仍能有效追溯原圖片或找到視覺上相似的內容。",
           "除了基本的反向圖片搜尋功能，Yandex還提供豐富的圖片分析工具，包括視覺內容分類和元素識別。無論是追蹤圖片來源，還是發現視覺相關內容，Yandex都能提供獨特而全面的搜尋結果。"
+        ],
+        cn: [
+          "Yandex是俄罗斯及东欧地区最大的搜索引擎，其图片搜索功能在全球范围内享有盛誉。Yandex的图片识别技术特别擅长在不同场景、角度和光线条件下识别相同的物体或人物，使其成为寻找特定图片变体的理想选择。",
+          "Yandex图片搜索的核心优势在于其先进的图片处理算法，能够精确识别照片中的商标、地标和人物。即使图片经过裁剪、旋转或颜色调整等修改，Yandex仍能有效追溯原图片或找到视觉上相似的内容。",
+          "除了基本的反向图片搜索功能，Yandex还提供丰富的图片分析工具，包括视觉内容分类和元素识别。无论是追踪图片来源，还是发现视觉相关内容，Yandex都能提供独特而全面的搜索结果。"
         ],
         en: [
           "Yandex is the largest search engine in Russia and Eastern Europe, with its image search functionality enjoying a worldwide reputation. Yandex's image recognition technology is particularly skilled at identifying the same objects or people under different scenarios, angles, and lighting conditions, making it an ideal choice for finding specific image variants.",
@@ -182,15 +216,20 @@ const imageSearchContentTranslations = {
     },
     sauceNAO: {
       title: {
-        zh: "SauceNAO 圖片搜尋",
+        tw: "SauceNAO 圖片搜尋",
+        cn: "SauceNAO 图片搜索",
         en: "SauceNAO Image Search",
         jp: "SauceNAO 画像検索",
         es: "Búsqueda de Imágenes SauceNAO"
       },
       content: {
-        zh: [
+        tw: [
           "SauceNAO是動漫、漫畫和插畫領域最專業的圖片搜尋引擎，為二次元內容愛好者提供了無與倫比的搜尋體驗。其專門的資料庫涵蓋了Twitter、Pixiv、niconico等主要動漫藝術平台，能夠快速精準地定位圖片來源。",
           "使用SauceNAO，使用者不僅能找到原始圖片及其作者資訊，還能獲取關聯的作品集、漫畫系列及遊戲出處。對於動漫藝術研究、同人創作參考或純粹的愛好者探索，SauceNAO提供了專業且全面的搜尋解決方案。"
+        ],
+        cn: [
+          "SauceNAO是动漫、漫画和插画领域最专业的图片搜索引擎，为二次元内容爱好者提供了无与伦比的搜索体验。其专门的数据库涵盖了Twitter、Pixiv、niconico等主要动漫艺术平台，能够快速精准地定位图片来源。",
+          "使用SauceNAO，用户不仅能找到原始图片及其作者信息，还能获取关联的作品集、漫画系列及游戏出处。对于动漫艺术研究、同人创作参考或纯粹的爱好者探索，SauceNAO提供了专业且全面的搜索解决方案。"
         ],
         en: [
           "SauceNAO is the most professional image search engine in the anime, manga, and illustration fields, providing anime content enthusiasts with an unparalleled search experience. Its specialized database covers major anime art platforms like Twitter, Pixiv, and niconico, enabling fast and precise location of image sources.",
@@ -208,15 +247,20 @@ const imageSearchContentTranslations = {
     },
     traceMoe: {
       title: {
-        zh: "trace.moe 動畫場景搜尋",
+        tw: "trace.moe 動畫場景搜尋",
+        cn: "trace.moe 动画场景搜索",
         en: "trace.moe Anime Scene Search",
         jp: "trace.moe アニメシーン検索",
         es: "Búsqueda de Escenas de Anime trace.moe"
       },
       content: {
-        zh: [
+        tw: [
           "trace.moe 是專門針對動畫場景的反向搜尋引擎，能夠精確識別動畫截圖來源，包括作品名稱、具體集數和時間點。這項服務使用先進的圖像識別技術，通過分析動畫畫面的特徵，在龐大的動畫資料庫中進行比對。",
           "使用 trace.moe，使用者可以快速找到動畫截圖的確切來源，無論是想要重溫某個經典場景，還是尋找表情包或迷因圖的原始出處。系統不僅提供準確的作品資訊，還能精確到具體的集數和時間戳，讓使用者能夠直接定位到該場景。對於動畫愛好者、內容創作者和研究人員來說，這是一個極其實用的工具。"
+        ],
+        cn: [
+          "trace.moe 是专门针对动画场景的反向搜索引擎，能够精确识别动画截图来源，包括作品名称、具体集数和时间点。这项服务使用先进的图像识别技术，通过分析动画画面的特征，在庞大的动画数据库中进行比对。",
+          "使用 trace.moe，用户可以快速找到动画截图的确切来源，无论是想要重温某个经典场景，还是寻找表情包或迷因图的原始出处。系统不仅提供准确的作品信息，还能精确到具体的集数和时间戳，让用户能够直接定位到该场景。对于动画爱好者、内容创作者和研究人员来说，这是一个极其实用的工具。"
         ],
         en: [
           "trace.moe is a reverse search engine specifically designed for anime scenes, capable of accurately identifying the source of anime screenshots, including the work name, specific episode, and timestamp. This service uses advanced image recognition technology to analyze anime frame characteristics and match them against a vast anime database.",
@@ -234,14 +278,18 @@ const imageSearchContentTranslations = {
     },
     tineye: {
       title: {
-        zh: "TinEye（已移除）",
+        tw: "TinEye（已移除）",
+        cn: "TinEye（已移除）",
         en: "TinEye (Removed)",
         jp: "TinEye（削除済み）",
         es: "TinEye (Eliminado)"
       },
       content: {
-        zh: [
+        tw: [
           "TinEye是一個專注於精確圖像匹配的搜尋引擎，其獨特之處在於能夠找出圖片的完全匹配，而非僅提供視覺上相似的結果。這使其成為追蹤圖片網路使用情況、確定圖片首次出現時間、尋找高解析度版本及驗證圖片原創性的理想工具。"
+        ],
+        cn: [
+          "TinEye是一个专注于精确图像匹配的搜索引擎，其独特之处在于能够找出图片的完全匹配，而非仅提供视觉上相似的结果。这使其成为追踪图片网络使用情况、确定图片首次出现时间、寻找高分辨率版本及验证图片原创性的理想工具。"
         ],
         en: [
           "TinEye is a search engine focused on precise image matching, with its uniqueness being its ability to find exact matches for images rather than just providing visually similar results. This makes it an ideal tool for tracking image usage online, determining when an image first appeared, finding high-resolution versions, and verifying image originality."
@@ -254,7 +302,8 @@ const imageSearchContentTranslations = {
         ]
       },
       note: {
-        zh: "註：經測試後發現TinEye搜尋功能不穩定，且結果不如其他引擎，因此我們已將其從搜尋選項中移除。我們持續評估各搜尋引擎的表現，以提供最佳使用者體驗。",
+        tw: "註：經測試後發現TinEye搜尋功能不穩定，且結果不如其他引擎，因此我們已將其從搜尋選項中移除。我們持續評估各搜尋引擎的表現，以提供最佳使用者體驗。",
+        cn: "注：经测试后发现TinEye搜索功能不稳定，且结果不如其他引擎，因此我们已将其从搜索选项中移除。我们持续评估各搜索引擎的表现，以提供最佳用户体验。",
         en: "Note: After testing, we found TinEye's search function to be unstable and its result quality inferior to other engines, so we have removed it from our search options. We continuously evaluate the performance of various search engines to provide the best user experience.",
         jp: "注：テスト後、TinEyeの検索機能が不安定であり、結果の品質が他のエンジンより劣ることが判明したため、検索オプションから削除しました。最高のユーザー体験を提供するため、様々な検索エンジンのパフォーマンスを継続的に評価しています。",
         es: "Nota: Después de las pruebas, encontramos que la función de búsqueda de TinEye es inestable y su calidad de resultados inferior a otros motores, por lo que lo hemos eliminado de nuestras opciones de búsqueda. Evaluamos continuamente el rendimiento de varios motores de búsqueda para proporcionar la mejor experiencia de usuario."
@@ -263,7 +312,8 @@ const imageSearchContentTranslations = {
   },
   whyChooseUs: {
     title: {
-      zh: "為什麼選擇我們的以圖搜圖工具？",
+      tw: "為什麼選擇我們的以圖搜圖工具？",
+      cn: "为什么选择我们的以图搜图工具？",
       en: "Why Choose Our Reverse Image Search Tool?",
       jp: "なぜ当画像検索ツールを選ぶのか？",
       es: "¿Por Qué Elegir Nuestra Herramienta de Búsqueda de Imagen Inversa?"
@@ -271,13 +321,15 @@ const imageSearchContentTranslations = {
     features: {
       multiEngine: {
         title: {
-          zh: "多引擎整合",
+          tw: "多引擎整合",
+          cn: "多引擎整合",
           en: "Multi-Engine Integration",
           jp: "マルチエンジン統合",
           es: "Integración Multi-Motor"
         },
         content: {
-          zh: "一站式訪問Google、Bing、Yandex和SauceNAO等主流搜尋引擎，無需切換網站，節省時間和精力。",
+          tw: "一站式訪問Google、Bing、Yandex和SauceNAO等主流搜尋引擎，無需切換網站，節省時間和精力。",
+          cn: "一站式访问Google、Bing、Yandex和SauceNAO等主流搜索引擎，无需切换网站，节省时间和精力。",
           en: "One-stop access to mainstream search engines like Google, Bing, Yandex, and SauceNAO without switching websites, saving time and effort.",
           jp: "Google、Bing、Yandex、SauceNAOなどの主流検索エンジンにウェブサイトを切り替えることなくワンストップでアクセスでき、時間と労力を節約できます。",
           es: "Acceso integral a motores de búsqueda principales como Google, Bing, Yandex y SauceNAO sin cambiar de sitios web, ahorrando tiempo y esfuerzo."
@@ -285,13 +337,15 @@ const imageSearchContentTranslations = {
       },
       free: {
         title: {
-          zh: "完全免費",
+          tw: "完全免費",
+          cn: "完全免费",
           en: "Completely Free",
           jp: "完全無料",
           es: "Completamente Gratis"
         },
         content: {
-          zh: "所有功能均可免費使用，無隱藏費用，無需註冊帳號，也不顯示任何廣告，提供純淨的搜尋體驗。",
+          tw: "所有功能均可免費使用，無隱藏費用，無需註冊帳號，也不顯示任何廣告，提供純淨的搜尋體驗。",
+          cn: "所有功能均可免费使用，无隐藏费用，无需注册账号，也不显示任何广告，提供纯净的搜索体验。",
           en: "All features are free to use with no hidden costs, no account registration required, and no advertisements displayed, providing a pure search experience.",
           jp: "すべての機能は隠れたコストなしで無料で使用でき、アカウント登録は不要で、広告も表示されないため、純粋な検索体験を提供します。",
           es: "Todas las funciones son gratuitas sin costos ocultos, no requieren registro de cuenta, y no muestran anuncios, proporcionando una experiencia de búsqueda pura."
@@ -299,13 +353,15 @@ const imageSearchContentTranslations = {
       },
       crossPlatform: {
         title: {
-          zh: "跨平台支援",
+          tw: "跨平台支援",
+          cn: "跨平台支持",
           en: "Cross-Platform Support",
           jp: "クロスプラットフォームサポート",
           es: "Soporte Multiplataforma"
         },
         content: {
-          zh: "完美支援電腦、手機和平板，實現隨時隨地搜圖，且具有針對行動裝置優化的響應式介面設計。",
+          tw: "完美支援電腦、手機和平板，實現隨時隨地搜圖，且具有針對行動裝置優化的響應式介面設計。",
+          cn: "完美支持电脑、手机和平板，实现随时随地搜图，且具有针对移动设备优化的响应式界面设计。",
           en: "Perfect support for computers, phones, and tablets, enabling image searches anytime, anywhere, with a responsive interface optimized for mobile devices.",
           jp: "パソコン、スマートフォン、タブレットを完璧にサポートし、いつでもどこでも画像検索が可能で、モバイルデバイス向けに最適化されたレスポンシブインターフェースを備えています。",
           es: "Soporte perfecto para computadoras, teléfonos y tablets, permitiendo búsquedas de imágenes en cualquier momento y lugar, con una interfaz responsive optimizada para dispositivos móviles."
@@ -313,13 +369,15 @@ const imageSearchContentTranslations = {
       },
       easyToUse: {
         title: {
-          zh: "便捷操作",
+          tw: "便捷操作",
+          cn: "便捷操作",
           en: "Convenient Operation",
           jp: "便利な操作",
           es: "Operación Conveniente"
         },
         content: {
-          zh: "支持URL輸入、本地上傳和剪貼板直接貼圖，操作簡單直觀，幾秒鐘內即可完成搜尋過程。",
+          tw: "支持URL輸入、本地上傳和剪貼板直接貼圖，操作簡單直觀，幾秒鐘內即可完成搜尋過程。",
+          cn: "支持URL输入、本地上传和剪贴板直接贴图，操作简单直观，几秒钟内即可完成搜索过程。",
           en: "Supports URL input, local uploads, and direct clipboard pasting. Simple and intuitive operation completes the search process in seconds.",
           jp: "URL入力、ローカルアップロード、クリップボードからの直接貼り付けをサポート。シンプルで直感的な操作で数秒で検索プロセスを完了します。",
           es: "Soporta entrada de URL, subidas locales y pegado directo del portapapeles. Operación simple e intuitiva completa el proceso de búsqueda en segundos."
@@ -327,13 +385,15 @@ const imageSearchContentTranslations = {
       },
       privacy: {
         title: {
-          zh: "隱私保護",
+          tw: "隱私保護",
+          cn: "隐私保护",
           en: "Privacy Protection",
           jp: "プライバシー保護",
           es: "Protección de Privacidad"
         },
         content: {
-          zh: "圖片僅臨時儲存用於生成可搜尋URL，24小時內自動刪除，從不用於其他用途或分享給第三方。",
+          tw: "圖片僅臨時儲存用於生成可搜尋URL，24小時內自動刪除，從不用於其他用途或分享給第三方。",
+          cn: "图片仅临时存储用于生成可搜索URL，24小时内自动删除，从不用于其他用途或分享给第三方。",
           en: "Images are only temporarily stored to generate searchable URLs and automatically deleted within 24 hours, never used for other purposes or shared with third parties.",
           jp: "画像は検索可能なURLを生成するためだけに一時的に保存され、24時間以内に自動的に削除されます。他の目的に使用されたり、第三者と共有されることはありません。",
           es: "Las imágenes solo se almacenan temporalmente para generar URLs buscables y se eliminan automáticamente dentro de 24 horas, nunca se usan para otros propósitos ni se comparten con terceros."
@@ -341,13 +401,15 @@ const imageSearchContentTranslations = {
       },
       clean: {
         title: {
-          zh: "簡潔無干擾",
+          tw: "簡潔無干擾",
+          cn: "简洁无干扰",
           en: "Clean and Distraction-Free",
           jp: "クリーンで邪魔のない",
           es: "Limpio y Sin Distracciones"
         },
         content: {
-          zh: "清爽簡潔的介面設計，沒有干擾使用者的彈窗和提示，聚焦於搜尋功能本身，提供專業高效的使用者體驗。",
+          tw: "清爽簡潔的介面設計，沒有干擾使用者的彈窗和提示，聚焦於搜尋功能本身，提供專業高效的使用者體驗。",
+          cn: "清爽简洁的界面设计，没有干扰用户的弹窗和提示，聚焦于搜索功能本身，提供专业高效的用户体验。",
           en: "Clean, simple interface design without distracting pop-ups and prompts, focusing on search functionality and providing a professional, efficient user experience.",
           jp: "クリーンでシンプルなインターフェースデザインで、邪魔なポップアップやプロンプトがなく、検索機能に焦点を当て、プロフェッショナルで効率的なユーザー体験を提供します。",
           es: "Diseño de interfaz limpio y simple sin ventanas emergentes y avisos que distraigan, enfocándose en la funcionalidad de búsqueda y proporcionando una experiencia de usuario profesional y eficiente."
@@ -356,13 +418,15 @@ const imageSearchContentTranslations = {
     },
     callToAction: {
       title: {
-        zh: "立即體驗最全面的以圖搜圖工具",
+        tw: "立即體驗最全面的以圖搜圖工具",
+        cn: "立即体验最全面的以图搜图工具",
         en: "Experience the most comprehensive reverse image search tool now",
         jp: "今すぐ最も包括的な画像検索ツールを体験",
         es: "Experimenta ahora la herramienta de búsqueda de imagen inversa más completa"
       },
       subtitle: {
-        zh: "簡單上傳或輸入URL，開啟多引擎圖像搜尋",
+        tw: "簡單上傳或輸入URL，開啟多引擎圖像搜尋",
+        cn: "简单上传或输入URL，开启多引擎图像搜索",
         en: "Simply upload or enter a URL to start multi-engine intelligent image search",
         jp: "シンプルにアップロードするかURLを入力して、マルチエンジンインテリジェント画像検索を開始",
         es: "Simplemente sube o ingresa una URL para comenzar la búsqueda inteligente de imagen multi-motor"
@@ -372,7 +436,8 @@ const imageSearchContentTranslations = {
 };
 
 export default function ArticleContent({ locale }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
+  const faqLang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   return (
     <>
@@ -564,10 +629,10 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-bold mb-3">{imageSearchTranslations.faq.title[lang]}</h2>
-        
+        <h2 className="text-xl font-bold mb-3">{imageSearchTranslations.faq.title[faqLang]}</h2>
+
         <div className="space-y-6">
-          {imageSearchTranslations.faq.questions[lang].map((item, index) => (
+          {imageSearchTranslations.faq.questions[faqLang].map((item, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">

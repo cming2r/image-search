@@ -10,103 +10,120 @@ import { Image as ImageIcon, ChevronDown, Mail, Menu, X, LogOut } from 'lucide-r
 // Header translations
 const headerTranslations = {
   home: {
-    zh: "首頁",
-    en: "Home", 
+    tw: "首頁",
+    cn: "首页",
+    en: "Home",
     jp: "ホーム",
     es: "Inicio"
   },
   tools: {
-    zh: "線上工具",
+    tw: "線上工具",
+    cn: "线上工具",
     en: "Online Tools",
-    jp: "オンラインツール", 
+    jp: "オンラインツール",
     es: "Herramientas en Línea"
   },
   imageSearch: {
-    zh: "以圖搜圖",
+    tw: "以圖搜圖",
+    cn: "以图搜图",
     en: "Image Search",
     jp: "画像検索",
     es: "Buscar por Imagen"
   },
   calculator: {
-    zh: "日期計算器",
+    tw: "日期計算器",
+    cn: "日期计算器",
     en: "Date Calculator",
     jp: "日付計算機",
     es: "Calculadora de Fechas"
   },
   dueDate: {
-    zh: "預產期計算器",
-    en: "Due Date Calculator", 
+    tw: "預產期計算器",
+    cn: "预产期计算器",
+    en: "Due Date Calculator",
     jp: "出産予定日計算機",
     es: "Calculadora de Fecha de Parto"
   },
   giftExchange: {
-    zh: "交換禮物抽籤",
+    tw: "交換禮物抽籤",
+    cn: "交换礼物抽签",
     en: "Gift Exchange Draw",
     jp: "ギフト交換抽選",
     es: "Sorteo de Intercambio de Regalos"
   },
   about: {
-    zh: "關於",
+    tw: "關於",
+    cn: "关于",
     en: "About",
-    jp: "について", 
+    jp: "について",
     es: "Acerca de"
   },
   contact: {
-    zh: "聯絡我們",
+    tw: "聯絡我們",
+    cn: "联络我们",
     en: "Contact Us",
     jp: "お問い合わせ",
     es: "Contáctanos"
   },
   terms: {
-    zh: "使用條款",
+    tw: "使用條款",
+    cn: "使用条款",
     en: "Terms of Use",
     jp: "利用規約",
     es: "Términos de Uso"
   },
   privacy: {
-    zh: "隱私權政策",
+    tw: "隱私權政策",
+    cn: "隐私权政策",
     en: "Privacy Policy",
     jp: "プライバシーポリシー",
     es: "Política de Privacidad"
   },
   admin: {
-    zh: "管理頁面",
+    tw: "管理頁面",
+    cn: "管理页面",
     en: "Admin Panel",
     jp: "管理ページ",
     es: "Panel de Administración"
   },
   logout: {
-    zh: "登出",
+    tw: "登出",
+    cn: "登出",
     en: "Logout",
-    jp: "ログアウト", 
+    jp: "ログアウト",
     es: "Cerrar Sesión"
   },
   urlShortener: {
-    zh: "縮網址服務",
+    tw: "縮網址服務",
+    cn: "缩网址服务",
     en: "URL Shortener",
     jp: "URL短縮サービス",
     es: "Servicio de Acortador de URL"
   },
   imageUrl: {
-    zh: "圖片URL",
+    tw: "圖片URL",
+    cn: "图片URL",
     en: "Image URL",
     jp: "画像URL",
     es: "URL de Imagen"
   },
   fileUrl: {
-    zh: "檔案URL",
+    tw: "檔案URL",
+    cn: "档案URL",
     en: "File URL",
     jp: "ファイルURL",
     es: "URL de Archivo"
   },
   videoUrl: {
-    zh: "影片URL",
+    tw: "影片URL",
+    cn: "影片URL",
     en: "Video URL",
     jp: "動画URL",
     es: "URL de Video"
   },
   menuScanner: {
-    zh: "揪團訂餐-菜單掃描器",
+    tw: "揪團訂餐-菜單掃描器",
+    cn: "揪团订餐-菜单扫描器",
     en: "Group Order - Menu Scanner",
     jp: "グループ注文 - メニュースキャナー",
     es: "Pedido Grupal - Escáner de Menú"
@@ -122,6 +139,15 @@ function debounce(func: () => void, wait: number) {
   };
 }
 
+// 生成外部網址（根據當前語言添加路徑）
+function getExternalUrl(baseUrl: string, locale: string): string {
+  // en 使用根路徑，其他語言添加前綴
+  if (locale === 'en') {
+    return baseUrl;
+  }
+  return `${baseUrl}/${locale}`;
+}
+
 const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -132,7 +158,7 @@ const Header: FC = () => {
   
   // 獲取翻譯文字的函數
   const getTranslation = (key: keyof typeof headerTranslations) => {
-    return headerTranslations[key][locale as keyof typeof headerTranslations[typeof key]] || headerTranslations[key].zh;
+    return headerTranslations[key][locale as keyof typeof headerTranslations[typeof key]] || headerTranslations[key].tw;
   };
   
   // 切換選單狀態
@@ -251,7 +277,7 @@ const Header: FC = () => {
               </div>
               <div className="relative group">
                 <a
-                  href="https://diin.cc"
+                  href={getExternalUrl('https://diin.cc', locale)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
@@ -277,7 +303,7 @@ const Header: FC = () => {
                     {getTranslation('giftExchange')}
                   </Link>
                   <a
-                    href="https://diin.cc"
+                    href={getExternalUrl('https://diin.cc', locale)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
@@ -517,7 +543,7 @@ const Header: FC = () => {
               <li>
                 <div className="flex w-full items-center justify-between">
                   <a
-                    href="https://diin.cc"
+                    href={getExternalUrl('https://diin.cc', locale)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 flex items-center"
@@ -550,7 +576,7 @@ const Header: FC = () => {
                     {getTranslation('giftExchange')}
                   </Link>
                   <a
-                    href="https://diin.cc"
+                    href={getExternalUrl('https://diin.cc', locale)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"

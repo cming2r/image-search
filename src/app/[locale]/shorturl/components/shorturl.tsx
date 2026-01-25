@@ -8,98 +8,114 @@ import { Download, ExternalLink, Copy, QrCode, Check, Lock, Clock } from 'lucide
 
 const translations = {
   urlLabel: {
-    zh: '輸入您的長網址 *',
+    tw: '輸入您的長網址 *',
+    cn: '输入您的长网址 *',
     en: 'Enter your long URL *',
     jp: '長いURLを入力 *',
     es: 'Ingresa tu URL larga *'
   },
   passwordProtection: {
-    zh: '密碼保護',
+    tw: '密碼保護',
+    cn: '密码保护',
     en: 'Password Protection',
     jp: 'パスワード保護',
     es: 'Protección con Contraseña'
   },
   passwordPlaceholder: {
-    zh: '最多4位數字',
+    tw: '最多4位數字',
+    cn: '最多4位数字',
     en: 'Max 4 digits',
     jp: '最大4桁',
     es: 'Máx. 4 dígitos'
   },
   expiresIn: {
-    zh: '有效期限',
+    tw: '有效期限',
+    cn: '有效期限',
     en: 'Expiration',
     jp: '有効期限',
     es: 'Expiración'
   },
   none: {
-    zh: '無',
+    tw: '無',
+    cn: '无',
     en: 'None',
     jp: 'なし',
     es: 'Ninguno'
   },
   urlPlaceholder: {
-    zh: 'https://example.com/very/long/url',
+    tw: 'https://example.com/very/long/url',
+    cn: 'https://example.com/very/long/url',
     en: 'https://example.com/very/long/url',
     jp: 'https://example.com/very/long/url',
     es: 'https://example.com/very/long/url'
   },
   shortenButton: {
-    zh: '縮短網址',
+    tw: '縮短網址',
+    cn: '缩短网址',
     en: 'Shorten URL',
     jp: 'URL短縮',
     es: 'Acortar URL'
   },
   shorteningText: {
-    zh: '縮短中...',
+    tw: '縮短中...',
+    cn: '缩短中...',
     en: 'Shortening...',
     jp: '短縮中...',
     es: 'Acortando...'
   },
   originalUrlTitle: {
-    zh: '您的長網址',
+    tw: '您的長網址',
+    cn: '您的长网址',
     en: 'Your Long URL',
     jp: 'あなたの元のURL',
     es: 'Tu URL Larga'
   },
   resultTitle: {
-    zh: '您的短網址',
+    tw: '您的短網址',
+    cn: '您的短网址',
     en: 'Your Short URL',
     jp: 'あなたの短縮URL',
     es: 'Tu URL Corta'
   },
   copyButton: {
-    zh: '複製',
+    tw: '複製',
+    cn: '复制',
     en: 'Copy',
     jp: 'コピー',
     es: 'Copiar'
   },
   copiedText: {
-    zh: '已複製！',
+    tw: '已複製！',
+    cn: '已复制！',
     en: 'Copied!',
     jp: 'コピー済み！',
     es: '¡Copiado!'
   },
   successMessage: {
-    zh: '短網址已建立！您可以複製上方連結進行分享。',
+    tw: '短網址已建立！您可以複製上方連結進行分享。',
+    cn: '短网址已建立！您可以复制上方链接进行分享。',
     en: 'Short URL created! You can copy the link above to share.',
     jp: '短縮URLが作成されました！上のリンクをコピーして共有できます。',
     es: '¡URL corta creada! Puedes copiar el enlace de arriba para compartir.'
   },
   backButton: {
-    zh: '返回',
+    tw: '返回',
+    cn: '返回',
     en: 'Back',
     jp: '戻る',
     es: 'Volver'
   },
   errorMessages: {
     shortenFailed: {
-      zh: '縮短網址失敗',
+      tw: '縮短網址失敗',
+      cn: '缩短网址失败',
       en: 'Failed to shorten URL',
       jp: 'URL短縮に失敗しました',
       es: 'Error al acortar URL'
     },
     networkError: {
-      zh: '網路錯誤，請重試',
+      tw: '網路錯誤，請重試',
+      cn: '网络错误，请重试',
       en: 'Network error, please try again',
       jp: 'ネットワークエラー、再試行してください',
       es: 'Error de red, por favor inténtalo de nuevo'
@@ -108,14 +124,14 @@ const translations = {
 };
 
 const expirationOptions = [
-  { value: '', label: { zh: '預設', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
-  { value: '1hr', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
-  { value: '3hr', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
-  { value: '6hr', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
-  { value: '12hr', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
-  { value: '1day', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
-  { value: '3days', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
-  { value: '7days', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
+  { value: '', label: { tw: '預設', cn: '预设', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
+  { value: '1hr', label: { tw: '1小時', cn: '1小时', en: '1 hour', jp: '1時間', es: '1 hora' } },
+  { value: '3hr', label: { tw: '3小時', cn: '3小时', en: '3 hours', jp: '3時間', es: '3 horas' } },
+  { value: '6hr', label: { tw: '6小時', cn: '6小时', en: '6 hours', jp: '6時間', es: '6 horas' } },
+  { value: '12hr', label: { tw: '12小時', cn: '12小时', en: '12 hours', jp: '12時間', es: '12 horas' } },
+  { value: '1day', label: { tw: '1天', cn: '1天', en: '1 day', jp: '1日', es: '1 día' } },
+  { value: '3days', label: { tw: '3天', cn: '3天', en: '3 days', jp: '3日', es: '3 días' } },
+  { value: '7days', label: { tw: '7天', cn: '7天', en: '7 days', jp: '7日', es: '7 días' } }
 ];
 
 interface ShortUrlResult {
@@ -131,7 +147,7 @@ interface ShortUrlResult {
 export default function ShortUrl() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   const [url, setUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
@@ -162,22 +178,22 @@ export default function ShortUrl() {
 
           let countdownText = '';
           if (days > 0) {
-            countdownText = lang === 'zh' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
                            lang === 'en' ? `${days}d ${hours}h ${minutes}m` :
                            lang === 'jp' ? `${days}日 ${hours}時間 ${minutes}分` :
                            `${days}d ${hours}h ${minutes}m`;
           } else if (hours > 0) {
-            countdownText = lang === 'zh' ? `${hours}小時 ${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${hours}小時 ${minutes}分鐘` :
                            lang === 'en' ? `${hours}h ${minutes}m` :
                            lang === 'jp' ? `${hours}時間 ${minutes}分` :
                            `${hours}h ${minutes}m`;
           } else if (minutes > 0) {
-            countdownText = lang === 'zh' ? `${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${minutes}分鐘` :
                            lang === 'en' ? `${minutes}m` :
                            lang === 'jp' ? `${minutes}分` :
                            `${minutes}m`;
           } else {
-            countdownText = lang === 'zh' ? '不到1分鐘' :
+            countdownText = lang === 'tw' ? '不到1分鐘' :
                            lang === 'en' ? 'Less than 1m' :
                            lang === 'jp' ? '1分未満' :
                            'Menos de 1m';
@@ -185,7 +201,7 @@ export default function ShortUrl() {
 
           setCountdown(countdownText);
         } else {
-          setCountdown(lang === 'zh' ? '已過期' :
+          setCountdown(lang === 'tw' ? '已過期' :
                       lang === 'en' ? 'Expired' :
                       lang === 'jp' ? '期限切れ' :
                       'Expirado');
@@ -497,7 +513,7 @@ export default function ShortUrl() {
                   }
                 }}
                 className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
-                title={locale === 'zh' ? '前往' : locale === 'en' ? 'Visit' : locale === 'jp' ? '移動' : 'Visitar'}
+                title={locale === 'tw' ? '前往' : locale === 'en' ? 'Visit' : locale === 'jp' ? '移動' : 'Visitar'}
               >
                 <ExternalLink size={24} />
               </button>
@@ -508,7 +524,7 @@ export default function ShortUrl() {
                     ? 'bg-green-600 text-white' 
                     : 'bg-green-600 text-white hover:bg-green-700'
                 }`}
-                title={showSuccess ? (locale === 'zh' ? '已複製！' : locale === 'en' ? 'Copied!' : locale === 'jp' ? 'コピー済み！' : '¡Copiado!') : (locale === 'zh' ? '複製' : locale === 'en' ? 'Copy' : locale === 'jp' ? 'コピー' : 'Copiar')}
+                title={showSuccess ? (locale === 'tw' ? '已複製！' : locale === 'en' ? 'Copied!' : locale === 'jp' ? 'コピー済み！' : '¡Copiado!') : (locale === 'tw' ? '複製' : locale === 'en' ? 'Copy' : locale === 'jp' ? 'コピー' : 'Copiar')}
               >
                 {showSuccess ? (
                   <Check size={24} />
@@ -523,7 +539,7 @@ export default function ShortUrl() {
                     ? 'bg-black text-white' 
                     : 'bg-black text-white hover:bg-gray-800'
                 }`}
-                title={locale === 'zh' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
+                title={locale === 'tw' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
               >
                 <QrCode size={24} />
               </button>
@@ -536,7 +552,7 @@ export default function ShortUrl() {
             {showQrCode && qrCodeUrl && (
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <h4 className="text-lg font-medium text-gray-900 mb-3 text-center">
-                  {locale === 'zh' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
+                  {locale === 'tw' ? 'QR Code' : locale === 'en' ? 'QR Code' : locale === 'jp' ? 'QRコード' : 'Código QR'}
                 </h4>
                 
                 <div className="flex justify-center">
@@ -546,7 +562,7 @@ export default function ShortUrl() {
                         <div className="flex items-center">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
                           <span className="ml-2 text-sm text-gray-600">
-                            {locale === 'zh' ? '生成中...' : 
+                            {locale === 'tw' ? '生成中...' : 
                              locale === 'en' ? 'Generating...' : 
                              locale === 'jp' ? '生成中...' : 
                              'Generando...'}
@@ -583,7 +599,7 @@ export default function ShortUrl() {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="ml-2 text-sm text-gray-700">
-                      {locale === 'zh' ? '包含 URL' : 
+                      {locale === 'tw' ? '包含 URL' : 
                        locale === 'en' ? 'Include URL' : 
                        locale === 'jp' ? 'URLを含める' : 
                        'Incluir URL'}
@@ -595,7 +611,7 @@ export default function ShortUrl() {
                   <button
                     onClick={downloadQRCode}
                     className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors flex items-center justify-center"
-                    title={locale === 'zh' ? '下載圖片' : 
+                    title={locale === 'tw' ? '下載圖片' : 
                            locale === 'en' ? 'Download Image' : 
                            locale === 'jp' ? '画像をダウンロード' : 
                            'Descargar Imagen'}

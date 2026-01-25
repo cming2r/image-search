@@ -20,6 +20,21 @@ const nextConfig: NextConfig = {
   },
   // SWC 優化在新版 Next.js 中默認啟用
   // Note: ESLint config moved to eslint.config.mjs (no longer supported in next.config.ts in Next.js 16+)
+  // 301 重定向：將舊的 /zh 路徑重定向到新的 /tw 路徑
+  async redirects() {
+    return [
+      {
+        source: '/zh/:path*',
+        destination: '/tw/:path*',
+        permanent: true,
+      },
+      {
+        source: '/zh',
+        destination: '/tw',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // 直接導出配置，不使用 withNextIntl

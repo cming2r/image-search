@@ -1,13 +1,15 @@
 export const shorturlTranslations = {
   meta: {
     title: {
-      zh: '短網址產生器',
+      tw: '短網址產生器',
+      cn: '短网址生成器',
       en: 'URL Shortener',
       jp: 'URL短縮ツール',
       es: 'Acortador de URL'
     },
     description: {
-      zh: '快速將長網址縮短為易於分享的短連結',
+      tw: '快速將長網址縮短為易於分享的短連結',
+      cn: '快速将长网址缩短为易于分享的短链接',
       en: 'Quickly shorten long URLs into easy-to-share short links',
       jp: '長いURLを簡単に共有できる短いリンクに素早く短縮',
       es: 'Acorta rápidamente URLs largas en enlaces cortos fáciles de compartir'
@@ -15,13 +17,14 @@ export const shorturlTranslations = {
   },
   faq: {
     title: {
-      zh: "短網址常見問題",
+      tw: "短網址常見問題",
+      cn: "短网址常见问题",
       en: "Frequently Asked Questions About URL Shortener",
       jp: "短縮URLについてよくある質問",
       es: "Preguntas Frecuentes sobre Acortador de URL"
     },
     questions: {
-      zh: [
+      tw: [
         {
           question: "短網址會永久有效嗎？",
           answer: "是的，我們生成的短網址會永久有效，沒有時間限制。只要我們的服務正常運行，您的短網址將始終可用。我們承諾維護所有已生成的短網址，確保它們長期有效。"
@@ -37,6 +40,24 @@ export const shorturlTranslations = {
         {
           question: "如何追蹤短網址的點擊統計？",
           answer: "點擊統計功能目前正在開發中，即將推出。屆時您將能夠查看短網址的點擊次數、來源地區、訪問時間等詳細統計數據，幫助您更好地了解分享效果。"
+        }
+      ],
+      cn: [
+        {
+          question: "短网址会永久有效吗？",
+          answer: "是的，我们生成的短网址会永久有效，没有时间限制。只要我们的服务正常运行，您的短网址将始终可用。我们承诺维护所有已生成的短网址，确保它们长期有效。"
+        },
+        {
+          question: "使用短网址有数量限制吗？",
+          answer: "没有，我们的短网址服务完全免费且无使用次数限制。您可以根据需要生成任意数量的短网址，无需注册帐号或付费。我们致力于提供无限制的免费服务。"
+        },
+        {
+          question: "短网址是否安全？我的原始网址会被保存吗？",
+          answer: "我们非常重视用户隐私和安全。生成短网址时，系统仅保存必要的映射关系以确保重定向功能正常运作。我们不会分析或分享您的原始网址内容，也不会用于任何其他商业目的。"
+        },
+        {
+          question: "如何追踪短网址的点击统计？",
+          answer: "点击统计功能目前正在开发中，即将推出。届时您将能够查看短网址的点击次数、来源地区、访问时间等详细统计数据，帮助您更好地了解分享效果。"
         }
       ],
       en: [

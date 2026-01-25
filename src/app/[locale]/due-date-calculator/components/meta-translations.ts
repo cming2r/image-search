@@ -1,13 +1,15 @@
 export const metaTranslations = {
   meta: {
     title: {
-      zh: "預產期計算器",
-      en: "Due Date Calculator", 
+      tw: "預產期計算器",
+      cn: "预产期计算器",
+      en: "Due Date Calculator",
       jp: "出産予定日計算機",
       es: "Calculadora de Fecha de Parto"
     },
     description: {
-      zh: "計算預產期及懷孕週數，幫助您追蹤懷孕進程",
+      tw: "計算預產期及懷孕週數，幫助您追蹤懷孕進程",
+      cn: "计算预产期及怀孕周数，帮助您追踪怀孕进程",
       en: "Calculate your due date and track pregnancy progress",
       jp: "出産予定日と妊娠週数を計算し、妊娠経過を追跡",
       es: "Calcule su fecha de parto y haga seguimiento del progreso del embarazo"
@@ -15,13 +17,14 @@ export const metaTranslations = {
   },
   faq: {
     title: {
-      zh: "預產期計算器常見問題",
+      tw: "預產期計算器常見問題",
+      cn: "预产期计算器常见问题",
       en: "Due Date Calculator Frequently Asked Questions",
       jp: "出産予定日計算機に関するよくある質問",
       es: "Preguntas Frecuentes sobre la Calculadora de Fecha de Parto"
     },
     questions: {
-      zh: [
+      tw: [
         {
           question: "預產期是如何計算的？",
           answer: "預產期計算通常採用內格萊氏法則（Naegele's rule），以最後一次月經的第一天為基準，加上一年，減三個月，再加上七天。例如最後一次月經第一天為6月1號，則預產期為隔年3月8日。實際上，這等同於從最後一次月經的第一天加上280天。本方法假設月經週期為28天，而排卵和受精在第14天發生。"
@@ -37,6 +40,24 @@ export const metaTranslations = {
         {
           question: "產前檢查的建議頻率是多少？",
           answer: "根據美國婦女健康辦公室的建議，正常產檢的頻率為：第4週到第28週期間，每月一次；第28週到第36週期間，每兩週一次；第36週到分娩期間，每週一次。高風險妊娠的孕婦可能需要更頻繁地產前護理和檢查。"
+        }
+      ],
+      cn: [
+        {
+          question: "预产期是如何计算的？",
+          answer: "预产期计算通常采用内格莱氏法则（Naegele's rule），以最后一次月经的第一天为基准，加上一年，减三个月，再加上七天。例如最后一次月经第一天为6月1号，则预产期为隔年3月8日。实际上，这等同于从最后一次月经的第一天加上280天。本方法假设月经周期为28天，而排卵和受精在第14天发生。"
+        },
+        {
+          question: "孕期周数是如何计算的？",
+          answer: "孕期以最后一次月经的第一天开始计算，到预产期约为40周。因此，通常知道自己怀孕时，大概都已到第5周或第六周。若有规划备孕，建议用手机的「健康」软件，记录自己每一次的月经周期。当第一次看妇产科时，医生通常会询问上一次月经的第一天为几月几号，依此来计算预产期。"
+        },
+        {
+          question: "什么情况下被视为高风险妊娠？",
+          answer: "高风险妊娠指的是有较高并发症风险的怀孕状况。以下因素可能会增加风险：年龄过小或超过35岁、体重过重或过轻、既往妊娠出现问题、怀孕前就存在的健康问题（如高血压、糖尿病、自身免疫疾病）以及双胞胎或多胞胎妊娠。怀孕期间出现的问题如妊娠糖尿病或子痫前症也会导致高风险妊娠。若有任何高风险妊娠的疑虑，建议向医生咨询。"
+        },
+        {
+          question: "产前检查的建议频率是多少？",
+          answer: "根据美国妇女健康办公室的建议，正常产检的频率为：第4周到第28周期间，每月一次；第28周到第36周期间，每两周一次；第36周到分娩期间，每周一次。高风险妊娠的孕妇可能需要更频繁地产前护理和检查。"
         }
       ],
       en: [

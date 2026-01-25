@@ -5,92 +5,107 @@ import { useRouter } from 'next/navigation';
 const giftExchangeTranslations = {
   wheel: {
     participantsLabel: {
-      zh: "參與者名單",
+      tw: "參與者名單",
+      cn: "参与者名单",
       en: "Participants List",
       jp: "参加者リスト",
       es: "Lista de Participantes"
     },
     participantsPlaceholder: {
-      zh: "輸入參與者名單，用空格分隔（如：小明 小華 小強）",
+      tw: "輸入參與者名單，用空格分隔（如：小明 小華 小強）",
+      cn: "输入参与者名单，用空格分隔（如：小明 小华 小强）",
       en: "Enter participant names, separated by spaces (e.g., John Mary David)",
       jp: "参加者名をスペースで区切って入力（例：太郎 花子 健太）",
       es: "Ingrese nombres de participantes, separados por espacios (ej: Juan María David)"
     },
     randomizeOrder: {
-      zh: "隨機分佈參與者順序",
+      tw: "隨機分佈參與者順序",
+      cn: "随机分布参与者顺序",
       en: "Randomize participant order",
       jp: "参加者の順序をランダム化",
       es: "Aleatorizar orden de participantes"
     },
     showFinalResultDirectly: {
-      zh: "直接顯示最終結果",
+      tw: "直接顯示最終結果",
+      cn: "直接显示最终结果",
       en: "Show final results directly",
       jp: "最終結果を直接表示",
       es: "Mostrar resultados finales directamente"
     },
     startButton: {
-      zh: "開始抽籤",
+      tw: "開始抽籤",
+      cn: "开始抽签",
       en: "Start Drawing",
       jp: "抽選開始",
       es: "Iniciar Sorteo"
     },
     noParticipantsError: {
-      zh: "請至少輸入兩名參與者",
+      tw: "請至少輸入兩名參與者",
+      cn: "请至少输入两名参与者",
       en: "Please enter at least two participants",
       jp: "少なくとも2人の参加者を入力してください",
       es: "Por favor ingrese al menos dos participantes"
     },
     quickAdd: {
-      zh: "快速添加",
+      tw: "快速添加",
+      cn: "快速添加",
       en: "Quick Add",
       jp: "クイック追加",
       es: "Agregar Rápido"
     },
     addButton: {
-      zh: "添加",
+      tw: "添加",
+      cn: "添加",
       en: "Add",
       jp: "追加",
       es: "Agregar"
     },
     currentParticipants: {
-      zh: "目前參與者",
+      tw: "目前參與者",
+      cn: "目前参与者",
       en: "Current participants",
       jp: "現在の参加者",
       es: "Participantes actuales"
     },
     clearAll: {
-      zh: "清除全部",
+      tw: "清除全部",
+      cn: "清除全部",
       en: "Clear All",
       jp: "すべてクリア",
       es: "Limpiar Todo"
     },
     noParticipantsYet: {
-      zh: "尚未添加參與者",
+      tw: "尚未添加參與者",
+      cn: "尚未添加参与者",
       en: "No participants added yet",
       jp: "まだ参加者が追加されていません",
       es: "Aún no se han agregado participantes"
     },
     addedPrefix: {
-      zh: "已添加",
+      tw: "已添加",
+      cn: "已添加",
       en: "Added",
       jp: "追加済み",
       es: "Agregado"
     },
     addedSuffix: {
-      zh: "名參與者",
+      tw: "名參與者",
+      cn: "名参与者",
       en: "participants",
       jp: "人の参加者",
       es: "participantes"
     },
     personSuffix: {
-      zh: "人",
+      tw: "人",
+      cn: "人",
       en: "",
       jp: "人",
       es: ""
     }
   },
   createEventDescription: {
-    zh: "點擊「開始抽籤」按鈕，系統會自動生成活動連結",
+    tw: "點擊「開始抽籤」按鈕，系統會自動生成活動連結",
+    cn: "点击「开始抽签」按钮，系统会自动生成活动链接",
     en: "Click the \"Start Drawing\" button, and the system will automatically generate an event link",
     jp: "「抽選開始」ボタンをクリックすると、システムは自動的にイベントリンクを生成します",
     es: "Haga clic en el botón \"Iniciar Sorteo\", y el sistema generará automáticamente un enlace del evento"
@@ -101,7 +116,7 @@ import { useParams } from 'next/navigation';
 export default function GiftExchangeWheel() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   // 初始為空數組，避免服務器/客戶端水合問題
   const [participants, setParticipants] = useState<string[]>([]);

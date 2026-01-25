@@ -11,14 +11,15 @@ import { metaTranslations } from './components/meta-translations';
 // 多語言關鍵字
 
 const keywordsList = {
-  zh: ['日期計算器', '日期加減', '計算日期差', '天數計算'],
+  tw: ['日期計算器', '日期加減', '計算日期差', '天數計算'],
+  cn: ['日期计算器', '日期加减', '计算日期差', '天数计算'],
   en: ['date calculator', 'date difference', 'days between dates', 'add days to date'],
   jp: ['日付計算機', '日付の差', '日数計算', '日付の追加'],
   es: ['calculadora de fechas', 'diferencia de fechas', 'días entre fechas', 'agregar días a fecha']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -31,7 +32,8 @@ const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.zh) 
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(metaTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(metaTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(metaTranslations.faq.questions.cn),
   en: convertFaqForSchema(metaTranslations.faq.questions.en),
   jp: convertFaqForSchema(metaTranslations.faq.questions.jp),
   es: convertFaqForSchema(metaTranslations.faq.questions.es)
@@ -42,7 +44,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -54,10 +57,10 @@ const imageUrl = getFullUrl('/images/og-date.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   const title = metaTranslations.meta.title[lang];
   const description = metaTranslations.meta.description[lang];
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = title;
@@ -77,7 +80,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '日期計算器工具界面' : 
+          alt: locale === 'tw' ? '日期計算器工具界面' : 
                locale === 'en' ? 'Date Calculator Tool Interface' :
                locale === 'jp' ? '日付計算機ツールインターフェース' :
                locale === 'es' ? 'Interfaz de Herramienta Calculadora de Fechas' : 'Date Calculator Tool Interface',
@@ -100,7 +103,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/date' : `/${locale}/date`),
       languages: {
-        'zh-TW': getFullUrl('/date'),
+        'zh-TW': getFullUrl('/tw/date'),
+        'zh-CN': getFullUrl('/cn/date'),
         'en': getFullUrl('/en/date'),
         'ja': getFullUrl('/jp/date'),
         'es': getFullUrl('/es/date'),
@@ -133,15 +137,15 @@ export default async function DateLayout({
   // 取得當前語言
   const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   // 根據當前語言取得相應標題與描述
   const title = metaTranslations.meta.title[lang];
   const description = metaTranslations.meta.description[lang];
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/date', title, locale);
@@ -160,7 +164,8 @@ export default async function DateLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/date',
-    locale === 'zh' ? '日期計算工具' :
+    locale === 'tw' ? '日期計算工具' :
+    locale === 'cn' ? '日期计算工具' :
     locale === 'en' ? 'Date Calculation Tool' :
     locale === 'jp' ? '日付計算ツール' :
     locale === 'es' ? 'Herramienta de Cálculo de Fechas' : 'Date Calculation Tool',

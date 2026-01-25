@@ -10,7 +10,8 @@ export default function Terms() {
   const locale = (params?.locale as string) || 'en';
   
   // Only display content based on locale
-  const isZhLocale = locale === 'zh';
+  const isTwLocale = locale === 'tw';
+  const isCnLocale = locale === 'cn';
   const isEnLocale = locale === 'en';
   const isJpLocale = locale === 'jp';
   const isEsLocale = locale === 'es';
@@ -21,14 +22,15 @@ export default function Terms() {
       <main className="flex-grow w-full">
         <div className="container mx-auto max-w-4xl px-4 py-8">
           <h1 className="text-3xl font-bold mb-8">
-            {isZhLocale ? "使用條款" : 
-             isEnLocale ? "Terms of Service" : 
-             isJpLocale ? "利用規約" : 
+            {isTwLocale ? "使用條款" :
+             isCnLocale ? "使用条款" :
+             isEnLocale ? "Terms of Service" :
+             isJpLocale ? "利用規約" :
              isEsLocale ? "Términos de Servicio" : "Terms of Service"}
           </h1>
 
           <div className="prose prose-lg max-w-none">
-            {isZhLocale && (
+            {isTwLocale && (
               <div>
                 <p>歡迎使用 fyimg.com（以下簡稱「本網站」）。通過訪問或使用本網站，您同意受這些條款和條件的約束。如果您不同意這些條款的任何部分，請不要使用本網站。</p>
                 
@@ -74,7 +76,54 @@ export default function Terms() {
                 <p>如果您對這些條款有任何疑問或意見，請通過<Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">聯絡頁面</Link>與我們聯繫。</p>
               </div>
             )}
-            
+
+            {isCnLocale && (
+              <div>
+                <p>欢迎使用 fyimg.com（以下简称「本网站」）。通过访问或使用本网站，您同意受这些条款和条件的约束。如果您不同意这些条款的任何部分，请不要使用本网站。</p>
+
+                <p className="text-gray-500 mb-6">最后更新日期：2025年1月1日</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">1. 服务说明</h2>
+                <p>本网站提供各种在线工具，包括但不限于图片搜索、日期计算器、预产期计算器和礼物交换抽签工具。这些工具旨在提供便利和帮助，但不保证结果的准确性或适用性。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">2. 使用限制</h2>
+                <p>您同意仅将我们的服务用于合法目的，并遵守所有适用的法律和法规。您不得：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>使用本网站进行欺诈、非法或未经授权的活动</li>
+                  <li>上传或传输任何含有病毒、恶意代码或其他有害内容的资料</li>
+                  <li>尝试干扰或破坏本网站的正常运作</li>
+                  <li>收集或储存本网站其他用户的个人资料</li>
+                  <li>规避、禁用或以其他方式干扰本网站的安全相关功能</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">3. 智慧财产权</h2>
+                <p>本网站及其内容（包括但不限于文字、图形、标志、图标、图像、音频剪辑、数据编辑和软件）均为 fyimg 或其内容供应商所有，受国际版权、商标、专利和其他知识产权法律的保护。</p>
+                <p>未经明确许可，您不得复制、修改、发布、传输、分发、销售、展示或以其他方式利用本网站的任何内容。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">4. 隐私政策</h2>
+                <p>我们重视您的隐私，并致力于保护您的个人信息。我们的<Link href={`/${locale}/privacy-policy`} className="text-blue-600 hover:underline">隐私政策</Link>详细说明了我们如何收集、使用和保护您的数据。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">5. 免责声明</h2>
+                <p>本网站及其内容按「现状」提供，不做任何明示或暗示的保证。我们不对服务的准确性、可靠性或可用性负责。</p>
+                <p>fyimg 不对使用本网站或其服务可能产生的任何直接、间接、附带、特殊或后果性损害负责。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">6. 第三方连结</h2>
+                <p>本网站可能包含指向第三方网站或服务的连结。这些连结仅为便利用户而提供，并不意味着 fyimg 认可这些第三方网站或服务。fyimg 对这些第三方网站或服务的内容、隐私政策或做法不负责任。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">7. 修改条款</h2>
+                <p>我们保留随时修改这些条款的权利。修改后的条款将在网站上发布后立即生效。继续使用我们的服务即表示您接受这些变更。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">8. 终止</h2>
+                <p>fyimg 保留因任何原因随时终止或限制您访问本网站的权利，恕不另行通知。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">9. 适用法律</h2>
+                <p>这些条款及您对本网站的使用受当地法律管辖，不考虑法律冲突原则。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">10. 联络我们</h2>
+                <p>如果您对这些条款有任何疑问或意见，请通过<Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">联络页面</Link>与我们联系。</p>
+              </div>
+            )}
+
             {isEnLocale && (
               <div>
                 <p>Welcome to fyimg.com (hereinafter referred to as &quot;this website&quot;). By accessing or using this website, you agree to be bound by these terms and conditions. If you do not agree to any part of these terms, please do not use this website.</p>

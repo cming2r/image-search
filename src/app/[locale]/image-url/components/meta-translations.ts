@@ -1,13 +1,15 @@
 export const imageUrlTranslations = {
   meta: {
     title: {
-      zh: '圖片網址生成器',
+      tw: '圖片網址生成器',
+      cn: '图片网址生成器',
       en: 'Image URL Generator',
       jp: '画像URL生成器',
       es: 'Generador de URL de Imagen'
     },
     description: {
-      zh: '免費上傳圖片，快速獲取永久連結，支援多種格式。',
+      tw: '免費上傳圖片，快速獲取永久連結，支援多種格式。',
+      cn: '免费上传图片，快速获取永久链接，支持多种格式。',
       en: 'Free image upload with instant permanent links. Multiple formats supported.',
       jp: '無料で画像をアップロードし、永続的なリンクを即座に取得。多形式対応。',
       es: 'Subida gratuita de imágenes con enlaces permanentes instantáneos. Múltiples formatos compatibles.'
@@ -15,13 +17,14 @@ export const imageUrlTranslations = {
   },
   faq: {
     title: {
-      zh: "圖片網址產生器常見問題",
+      tw: "圖片網址產生器常見問題",
+      cn: "图片网址生成器常见问题",
       en: "Frequently Asked Questions About Image URL Generator",
       jp: "画像URLジェネレーターについてよくある質問",
       es: "Preguntas Frecuentes sobre Generador de URL de Imagen"
     },
     questions: {
-      zh: [
+      tw: [
         {
           question: "什麼是圖片網址產生器？",
           answer: "圖片網址產生器是一個免費的線上工具，讓您能夠快速上傳圖片並獲取永久的網址連結。這個連結可以在任何地方使用，包括網站、部落格、論壇、社交媒體或電子郵件。我們使用安全的雲端存儲確保您的圖片永久可用，並提供高速的全球CDN服務以保證快速加載。"
@@ -41,6 +44,28 @@ export const imageUrlTranslations = {
         {
           question: "如何在網站或部落格中使用生成的圖片網址？",
           answer: "使用很簡單！複製生成的圖片網址後，您可以直接在HTML中使用<img src=\"圖片網址\">標籤，或在Markdown中使用![描述](圖片網址)格式。對於WordPress、Blogger等平台，直接貼上網址即可自動識別為圖片。在社交媒體如Facebook、Twitter上分享時，通常會自動顯示圖片預覽。我們的CDN確保全球用戶都能快速加載您的圖片。"
+        }
+      ],
+      cn: [
+        {
+          question: "什么是图片网址生成器？",
+          answer: "图片网址生成器是一个免费的在线工具，让您能够快速上传图片并获取永久的网址链接。这个链接可以在任何地方使用，包括网站、博客、论坛、社交媒体或电子邮件。我们使用安全的云端存储确保您的图片永久可用，并提供高速的全球CDN服务以保证快速加载。"
+        },
+        {
+          question: "支持哪些图片格式和文件大小限制？",
+          answer: "我们支持所有主流图片格式，包括JPEG、JPG、PNG、GIF、WebP、BMP、TIFF等。文件大小限制为10MB，这足以应付大部分的使用需求。建议使用JPEG或PNG格式以获得最佳的压缩比和品质平衡。对于动态图片，我们完全支持GIF格式并保持动画效果。"
+        },
+        {
+          question: "上传的图片安全吗？会被他人看到吗？",
+          answer: "我们非常重视您的隐私和数据安全。所有上传的图片都存储在安全的云端服务器上，采用业界标准的加密技术。生成的图片网址包含随机字符串，只有知道完整网址的人才能访问您的图片。我们不会在任何地方公开展示您的图片，也不会将其用于任何商业用途。此外，您可以随时删除不需要的图片。"
+        },
+        {
+          question: "生成的图片网址会过期吗？",
+          answer: "正常情况下，通过我们服务生成的图片网址是永久有效的，不会自动过期。我们承诺长期维护服务的稳定性，确保您的图片链接持续可用。不过，如果图片内容违反我们的使用条款（如包含非法、有害或侵权内容），我们保留移除相关图片的权利。建议您定期备份重要图片，以防万一。"
+        },
+        {
+          question: "如何在网站或博客中使用生成的图片网址？",
+          answer: "使用很简单！复制生成的图片网址后，您可以直接在HTML中使用<img src=\"图片网址\">标签，或在Markdown中使用![描述](图片网址)格式。对于WordPress、Blogger等平台，直接贴上网址即可自动识别为图片。在社交媒体如Facebook、Twitter上分享时，通常会自动显示图片预览。我们的CDN确保全球用户都能快速加载您的图片。"
         }
       ],
       en: [

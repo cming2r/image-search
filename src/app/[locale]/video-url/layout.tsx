@@ -11,14 +11,15 @@ import { videoUrlTranslations } from './components/meta-translations';
 
 
 const keywordsList = {
-  zh: ['影片網址', '影片上傳', '影片連結產生器', '影片託管', '影片分享', 'MP4上傳'],
+  tw: ['影片網址', '影片上傳', '影片連結產生器', '影片託管', '影片分享', 'MP4上傳'],
+  cn: ['视频网址', '视频上传', '视频链接生成器', '视频托管', '视频分享', 'MP4上传'],
   en: ['video url', 'video upload', 'video link generator', 'video hosting', 'video sharing', 'MP4 upload'],
   jp: ['動画URL', '動画アップロード', '動画リンクジェネレーター', '動画ホスティング', '動画共有', 'MP4アップロード'],
   es: ['url de video', 'subir video', 'generador de enlace de video', 'alojamiento de videos', 'compartir videos', 'subir MP4']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof videoUrlTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof videoUrlTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -31,7 +32,8 @@ const convertFaqForSchema = (faqData: typeof videoUrlTranslations.faq.questions.
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(videoUrlTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(videoUrlTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(videoUrlTranslations.faq.questions.cn),
   en: convertFaqForSchema(videoUrlTranslations.faq.questions.en),
   jp: convertFaqForSchema(videoUrlTranslations.faq.questions.jp),
   es: convertFaqForSchema(videoUrlTranslations.faq.questions.es)
@@ -43,7 +45,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 // 語言對應表，將locale映射為HTML語言代碼
 
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -57,9 +60,9 @@ const imageUrl = getFullUrl('/images/og-image.png');
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = videoUrlTranslations.meta.title[locale as keyof typeof videoUrlTranslations.meta.title] || videoUrlTranslations.meta.title.zh;
-  const description = videoUrlTranslations.meta.description[locale as keyof typeof videoUrlTranslations.meta.description] || videoUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = videoUrlTranslations.meta.title[locale as keyof typeof videoUrlTranslations.meta.title] || videoUrlTranslations.meta.title.tw;
+  const description = videoUrlTranslations.meta.description[locale as keyof typeof videoUrlTranslations.meta.description] || videoUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `影片網址產生器` : 
@@ -82,7 +85,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '影片網址產生器工具界面' : 
+          alt: locale === 'tw' ? '影片網址產生器工具界面' :
+               locale === 'cn' ? '视频网址生成器工具界面' :
                locale === 'en' ? 'Video URL Generator Tool Interface' :
                locale === 'es' ? 'Interfaz de Herramienta Generadora de URL de Video' :
                '動画URLジェネレーターツールインターフェース',
@@ -105,7 +109,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/video-url' : `/${locale}/video-url`),
       languages: {
-        'zh-TW': getFullUrl('/video-url'),
+        'zh-TW': getFullUrl('/tw/video-url'),
+        'zh-CN': getFullUrl('/cn/video-url'),
         'en': getFullUrl('/en/video-url'),
         'ja': getFullUrl('/jp/video-url'),
         'es': getFullUrl('/es/video-url'),
@@ -141,12 +146,12 @@ export default async function VideoUrlLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = videoUrlTranslations.meta.title[locale as keyof typeof videoUrlTranslations.meta.title] || videoUrlTranslations.meta.title.zh;
-  const description = videoUrlTranslations.meta.description[locale as keyof typeof videoUrlTranslations.meta.description] || videoUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = videoUrlTranslations.meta.title[locale as keyof typeof videoUrlTranslations.meta.title] || videoUrlTranslations.meta.title.tw;
+  const description = videoUrlTranslations.meta.description[locale as keyof typeof videoUrlTranslations.meta.description] || videoUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/video-url', title, locale);
@@ -165,7 +170,8 @@ export default async function VideoUrlLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/video-url',
-    locale === 'zh' ? '影片網址產生器工具' :
+    locale === 'tw' ? '影片網址產生器工具' :
+    locale === 'cn' ? '视频网址生成器工具' :
     locale === 'en' ? 'Video URL Generator Tool' :
     locale === 'es' ? 'Herramienta Generadora de URL de Video' :
     '動画URLジェネレーターツール',

@@ -3,14 +3,16 @@ import { generateBreadcrumbSchema, generateWebPageSchema, formatJSON } from '@/l
 
 // 多語言標題和描述
 const titles = {
-  zh: '聯絡我們',
+  tw: '聯絡我們',
+  cn: '联络我们',
   en: 'Contact Us',
   jp: 'お問い合わせ',
   es: 'Contáctanos'
 };
 
 const descriptions = {
-  zh: '有任何問題、建議或回饋嗎？請與我們聯絡，我們會盡快回覆您。',
+  tw: '有任何問題、建議或回饋嗎？請與我們聯絡，我們會盡快回覆您。',
+  cn: '有任何问题、建议或回馈吗？请与我们联络，我们会尽快回复您。',
   en: 'Have questions, suggestions, or feedback? Please contact us, and we will get back to you as soon as possible.',
   jp: 'ご質問、ご提案、またはフィードバックがありますか？お問い合わせください。できるだけ早くご返信いたします。',
   es: '¿Tiene preguntas, sugerencias o comentarios? Contáctenos y le responderemos lo antes posible.'
@@ -22,8 +24,8 @@ const imageUrl = getFullUrl('/og-image.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = titles[locale as keyof typeof titles] || titles.zh;
-  const description = descriptions[locale as keyof typeof descriptions] || descriptions.zh;
+  const title = titles[locale as keyof typeof titles] || titles.tw;
+  const description = descriptions[locale as keyof typeof descriptions] || descriptions.tw;
   
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -40,8 +42,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? 'fyimg聯絡我們' : 
-               locale === 'en' ? 'fyimg Contact Us' : 
+          alt: locale === 'tw' ? 'fyimg聯絡我們' :
+               locale === 'cn' ? 'fyimg联络我们' :
+               locale === 'en' ? 'fyimg Contact Us' :
                locale === 'jp' ? 'fyimgお問い合わせ' :
                locale === 'es' ? 'fyimg Contáctanos' : 'fyimg Contact Us',
           type: 'image/png',
@@ -63,15 +66,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/contact' : `/${locale}/contact`),
       languages: {
-        'zh-TW': getFullUrl('/contact'),
-        'en': getFullUrl('/en/contact'),
+        'zh-TW': getFullUrl('/tw/contact'),
+        'zh-CN': getFullUrl('/cn/contact'),
+        'en': getFullUrl('/contact'),
         'ja': getFullUrl('/jp/contact'),
         'es': getFullUrl('/es/contact'),
       },
     },
-    
+
     // 關鍵字、作者及發布者信息
-    keywords: locale === 'zh' ? '聯絡我們, 客戶服務, 回饋, 意見反饋, 問題諮詢' : 
+    keywords: locale === 'tw' ? '聯絡我們, 客戶服務, 回饋, 意見反饋, 問題諮詢' :
+              locale === 'cn' ? '联络我们, 客户服务, 回馈, 意见反馈, 问题咨询' :
               locale === 'en' ? 'contact us, customer service, feedback, inquiry, support' :
               locale === 'jp' ? 'お問い合わせ, カスタマーサービス, フィードバック, お問い合わせフォーム, サポート' :
               locale === 'es' ? 'contáctanos, servicio al cliente, comentarios, consulta, soporte' :
@@ -93,11 +98,11 @@ export default async function ContactLayout({
   const { locale = 'en' } = await params;
   
   // 根據當前語言生成結構化數據
-  const breadcrumbSchema = generateBreadcrumbSchema('/contact', titles[locale as keyof typeof titles] || titles.zh, locale);
+  const breadcrumbSchema = generateBreadcrumbSchema('/contact', titles[locale as keyof typeof titles] || titles.tw, locale);
   const webPageSchema = generateWebPageSchema(
     '/contact',
-    titles[locale as keyof typeof titles] || titles.zh,
-    descriptions[locale as keyof typeof descriptions] || descriptions.zh,
+    titles[locale as keyof typeof titles] || titles.tw,
+    descriptions[locale as keyof typeof descriptions] || descriptions.tw,
     locale
   );
   

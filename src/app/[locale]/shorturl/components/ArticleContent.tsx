@@ -9,16 +9,22 @@ interface ArticleContentProps {
 const shorturlContentTranslations = {
   howToUse: {
     title: {
-      zh: "如何使用此工具？",
+      tw: "如何使用此工具？",
+      cn: "如何使用此工具？",
       en: "How to Use This Tool?",
       jp: "このツールの使い方",
       es: "¿Cómo Usar Esta Herramienta?"
     },
     steps: {
-      zh: [
+      tw: [
         "在輸入框中貼上或輸入您想要縮短的長網址",
         "點擊「縮短網址」按鈕生成短連結",
         "複製產生的短網址並分享給其他人"
+      ],
+      cn: [
+        "在输入框中粘贴或输入您想要缩短的长网址",
+        "点击「缩短网址」按钮生成短链接",
+        "复制生成的短网址并分享给其他人"
       ],
       en: [
         "Paste or enter the long URL you want to shorten in the input field",
@@ -37,13 +43,15 @@ const shorturlContentTranslations = {
       ]
     },
     tip: {
-      zh: "小提示：",
+      tw: "小提示：",
+      cn: "小提示：",
       en: "Tip:",
       jp: "ヒント：",
       es: "Consejo:"
     },
     tipContent: {
-      zh: "確保您輸入的是完整且有效的網址，並包含 http:// 或 https://。短網址會永久有效且無使用次數限制。",
+      tw: "確保您輸入的是完整且有效的網址，並包含 http:// 或 https://。短網址會永久有效且無使用次數限制。",
+      cn: "确保您输入的是完整且有效的网址，并包含 http:// 或 https://。短网址会永久有效且无使用次数限制。",
       en: "Make sure you enter a complete and valid URL, including http:// or https://. Short URLs are permanently valid with no usage limits.",
       jp: "http://またはhttps://を含む完全で有効なURLを入力してください。短縮URLは永続的に有効で使用回数制限はありません。",
       es: "Asegúrate de ingresar una URL completa y válida, incluyendo http:// o https://. Las URLs cortas son válidas permanentemente sin límites de uso."
@@ -51,16 +59,22 @@ const shorturlContentTranslations = {
   },
   whatIs: {
     title: {
-      zh: "什麼是短網址？",
+      tw: "什麼是短網址？",
+      cn: "什么是短网址？",
       en: "What is a URL Shortener?",
       jp: "URL短縮とは何ですか？",
       es: "¿Qué es un Acortador de URL?"
     },
     content: {
-      zh: [
+      tw: [
         "短網址（URL Shortener）是一種將冗長的網址轉換成簡短、易於分享連結的工具。當您有一個非常長的網址時，短網址可以幫助您在社交媒體上更容易分享、減少訊息中的字符數量、讓網址看起來更簡潔美觀，以及便於記憶和輸入。",
         "我們的短網址服務使用6位字符代碼，安全可靠且永久有效。無論是在 Facebook、Twitter、LINE 等社交平台分享，還是在 WhatsApp、Telegram 等即時通訊軟體中傳送，或是在印刷品、名片、廣告中使用，短網址都能提供更好的使用體驗。",
         "此外，短網址還有助於追蹤點擊統計和用戶來源分析（即將推出），讓您能夠更好地了解分享效果和受眾反應。"
+      ],
+      cn: [
+        "短网址（URL Shortener）是一种将冗长的网址转换成简短、易于分享链接的工具。当您有一个非常长的网址时，短网址可以帮助您在社交媒体上更容易分享、减少消息中的字符数量、让网址看起来更简洁美观，以及便于记忆和输入。",
+        "我们的短网址服务使用6位字符代码，安全可靠且永久有效。无论是在 Facebook、Twitter、LINE 等社交平台分享，还是在 WhatsApp、Telegram 等即时通讯软件中传送，或是在印刷品、名片、广告中使用，短网址都能提供更好的使用体验。",
+        "此外，短网址还有助于追踪点击统计和用户来源分析（即将推出），让您能够更好地了解分享效果和受众反应。"
       ],
       en: [
         "A URL shortener is a tool that converts long URLs into short, easy-to-share links. When you have a very long URL, a URL shortener can help you share more easily on social media, reduce character count in messages, make URLs look cleaner and more attractive, and make them easier to remember and type.",
@@ -81,18 +95,26 @@ const shorturlContentTranslations = {
   },
   features: {
     title: {
-      zh: "短網址功能特色",
+      tw: "短網址功能特色",
+      cn: "短网址功能特色",
       en: "Short URL Features",
       jp: "短縮URL機能特徴",
       es: "Características de URL Corta"
     },
     items: {
-      zh: [
+      tw: [
         "快速將長網址縮短為易於分享的短連結",
         "6位字符代碼，安全可靠",
         "永久有效，無使用次數限制",
         "適用於各種社交媒體和通訊平台",
         "統計追蹤功能（即將推出）"
+      ],
+      cn: [
+        "快速将长网址缩短为易于分享的短链接",
+        "6位字符代码，安全可靠",
+        "永久有效，无使用次数限制",
+        "适用于各种社交媒体和通讯平台",
+        "统计追踪功能（即将推出）"
       ],
       en: [
         "Quickly shorten long URLs into easy-to-share short links",
@@ -119,7 +141,8 @@ const shorturlContentTranslations = {
   },
   whyChooseUs: {
     title: {
-      zh: "為什麼選擇我們的短網址工具？",
+      tw: "為什麼選擇我們的短網址工具？",
+      cn: "为什么选择我们的短网址工具？",
       en: "Why Choose Our URL Shortener Tool?",
       jp: "なぜ当短縮URLツールを選ぶのか？",
       es: "¿Por Qué Elegir Nuestra Herramienta de Acortamiento de URL?"
@@ -127,13 +150,15 @@ const shorturlContentTranslations = {
     features: {
       simple: {
         title: {
-          zh: "簡單易用",
+          tw: "簡單易用",
+          cn: "简单易用",
           en: "Simple and Easy",
           jp: "シンプルで使いやすい",
           es: "Simple y Fácil"
         },
         content: {
-          zh: "只需輸入長網址，一鍵生成短連結，操作簡單直觀，無需註冊即可使用。",
+          tw: "只需輸入長網址，一鍵生成短連結，操作簡單直觀，無需註冊即可使用。",
+          cn: "只需输入长网址，一键生成短链接，操作简单直观，无需注册即可使用。",
           en: "Just enter a long URL and generate a short link with one click. Simple and intuitive operation without registration required.",
           jp: "長いURLを入力するだけで、ワンクリックで短いリンクを生成。シンプルで直感的な操作で、登録不要で使用可能。",
           es: "Solo ingresa una URL larga y genera un enlace corto con un clic. Operación simple e intuitiva sin necesidad de registro."
@@ -141,13 +166,15 @@ const shorturlContentTranslations = {
       },
       reliable: {
         title: {
-          zh: "安全可靠",
+          tw: "安全可靠",
+          cn: "安全可靠",
           en: "Safe and Reliable",
           jp: "安全で信頼性が高い",
           es: "Seguro y Confiable"
         },
         content: {
-          zh: "採用安全的短網址生成演算法，確保每個短連結的唯一性和安全性，永久有效。",
+          tw: "採用安全的短網址生成演算法，確保每個短連結的唯一性和安全性，永久有效。",
+          cn: "采用安全的短网址生成算法，确保每个短链接的唯一性和安全性，永久有效。",
           en: "Uses secure short URL generation algorithms to ensure uniqueness and security of each short link, permanently valid.",
           jp: "安全な短縮URL生成アルゴリズムを使用して、各短いリンクの一意性と安全性を確保し、永続的に有効。",
           es: "Utiliza algoritmos seguros de generación de URL corta para garantizar la unicidad y seguridad de cada enlace corto, válido permanentemente."
@@ -155,13 +182,15 @@ const shorturlContentTranslations = {
       },
       free: {
         title: {
-          zh: "完全免費",
+          tw: "完全免費",
+          cn: "完全免费",
           en: "Completely Free",
           jp: "完全無料",
           es: "Completamente Gratis"
         },
         content: {
-          zh: "提供免費的短網址服務，無使用次數限制，無廣告干擾，專注於提供最佳用戶體驗。",
+          tw: "提供免費的短網址服務，無使用次數限制，無廣告干擾，專注於提供最佳用戶體驗。",
+          cn: "提供免费的短网址服务，无使用次数限制，无广告干扰，专注于提供最佳用户体验。",
           en: "Provides free URL shortening service with no usage limits, no advertisements, focusing on delivering the best user experience.",
           jp: "使用回数制限なし、広告なしの無料短縮URLサービスを提供し、最高のユーザー体験の提供に焦点を当てています。",
           es: "Proporciona servicio gratuito de acortamiento de URL sin límites de uso, sin anuncios, enfocándose en brindar la mejor experiencia de usuario."
@@ -171,7 +200,8 @@ const shorturlContentTranslations = {
   },
   useCases: {
     title: {
-      zh: "短網址應用場景",
+      tw: "短網址應用場景",
+      cn: "短网址应用场景",
       en: "Short URL Use Cases",
       jp: "短縮URLの使用ケース",
       es: "Casos de Uso de URL Corta"
@@ -179,13 +209,15 @@ const shorturlContentTranslations = {
     scenarios: {
       social: {
         title: {
-          zh: "社交媒體分享",
+          tw: "社交媒體分享",
+          cn: "社交媒体分享",
           en: "Social Media Sharing",
           jp: "ソーシャルメディア共有",
           es: "Compartir en Redes Sociales"
         },
         content: {
-          zh: "在 Facebook、Instagram、Twitter、LINE 等社交平台分享時，短網址能節省字符空間，讓貼文看起來更簡潔美觀。",
+          tw: "在 Facebook、Instagram、Twitter、LINE 等社交平台分享時，短網址能節省字符空間，讓貼文看起來更簡潔美觀。",
+          cn: "在 Facebook、Instagram、Twitter、LINE 等社交平台分享时，短网址能节省字符空间，让帖文看起来更简洁美观。",
           en: "When sharing on social platforms like Facebook, Instagram, Twitter, LINE, short URLs save character space and make posts look cleaner.",
           jp: "Facebook、Instagram、Twitter、LINEなどのソーシャルプラットフォームで共有する際、短縮URLは文字スペースを節約し、投稿をより簡潔に見せます。",
           es: "Al compartir en plataformas sociales como Facebook, Instagram, Twitter, LINE, las URLs cortas ahorran espacio de caracteres y hacen que las publicaciones se vean más limpias."
@@ -193,13 +225,15 @@ const shorturlContentTranslations = {
       },
       marketing: {
         title: {
-          zh: "行銷推廣",
+          tw: "行銷推廣",
+          cn: "营销推广",
           en: "Marketing Promotion",
           jp: "マーケティングプロモーション",
           es: "Promoción de Marketing"
         },
         content: {
-          zh: "在廣告文案、DM、名片或海報上使用短網址，讓顧客更容易記憶和輸入，提高轉換率和品牌形象。",
+          tw: "在廣告文案、DM、名片或海報上使用短網址，讓顧客更容易記憶和輸入，提高轉換率和品牌形象。",
+          cn: "在广告文案、DM、名片或海报上使用短网址，让顾客更容易记忆和输入，提高转化率和品牌形象。",
           en: "Use short URLs in advertising copy, DMs, business cards, or posters to make them easier for customers to remember and type, improving conversion rates and brand image.",
           jp: "広告コピー、DM、名刺、ポスターで短縮URLを使用することで、顧客が覚えやすく入力しやすくなり、コンバージョン率とブランドイメージが向上します。",
           es: "Use URLs cortas en copias publicitarias, DMs, tarjetas de visita o carteles para que sean más fáciles de recordar y escribir para los clientes, mejorando las tasas de conversión y la imagen de marca."
@@ -207,13 +241,15 @@ const shorturlContentTranslations = {
       },
       messaging: {
         title: {
-          zh: "訊息傳送",
+          tw: "訊息傳送",
+          cn: "消息传送",
           en: "Messaging",
           jp: "メッセージング",
           es: "Mensajería"
         },
         content: {
-          zh: "在 WhatsApp、Telegram、微信等即時通訊軟體中傳送連結時，短網址避免了訊息被過長的網址佔據，保持對話的整潔性。",
+          tw: "在 WhatsApp、Telegram、微信等即時通訊軟體中傳送連結時，短網址避免了訊息被過長的網址佔據，保持對話的整潔性。",
+          cn: "在 WhatsApp、Telegram、微信等即时通讯软件中传送链接时，短网址避免了消息被过长的网址占据，保持对话的整洁性。",
           en: "When sending links in instant messaging apps like WhatsApp, Telegram, WeChat, short URLs prevent messages from being dominated by overly long URLs, maintaining conversation clarity.",
           jp: "WhatsApp、Telegram、WeChatなどのインスタントメッセージングアプリでリンクを送信する際、短縮URLは過度に長いURLによってメッセージが支配されることを防ぎ、会話の明瞭性を保ちます。",
           es: "Al enviar enlaces en aplicaciones de mensajería instantánea como WhatsApp, Telegram, WeChat, las URLs cortas evitan que los mensajes sean dominados por URLs excesivamente largas, manteniendo la claridad de la conversación."
@@ -221,13 +257,15 @@ const shorturlContentTranslations = {
       },
       print: {
         title: {
-          zh: "印刷品應用",
+          tw: "印刷品應用",
+          cn: "印刷品应用",
           en: "Print Applications",
           jp: "印刷物への応用",
           es: "Aplicaciones Impresas"
         },
         content: {
-          zh: "在雜誌、報紙、傳單、手冊等印刷媒體上，短網址易於閱讀和手動輸入，大大提升了線下到線上的轉換效果。",
+          tw: "在雜誌、報紙、傳單、手冊等印刷媒體上，短網址易於閱讀和手動輸入，大大提升了線下到線上的轉換效果。",
+          cn: "在杂志、报纸、传单、手册等印刷媒体上，短网址易于阅读和手动输入，大大提升了线下到线上的转化效果。",
           en: "In print media such as magazines, newspapers, flyers, brochures, short URLs are easy to read and manually input, greatly improving offline-to-online conversion effectiveness.",
           jp: "雑誌、新聞、チラシ、パンフレットなどの印刷メディアでは、短縮URLは読みやすく手動入力しやすく、オフラインからオンラインへの変換効果を大幅に向上させます。",
           es: "En medios impresos como revistas, periódicos, volantes, folletos, las URLs cortas son fáciles de leer e ingresar manualmente, mejorando enormemente la efectividad de conversión offline-a-online."
@@ -238,7 +276,8 @@ const shorturlContentTranslations = {
 };
 
 export default function ArticleContent({ locale }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
+  const faqLang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   return (
     <>
@@ -336,10 +375,10 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-bold mb-3">{shorturlTranslations.faq.title[lang]}</h2>
-        
+        <h2 className="text-xl font-bold mb-3">{shorturlTranslations.faq.title[faqLang]}</h2>
+
         <div className="space-y-6">
-          {shorturlTranslations.faq.questions[lang].map((item, index) => (
+          {shorturlTranslations.faq.questions[faqLang].map((item, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">

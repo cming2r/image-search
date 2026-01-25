@@ -28,31 +28,31 @@ const r2Client = new S3Client({
 // 錯誤訊息多語言
 const errorMessages = {
   missingParams: {
-    zh: '缺少必要參數',
+    tw: '缺少必要參數',
     en: 'Missing required parameters',
     jp: '必要なパラメータが不足しています',
     es: 'Faltan parámetros requeridos'
   },
   onlyImages: {
-    zh: '只支持圖片文件',
+    tw: '只支持圖片文件',
     en: 'Only image files are supported',
     jp: '画像ファイルのみサポートされています',
     es: 'Solo se admiten archivos de imagen'
   },
   fileSizeExceeded: {
-    zh: '文件大小不能超過15MB',
+    tw: '文件大小不能超過15MB',
     en: 'File size cannot exceed 15MB',
     jp: 'ファイルサイズは15MBを超えることはできません',
     es: 'El tamaño del archivo no puede exceder 15MB'
   },
   uploadConfigFailed: {
-    zh: '生成上傳配置失敗',
+    tw: '生成上傳配置失敗',
     en: 'Failed to generate upload configuration',
     jp: 'アップロード設定の生成に失敗しました',
     es: 'Error al generar la configuración de carga'
   },
   unknownError: {
-    zh: '未知錯誤',
+    tw: '未知錯誤',
     en: 'Unknown error',
     jp: '不明なエラー',
     es: 'Error desconocido'
@@ -61,7 +61,7 @@ const errorMessages = {
 
 // 獲取本地化的錯誤訊息
 function getErrorMessage(key: keyof typeof errorMessages, locale: string = 'en'): string {
-  const validLocale = ['zh', 'en', 'jp', 'es'].includes(locale) ? locale as 'zh' | 'en' | 'jp' | 'es' : 'en';
+  const validLocale = ['tw', 'cn', 'en', 'jp', 'es'].includes(locale) ? locale as 'tw' | 'en' | 'jp' | 'es' : 'en';
   return errorMessages[key][validLocale];
 }
 

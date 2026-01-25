@@ -15,18 +15,26 @@ interface FAQItem {
 const videoUrlContentTranslations = {
   howToUse: {
     title: {
-      zh: "如何使用此工具？",
+      tw: "如何使用此工具？",
+      cn: "如何使用此工具？",
       en: "How to Use This Tool?",
       jp: "このツールの使い方",
       es: "¿Cómo Usar Esta Herramienta?"
     },
     steps: {
-      zh: [
+      tw: [
         "點擊上傳區域或拖拽影片文件到指定區域",
         "選擇您要上傳的影片文件（支援MP4、MOV、AVI、WebM等格式，最大100MB）",
         "可選設定密碼保護和過期時間",
         "系統自動上傳並處理您的影片文件",
         "獲得短網址連結，立即可以分享使用"
+      ],
+      cn: [
+        "点击上传区域或拖拽视频文件到指定区域",
+        "选择您要上传的视频文件（支持MP4、MOV、AVI、WebM等格式，最大100MB）",
+        "可选设置密码保护和过期时间",
+        "系统自动上传并处理您的视频文件",
+        "获得短网址链接，立即可以分享使用"
       ],
       en: [
         "Click the upload area or drag video files to the designated area",
@@ -51,13 +59,15 @@ const videoUrlContentTranslations = {
       ]
     },
     tip: {
-      zh: "小提示：",
+      tw: "小提示：",
+      cn: "小提示：",
       en: "Tip:",
       jp: "ヒント：",
       es: "Consejo:"
     },
     tipContent: {
-      zh: "設定密碼保護和過期時間可以更好地控制影片的訪問權限，確保內容安全分享。",
+      tw: "設定密碼保護和過期時間可以更好地控制影片的訪問權限，確保內容安全分享。",
+      cn: "设置密码保护和过期时间可以更好地控制视频的访问权限，确保内容安全分享。",
       en: "Setting password protection and expiration time can better control video access permissions, ensuring secure content sharing.",
       jp: "パスワード保護と有効期限を設定することで、動画のアクセス権限をより良く制御し、安全なコンテンツ共有を確保できます。",
       es: "Establecer protección con contraseña y tiempo de expiración puede controlar mejor los permisos de acceso al video, asegurando compartir contenido de forma segura."
@@ -65,16 +75,22 @@ const videoUrlContentTranslations = {
   },
   whatIs: {
     title: {
-      zh: "什麼是影片網址生成器？",
+      tw: "什麼是影片網址生成器？",
+      cn: "什么是视频网址生成器？",
       en: "What is a Video URL Generator?",
       jp: "動画URL生成器とは？",
       es: "¿Qué es un Generador de URL de Video?"
     },
     content: {
-      zh: [
+      tw: [
         "影片網址生成器是一個現代化的雲端影片分享工具，讓使用者能夠快速上傳影片文件並獲取短網址連結。透過 Bunny.net Stream 技術，我們提供高品質的影片串流和全球 CDN 加速播放服務，適合內容創作者、教育工作者和企業用戶使用。",
         "在現代數位內容分享需求日益增長的環境下，無論是教學影片分享、企業展示、個人創作還是客戶服務，都需要穩定可靠的影片託管解決方案。我們的影片網址生成器正是為了解決這些需求而設計，提供快速、安全且高品質的影片分享服務。",
         "我們的服務支援多種主流影片格式，包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等，文件大小最大支援 100MB。同時提供密碼保護和過期時間設定功能，讓您能夠更好地控制影片的訪問權限。"
+      ],
+      cn: [
+        "视频网址生成器是一个现代化的云端视频分享工具，让用户能够快速上传视频文件并获取短网址链接。通过 Bunny.net Stream 技术，我们提供高品质的视频串流和全球 CDN 加速播放服务，适合内容创作者、教育工作者和企业用户使用。",
+        "在现代数字内容分享需求日益增长的环境下，无论是教学视频分享、企业展示、个人创作还是客户服务，都需要稳定可靠的视频托管解决方案。我们的视频网址生成器正是为了解决这些需求而设计，提供快速、安全且高品质的视频分享服务。",
+        "我们的服务支持多种主流视频格式，包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等，文件大小最大支持 100MB。同时提供密码保护和过期时间设置功能，让您能够更好地控制视频的访问权限。"
       ],
       en: [
         "A Video URL Generator is a modern cloud video sharing tool that allows users to quickly upload video files and obtain short URL links. Through Bunny.net Stream technology, we provide high-quality video streaming and global CDN accelerated playback services, suitable for content creators, educators, and business users.",
@@ -95,22 +111,28 @@ const videoUrlContentTranslations = {
   },
   features: {
     title: {
-      zh: "功能特色與優勢",
+      tw: "功能特色與優勢",
+      cn: "功能特色与优势",
       en: "Features and Advantages",
       jp: "機能の特徴と利点",
       es: "Características y Ventajas"
     },
     upload: {
       title: {
-        zh: "多格式影片上傳",
+        tw: "多格式影片上傳",
+        cn: "多格式视频上传",
         en: "Multi-Format Video Upload",
         jp: "マルチフォーマット動画アップロード",
         es: "Carga de Video Multi-Formato"
       },
       content: {
-        zh: [
+        tw: [
           "支援主流影片格式包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等，最大文件大小達 100MB。系統採用先進的並行上傳技術，通常可在數十秒內完成上傳處理。",
           "支援拖拽上傳和點擊選擇兩種上傳方式，讓操作更加便捷。上傳完成後自動進行影片處理和優化，確保在各種設備上都能流暢播放。我們的全球 CDN 網絡確保無論您身在何處，都能享受到快速穩定的上傳和播放服務。"
+        ],
+        cn: [
+          "支持主流视频格式包括 MP4、MOV、AVI、WebM、MKV、3GP、M4V 等，最大文件大小达 100MB。系统采用先进的并行上传技术，通常可在数十秒内完成上传处理。",
+          "支持拖拽上传和点击选择两种上传方式，让操作更加便捷。上传完成后自动进行视频处理和优化，确保在各种设备上都能流畅播放。我们的全球 CDN 网络确保无论您身在何处，都能享受到快速稳定的上传和播放服务。"
         ],
         en: [
           "Supports mainstream video formats including MP4, MOV, AVI, WebM, MKV, 3GP, M4V, with maximum file size up to 100MB. The system employs advanced parallel upload technology, typically completing upload processing within tens of seconds.",
@@ -128,15 +150,20 @@ const videoUrlContentTranslations = {
     },
     streaming: {
       title: {
-        zh: "高品質影片串流",
+        tw: "高品質影片串流",
+        cn: "高品质视频串流",
         en: "High-Quality Video Streaming",
         jp: "高品質動画ストリーミング",
         es: "Streaming de Video de Alta Calidad"
       },
       content: {
-        zh: [
+        tw: [
           "採用 Bunny.net Stream 企業級串流技術，提供高品質的影片播放體驗。支援自適應碼率串流，根據用戶的網絡條件自動調整影片品質，確保流暢播放不卡頓。",
           "全球 CDN 加速網絡覆蓋多個地區，大幅減少緩衝時間，提升播放速度。支援多種設備播放，包括桌面電腦、平板電腦、智慧手機等，確保跨平台兼容性。所有影片都採用 HTTPS 加密傳輸，保障播放安全。"
+        ],
+        cn: [
+          "采用 Bunny.net Stream 企业级串流技术，提供高品质的视频播放体验。支持自适应码率串流，根据用户的网络条件自动调整视频品质，确保流畅播放不卡顿。",
+          "全球 CDN 加速网络覆盖多个地区，大幅减少缓冲时间，提升播放速度。支持多种设备播放，包括桌面电脑、平板电脑、智能手机等，确保跨平台兼容性。所有视频都采用 HTTPS 加密传输，保障播放安全。"
         ],
         en: [
           "Uses enterprise-grade Bunny.net Stream technology to provide high-quality video playback experience. Supports adaptive bitrate streaming, automatically adjusting video quality based on users' network conditions to ensure smooth playback without buffering.",
@@ -154,15 +181,20 @@ const videoUrlContentTranslations = {
     },
     security: {
       title: {
-        zh: "安全控制功能",
+        tw: "安全控制功能",
+        cn: "安全控制功能",
         en: "Security Control Features",
         jp: "セキュリティ制御機能",
         es: "Características de Control de Seguridad"
       },
       content: {
-        zh: [
+        tw: [
           "提供密碼保護功能，可設定最多4位數字密碼來保護您的影片內容。只有輸入正確密碼的人才能觀看影片，為敏感內容提供額外的安全保障。同時支援過期時間設定，可選擇從1小時到7天不等的自動過期時間。",
           "所有影片都存儲在安全的雲端服務器上，採用 HTTPS 加密傳輸保護數據安全。系統會記錄設備資訊，幫助您了解影片的訪問來源。過期的影片會自動刪除，節省存儲空間並保護隱私。"
+        ],
+        cn: [
+          "提供密码保护功能，可设置最多4位数字密码来保护您的视频内容。只有输入正确密码的人才能观看视频，为敏感内容提供额外的安全保障。同时支持过期时间设置，可选择从1小时到7天不等的自动过期时间。",
+          "所有视频都存储在安全的云端服务器上，采用 HTTPS 加密传输保护数据安全。系统会记录设备信息，帮助您了解视频的访问来源。过期的视频会自动删除，节省存储空间并保护隐私。"
         ],
         en: [
           "Provides password protection features, allowing you to set up to 4-digit passwords to protect your video content. Only those who enter the correct password can watch the video, providing additional security for sensitive content. Also supports expiration time settings, with options ranging from 1 hour to 7 days for automatic expiration.",
@@ -181,7 +213,8 @@ const videoUrlContentTranslations = {
   },
   useCases: {
     title: {
-      zh: "使用場景與應用",
+      tw: "使用場景與應用",
+      cn: "使用场景与应用",
       en: "Use Cases and Applications",
       jp: "使用シナリオとアプリケーション",
       es: "Casos de Uso y Aplicaciones"
@@ -189,13 +222,15 @@ const videoUrlContentTranslations = {
     scenarios: {
       education: {
         title: {
-          zh: "教育培訓",
+          tw: "教育培訓",
+          cn: "教育培训",
           en: "Education and Training",
           jp: "教育研修",
           es: "Educación y Entrenamiento"
         },
         content: {
-          zh: "分享教學影片給學生，支援密碼保護確保課程內容安全，過期設定避免長期佔用存儲空間。",
+          tw: "分享教學影片給學生，支援密碼保護確保課程內容安全，過期設定避免長期佔用存儲空間。",
+          cn: "分享教学视频给学生，支持密码保护确保课程内容安全，过期设置避免长期占用存储空间。",
           en: "Share instructional videos with students, with password protection to ensure course content security and expiration settings to avoid long-term storage occupation.",
           jp: "学生との教育動画共有、パスワード保護でコース内容のセキュリティを確保し、有効期限設定で長期間のストレージ占有を回避。",
           es: "Compartir videos instructivos con estudiantes, con protección por contraseña para asegurar la seguridad del contenido del curso y configuraciones de expiración para evitar ocupación de almacenamiento a largo plazo."
@@ -203,13 +238,15 @@ const videoUrlContentTranslations = {
       },
       business: {
         title: {
-          zh: "企業展示",
+          tw: "企業展示",
+          cn: "企业展示",
           en: "Business Presentations",
           jp: "ビジネスプレゼンテーション",
           es: "Presentaciones Empresariales"
         },
         content: {
-          zh: "產品演示和公司介紹影片分享，高品質串流確保專業展示效果，密碼保護控制觀看權限。",
+          tw: "產品演示和公司介紹影片分享，高品質串流確保專業展示效果，密碼保護控制觀看權限。",
+          cn: "产品演示和公司介绍视频分享，高品质串流确保专业展示效果，密码保护控制观看权限。",
           en: "Product demonstrations and company introduction video sharing, high-quality streaming ensures professional presentation effects, password protection controls viewing permissions.",
           jp: "製品デモと会社紹介動画共有、高品質ストリーミングでプロフェッショナルなプレゼンテーション効果を確保し、パスワード保護で視聴権限を制御。",
           es: "Compartir videos de demostraciones de productos e introducción de la empresa, streaming de alta calidad asegura efectos de presentación profesional, protección por contraseña controla permisos de visualización."
@@ -217,13 +254,15 @@ const videoUrlContentTranslations = {
       },
       personal: {
         title: {
-          zh: "個人創作",
+          tw: "個人創作",
+          cn: "个人创作",
           en: "Personal Creations",
           jp: "個人創作",
           es: "Creaciones Personales"
         },
         content: {
-          zh: "分享創意作品和生活記錄，QR Code 功能方便移動設備分享，過期設定保護個人隱私。",
+          tw: "分享創意作品和生活記錄，QR Code 功能方便移動設備分享，過期設定保護個人隱私。",
+          cn: "分享创意作品和生活记录，QR Code 功能方便移动设备分享，过期设置保护个人隐私。",
           en: "Share creative works and life recordings, QR Code feature facilitates mobile device sharing, expiration settings protect personal privacy.",
           jp: "クリエイティブ作品と生活記録の共有、QRコード機能でモバイルデバイス共有を促進し、有効期限設定で個人プライバシーを保護。",
           es: "Compartir trabajos creativos y grabaciones de vida, la función de código QR facilita compartir en dispositivos móviles, configuraciones de expiración protegen la privacidad personal."
@@ -231,13 +270,15 @@ const videoUrlContentTranslations = {
       },
       events: {
         title: {
-          zh: "活動記錄",
+          tw: "活動記錄",
+          cn: "活动记录",
           en: "Event Recording",
           jp: "イベント記録",
           es: "Grabación de Eventos"
         },
         content: {
-          zh: "會議記錄和活動回顧影片保存分享，支援大文件上傳，全球 CDN 確保穩定播放。",
+          tw: "會議記錄和活動回顧影片保存分享，支援大文件上傳，全球 CDN 確保穩定播放。",
+          cn: "会议记录和活动回顾视频保存分享，支持大文件上传，全球 CDN 确保稳定播放。",
           en: "Meeting recordings and event review video storage and sharing, supports large file uploads, global CDN ensures stable playback.",
           jp: "会議記録とイベントレビュー動画保存共有、大容量ファイルアップロードをサポートし、グローバルCDNで安定した再生を確保。",
           es: "Almacenamiento y compartir videos de grabaciones de reuniones y revisión de eventos, soporta cargas de archivos grandes, CDN global asegura reproducción estable."
@@ -245,13 +286,15 @@ const videoUrlContentTranslations = {
       },
       support: {
         title: {
-          zh: "客戶服務",
+          tw: "客戶服務",
+          cn: "客户服务",
           en: "Customer Service",
           jp: "カスタマーサービス",
           es: "Servicio al Cliente"
         },
         content: {
-          zh: "技術支援和問題解答影片，密碼保護確保客戶資料安全，短網址連結方便快速分享。",
+          tw: "技術支援和問題解答影片，密碼保護確保客戶資料安全，短網址連結方便快速分享。",
+          cn: "技术支持和问题解答视频，密码保护确保客户资料安全，短网址链接方便快速分享。",
           en: "Technical support and Q&A videos, password protection ensures customer data security, short URL links facilitate quick sharing.",
           jp: "技術サポートとQ&A動画、パスワード保護で顧客データのセキュリティを確保し、短縮URLリンクで迅速な共有を促進。",
           es: "Videos de soporte técnico y preguntas frecuentes, protección por contraseña asegura la seguridad de datos del cliente, enlaces de URL cortos facilitan compartir rápido."
@@ -259,13 +302,15 @@ const videoUrlContentTranslations = {
       },
       collaboration: {
         title: {
-          zh: "團隊協作",
+          tw: "團隊協作",
+          cn: "团队协作",
           en: "Team Collaboration",
           jp: "チームコラボレーション",
           es: "Colaboración en Equipo"
         },
         content: {
-          zh: "專案影片共享、團隊溝通記錄，設備資訊記錄幫助了解團隊成員訪問情況。",
+          tw: "專案影片共享、團隊溝通記錄，設備資訊記錄幫助了解團隊成員訪問情況。",
+          cn: "项目视频共享、团队沟通记录，设备信息记录帮助了解团队成员访问情况。",
           en: "Project video sharing, team communication records, device information recording helps understand team member access situations.",
           jp: "プロジェクト動画共有、チームコミュニケーション記録、デバイス情報記録でチームメンバーのアクセス状況を理解。",
           es: "Compartir videos de proyecto, registros de comunicación del equipo, grabación de información del dispositivo ayuda a entender situaciones de acceso de miembros del equipo."
@@ -275,7 +320,8 @@ const videoUrlContentTranslations = {
   },
   whyChooseUs: {
     title: {
-      zh: "為什麼選擇我們的影片網址生成器？",
+      tw: "為什麼選擇我們的影片網址生成器？",
+      cn: "为什么选择我们的视频网址生成器？",
       en: "Why Choose Our Video URL Generator?",
       jp: "なぜ当動画URL生成器を選ぶのか？",
       es: "¿Por Qué Elegir Nuestro Generador de URL de Video?"
@@ -283,13 +329,15 @@ const videoUrlContentTranslations = {
     features: {
       reliable: {
         title: {
-          zh: "穩定可靠",
+          tw: "穩定可靠",
+          cn: "稳定可靠",
           en: "Stable and Reliable",
           jp: "安定信頼性",
           es: "Estable y Confiable"
         },
         content: {
-          zh: "99.9% 的服務可用性，Bunny.net Stream 企業級基礎設施確保您的影片始終可播放。",
+          tw: "99.9% 的服務可用性，Bunny.net Stream 企業級基礎設施確保您的影片始終可播放。",
+          cn: "99.9% 的服务可用性，Bunny.net Stream 企业级基础设施确保您的视频始终可播放。",
           en: "99.9% service availability, Bunny.net Stream enterprise-grade infrastructure ensures your videos are always playable.",
           jp: "99.9%のサービス可用性、Bunny.net Streamエンタープライズグレードインフラストラクチャがあなたの動画が常に再生可能であることを保証します。",
           es: "99.9% de disponibilidad del servicio, infraestructura Bunny.net Stream de grado empresarial asegura que tus videos sean siempre reproducibles."
@@ -297,13 +345,15 @@ const videoUrlContentTranslations = {
       },
       secure: {
         title: {
-          zh: "安全保護",
+          tw: "安全保護",
+          cn: "安全保护",
           en: "Security Protection",
           jp: "セキュリティ保護",
           es: "Protección de Seguridad"
         },
         content: {
-          zh: "HTTPS 加密傳輸、密碼保護功能、過期時間控制，全方位保護您的影片安全。",
+          tw: "HTTPS 加密傳輸、密碼保護功能、過期時間控制，全方位保護您的影片安全。",
+          cn: "HTTPS 加密传输、密码保护功能、过期时间控制，全方位保护您的视频安全。",
           en: "HTTPS encrypted transmission, password protection features, expiration time control - comprehensive protection for your video security.",
           jp: "HTTPS暗号化伝送、パスワード保護機能、有効期限制御 - 動画セキュリティの包括的保護。",
           es: "Transmisión encriptada HTTPS, características de protección por contraseña, control de tiempo de expiración - protección integral para la seguridad de tu video."
@@ -311,13 +361,15 @@ const videoUrlContentTranslations = {
       },
       quality: {
         title: {
-          zh: "高品質串流",
+          tw: "高品質串流",
+          cn: "高品质串流",
           en: "High-Quality Streaming",
           jp: "高品質ストリーミング",
           es: "Streaming de Alta Calidad"
         },
         content: {
-          zh: "Bunny.net Stream 技術提供自適應碼率串流，確保各種網絡環境下的最佳播放體驗。",
+          tw: "Bunny.net Stream 技術提供自適應碼率串流，確保各種網絡環境下的最佳播放體驗。",
+          cn: "Bunny.net Stream 技术提供自适应码率串流，确保各种网络环境下的最佳播放体验。",
           en: "Bunny.net Stream technology provides adaptive bitrate streaming, ensuring optimal playback experience in various network environments.",
           jp: "Bunny.net Stream技術がアダプティブビットレートストリーミングを提供し、様々なネットワーク環境で最適な再生体験を確保します。",
           es: "La tecnología Bunny.net Stream proporciona streaming de bitrate adaptativo, asegurando experiencia de reproducción óptima en varios entornos de red."
@@ -325,13 +377,15 @@ const videoUrlContentTranslations = {
       },
       fast: {
         title: {
-          zh: "極速體驗",
+          tw: "極速體驗",
+          cn: "极速体验",
           en: "Lightning Fast",
           jp: "超高速体験",
           es: "Experiencia Ultrarrápida"
         },
         content: {
-          zh: "全球 CDN 加速，平均上傳時間少於 60 秒，快速穩定的影片播放。",
+          tw: "全球 CDN 加速，平均上傳時間少於 60 秒，快速穩定的影片播放。",
+          cn: "全球 CDN 加速，平均上传时间少于 60 秒，快速稳定的视频播放。",
           en: "Global CDN acceleration with average upload time under 60 seconds, fast and stable video playback.",
           jp: "グローバルCDN加速により、平均アップロード時間は60秒未満で、高速で安定した動画再生。",
           es: "Aceleración CDN global con tiempo de carga promedio bajo 60 segundos, reproducción de video rápida y estable."
@@ -339,13 +393,15 @@ const videoUrlContentTranslations = {
       },
       convenient: {
         title: {
-          zh: "便捷分享",
+          tw: "便捷分享",
+          cn: "便捷分享",
           en: "Convenient Sharing",
           jp: "便利な共有",
           es: "Compartir Conveniente"
         },
         content: {
-          zh: "短網址連結、QR Code 生成、多平台支援，讓影片分享變得更簡單。",
+          tw: "短網址連結、QR Code 生成、多平台支援，讓影片分享變得更簡單。",
+          cn: "短网址链接、QR Code 生成、多平台支持，让视频分享变得更简单。",
           en: "Short URL links, QR Code generation, multi-platform support make video sharing easier.",
           jp: "短縮URLリンク、QRコード生成、マルチプラットフォームサポートで動画共有をより簡単に。",
           es: "Enlaces de URL cortos, generación de código QR, soporte multiplataforma hacen que compartir videos sea más fácil."
@@ -353,13 +409,15 @@ const videoUrlContentTranslations = {
       },
       flexible: {
         title: {
-          zh: "靈活控制",
+          tw: "靈活控制",
+          cn: "灵活控制",
           en: "Flexible Control",
           jp: "柔軟な制御",
           es: "Control Flexible"
         },
         content: {
-          zh: "密碼保護、過期時間設定、設備資訊記錄等個性化控制功能。",
+          tw: "密碼保護、過期時間設定、設備資訊記錄等個性化控制功能。",
+          cn: "密码保护、过期时间设置、设备信息记录等个性化控制功能。",
           en: "Password protection, expiration time settings, device information recording and other personalized control features.",
           jp: "パスワード保護、有効期限設定、デバイス情報記録などのパーソナライズされた制御機能。",
           es: "Protección por contraseña, configuraciones de tiempo de expiración, grabación de información del dispositivo y otras características de control personalizadas."
@@ -368,13 +426,15 @@ const videoUrlContentTranslations = {
     },
     callToAction: {
       title: {
-        zh: "立即體驗最專業的影片網址生成器",
+        tw: "立即體驗最專業的影片網址生成器",
+        cn: "立即体验最专业的视频网址生成器",
         en: "Experience the most professional video URL generator now",
         jp: "今すぐ最もプロフェッショナルな動画URL生成器を体験",
         es: "Experimenta ahora el generador de URL de video más profesional"
       },
       subtitle: {
-        zh: "高品質串流，安全分享，讓影片傳播變得更簡單",
+        tw: "高品質串流，安全分享，讓影片傳播變得更簡單",
+        cn: "高品质串流，安全分享，让视频传播变得更简单",
         en: "High-quality streaming, secure sharing, making video distribution easier",
         jp: "高品質ストリーミング、安全な共有、動画配信をより簡単に",
         es: "Streaming de alta calidad, compartir seguro, haciendo que la distribución de video sea más fácil"
@@ -384,7 +444,8 @@ const videoUrlContentTranslations = {
 };
 
 export default function ArticleContent({ locale }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
+  const faqLang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   return (
     <>
@@ -552,10 +613,10 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-        <h2>{lang === 'zh' ? '常見問題' : lang === 'en' ? 'FAQ' : lang === 'jp' ? 'よくある質問' : 'Preguntas Frecuentes'}</h2>
-        
+        <h2>{lang === 'tw' ? '常見問題' : lang === 'cn' ? '常见问题' : lang === 'en' ? 'FAQ' : lang === 'jp' ? 'よくある質問' : 'Preguntas Frecuentes'}</h2>
+
         <div className="space-y-6">
-          {videoUrlTranslations.faq.questions[lang].map((item: FAQItem, index: number) => (
+          {videoUrlTranslations.faq.questions[faqLang].map((item: FAQItem, index: number) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">

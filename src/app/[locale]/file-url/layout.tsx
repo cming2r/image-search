@@ -11,14 +11,15 @@ import { fileUrlTranslations } from './components/meta-translations';
 
 
 const keywordsList = {
-  zh: ['檔案網址', '檔案上傳', '檔案連結產生器', '檔案託管', '檔案分享'],
+  tw: ['檔案網址', '檔案上傳', '檔案連結產生器', '檔案託管', '檔案分享'],
+  cn: ['文件网址', '文件上传', '文件链接生成器', '文件托管', '文件分享'],
   en: ['file url', 'file upload', 'file link generator', 'file hosting', 'file sharing'],
   jp: ['ファイルURL', 'ファイルアップロード', 'ファイルリンクジェネレーター', 'ファイルホスティング', 'ファイル共有'],
   es: ['url de archivo', 'subir archivo', 'generador de enlace de archivo', 'alojamiento de archivos', 'compartir archivos']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof fileUrlTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof fileUrlTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -31,7 +32,8 @@ const convertFaqForSchema = (faqData: typeof fileUrlTranslations.faq.questions.z
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(fileUrlTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(fileUrlTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(fileUrlTranslations.faq.questions.cn),
   en: convertFaqForSchema(fileUrlTranslations.faq.questions.en),
   jp: convertFaqForSchema(fileUrlTranslations.faq.questions.jp),
   es: convertFaqForSchema(fileUrlTranslations.faq.questions.es)
@@ -43,7 +45,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 // 語言對應表，將locale映射為HTML語言代碼
 
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -57,9 +60,9 @@ const imageUrl = getFullUrl('/images/og-image.png');
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = fileUrlTranslations.meta.title[locale as keyof typeof fileUrlTranslations.meta.title] || fileUrlTranslations.meta.title.zh;
-  const description = fileUrlTranslations.meta.description[locale as keyof typeof fileUrlTranslations.meta.description] || fileUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = fileUrlTranslations.meta.title[locale as keyof typeof fileUrlTranslations.meta.title] || fileUrlTranslations.meta.title.tw;
+  const description = fileUrlTranslations.meta.description[locale as keyof typeof fileUrlTranslations.meta.description] || fileUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `檔案網址產生器` : 
@@ -82,7 +85,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '檔案網址產生器工具界面' : 
+          alt: locale === 'tw' ? '檔案網址產生器工具界面' :
+               locale === 'cn' ? '文件网址生成器工具界面' :
                locale === 'en' ? 'File URL Generator Tool Interface' :
                locale === 'es' ? 'Interfaz de Herramienta Generadora de URL de Archivo' :
                'ファイルURLジェネレーターツールインターフェース',
@@ -105,8 +109,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/file-url' : `/${locale}/file-url`),
       languages: {
-        'zh-TW': getFullUrl('/file-url'),
-        'en': getFullUrl('/en/file-url'),
+        'zh-TW': getFullUrl('/tw/file-url'),
+        'zh-CN': getFullUrl('/cn/file-url'),
+        'en': getFullUrl('/file-url'),
         'ja': getFullUrl('/jp/file-url'),
         'es': getFullUrl('/es/file-url'),
       },
@@ -141,12 +146,12 @@ export default async function FileUrlLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = fileUrlTranslations.meta.title[locale as keyof typeof fileUrlTranslations.meta.title] || fileUrlTranslations.meta.title.zh;
-  const description = fileUrlTranslations.meta.description[locale as keyof typeof fileUrlTranslations.meta.description] || fileUrlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = fileUrlTranslations.meta.title[locale as keyof typeof fileUrlTranslations.meta.title] || fileUrlTranslations.meta.title.tw;
+  const description = fileUrlTranslations.meta.description[locale as keyof typeof fileUrlTranslations.meta.description] || fileUrlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/file-url', title, locale);
@@ -165,7 +170,8 @@ export default async function FileUrlLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/file-url',
-    locale === 'zh' ? '檔案網址產生器工具' :
+    locale === 'tw' ? '檔案網址產生器工具' :
+    locale === 'cn' ? '文件网址生成器工具' :
     locale === 'en' ? 'File URL Generator Tool' :
     locale === 'es' ? 'Herramienta Generadora de URL de Archivo' :
     'ファイルURLジェネレーターツール',

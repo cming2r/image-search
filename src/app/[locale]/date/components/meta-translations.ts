@@ -1,13 +1,15 @@
 export const metaTranslations = {
   meta: {
     title: {
-      zh: "日期計算器",
+      tw: "日期計算器",
+      cn: "日期计算器",
       en: "Date Calculator",
       jp: "日付計算機",
       es: "Calculadora de Fechas"
     },
     description: {
-      zh: "計算日期之間的差距，或從指定日期加減天數",
+      tw: "計算日期之間的差距，或從指定日期加減天數",
+      cn: "计算日期之间的差距，或从指定日期加减天数",
       en: "Calculate the difference between dates, or add/subtract days from a specific date",
       jp: "日付間の差を計算したり、特定の日付から日数を追加・減算する",
       es: "Calcule la diferencia entre fechas o agregue/sustraiga días de una fecha específica"
@@ -15,13 +17,14 @@ export const metaTranslations = {
   },
   faq: {
     title: {
-      zh: "日期計算器常見問題",
+      tw: "日期計算器常見問題",
+      cn: "日期计算器常见问题",
       en: "Date Calculator Frequently Asked Questions",
       jp: "日付計算機に関するよくある質問",
       es: "Preguntas Frecuentes sobre la Calculadora de Fechas"
     },
     questions: {
-      zh: [
+      tw: [
         {
           question: "日期計算器是否考慮閏年？",
           answer: "是的，我們的日期計算器會自動考慮閏年的影響。當您進行跨年度的日期計算時，系統會準確計算包括2月29日在內的所有日期，確保結果的準確性。"
@@ -41,6 +44,28 @@ export const metaTranslations = {
         {
           question: "是否可以保存計算記錄？",
           answer: "目前的版本專注於提供快速、準確的即時計算功能。每次計算都是獨立的，不會保存歷史記錄。如果您需要保留計算結果，建議截圖或手動記錄重要的日期資訊。"
+        }
+      ],
+      cn: [
+        {
+          question: "日期计算器是否考虑闰年？",
+          answer: "是的，我们的日期计算器会自动考虑闰年的影响。当您进行跨年度的日期计算时，系统会准确计算包括2月29日在内的所有日期，确保结果的准确性。"
+        },
+        {
+          question: "可以计算过去的日期吗？",
+          answer: "当然可以！您可以输入负数天数来计算过去的日期，或者选择两个过去的日期来计算它们之间的间隔。这对于计算已过去的时间或历史事件非常有用。"
+        },
+        {
+          question: "计算结果会显示星期几吗？",
+          answer: "是的，所有计算结果都会显示对应的星期几。这个功能对于安排会议、活动或旅行计划特别有帮助，让您能够更好地规划时间。"
+        },
+        {
+          question: "日期计算器支持哪些日期格式？",
+          answer: "我们的日期选择器提供直观的日历界面，您只需点选即可选择日期，无需担心格式问题。系统会根据您的地区设置自动显示适合的日期格式。"
+        },
+        {
+          question: "是否可以保存计算记录？",
+          answer: "目前的版本专注于提供快速、准确的即时计算功能。每次计算都是独立的，不会保存历史记录。如果您需要保留计算结果，建议截图或手动记录重要的日期信息。"
         }
       ],
       en: [

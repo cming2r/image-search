@@ -188,17 +188,19 @@ export function generateWebApplicationSchema(
   ratingCount: string = '150',
   validFrom: string = '2025-01-01T00:00:00Z',
   language: string = 'zh-TW',
-  locale: string = 'zh'
+  locale: string = 'tw'
 ): WebApplicationSchema {
   // 處理不同語言的路徑
-  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const localePath = locale === 'en' ? path : `/${locale}${path}`;
   const url = getFullUrl(localePath);
-  
+
   // 根據語言設置 inLanguage 參數
   const langMap: Record<string, string> = {
-    'zh': 'zh-TW',
+    'tw': 'zh-TW',
+    'cn': 'zh-CN',
     'en': 'en',
-    'jp': 'ja'
+    'jp': 'ja',
+    'es': 'es'
   };
   
   const inLanguage = langMap[locale] || language;
@@ -233,19 +235,21 @@ export function generateWebApplicationSchema(
 }
 
 export function generateBreadcrumbSchema(
-  path?: string, 
-  pageName?: string, 
-  locale: string = 'zh'
+  path?: string,
+  pageName?: string,
+  locale: string = 'tw'
 ): BreadcrumbSchema {
   const baseUrl = getBaseUrl();
-  
+
   // 多語言主頁名稱
   const homeNames: Record<string, string> = {
-    'zh': '首頁',
+    'tw': '首頁',
+    'cn': '首页',
     'en': 'Home',
-    'jp': 'ホーム'
+    'jp': 'ホーム',
+    'es': 'Inicio'
   };
-  
+
   const homeName = homeNames[locale] || '首頁';
   
   const itemListElement = [
@@ -265,7 +269,7 @@ export function generateBreadcrumbSchema(
     // 處理多層路徑
     pathSegments.forEach((segment, index) => {
       // 根據語言生成URL
-      if (locale === 'zh') {
+      if (locale === 'en') {
         currentUrl += `/${segment}`;
       } else {
         if (index === 0) {
@@ -303,36 +307,40 @@ export function generateBreadcrumbSchema(
 }
 
 export function generateWebPageSchema(
-  path: string, 
-  title: string, 
-  description: string, 
-  imageUrl?: string, 
-  language: string = 'zh-TW', 
+  path: string,
+  title: string,
+  description: string,
+  imageUrl?: string,
+  language: string = 'zh-TW',
   datePublished: string = '2025-01-01T00:00:00+08:00',
   dateModified: string = '2025-01-01T00:00:00+08:00',
   removeBreadcrumb: boolean = false,
-  locale: string = 'zh'
+  locale: string = 'tw'
 ): WebPageSchema {
   // 處理不同語言的路徑
-  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const localePath = locale === 'en' ? path : `/${locale}${path}`;
   const fullUrl = getFullUrl(localePath);
   const baseUrl = getBaseUrl();
   const pathSegments = path.split('/').filter(Boolean);
-  
+
   // 語言對應表，將locale映射為HTML語言代碼
   const langMap: Record<string, string> = {
-    'zh': 'zh-TW',
+    'tw': 'zh-TW',
+    'cn': 'zh-CN',
     'en': 'en',
-    'jp': 'ja'
+    'jp': 'ja',
+    'es': 'es'
   };
-  
+
   const inLanguage = langMap[locale] || language;
-  
+
   // 多語言主頁名稱
   const homeNames: Record<string, string> = {
-    'zh': '首頁',
+    'tw': '首頁',
+    'cn': '首页',
     'en': 'Home',
-    'jp': 'ホーム'
+    'jp': 'ホーム',
+    'es': 'Inicio'
   };
   
   // 準備麵包屑項目
@@ -407,39 +415,43 @@ export function generateWebPageSchema(
 }
 
 export function generateArticleSchema(
-  path: string, 
-  title: string, 
-  description: string, 
+  path: string,
+  title: string,
+  description: string,
   imageUrl: string,
   datePublished: string = '2025-01-01T00:00:00+08:00',
   dateModified: string = '2025-01-01T00:00:00+08:00',
   language: string = 'zh-TW',
   keywords: string[] = [],
   wordCount?: number,
-  locale: string = 'zh'
+  locale: string = 'tw'
 ): ArticleSchema {
   // 處理不同語言的路徑
-  const localePath = locale === 'zh' ? path : `/${locale}${path}`;
+  const localePath = locale === 'en' ? path : `/${locale}${path}`;
   const fullUrl = getFullUrl(localePath);
   const baseUrl = getBaseUrl();
   const richSnippetId = `${fullUrl}#richSnippet`;
   const webpageId = `${fullUrl}#webpage`;
   const pathSegments = path.split('/').filter(Boolean);
-  
+
   // 語言對應表，將locale映射為HTML語言代碼
   const langMap: Record<string, string> = {
-    'zh': 'zh-TW',
+    'tw': 'zh-TW',
+    'cn': 'zh-CN',
     'en': 'en',
-    'jp': 'ja'
+    'jp': 'ja',
+    'es': 'es'
   };
-  
+
   const inLanguage = langMap[locale] || language;
-  
+
   // 多語言主頁名稱
   const homeNames: Record<string, string> = {
-    'zh': '首頁',
+    'tw': '首頁',
+    'cn': '首页',
     'en': 'Home',
-    'jp': 'ホーム'
+    'jp': 'ホーム',
+    'es': 'Inicio'
   };
   
   // 準備麵包屑項目 - 這些項目不再在ArticleSchema中使用，

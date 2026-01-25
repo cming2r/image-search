@@ -10,14 +10,15 @@ import {
 import { imageSearchTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['以圖搜圖', '反向圖片搜尋', 'iphone手機以圖搜圖'],
+  tw: ['以圖搜圖', '反向圖片搜尋', 'iphone手機以圖搜圖'],
+  cn: ['以图搜图', '反向图片搜索', 'iphone手机以图搜图'],
   en: ['reverse image search', 'image search tool', 'search by image'],
   jp: ['画像検索', '逆画像検索', '画像で検索'],
   es: ['búsqueda inversa de imágenes', 'herramienta de búsqueda de imágenes', 'buscar por imagen']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof imageSearchTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof imageSearchTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -30,7 +31,8 @@ const convertFaqForSchema = (faqData: typeof imageSearchTranslations.faq.questio
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(imageSearchTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(imageSearchTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(imageSearchTranslations.faq.questions.cn),
   en: convertFaqForSchema(imageSearchTranslations.faq.questions.en),
   jp: convertFaqForSchema(imageSearchTranslations.faq.questions.jp),
   es: convertFaqForSchema(imageSearchTranslations.faq.questions.es)
@@ -41,7 +43,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -53,9 +56,9 @@ const imageUrl = getFullUrl('/images/og-image-search.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.zh;
-  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.tw;
+  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `以圖搜圖` : 
@@ -78,7 +81,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '以圖搜圖工具界面' : 
+          alt: locale === 'tw' ? '以圖搜圖工具界面' :
+               locale === 'cn' ? '以图搜图工具界面' :
                locale === 'en' ? 'Image Search Tool Interface' :
                locale === 'jp' ? '画像検索ツールインターフェース' :
                locale === 'es' ? 'Interfaz de Herramienta de Búsqueda de Imágenes' : 'Image Search Tool Interface',
@@ -101,7 +105,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/image-search' : `/${locale}/image-search`),
       languages: {
-        'zh-TW': getFullUrl('/image-search'),
+        'zh-TW': getFullUrl('/tw/image-search'),
+        'zh-CN': getFullUrl('/cn/image-search'),
         'en': getFullUrl('/en/image-search'),
         'ja': getFullUrl('/jp/image-search'),
         'es': getFullUrl('/es/image-search'),
@@ -137,12 +142,12 @@ export default async function ImageSearchLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.zh;
-  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = imageSearchTranslations.meta.title[locale as keyof typeof imageSearchTranslations.meta.title] || imageSearchTranslations.meta.title.tw;
+  const description = imageSearchTranslations.meta.description[locale as keyof typeof imageSearchTranslations.meta.description] || imageSearchTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/image-search', title, locale);
@@ -161,7 +166,8 @@ export default async function ImageSearchLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/image-search',
-    locale === 'zh' ? '以圖搜圖多引擎搜尋工具' :
+    locale === 'tw' ? '以圖搜圖多引擎搜尋工具' :
+    locale === 'cn' ? '以图搜图多引擎搜索工具' :
     locale === 'en' ? 'Multi-Engine Reverse Image Search Tool' :
     locale === 'jp' ? '複数エンジン画像検索ツール' :
     locale === 'es' ? 'Herramienta de Búsqueda Inversa de Imágenes Multi-Motor' : 'Multi-Engine Reverse Image Search Tool',

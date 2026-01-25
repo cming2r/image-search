@@ -11,32 +11,37 @@ interface ArticleContentProps {
 const content = {
   toolFeatures: {
     title: {
-      zh: "關於預產期計算器工具特色：",
+      tw: "關於預產期計算器工具特色：",
+      cn: "关于预产期计算器工具特色：",
       en: "About the Due Date Calculator Features:",
       jp: "予定日計算機の機能について：",
       es: "Acerca de las Características de la Calculadora de Fecha de Parto:"
     },
     features: [
       {
-        zh: "輸入最後一次月經日期，自動計算預產期",
+        tw: "輸入最後一次月經日期，自動計算預產期",
+        cn: "输入最后一次月经日期，自动计算预产期",
         en: "Enter your last menstrual period date to automatically calculate due date",
         jp: "最後の月経日を入力して自動的に予定日を計算",
         es: "Ingrese la fecha de su último período menstrual para calcular automáticamente la fecha de parto"
       },
       {
-        zh: "顯示當前懷孕週數和天數",
+        tw: "顯示當前懷孕週數和天數",
+        cn: "显示当前怀孕周数和天数",
         en: "Display current pregnancy week and days",
         jp: "現在の妊娠週数と日数を表示",
         es: "Mostrar las semanas y días actuales del embarazo"
       },
       {
-        zh: "互動式懷孕日曆，清晰標示重要日期",
+        tw: "互動式懷孕日曆，清晰標示重要日期",
+        cn: "互动式怀孕日历，清晰标示重要日期",
         en: "Interactive pregnancy calendar clearly marking important dates",
         jp: "インタラクティブな妊娠カレンダーで重要な日付を明確に表示",
         es: "Calendario interactivo del embarazo que marca claramente las fechas importantes"
       },
       {
-        zh: "輕鬆查看過去和未來各個月份的懷孕進程",
+        tw: "輕鬆查看過去和未來各個月份的懷孕進程",
+        cn: "轻松查看过去和未来各个月份的怀孕进程",
         en: "Easily view past and future pregnancy progress by month",
         jp: "過去と未来の各月の妊娠経過を簡単に確認",
         es: "Vea fácilmente el progreso del embarazo pasado y futuro por mes"
@@ -45,13 +50,15 @@ const content = {
   },
   weekCalculation: {
     title: {
-      zh: "孕期週數怎麼算",
+      tw: "孕期週數怎麼算",
+      cn: "孕期周数怎么算",
       en: "How Pregnancy Weeks Are Calculated",
       jp: "妊娠週数の計算方法",
       es: "Cómo se Calculan las Semanas de Embarazo"
     },
     content: {
-      zh: "孕期以最後一次經期的第一天開始計算，到預產期約為40週。因此，通常知道自己懷孕時，大概都已到第5週或第六週。若有規劃備孕，建議用手機的「健康」軟體，紀錄自己每一次的月經週期。當第一次看婦產科時，醫生通常會詢問上一次月經的第一天為幾月幾號，依此來計算預產期。",
+      tw: "孕期以最後一次經期的第一天開始計算，到預產期約為40週。因此，通常知道自己懷孕時，大概都已到第5週或第六週。若有規劃備孕，建議用手機的「健康」軟體，紀錄自己每一次的月經週期。當第一次看婦產科時，醫生通常會詢問上一次月經的第一天為幾月幾號，依此來計算預產期。",
+      cn: "孕期以最后一次经期的第一天开始计算，到预产期约为40周。因此，通常知道自己怀孕时，大概都已到第5周或第六周。若有规划备孕，建议用手机的「健康」软件，记录自己每一次的月经周期。当第一次看妇产科时，医生通常会询问上一次月经的第一天为几月几号，依此来计算预产期。",
       en: "Pregnancy is calculated starting from the first day of your last menstrual period, with the due date approximately 40 weeks later. Therefore, by the time most women know they're pregnant, they're typically at week 5 or 6. If you're planning for pregnancy, it's recommended to use your phone's 'Health' app to record your menstrual cycles. During your first obstetrics visit, the doctor will usually ask for the first day of your last period to calculate your due date.",
       jp: "妊娠は最後の月経の初日から計算され、予定日まで約40週間です。そのため、通常妊娠を知った時には、すでに5週目または6週目になっています。妊娠を計画している場合は、スマートフォンの「ヘルス」アプリを使用して月経周期を記録することをお勧めします。初回の産科受診時、医師は通常最後の月経の初日がいつかを尋ね、これに基づいて予定日を計算します。",
       es: "El embarazo se calcula desde el primer día de su último período menstrual, con la fecha de parto aproximadamente 40 semanas después. Por lo tanto, para cuando la mayoría de las mujeres saben que están embarazadas, típicamente están en la semana 5 o 6. Si está planificando un embarazo, se recomienda usar la aplicación 'Salud' de su teléfono para registrar sus ciclos menstruales. Durante su primera visita obstétrica, el médico usualmente preguntará por el primer día de su último período para calcular su fecha de parto."
@@ -59,37 +66,43 @@ const content = {
   },
   dueDateCalculation: {
     title: {
-      zh: "預產期計算方式",
+      tw: "預產期計算方式",
+      cn: "预产期计算方式",
       en: "Due Date Calculation Method",
       jp: "予定日の計算方法",
       es: "Método de Cálculo de la Fecha de Parto"
     },
     content1: {
-      zh: "懷孕預產期的計算通常採用內格萊氏法則（Naegele's rule），這是由德國婦產科醫生 Franz Karl Naegele 發明的方法。",
+      tw: "懷孕預產期的計算通常採用內格萊氏法則（Naegele's rule），這是由德國婦產科醫生 Franz Karl Naegele 發明的方法。",
+      cn: "怀孕预产期的计算通常采用内格莱氏法则（Naegele's rule），这是由德国妇产科医生 Franz Karl Naegele 发明的方法。",
       en: "Pregnancy due date calculation typically uses Naegele's rule, a method invented by German obstetrician Franz Karl Naegele.",
       jp: "妊娠予定日の計算は通常、ドイツの産婦人科医Franz Karl Naegelによって発明されたネーゲレ法則（Naegele's rule）を使用します。",
       es: "El cálculo de la fecha de parto del embarazo típicamente utiliza la regla de Naegele, un método inventado por el obstetra alemán Franz Karl Naegele."
     },
     content2: {
-      zh: "計算方式是以最後一次月經的第一天（Last Menstrual Period，LMP）為基準，加上一年，減三個月，加上七天，即可得出預估的分娩日期EDD（Estimated Date of Delivery）。",
+      tw: "計算方式是以最後一次月經的第一天（Last Menstrual Period，LMP）為基準，加上一年，減三個月，加上七天，即可得出預估的分娩日期EDD（Estimated Date of Delivery）。",
+      cn: "计算方式是以最后一次月经的第一天（Last Menstrual Period，LMP）为基准，加上一年，减三个月，加上七天，即可得出预估的分娩日期EDD（Estimated Date of Delivery）。",
       en: "The calculation is based on the first day of the Last Menstrual Period (LMP), adding one year, subtracting three months, and adding seven days to obtain the Estimated Date of Delivery (EDD).",
       jp: "計算方法は、最後の月経の初日（Last Menstrual Period、LMP）を基準に、1年を加え、3ヶ月を減らし、7日を加えて、推定分娩日EDD（Estimated Date of Delivery）を得ます。",
       es: "El cálculo se basa en el primer día del Último Período Menstrual (LMP), agregando un año, restando tres meses y agregando siete días para obtener la Fecha Estimada de Parto (EDD)."
     },
     content3: {
-      zh: "例如最後一次月經第一天為6月1號，「減三個月加上七天加一年」則為隔年3月8日。",
+      tw: "例如最後一次月經第一天為6月1號，「減三個月加上七天加一年」則為隔年3月8日。",
+      cn: "例如最后一次月经第一天为6月1号，「减三个月加上七天加一年」则为隔年3月8日。",
       en: "For example, if the first day of your last period was June 1st, \"subtract three months, add seven days, and add one year\" results in March 8th of the following year.",
       jp: "例えば、最後の月経の初日が6月1日の場合、「3ヶ月を減らし、7日を加え、1年を加える」と翌年の3月8日になります。",
       es: "Por ejemplo, si el primer día de su último período fue el 1 de junio, 'restar tres meses, agregar siete días y agregar un año' resulta en el 8 de marzo del año siguiente."
     },
     content4: {
-      zh: "一般來說，預產期大約40個星期，因此將最後一次月經的第一天加上280天，可得到跟Naegele's rule計算一樣的結果。這也就是估計的分娩日期（Estimated Date of Delivery, EDD）。",
+      tw: "一般來說，預產期大約40個星期，因此將最後一次月經的第一天加上280天，可得到跟Naegele's rule計算一樣的結果。這也就是估計的分娩日期（Estimated Date of Delivery, EDD）。",
+      cn: "一般来说，预产期大约40个星期，因此将最后一次月经的第一天加上280天，可得到跟Naegele's rule计算一样的结果。这也就是估计的分娩日期（Estimated Date of Delivery, EDD）。",
       en: "Generally, the due date is about 40 weeks, so adding 280 days to the first day of your last period yields the same result as Naegele's rule. This is the Estimated Date of Delivery (EDD).",
       jp: "一般的に、予定日は約40週間なので、最後の月経の初日に280日を加えると、ネーゲレ法則と同じ結果が得られます。これが推定分娩日（Estimated Date of Delivery, EDD）です。",
       es: "En general, la fecha de parto es aproximadamente 40 semanas, por lo que agregar 280 días al primer día de su último período produce el mismo resultado que la regla de Naegele. Esta es la Fecha Estimada de Parto (EDD)."
     },
     note: {
-      zh: "註：本方法假設月經週期為28天，而排卵和受精在第14天發生。",
+      tw: "註：本方法假設月經週期為28天，而排卵和受精在第14天發生。",
+      cn: "注：本方法假设月经周期为28天，而排卵和受精在第14天发生。",
       en: "Note: This method assumes a 28-day menstrual cycle with ovulation and fertilization occurring on day 14.",
       jp: "注：この方法は28日の月経周期を仮定し、排卵と受精が14日目に起こることを前提としています。",
       es: "Nota: Este método asume un ciclo menstrual de 28 días con ovulación y fertilización ocurriendo en el día 14."
@@ -97,38 +110,44 @@ const content = {
   },
   pregnancyPrecautions: {
     title: {
-      zh: "孕期注意事項",
+      tw: "孕期注意事項",
+      cn: "孕期注意事项",
       en: "Pregnancy Precautions",
       jp: "妊娠中の注意事項",
       es: "Precauciones durante el Embarazo"
     },
     content: {
-      zh: "懷孕期間可以劃分成三個階段，分別為妊娠第一期（未滿13週）、妊娠第二期（13-29週）、妊娠第三期（29週以上）。",
+      tw: "懷孕期間可以劃分成三個階段，分別為妊娠第一期（未滿13週）、妊娠第二期（13-29週）、妊娠第三期（29週以上）。",
+      cn: "怀孕期间可以划分成三个阶段，分别为妊娠第一期（未满13周）、妊娠第二期（13-29周）、妊娠第三期（29周以上）。",
       en: "Pregnancy can be divided into three stages: the first trimester (before 13 weeks), the second trimester (13-29 weeks), and the third trimester (over 29 weeks).",
       jp: "妊娠期間は3つの段階に分けることができます：第1三半期（13週未満）、第2三半期（13-29週）、第3三半期（29週以上）。",
       es: "El embarazo se puede dividir en tres etapas: el primer trimestre (antes de las 13 semanas), el segundo trimestre (13-29 semanas) y el tercer trimestre (más de 29 semanas)."
     },
     generalPrecautions: [
       {
-        zh: "定期產檢追蹤",
+        tw: "定期產檢追蹤",
+        cn: "定期产检追踪",
         en: "Regular prenatal check-ups",
         jp: "定期的な産前チェックアップ",
         es: "Controles prenatales regulares"
       },
       {
-        zh: "穿著透氣舒適孕婦裝",
+        tw: "穿著透氣舒適孕婦裝",
+        cn: "穿着透气舒适孕妇装",
         en: "Wear breathable, comfortable maternity clothes",
         jp: "通気性の良い快適なマタニティウェアを着用",
         es: "Usar ropa de maternidad cómoda y transpirable"
       },
       {
-        zh: "保持心情愉悅",
+        tw: "保持心情愉悅",
+        cn: "保持心情愉悦",
         en: "Maintain a positive mood",
         jp: "前向きな気持ちを保つ",
         es: "Mantener un estado de ánimo positivo"
       },
       {
-        zh: "避免二手菸暴露",
+        tw: "避免二手菸暴露",
+        cn: "避免二手烟暴露",
         en: "Avoid secondhand smoke exposure",
         jp: "受動喫煙を避ける",
         es: "Evitar la exposición al humo de segunda mano"
@@ -136,33 +155,38 @@ const content = {
     ],
     firstTrimester: {
       title: {
-        zh: "第一孕期 (未滿13週)",
+        tw: "第一孕期 (未滿13週)",
+        cn: "第一孕期 (未满13周)",
         en: "First Trimester (Before 13 weeks)",
         jp: "第1三半期（13週未満）",
         es: "Primer Trimestre (Antes de las 13 semanas)"
       },
       diet: {
         title: {
-          zh: "飲食",
+          tw: "飲食",
+          cn: "饮食",
           en: "Diet",
           jp: "食事",
           es: "Dieta"
         },
         items: [
           {
-            zh: "葉酸補充",
+            tw: "葉酸補充",
+            cn: "叶酸补充",
             en: "Folic acid supplements",
             jp: "葉酸サプリメント",
             es: "Suplementos de ácido fólico"
           },
           {
-            zh: "避免生食",
+            tw: "避免生食",
+            cn: "避免生食",
             en: "Avoid raw food",
             jp: "生食を避ける",
             es: "Evitar alimentos crudos"
           },
           {
-            zh: "每日8杯水",
+            tw: "每日8杯水",
+            cn: "每日8杯水",
             en: "8 glasses of water daily",
             jp: "1日8杯の水",
             es: "8 vasos de agua diarios"
@@ -171,20 +195,23 @@ const content = {
       },
       discomfort: {
         title: {
-          zh: "不適處理",
+          tw: "不適處理",
+          cn: "不适处理",
           en: "Managing Discomfort",
           jp: "不快感への対処",
           es: "Manejo de Molestias"
         },
         items: [
           {
-            zh: "緩解孕吐",
+            tw: "緩解孕吐",
+            cn: "缓解孕吐",
             en: "Relieving morning sickness",
             jp: "つわりの緩和",
             es: "Aliviar las náuseas matutinas"
           },
           {
-            zh: "處理頻尿",
+            tw: "處理頻尿",
+            cn: "处理频尿",
             en: "Managing frequent urination",
             jp: "頻尿への対処",
             es: "Manejar la micción frecuente"
@@ -193,20 +220,23 @@ const content = {
       },
       exercise: {
         title: {
-          zh: "運動",
+          tw: "運動",
+          cn: "运动",
           en: "Exercise",
           jp: "運動",
           es: "Ejercicio"
         },
         items: [
           {
-            zh: "溫和散步",
+            tw: "溫和散步",
+            cn: "温和散步",
             en: "Gentle walking",
             jp: "軽い散歩",
             es: "Caminata suave"
           },
           {
-            zh: "孕婦瑜珈",
+            tw: "孕婦瑜珈",
+            cn: "孕妇瑜珈",
             en: "Prenatal yoga",
             jp: "マタニティヨガ",
             es: "Yoga prenatal"
@@ -216,27 +246,31 @@ const content = {
     },
     secondTrimester: {
       title: {
-        zh: "第二孕期 (13-29週)",
+        tw: "第二孕期 (13-29週)",
+        cn: "第二孕期 (13-29周)",
         en: "Second Trimester (13-29 weeks)",
         jp: "第2三半期（13-29週）",
         es: "Segundo Trimestre (13-29 semanas)"
       },
       diet: {
         title: {
-          zh: "飲食",
+          tw: "飲食",
+          cn: "饮食",
           en: "Diet",
           jp: "食事",
           es: "Dieta"
         },
         items: [
           {
-            zh: "增加蛋白質",
+            tw: "增加蛋白質",
+            cn: "增加蛋白质",
             en: "Increase protein intake",
             jp: "タンパク質摂取量を増やす",
             es: "Aumentar la ingesta de proteínas"
           },
           {
-            zh: "補充鈣質、鐵質",
+            tw: "補充鈣質、鐵質",
+            cn: "补充钙质、铁质",
             en: "Supplement calcium and iron",
             jp: "カルシウムと鉄分の補給",
             es: "Suplementar calcio y hierro"
@@ -245,14 +279,16 @@ const content = {
       },
       weight: {
         title: {
-          zh: "體重管理",
+          tw: "體重管理",
+          cn: "体重管理",
           en: "Weight Management",
           jp: "体重管理",
           es: "Control de Peso"
         },
         items: [
           {
-            zh: "每週增重0.3-0.5kg",
+            tw: "每週增重0.3-0.5kg",
+            cn: "每周增重0.3-0.5kg",
             en: "Weekly weight gain of 0.3-0.5kg",
             jp: "週0.3-0.5kgの体重増加",
             es: "Aumento de peso semanal de 0.3-0.5kg"
@@ -261,20 +297,23 @@ const content = {
       },
       skin: {
         title: {
-          zh: "皮膚護理",
+          tw: "皮膚護理",
+          cn: "皮肤护理",
           en: "Skin Care",
           jp: "スキンケア",
           es: "Cuidado de la Piel"
         },
         items: [
           {
-            zh: "預防妊娠紋",
+            tw: "預防妊娠紋",
+            cn: "预防妊娠纹",
             en: "Prevent stretch marks",
             jp: "妊娠線の予防",
             es: "Prevenir estrías"
           },
           {
-            zh: "處理搔癢",
+            tw: "處理搔癢",
+            cn: "处理瘙痒",
             en: "Manage itching",
             jp: "かゆみへの対処",
             es: "Manejar la picazón"
@@ -284,27 +323,31 @@ const content = {
     },
     thirdTrimester: {
       title: {
-        zh: "第三孕期 (29週以上)",
+        tw: "第三孕期 (29週以上)",
+        cn: "第三孕期 (29周以上)",
         en: "Third Trimester (Over 29 weeks)",
         jp: "第3三半期（29週以上）",
         es: "Tercer Trimestre (Más de 29 semanas)"
       },
       diet: {
         title: {
-          zh: "飲食",
+          tw: "飲食",
+          cn: "饮食",
           en: "Diet",
           jp: "食事",
           es: "Dieta"
         },
         items: [
           {
-            zh: "少量多餐",
+            tw: "少量多餐",
+            cn: "少量多餐",
             en: "Small, frequent meals",
             jp: "少量頻回食",
             es: "Comidas pequeñas y frecuentes"
           },
           {
-            zh: "避免過度增重",
+            tw: "避免過度增重",
+            cn: "避免过度增重",
             en: "Avoid excessive weight gain",
             jp: "過度な体重増加を避ける",
             es: "Evitar el aumento excesivo de peso"
@@ -313,20 +356,23 @@ const content = {
       },
       sleep: {
         title: {
-          zh: "睡眠",
+          tw: "睡眠",
+          cn: "睡眠",
           en: "Sleep",
           jp: "睡眠",
           es: "Sueño"
         },
         items: [
           {
-            zh: "左側臥",
+            tw: "左側臥",
+            cn: "左侧卧",
             en: "Left side sleeping position",
             jp: "左側臥位",
             es: "Posición de sueño del lado izquierdo"
           },
           {
-            zh: "使用托腹枕",
+            tw: "使用托腹枕",
+            cn: "使用托腹枕",
             en: "Use a pregnancy pillow",
             jp: "妊娠用枕の使用",
             es: "Usar una almohada para embarazadas"
@@ -335,20 +381,23 @@ const content = {
       },
       observation: {
         title: {
-          zh: "觀察",
+          tw: "觀察",
+          cn: "观察",
           en: "Monitoring",
           jp: "観察",
           es: "Monitoreo"
         },
         items: [
           {
-            zh: "胎動計數",
+            tw: "胎動計數",
+            cn: "胎动计数",
             en: "Count fetal movements",
             jp: "胎動カウント",
             es: "Contar movimientos fetales"
           },
           {
-            zh: "注意水腫",
+            tw: "注意水腫",
+            cn: "注意水肿",
             en: "Watch for swelling",
             jp: "むくみに注意",
             es: "Vigilar la hinchazón"
@@ -359,57 +408,66 @@ const content = {
   },
   prenatalCheckup: {
     title: {
-      zh: "產前定期檢查",
+      tw: "產前定期檢查",
+      cn: "产前定期检查",
       en: "Regular Prenatal Check-ups",
       jp: "定期産前検査",
       es: "Controles Prenatales Regulares"
     },
     content1: {
-      zh: "在懷孕期間，產前定期檢查可以幫助診斷孕婦和寶寶的健康，及時發現問題（如果出現的話），並預防分娩過程中的併發症。",
+      tw: "在懷孕期間，產前定期檢查可以幫助診斷孕婦和寶寶的健康，及時發現問題（如果出現的話），並預防分娩過程中的併發症。",
+      cn: "在怀孕期间，产前定期检查可以帮助诊断孕妇和宝宝的健康，及时发现问题（如果出现的话），并预防分娩过程中的并发症。",
       en: "During pregnancy, regular prenatal check-ups help diagnose the health of both mother and baby, promptly identify any issues (if they arise), and prevent complications during delivery.",
       jp: "妊娠中、定期的な産前検査は母親と赤ちゃんの健康を診断し、問題があれば迅速に発見し、分娩中の合併症を予防するのに役立ちます。",
       es: "Durante el embarazo, los controles prenatales regulares ayudan a diagnosticar la salud tanto de la madre como del bebé, identificar rápidamente cualquier problema (si surge) y prevenir complicaciones durante el parto."
     },
     content2: {
-      zh: "根據",
+      tw: "根據",
+      cn: "根据",
       en: "According to the",
       jp: "によると",
       es: "Según la"
     },
     source: {
-      zh: "美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)",
+      tw: "美國婦女健康辦公室(OWH，隸屬於美國衛生及公共服務部HHS)",
+      cn: "美国妇女健康办公室(OWH，隶属于美国卫生及公共服务部HHS)",
       en: "Office on Women's Health (OWH, part of the US Department of Health and Human Services)",
       jp: "アメリカ女性健康局（OWH、アメリカ保健福祉省の一部）",
       es: "Oficina de Salud de la Mujer (OWH, parte del Departamento de Salud y Servicios Humanos de EE.UU.)"
     },
     content3: {
-      zh: "的建議，正常產檢的頻率為：",
+      tw: "的建議，正常產檢的頻率為：",
+      cn: "的建议，正常产检的频率为：",
       en: "the recommended frequency for normal prenatal check-ups is:",
       jp: "の推奨により、通常の産前検査の頻度は：",
       es: "la frecuencia recomendada para controles prenatales normales es:"
     },
     checkupFrequency: [
       {
-        zh: "第4週到第28週期間，每月一次",
+        tw: "第4週到第28週期間，每月一次",
+        cn: "第4周到第28周期间，每月一次",
         en: "Between weeks 4 and 28, once a month",
         jp: "第4週から第28週まで、月1回",
         es: "Entre las semanas 4 y 28, una vez al mes"
       },
       {
-        zh: "第28週到第36週期間，每月兩次",
+        tw: "第28週到第36週期間，每月兩次",
+        cn: "第28周到第36周期间，每月两次",
         en: "Between weeks 28 and 36, twice a month",
         jp: "第28週から第36週まで、月2回",
         es: "Entre las semanas 28 y 36, dos veces al mes"
       },
       {
-        zh: "第36週到分娩期間，每週一次",
+        tw: "第36週到分娩期間，每週一次",
+        cn: "第36周到分娩期间，每周一次",
         en: "From week 36 until delivery, once a week",
         jp: "第36週から分娩まで、週1回",
         es: "Desde la semana 36 hasta el parto, una vez por semana"
       }
     ],
     note: {
-      zh: "註：高風險妊娠的孕婦可能需要更頻繁地產前護理。",
+      tw: "註：高風險妊娠的孕婦可能需要更頻繁地產前護理。",
+      cn: "注：高风险妊娠的孕妇可能需要更频繁地产前护理。",
       en: "Note: Women with high-risk pregnancies may need more frequent prenatal care.",
       jp: "注：高リスク妊娠の女性は、より頻繁な産前ケアが必要な場合があります。",
       es: "Nota: Las mujeres con embarazos de alto riesgo pueden necesitar atención prenatal más frecuente."
@@ -417,69 +475,80 @@ const content = {
   },
   highRiskPregnancy: {
     title: {
-      zh: "高風險妊娠的孕婦",
+      tw: "高風險妊娠的孕婦",
+      cn: "高风险妊娠的孕妇",
       en: "High-Risk Pregnancy",
       jp: "ハイリスク妊娠",
       es: "Embarazo de Alto Riesgo"
     },
     content1: {
-      zh: "「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據",
+      tw: "「高風險妊娠」並不代表會出現問題，而是較高併發症機率的風險，根據",
+      cn: "「高风险妊娠」并不代表会出现问题，而是较高并发症机率的风险，根据",
       en: "A 'high-risk pregnancy' doesn't necessarily mean problems will occur, but rather indicates a higher probability of complications. According to the",
       jp: "「ハイリスク妊娠」は必ずしも問題が起こることを意味するのではなく、むしろ合併症の確率が高いことを示しています。",
       es: "Un 'embarazo de alto riesgo' no necesariamente significa que ocurrirán problemas, sino que indica una mayor probabilidad de complicaciones. Según la"
     },
     source: {
-      zh: "美國婦女健康辦公室(OWH)",
+      tw: "美國婦女健康辦公室(OWH)",
+      cn: "美国妇女健康办公室(OWH)",
       en: "Office on Women's Health (OWH)",
       jp: "アメリカ女性健康局（OWH）",
       es: "Oficina de Salud de la Mujer (OWH)"
     },
     content2: {
-      zh: "，以下因素可能會增加懷孕期間出現問題的風險：",
+      tw: "，以下因素可能會增加懷孕期間出現問題的風險：",
+      cn: "，以下因素可能会增加怀孕期间出现问题的风险：",
       en: "the following factors may increase the risk of problems during pregnancy:",
       jp: "によると、以下の要因が妊娠中の問題のリスクを高める可能性があります：",
       es: "los siguientes factores pueden aumentar el riesgo de problemas durante el embarazo:"
     },
     riskFactors: [
       {
-        zh: "年齡過小或超過35歲",
+        tw: "年齡過小或超過35歲",
+        cn: "年龄过小或超过35岁",
         en: "Being very young or over 35 years old",
         jp: "非常に若いか35歳以上",
         es: "Ser muy joven o mayor de 35 años"
       },
       {
-        zh: "體重過重或過輕",
+        tw: "體重過重或過輕",
+        cn: "体重过重或过轻",
         en: "Being overweight or underweight",
         jp: "体重過多または過少",
         es: "Tener sobrepeso o bajo peso"
       },
       {
-        zh: "既往妊娠出現問題",
+        tw: "既往妊娠出現問題",
+        cn: "既往妊娠出现问题",
         en: "Having had problems in previous pregnancies",
         jp: "過去の妊娠で問題があった",
         es: "Haber tenido problemas en embarazos anteriores"
       },
       {
-        zh: "懷孕前就存在的健康問題，如高血壓、糖尿病、自身免疫疾病、癌症和HIV",
+        tw: "懷孕前就存在的健康問題，如高血壓、糖尿病、自身免疫疾病、癌症和HIV",
+        cn: "怀孕前就存在的健康问题，如高血压、糖尿病、自身免疫疾病、癌症和HIV",
         en: "Pre-existing health conditions such as high blood pressure, diabetes, autoimmune diseases, cancer, and HIV",
         jp: "高血圧、糖尿病、自己免疫疾患、がん、HIVなどの既存の健康状態",
         es: "Condiciones de salud preexistentes como presión arterial alta, diabetes, enfermedades autoinmunes, cáncer y VIH"
       },
       {
-        zh: "雙胞胎或多胞胎",
+        tw: "雙胞胎或多胞胎",
+        cn: "双胞胎或多胞胎",
         en: "Carrying twins or multiples",
         jp: "双子または多胎妊娠",
         es: "Embarazo de gemelos o múltiples"
       }
     ],
     content3: {
-      zh: "在懷孕期間也可能會出現高風險妊娠的健康問題，例如妊娠糖尿病或子癇前症。",
+      tw: "在懷孕期間也可能會出現高風險妊娠的健康問題，例如妊娠糖尿病或子癇前症。",
+      cn: "在怀孕期间也可能会出现高风险妊娠的健康问题，例如妊娠糖尿病或子癫前症。",
       en: "Health issues that may lead to high-risk pregnancy can also develop during pregnancy, such as gestational diabetes or preeclampsia.",
       jp: "妊娠糖尿病や子癇前症など、ハイリスク妊娠につながる健康問題は妊娠中にも発症する可能性があります。",
       es: "Los problemas de salud que pueden llevar a un embarazo de alto riesgo también pueden desarrollarse durante el embarazo, como la diabetes gestacional o la preeclampsia."
     },
     content4: {
-      zh: "若有任何高風險妊娠的疑慮，可以向醫生諮詢，醫生可以解釋風險程度以及實際出現問題的可能性。",
+      tw: "若有任何高風險妊娠的疑慮，可以向醫生諮詢，醫生可以解釋風險程度以及實際出現問題的可能性。",
+      cn: "若有任何高风险妊娠的疑虑，可以向医生咨询，医生可以解释风险程度以及实际出现问题的可能性。",
       en: "If you have any concerns about high-risk pregnancy, consult your doctor, who can explain the level of risk and the actual likelihood of problems occurring.",
       jp: "ハイリスク妊娠について心配がある場合は、医師に相談してください。医師はリスクのレベルと実際に問題が発生する可能性を説明できます。",
       es: "Si tiene alguna preocupación sobre un embarazo de alto riesgo, consulte a su médico, quien puede explicar el nivel de riesgo y la probabilidad real de que ocurran problemas."
@@ -488,7 +557,9 @@ const content = {
 };
 
 export default function ArticleContent({ locale, currentWeeks }: ArticleContentProps) {
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
+  // For FAQ, use locale directly since meta-translations has cn entries
+  const faqLang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   return (
     <>
@@ -647,10 +718,10 @@ export default function ArticleContent({ locale, currentWeeks }: ArticleContentP
           {content.highRiskPregnancy.content4[lang]}
         </p>
         
-        <h2>{metaTranslations.faq.title[lang]}</h2>
-        
+        <h2>{metaTranslations.faq.title[faqLang]}</h2>
+
         <div className="space-y-6">
-          {metaTranslations.faq.questions[lang].map((faq, index) => (
+          {metaTranslations.faq.questions[faqLang].map((faq, index) => (
             <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
               <p className="mt-2">

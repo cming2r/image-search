@@ -10,7 +10,8 @@ export default function PrivacyPolicy() {
   const locale = (params?.locale as string) || 'en';
   
   // Only display content based on locale
-  const isZhLocale = locale === 'zh';
+  const isTwLocale = locale === 'tw';
+  const isCnLocale = locale === 'cn';
   const isEnLocale = locale === 'en';
   const isJpLocale = locale === 'jp';
   const isEsLocale = locale === 'es';
@@ -21,14 +22,15 @@ export default function PrivacyPolicy() {
       <main className="flex-grow w-full">
         <div className="container mx-auto max-w-4xl px-4 py-8">
           <h1 className="text-3xl font-bold mb-8">
-            {isZhLocale ? "隱私權政策" : 
-             isEnLocale ? "Privacy Policy" : 
-             isJpLocale ? "プライバシーポリシー" : 
+            {isTwLocale ? "隱私權政策" :
+             isCnLocale ? "隐私权政策" :
+             isEnLocale ? "Privacy Policy" :
+             isJpLocale ? "プライバシーポリシー" :
              isEsLocale ? "Política de Privacidad" : "Privacy Policy"}
           </h1>
 
           <div className="prose prose-lg max-w-none">
-            {isZhLocale && (
+            {isTwLocale && (
               <div>
                 <p>歡迎使用 fyimg.com（以下簡稱「我們」或「本網站」）。我們致力於保護您的隱私，並確保您在使用本網站時的個人資訊安全。本隱私權政策用於說明我們如何收集、使用、分享和保護您的資訊。</p>
                 
@@ -96,7 +98,76 @@ export default function PrivacyPolicy() {
                 <p>如果您對本隱私權政策有任何疑問或疑慮，請通過 <Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">聯絡頁面</Link> 與我們聯繫。</p>
               </div>
             )}
-            
+
+            {isCnLocale && (
+              <div>
+                <p>欢迎使用 fyimg.com（以下简称「我们」或「本网站」）。我们致力于保护您的隐私，并确保您在使用本网站时的个人资讯安全。本隐私权政策用于说明我们如何收集、使用、分享和保护您的资讯。</p>
+
+                <p className="text-gray-500 mb-6">最后更新日期：2025年1月1日</p>
+
+                <h2 className="text-2xl font-semibold mb-3">1. 我们收集的资讯</h2>
+                <p>我们可能收集以下类型的资讯：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>您主动提供的资讯：当您使用我们的联络表单、注册帐户或参与调查时提供的个人资料，如姓名、电子邮件地址等。</li>
+                  <li>自动收集的资讯：您浏览本网站时，我们可能透过 Cookie 等技术自动收集资讯，包括 IP 地址、浏览器类型、操作系统、浏览习惯等。</li>
+                  <li>上传的图片：当您使用我们的图片�的索功能并上传图片时，我们可能会暂时存储这些图片以提供服务。</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">2. 如何使用您的资讯</h2>
+                <p>我们使用收集到的资讯用于：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>提供、维护和改进我们的服务</li>
+                  <li>处理您的查询和请求</li>
+                  <li>发送重要通知，如服务更新和变更</li>
+                  <li>分析网站流量和使用情况，以改善用户体验</li>
+                  <li>防止欺诈和滥用我们的服务</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">3. Cookie 和类似技术</h2>
+                <p>本网站使用 Cookie 和类似技术来收集和存储资讯。Cookie 是一种小型文字档案，存储在您的浏览器或设备上。我们使用 Cookie 来：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>记住您的设置和偏好</li>
+                  <li>提供个性化的用户体验</li>
+                  <li>收集使用统计数据</li>
+                </ul>
+                <p>您可以通过更改浏览器设置来控制或删除 Cookie。但请注意，这样做可能会影响本网站的某些功能。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">4. 资讯分享</h2>
+                <p>我们不会出售或出租您的个人资料给任何第三方。但在以下情况下，我们可能会分享您的资讯：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>经您的明确同意</li>
+                  <li>与提供服务的合作方分享，如云存储供应商</li>
+                  <li>为回应法律要求，如法院命令或传票</li>
+                  <li>保护我们的权利、财产或安全</li>
+                  <li>公司重组、合并或被收购时</li>
+                </ul>
+                <p>国际资料传输：我们的伺服器可能位于您所在国家/地区以外的地方。使用我们的服务，即表示您同意将资料传输至这些地区。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">5. 您的权利</h2>
+                <p>您有权：</p>
+                <ul className="list-disc pl-6 mt-2">
+                  <li>要求存取我们持有的您的个人资料。</li>
+                  <li>要求更正或删除您的资料（若适用）。</li>
+                  <li>随时停止使用本网站服务。</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">6. 数据安全</h2>
+                <p>我们采取合理的技术和组织措施来保护您的个人资料不被未经授权的访问、使用或泄露。但是，请注意互联网传输不是100%安全的，我们无法保证资讯传输的绝对安全性。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">7. 儿童隐私</h2>
+                <p>本网站不面向13岁以下儿童，我们不会在知情情况下收集儿童的个人资料。如果您认为我们可能收集了儿童的个人资料，请通过联络页面与我们联系。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">8. 第三方连结</h2>
+                <p>本网站可能包含第三方网站的连结。这些网站的隐私政策与我们的不同。我们建议您阅读这些网站的隐私政策，因为我们不对这些网站的内容或隐私惯例负责。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">9. 政策更新</h2>
+                <p>我们可能会不时更新本隐私权政策。更新后的政策将在本页发布，并在适用的情况下通知您。我们鼓励您定期查看本政策，以了解我们如何保护您的资讯。</p>
+
+                <h2 className="text-2xl font-semibold mb-3 mt-6">10. 联络我们</h2>
+                <p>如果您对本隐私权政策有任何疑问或疑虑，请通过 <Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">联络页面</Link> 与我们联系。</p>
+              </div>
+            )}
+
             {isEnLocale && (
               <div>
                 <p>Welcome to fyimg.com (hereinafter referred to as &quot;we&quot; or &quot;this website&quot;). We are committed to protecting your privacy and ensuring the security of your personal information when using our website. This Privacy Policy explains how we collect, use, share, and protect your information.</p>

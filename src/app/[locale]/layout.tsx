@@ -32,9 +32,17 @@ export default async function RootLayout({
     case 'jp':
       htmlLang = 'ja';
       break;
-    case 'zh':
-    default:
+    case 'es':
+      htmlLang = 'es';
+      break;
+    case 'tw':
       htmlLang = 'zh-TW';
+      break;
+    case 'cn':
+      htmlLang = 'zh-CN';
+      break;
+    default:
+      htmlLang = 'en';
       break;
   }
   

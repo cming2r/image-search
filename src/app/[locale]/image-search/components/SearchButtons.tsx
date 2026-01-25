@@ -165,9 +165,9 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
     return (
       <div className="mt-4">
         <p className={`${showWarning ? 'text-red-500 font-medium' : 'text-gray-500'} text-center mb-2`}>
-          {showWarning 
-            ? (locale === 'zh' ? '!!請先輸入圖片網址或上傳圖片!!' : locale === 'jp' ? '!!最初に画像URLを入力するか画像をアップロードしてください!!' : locale === 'es' ? '!!Por favor ingresa una URL de imagen o sube una imagen primero!!' : '!!Please enter an image URL or upload an image first!!')
-            : (locale === 'zh' ? '請先輸入圖片網址或上傳圖片' : locale === 'jp' ? '最初に画像URLを入力するか画像をアップロードしてください' : locale === 'es' ? 'Por favor ingresa una URL de imagen o sube una imagen primero' : 'Please enter an image URL or upload an image first')
+          {showWarning
+            ? (locale === 'tw' ? '!!請先輸入圖片網址或上傳圖片!!' : locale === 'cn' ? '!!请先输入图片网址或上传图片!!' : locale === 'jp' ? '!!最初に画像URLを入力するか画像をアップロードしてください!!' : locale === 'es' ? '!!Por favor ingresa una URL de imagen o sube una imagen primero!!' : '!!Please enter an image URL or upload an image first!!')
+            : (locale === 'tw' ? '請先輸入圖片網址或上傳圖片' : locale === 'cn' ? '请先输入图片网址或上传图片' : locale === 'jp' ? '最初に画像URLを入力するか画像をアップロードしてください' : locale === 'es' ? 'Por favor ingresa una URL de imagen o sube una imagen primero' : 'Please enter an image URL or upload an image first')
           }
         </p>
         <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
@@ -191,7 +191,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
   return (
     <div className="mt-4">
       <p className="text-gray-600 text-center mb-2">
-        {locale === 'zh' ? '選擇搜尋引擎進行圖片搜尋' : locale === 'jp' ? 'この画像を検索する検索エンジンを選択' : locale === 'es' ? 'Elige un motor de búsqueda para buscar esta imagen' : 'Choose a search engine to search for this image'}
+        {locale === 'tw' ? '選擇搜尋引擎進行圖片搜尋' : locale === 'cn' ? '选择搜索引擎进行图片搜索' : locale === 'jp' ? 'この画像を検索する検索エンジンを選択' : locale === 'es' ? 'Elige un motor de búsqueda para buscar esta imagen' : 'Choose a search engine to search for this image'}
       </p>
       <div className="flex flex-col md:flex-row md:flex-wrap md:gap-2">
         {searchEngines.map((engine) => (
@@ -255,7 +255,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
             onClick={onReset}
             className="bg-gray-700 hover:bg-gray-400 text-white font-medium py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors"
           >
-            {locale === 'zh' ? '重置' : locale === 'jp' ? 'リセット' : locale === 'es' ? 'Reiniciar' : 'Reset'}
+            {locale === 'tw' ? '重置' : locale === 'cn' ? '重置' : locale === 'jp' ? 'リセット' : locale === 'es' ? 'Reiniciar' : 'Reset'}
           </button>
         </div>
       )}

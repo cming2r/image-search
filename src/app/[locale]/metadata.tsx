@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { getBaseUrl, getFullUrl } from "@/lib/utils";
 
-// 定義有效的語言代碼
-export const locales = ['en', 'es', 'zh', 'jp'] as const;
+// 定義有效的語言代碼（順序：英文、西班牙文、日文、簡體中文、繁體中文）
+export const locales = ['en', 'es', 'jp', 'cn', 'tw'] as const;
 export type Locale = typeof locales[number];
 
 // 簡化的基礎元數據，僅包含通用設置
@@ -27,7 +27,8 @@ export const metadata: Metadata = {
     canonical: getFullUrl('/'),
     languages: {
       'en': getFullUrl('/'),
-      'zh-TW': getFullUrl('/zh/'),
+      'zh-TW': getFullUrl('/tw/'),
+      'zh-CN': getFullUrl('/cn/'),
       'ja': getFullUrl('/jp/'),
       'es': getFullUrl('/es/'),
     },

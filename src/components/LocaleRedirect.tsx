@@ -31,11 +31,17 @@ export default function LocaleRedirect({ currentLocale }: LocaleRedirectProps) {
     if (hasRedirected.current) return;
 
     // Get saved language preference
-    const savedLocale = localStorage.getItem('preferredLocale');
-    
+    let savedLocale = localStorage.getItem('preferredLocale');
+
+    // Migrate old 'zh' locale to 'tw'
+    if (savedLocale === 'zh') {
+      savedLocale = 'tw';
+      localStorage.setItem('preferredLocale', 'tw');
+    }
+
     // If no saved preference or already using the preferred locale, do nothing
     if (!savedLocale || savedLocale === currentLocale) return;
-    
+
     // Validate saved locale
     if (!locales.includes(savedLocale as typeof locales[number])) return;
 

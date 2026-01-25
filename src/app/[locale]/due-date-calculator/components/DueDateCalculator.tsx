@@ -3,39 +3,54 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 
+// 語言對應表（用於日期輸入的lang屬性）
+const langMap: Record<string, string> = {
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
+  'en': 'en',
+  'jp': 'ja',
+  'es': 'es'
+};
+
 const calculatorTranslations = {
   lastPeriodLabel: {
-    zh: "最後一次月經開始日",
+    tw: "最後一次月經開始日",
+    cn: "最后一次月经开始日",
     en: "First day of last period",
     jp: "最後の月経開始日",
     es: "Primer día del último período"
   },
   dueDate: {
-    zh: "預估預產期",
+    tw: "預估預產期",
+    cn: "预估预产期",
     en: "Estimated Due Date",
     jp: "推定予定日",
     es: "Fecha Estimada de Parto"
   },
   currentStatus: {
-    zh: "目前懷孕進度",
+    tw: "目前懷孕進度",
+    cn: "目前怀孕进度",
     en: "Current Pregnancy Progress",
     jp: "現在の妊娠進行状況",
     es: "Progreso Actual del Embarazo"
   },
   today: {
-    zh: "今天",
+    tw: "今天",
+    cn: "今天",
     en: "Today",
     jp: "今日",
     es: "Hoy"
   },
   weeks: {
-    zh: "週",
+    tw: "週",
+    cn: "周",
     en: "weeks",
     jp: "週",
     es: "semanas"
   },
   days: {
-    zh: "天",
+    tw: "天",
+    cn: "天",
     en: "days",
     jp: "日",
     es: "días"
@@ -45,7 +60,7 @@ const calculatorTranslations = {
 export default function DueDateCalculator() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   const [lastPeriodDate, setLastPeriodDate] = useState<string>('');
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -58,7 +73,7 @@ export default function DueDateCalculator() {
 
   // 格式化日期為本地格式
   const formatLocalDate = useCallback((date: Date) => {
-    return date.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : locale === 'es' ? 'es-ES' : 'en-US');
+    return date.toLocaleDateString(langMap[locale] || 'en-US');
   }, [locale]);
 
   // 計算懷孕週數
@@ -213,7 +228,8 @@ export default function DueDateCalculator() {
     // 先設置一個載入狀態，保留空間避免佈局偏移
     if (calendarEl.children.length === 0) {
       const noDateText = {
-        zh: "請先選擇最後一次月經日期",
+        tw: "請先選擇最後一次月經日期",
+        cn: "请先选择最后一次月经日期",
         en: "Please select the first day of your last period",
         jp: "最後の月経開始日を選択してください",
         es: "Por favor seleccione el primer día de su último período"
@@ -286,8 +302,8 @@ export default function DueDateCalculator() {
     // 更新月份顯示
     const calendarMonthDisplay = document.getElementById('calendarMonthDisplay');
     if (calendarMonthDisplay) {
-      calendarMonthDisplay.textContent = 
-        currentMonth.toLocaleDateString(locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja-JP' : locale === 'es' ? 'es-ES' : 'en-US', 
+      calendarMonthDisplay.textContent =
+        currentMonth.toLocaleDateString(langMap[locale] || 'en-US',
         { year: 'numeric', month: 'long' });
     }
     
@@ -395,6 +411,7 @@ export default function DueDateCalculator() {
                 <input
                   type="date"
                   id="lastPeriodDate"
+                  lang={langMap[locale] || 'en'}
                   value={lastPeriodDate}
                   onChange={(e) => {
                     const newDate = e.target.value;

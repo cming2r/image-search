@@ -10,133 +10,155 @@ import Toast from '@/components/Toast';
 
 const formTranslations = {
   enterUrlTab: {
-    zh: "輸入圖片網址",
+    tw: "輸入圖片網址",
+    cn: "输入图片网址",
     en: "Enter Image URL",
     jp: "画像URLを入力",
     es: "Ingresar URL de Imagen"
   },
   uploadImageTab: {
-    zh: "上傳圖片",
+    tw: "上傳圖片",
+    cn: "上传图片",
     en: "Upload Image",
     jp: "画像をアップロード",
     es: "Subir Imagen"
   },
   imageUrl: {
-    zh: "圖片網址",
+    tw: "圖片網址",
+    cn: "图片网址",
     en: "Image URL",
     jp: "画像URL",
     es: "URL de Imagen"
   },
   imageUrlPlaceholder: {
-    zh: "https://example.com/image.jpg",
+    tw: "https://example.com/image.jpg",
+    cn: "https://example.com/image.jpg",
     en: "https://example.com/image.jpg",
     jp: "https://example.com/image.jpg",
     es: "https://example.com/image.jpg"
   },
   imageUrlHint: {
-    zh: "URL必須以 .jpg、.png、.webp 等常見圖片格式結尾",
+    tw: "URL必須以 .jpg、.png、.webp 等常見圖片格式結尾",
+    cn: "URL必须以 .jpg、.png、.webp 等常见图片格式结尾",
     en: "URL must end with common image formats like .jpg, .png, .webp",
     jp: "URLは.jpg、.png、.webpなどの一般的な画像形式で終わる必要があります",
     es: "La URL debe terminar con formatos de imagen comunes como .jpg, .png, .webp"
   },
   searchButton: {
-    zh: "搜尋此圖片",
+    tw: "搜尋此圖片",
+    cn: "搜索此图片",
     en: "Search this image",
     jp: "この画像を検索",
     es: "Buscar esta imagen"
   },
   processing: {
-    zh: "處理中...",
+    tw: "處理中...",
+    cn: "处理中...",
     en: "Processing...",
     jp: "処理中...",
     es: "Procesando..."
   },
   resetButton: {
-    zh: "重置",
+    tw: "重置",
+    cn: "重置",
     en: "Reset",
     jp: "リセット",
     es: "Reiniciar"
   },
   imagePreview: {
-    zh: "圖片預覽",
+    tw: "圖片預覽",
+    cn: "图片预览",
     en: "Image Preview",
     jp: "画像プレビュー",
     es: "Vista Previa de Imagen"
   },
   selectImage: {
-    zh: "選擇圖片",
+    tw: "選擇圖片",
+    cn: "选择图片",
     en: "Select Image",
     jp: "画像を選択",
     es: "Seleccionar Imagen"
   },
   dragDropHint: {
-    zh: "拖曳圖片到這裡 、 ctrl+V 貼上 或",
+    tw: "拖曳圖片到這裡 、 ctrl+V 貼上 或",
+    cn: "拖拽图片到这里、ctrl+V 粘贴或",
     en: "Drag and drop image here, paste with ctrl+V, or",
     jp: "ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または",
     es: "Arrastra y suelta la imagen aquí, pega con ctrl+V, o"
   },
   clickUpload: {
-    zh: "點擊上傳",
+    tw: "點擊上傳",
+    cn: "点击上传",
     en: "click to upload",
     jp: "クリックしてアップロード",
     es: "haz clic para subir"
   },
   supportedFormats: {
-    zh: "支援 JPG, PNG, WEBP 等格式，最大15MB",
+    tw: "支援 JPG, PNG, WEBP 等格式，最大15MB",
+    cn: "支持 JPG, PNG, WEBP 等格式，最大15MB",
     en: "Supports JPG, PNG, WEBP and other formats, max 15MB",
     jp: "JPG、PNG、WEBPなどの形式をサポート、最大15MB",
     es: "Soporta JPG, PNG, WEBP y otros formatos, máx 15MB"
   },
   validUrlError: {
-    zh: "請輸入有效的圖片URL",
+    tw: "請輸入有效的圖片URL",
+    cn: "请输入有效的图片URL",
     en: "Please enter a valid image URL",
     jp: "有効な画像URLを入力してください",
     es: "Por favor ingresa una URL de imagen válida"
   },
   emptyUrlError: {
-    zh: "請輸入圖片URL",
+    tw: "請輸入圖片URL",
+    cn: "请输入图片URL",
     en: "Please enter an image URL",
     jp: "画像URLを入力してください",
     es: "Por favor ingresa una URL de imagen"
   },
   uploadErrorImage: {
-    zh: "請上傳圖片文件",
+    tw: "請上傳圖片文件",
+    cn: "请上传图片文件",
     en: "Please upload an image file",
     jp: "画像ファイルをアップロードしてください",
     es: "Por favor sube un archivo de imagen"
   },
   uploadErrorSize: {
-    zh: "圖片大小不能超過15MB",
+    tw: "圖片大小不能超過15MB",
+    cn: "图片大小不能超过15MB",
     en: "Image size cannot exceed 15MB",
     jp: "画像サイズは15MBを超えることはできません",
     es: "El tamaño de la imagen no puede exceder 15MB"
   },
   imageUrlInfo: {
-    zh: "圖片網址:",
+    tw: "圖片網址:",
+    cn: "图片网址:",
     en: "Image URL:",
     jp: "画像URL：",
     es: "URL de Imagen:"
   },
   successMessage: {
-    zh: "圖片網址設置成功",
+    tw: "圖片網址設置成功",
+    cn: "图片网址设置成功",
     en: "Image URL set successfully",
     jp: "画像URLが正常に設定されました",
     es: "URL de imagen configurada exitosamente"
   },
   errorMessage: {
-    zh: "處理圖片URL時發生錯誤",
+    tw: "處理圖片URL時發生錯誤",
+    cn: "处理图片URL时发生错误",
     en: "Error processing image URL",
     jp: "画像URLの処理中にエラーが発生しました",
     es: "Error al procesar la URL de imagen"
   },
   successUpload: {
-    zh: "圖片上傳成功",
+    tw: "圖片上傳成功",
+    cn: "图片上传成功",
     en: "Image uploaded successfully",
     jp: "画像が正常にアップロードされました",
     es: "Imagen subida exitosamente"
   },
   errorUpload: {
-    zh: "圖片上傳失敗，請稍後再試",
+    tw: "圖片上傳失敗，請稍後再試",
+    cn: "图片上传失败，请稍后再试",
     en: "Failed to upload image, please try again later",
     jp: "画像のアップロードに失敗しました。後でもう一度お試しください",
     es: "Error al subir la imagen, por favor inténtalo de nuevo más tarde"
@@ -147,7 +169,7 @@ const ImageForm: FC = () => {
   const params = useParams();
   const searchParams = useSearchParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
@@ -468,7 +490,8 @@ const ImageForm: FC = () => {
                     }
                   } catch (err) {
                     console.error('貼上失敗:', err);
-                    setError(lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' : 
+                    setError(lang === 'tw' ? '貼上失敗，請確認剪貼簿有圖片' :
+                             lang === 'cn' ? '粘贴失败，请确认剪贴板有图片' :
                              lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
                              lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
                              'Error al pegar, asegúrese de que el portapapeles tenga una imagen');
@@ -477,9 +500,10 @@ const ImageForm: FC = () => {
                 className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <Clipboard className="h-4 w-4 mr-1.5" />
-                {lang === 'zh' ? '貼上' : 
-                 lang === 'en' ? 'Paste' : 
-                 lang === 'jp' ? '貼り付け' : 
+                {lang === 'tw' ? '貼上' :
+                 lang === 'cn' ? '粘贴' :
+                 lang === 'en' ? 'Paste' :
+                 lang === 'jp' ? '貼り付け' :
                  'Pegar'}
               </button>
             </h2>

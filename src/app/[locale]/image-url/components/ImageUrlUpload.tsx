@@ -8,121 +8,141 @@ import Toast from '@/components/Toast';
 
 const uiTranslations = {
   uploadTitle: {
-    zh: '上傳圖片',
+    tw: '上傳圖片',
+    cn: '上传图片',
     en: 'Upload Image',
     jp: '画像をアップロード',
     es: 'Subir Imagen'
   },
   processing: {
-    zh: '上傳中...',
+    tw: '上傳中...',
+    cn: '上传中...',
     en: 'Uploading...',
     jp: 'アップロード中...',
     es: 'Subiendo...'
   },
   successUpload: {
-    zh: '圖片上傳成功',
+    tw: '圖片上傳成功',
+    cn: '图片上传成功',
     en: 'Image uploaded successfully',
     jp: '画像が正常にアップロードされました',
     es: 'Imagen subida exitosamente'
   },
   errorUpload: {
-    zh: '圖片上傳失敗，請稍後再試',
+    tw: '圖片上傳失敗，請稍後再試',
+    cn: '图片上传失败，请稍后再试',
     en: 'Failed to upload image, please try again later',
     jp: '画像のアップロードに失敗しました。後でもう一度お試しください',
     es: 'Error al subir la imagen, por favor inténtalo de nuevo más tarde'
   },
   supportedFormats: {
-    zh: '支援圖片格式 (最大 10MB)',
+    tw: '支援圖片格式 (最大 10MB)',
+    cn: '支持图片格式 (最大 10MB)',
     en: 'Supported image formats (Max 10MB)',
     jp: '対応画像形式（最大10MB）',
     es: 'Formatos de imagen compatibles (Máx. 10MB)'
   },
   dragDrop: {
-    zh: '拖曳圖片到這裡、ctrl+V 貼上或',
+    tw: '拖曳圖片到這裡、ctrl+V 貼上或',
+    cn: '拖拽图片到这里、ctrl+V 粘贴或',
     en: 'Drag and drop image here, paste with ctrl+V, or',
     jp: 'ここに画像をドラッグ＆ドロップ、ctrl+Vで貼り付け、または',
     es: 'Arrastra y suelta la imagen aquí, pega con ctrl+V, o'
   },
   clickUpload: {
-    zh: '點擊上傳',
+    tw: '點擊上傳',
+    cn: '点击上传',
     en: 'click to upload',
     jp: 'クリックしてアップロード',
     es: 'haz clic para subir'
   },
   uploadButton: {
-    zh: '開始上傳',
+    tw: '開始上傳',
+    cn: '开始上传',
     en: 'Start Upload',
     jp: 'アップロード開始',
     es: 'Iniciar Subida'
   },
   error: {
-    zh: '上傳失敗，請重試',
+    tw: '上傳失敗，請重試',
+    cn: '上传失败，请重试',
     en: 'Upload failed, please try again',
     jp: 'アップロードに失敗しました。再試行してください',
     es: 'Error al subir, por favor inténtalo de nuevo'
   },
   shortUrl: {
-    zh: '短網址',
+    tw: '短網址',
+    cn: '短网址',
     en: 'Short URL',
     jp: '短縮URL',
     es: 'URL Corta'
   },
   preview: {
-    zh: '圖片預覽',
+    tw: '圖片預覽',
+    cn: '图片预览',
     en: 'Image Preview',
     jp: '画像プレビュー',
     es: 'Vista Previa de Imagen'
   },
   backButton: {
-    zh: '返回',
+    tw: '返回',
+    cn: '返回',
     en: 'Back',
     jp: '戻る',
     es: 'Volver'
   },
   customImageUrl: {
-    zh: '設定圖片URL密碼',
+    tw: '設定圖片URL密碼',
+    cn: '设置图片URL密码',
     en: 'Set Image URL Password',
     jp: '画像URLパスワード設定',
     es: 'Configurar Contraseña de URL de Imagen'
   },
   passwordProtection: {
-    zh: '密碼保護',
+    tw: '密碼保護',
+    cn: '密码保护',
     en: 'Password Protection',
     jp: 'パスワード保護',
     es: 'Protección con Contraseña'
   },
   passwordPlaceholder: {
-    zh: '最多4位數字',
+    tw: '最多4位數字',
+    cn: '最多4位数字',
     en: 'Max 4 digits',
     jp: '最大4桁',
     es: 'Máx. 4 dígitos'
   },
   none: {
-    zh: '無',
+    tw: '無',
+    cn: '无',
     en: 'None',
     jp: 'なし',
     es: 'Ninguno'
   },
   expiresIn: {
-    zh: '有效期限（可選）',
+    tw: '有效期限（可選）',
+    cn: '有效期限（可选）',
     en: 'Expires In (Optional)',
     jp: '有効期限（任意）',
     es: 'Expira En (Opcional)'
   },
   expiration: {
-    zh: '有效期限',
+    tw: '有效期限',
+    cn: '有效期限',
     en: 'Expiration',
     jp: '有効期限',
     es: 'Expiración'
   },
   pasteButton: {
-    zh: '貼上',
+    tw: '貼上',
+    cn: '粘贴',
     en: 'Paste',
     jp: '貼り付け',
     es: 'Pegar'
   },
   multiUpload: {
-    zh: '多圖上傳',
+    tw: '多圖上傳',
+    cn: '多图上传',
     en: 'Multi Upload',
     jp: '複数アップロード',
     es: 'Subir Múltiples'
@@ -130,14 +150,14 @@ const uiTranslations = {
 };
 
 const expirationOptions = [
-  { value: '', label: { zh: '預設', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
-  { value: '1hr', label: { zh: '1小時', en: '1 hour', jp: '1時間', es: '1 hora' } },
-  { value: '3hr', label: { zh: '3小時', en: '3 hours', jp: '3時間', es: '3 horas' } },
-  { value: '6hr', label: { zh: '6小時', en: '6 hours', jp: '6時間', es: '6 horas' } },
-  { value: '12hr', label: { zh: '12小時', en: '12 hours', jp: '12時間', es: '12 horas' } },
-  { value: '1day', label: { zh: '1天', en: '1 day', jp: '1日', es: '1 día' } },
-  { value: '3days', label: { zh: '3天', en: '3 days', jp: '3日', es: '3 días' } },
-  { value: '7days', label: { zh: '7天', en: '7 days', jp: '7日', es: '7 días' } }
+  { value: '', label: { tw: '預設', cn: '默认', en: 'Default', jp: 'デフォルト', es: 'Predeterminado' } },
+  { value: '1hr', label: { tw: '1小時', cn: '1小时', en: '1 hour', jp: '1時間', es: '1 hora' } },
+  { value: '3hr', label: { tw: '3小時', cn: '3小时', en: '3 hours', jp: '3時間', es: '3 horas' } },
+  { value: '6hr', label: { tw: '6小時', cn: '6小时', en: '6 hours', jp: '6時間', es: '6 horas' } },
+  { value: '12hr', label: { tw: '12小時', cn: '12小时', en: '12 hours', jp: '12時間', es: '12 horas' } },
+  { value: '1day', label: { tw: '1天', cn: '1天', en: '1 day', jp: '1日', es: '1 día' } },
+  { value: '3days', label: { tw: '3天', cn: '3天', en: '3 days', jp: '3日', es: '3 días' } },
+  { value: '7days', label: { tw: '7天', cn: '7天', en: '7 days', jp: '7日', es: '7 días' } }
 ];
 
 interface ImageUrlUploadProps {
@@ -177,7 +197,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   const t = uiTranslations;
 
   // 倒數計時邏輯
@@ -195,22 +215,26 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
           let countdownText = '';
           if (days > 0) {
-            countdownText = lang === 'zh' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${days}天 ${hours}小時 ${minutes}分鐘` :
+                           lang === 'cn' ? `${days}天 ${hours}小时 ${minutes}分钟` :
                            lang === 'en' ? `${days}d ${hours}h ${minutes}m` :
                            lang === 'jp' ? `${days}日 ${hours}時間 ${minutes}分` :
                            `${days}d ${hours}h ${minutes}m`;
           } else if (hours > 0) {
-            countdownText = lang === 'zh' ? `${hours}小時 ${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${hours}小時 ${minutes}分鐘` :
+                           lang === 'cn' ? `${hours}小时 ${minutes}分钟` :
                            lang === 'en' ? `${hours}h ${minutes}m` :
                            lang === 'jp' ? `${hours}時間 ${minutes}分` :
                            `${hours}h ${minutes}m`;
           } else if (minutes > 0) {
-            countdownText = lang === 'zh' ? `${minutes}分鐘` :
+            countdownText = lang === 'tw' ? `${minutes}分鐘` :
+                           lang === 'cn' ? `${minutes}分钟` :
                            lang === 'en' ? `${minutes}m` :
                            lang === 'jp' ? `${minutes}分` :
                            `${minutes}m`;
           } else {
-            countdownText = lang === 'zh' ? '不到1分鐘' :
+            countdownText = lang === 'tw' ? '不到1分鐘' :
+                           lang === 'cn' ? '不到1分钟' :
                            lang === 'en' ? 'Less than 1m' :
                            lang === 'jp' ? '1分未満' :
                            'Menos de 1m';
@@ -218,7 +242,8 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
           setCountdown(countdownText);
         } else {
-          setCountdown(lang === 'zh' ? '已過期' :
+          setCountdown(lang === 'tw' ? '已過期' :
+                      lang === 'cn' ? '已过期' :
                       lang === 'en' ? 'Expired' :
                       lang === 'jp' ? '期限切れ' :
                       'Expirado');
@@ -285,7 +310,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
       if (!configResponse.ok) {
         const errorData = await configResponse.json().catch(() => ({}));
         const errorMessage = errorData.message || errorData.error || 
-                            (lang === 'zh' ? `配置獲取失敗 (${configResponse.status})` :
+                            (lang === 'tw' ? `配置獲取失敗 (${configResponse.status})` :
                              lang === 'en' ? `Configuration failed (${configResponse.status})` :
                              lang === 'jp' ? `設定取得失敗 (${configResponse.status})` :
                              `Error de configuración (${configResponse.status})`);
@@ -296,7 +321,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
       const configData = await configResponse.json();
       if (!configData.success || !configData.uploadConfig) {
-        const errorMessage = lang === 'zh' ? '無效的上傳配置' :
+        const errorMessage = lang === 'tw' ? '無效的上傳配置' :
                              lang === 'en' ? 'Invalid upload configuration' :
                              lang === 'jp' ? '無効なアップロード設定' :
                              'Configuración de subida inválida';
@@ -316,7 +341,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
       if (!r2Response.ok) {
         console.error('R2 upload failed:', r2Response.status, r2Response.statusText);
-        const errorMessage = lang === 'zh' ? '檔案上傳到存儲服務失敗' :
+        const errorMessage = lang === 'tw' ? '檔案上傳到存儲服務失敗' :
                              lang === 'en' ? 'Failed to upload file to storage service' :
                              lang === 'jp' ? 'ストレージサービスへのファイルアップロードに失敗しました' :
                              'Error al subir archivo al servicio de almacenamiento';
@@ -339,7 +364,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
       });
 
       if (!completeResponse.ok) {
-        const errorMessage = lang === 'zh' ? '上傳確認失敗' :
+        const errorMessage = lang === 'tw' ? '上傳確認失敗' :
                              lang === 'en' ? 'Upload confirmation failed' :
                              lang === 'jp' ? 'アップロード確認に失敗しました' :
                              'Error en confirmación de subida';
@@ -363,7 +388,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
       }
     } catch (networkError) {
       console.error('Network error:', networkError);
-      const errorMessage = lang === 'zh' ? '網路連線錯誤，請稍後再試' :
+      const errorMessage = lang === 'tw' ? '網路連線錯誤，請稍後再試' :
                            lang === 'en' ? 'Network error, please try again later' :
                            lang === 'jp' ? 'ネットワークエラー、後でもう一度お試しください' :
                            'Error de red, por favor inténtalo de nuevo más tarde';
@@ -381,7 +406,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
   const handleFileSelect = useCallback((selectedFile: File) => {
     // 檢查檔案大小 (10MB)
     if (selectedFile.size > 10 * 1024 * 1024) {
-      const errorMessage = lang === 'zh' ? '檔案大小超過10MB限制' :
+      const errorMessage = lang === 'tw' ? '檔案大小超過10MB限制' :
                            lang === 'en' ? 'File size exceeds 10MB limit' :
                            lang === 'jp' ? 'ファイルサイズが10MBの上限を超えています' :
                            'El tamaño del archivo excede el límite de 10MB';
@@ -397,7 +422,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
     ];
     
     if (!allowedTypes.includes(selectedFile.type)) {
-      const errorMessage = lang === 'zh' ? '不支援的圖片格式' :
+      const errorMessage = lang === 'tw' ? '不支援的圖片格式' :
                            lang === 'en' ? 'Unsupported image format' :
                            lang === 'jp' ? 'サポートされていない画像形式' :
                            'Formato de imagen no compatible';
@@ -637,7 +662,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                     }
                   } catch (err) {
                     console.error('貼上失敗:', err);
-                    const errorMessage = lang === 'zh' ? '貼上失敗，請確認剪貼簿有圖片' :
+                    const errorMessage = lang === 'tw' ? '貼上失敗，請確認剪貼簿有圖片' :
                                        lang === 'en' ? 'Paste failed, please make sure clipboard has an image' :
                                        lang === 'jp' ? '貼り付けに失敗しました。クリップボードに画像があることを確認してください' :
                                        'Error al pegar, asegúrese de que el portapapeles tenga una imagen';
@@ -852,7 +877,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                     }
                   }}
                   className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
-                  title={lang === 'zh' ? '前往' : lang === 'en' ? 'Visit' : lang === 'jp' ? '移動' : 'Visitar'}
+                  title={lang === 'tw' ? '前往' : lang === 'en' ? 'Visit' : lang === 'jp' ? '移動' : 'Visitar'}
                 >
                   <ExternalLink size={24} />
                 </button>
@@ -865,7 +890,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                       ? 'bg-green-600 text-white' 
                       : 'bg-green-600 text-white hover:bg-green-700'
                   }`}
-                  title={copied ? (lang === 'zh' ? '已複製！' : lang === 'en' ? 'Copied!' : lang === 'jp' ? 'コピー済み！' : '¡Copiado!') : (lang === 'zh' ? '複製' : lang === 'en' ? 'Copy' : lang === 'jp' ? 'コピー' : 'Copiar')}
+                  title={copied ? (lang === 'tw' ? '已複製！' : lang === 'en' ? 'Copied!' : lang === 'jp' ? 'コピー済み！' : '¡Copiado!') : (lang === 'tw' ? '複製' : lang === 'en' ? 'Copy' : lang === 'jp' ? 'コピー' : 'Copiar')}
                 >
                   {copied ? (
                     <Check size={24} />
@@ -882,7 +907,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                       ? 'bg-black text-white' 
                       : 'bg-black text-white hover:bg-gray-800'
                   }`}
-                  title={lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
+                  title={lang === 'tw' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
                 >
                   <QrCode size={24} />
                 </button>
@@ -893,7 +918,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
             {showQrCode && qrCodeUrl && (
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <h4 className="text-lg font-medium text-gray-900 mb-3 text-center">
-                  {lang === 'zh' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
+                  {lang === 'tw' ? 'QR Code' : lang === 'en' ? 'QR Code' : lang === 'jp' ? 'QRコード' : 'Código QR'}
                 </h4>
                 
                 <div className="flex justify-center">
@@ -904,7 +929,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                         <div className="flex items-center">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
                           <span className="ml-2 text-sm text-gray-700">
-                            {lang === 'zh' ? '生成中...' : lang === 'en' ? 'Generating...' : lang === 'jp' ? '生成中...' : 'Generando...'}
+                            {lang === 'tw' ? '生成中...' : lang === 'en' ? 'Generating...' : lang === 'jp' ? '生成中...' : 'Generando...'}
                           </span>
                         </div>
                       </div>
@@ -940,7 +965,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="ml-2 text-sm text-gray-700">
-                      {lang === 'zh' ? '包含 URL' : 
+                      {lang === 'tw' ? '包含 URL' : 
                        lang === 'en' ? 'Include URL' : 
                        lang === 'jp' ? 'URLを含める' : 
                        'Incluir URL'}
@@ -953,7 +978,7 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                   <button
                     onClick={downloadQRCode}
                     className="p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors flex items-center justify-center"
-                    title={lang === 'zh' ? '下載 QR Code' : 
+                    title={lang === 'tw' ? '下載 QR Code' : 
                            lang === 'en' ? 'Download QR Code' : 
                            lang === 'jp' ? 'QRコードをダウンロード' : 
                            'Descargar código QR'}
@@ -994,7 +1019,8 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
               <button
                 onClick={() => {
                   const baseUrl = 'https://vvrl.cc';
-                  const imageUrl = lang === 'zh' ? `${baseUrl}/zh/image` : 
+                  const imageUrl = lang === 'tw' ? `${baseUrl}/tw/image` :
+                                 lang === 'cn' ? `${baseUrl}/cn/image` :
                                  lang === 'en' ? `${baseUrl}/image` :
                                  lang === 'jp' ? `${baseUrl}/jp/image` :
                                  lang === 'es' ? `${baseUrl}/es/image` :
@@ -1004,7 +1030,8 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
                 onAuxClick={(e) => {
                   if (e.button === 1) { // 中鍵點擊
                     const baseUrl = 'https://vvrl.cc';
-                    const imageUrl = lang === 'zh' ? `${baseUrl}/zh/image` : 
+                    const imageUrl = lang === 'tw' ? `${baseUrl}/tw/image` :
+                                   lang === 'cn' ? `${baseUrl}/cn/image` :
                                    lang === 'en' ? `${baseUrl}/image` :
                                    lang === 'jp' ? `${baseUrl}/jp/image` :
                                    lang === 'es' ? `${baseUrl}/es/image` :

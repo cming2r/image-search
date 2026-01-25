@@ -10,14 +10,15 @@ import {
 import { giftExchangeTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['交換禮物', '抽籤', '輪盤', '秘密聖誕老人', '團隊活動'],
+  tw: ['交換禮物', '抽籤', '輪盤', '秘密聖誕老人', '團隊活動'],
+  cn: ['交换礼物', '抽签', '转盘', '秘密圣诞老人', '团队活动'],
   en: ['gift exchange', 'drawing', 'wheel', 'secret santa', 'team event'],
   jp: ['ギフト交換', '抽選', 'ホイール', 'シークレットサンタ', 'チームイベント'],
   es: ['intercambio de regalos', 'sorteo', 'ruleta', 'amigo secreto', 'evento de equipo']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof giftExchangeTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof giftExchangeTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -30,7 +31,8 @@ const convertFaqForSchema = (faqData: typeof giftExchangeTranslations.faq.questi
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(giftExchangeTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(giftExchangeTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(giftExchangeTranslations.faq.questions.cn),
   en: convertFaqForSchema(giftExchangeTranslations.faq.questions.en),
   jp: convertFaqForSchema(giftExchangeTranslations.faq.questions.jp),
   es: convertFaqForSchema(giftExchangeTranslations.faq.questions.es)
@@ -41,7 +43,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -53,9 +56,9 @@ const imageUrl = getFullUrl('/images/og-gift-exchange.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.zh;
-  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.tw;
+  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `交換禮物抽籤` : 
@@ -78,7 +81,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '交換禮物抽籤工具界面' : 
+          alt: locale === 'tw' ? '交換禮物抽籤工具界面' :
+               locale === 'cn' ? '交换礼物抽签工具界面' :
                locale === 'en' ? 'Gift Exchange Draw Tool Interface' :
                locale === 'jp' ? 'ギフト交換抽選ツールインターフェース' :
                locale === 'es' ? 'Interfaz de Herramienta de Sorteo de Intercambio de Regalos' : 'Gift Exchange Draw Tool Interface',
@@ -101,7 +105,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/gift-exchange' : `/${locale}/gift-exchange`),
       languages: {
-        'zh-TW': getFullUrl('/gift-exchange'),
+        'zh-TW': getFullUrl('/tw/gift-exchange'),
+        'zh-CN': getFullUrl('/cn/gift-exchange'),
         'en': getFullUrl('/en/gift-exchange'),
         'ja': getFullUrl('/jp/gift-exchange'),
         'es': getFullUrl('/es/gift-exchange'),
@@ -137,12 +142,12 @@ export default async function GiftExchangeLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.zh;
-  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = giftExchangeTranslations.meta.title[locale as keyof typeof giftExchangeTranslations.meta.title] || giftExchangeTranslations.meta.title.tw;
+  const description = giftExchangeTranslations.meta.description[locale as keyof typeof giftExchangeTranslations.meta.description] || giftExchangeTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/gift-exchange', title, locale);
@@ -161,7 +166,8 @@ export default async function GiftExchangeLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/gift-exchange',
-    locale === 'zh' ? '交換禮物轉盤工具' :
+    locale === 'tw' ? '交換禮物轉盤工具' :
+    locale === 'cn' ? '交换礼物转盘工具' :
     locale === 'en' ? 'Gift Exchange Wheel Tool' :
     locale === 'jp' ? 'ギフト交換ホイールツール' :
     locale === 'es' ? 'Herramienta de Ruleta de Intercambio de Regalos' : 'Gift Exchange Wheel Tool',

@@ -10,14 +10,15 @@ import {
 import { metaTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['預產期計算', '懷孕週數', '生產日期', '孕期追蹤'],
+  tw: ['預產期計算', '懷孕週數', '生產日期', '孕期追蹤'],
+  cn: ['预产期计算', '怀孕周数', '生产日期', '孕期追踪'],
   en: ['due date calculator', 'pregnancy weeks', 'delivery date', 'pregnancy tracker'],
   jp: ['出産予定日計算', '妊娠週数', '分娩日', '妊娠追跡'],
   es: ['calculadora de fecha de parto', 'semanas de embarazo', 'fecha de parto', 'seguimiento del embarazo']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -30,7 +31,8 @@ const convertFaqForSchema = (faqData: typeof metaTranslations.faq.questions.zh) 
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(metaTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(metaTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(metaTranslations.faq.questions.cn),
   en: convertFaqForSchema(metaTranslations.faq.questions.en),
   jp: convertFaqForSchema(metaTranslations.faq.questions.jp),
   es: convertFaqForSchema(metaTranslations.faq.questions.es)
@@ -41,7 +43,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -53,9 +56,9 @@ const imageUrl = getFullUrl('/images/og-due-date-calculator.webp');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.zh;
-  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.tw;
+  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
   const ogTitle = locale === 'en' ? `預產期計算器` : 
@@ -78,7 +81,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '預產期計算器工具界面' : 
+          alt: locale === 'tw' ? '預產期計算器工具界面' :
+               locale === 'cn' ? '预产期计算器工具界面' :
                locale === 'en' ? 'Due Date Calculator Tool Interface' :
                locale === 'jp' ? '出産予定日計算機ツールインターフェース' :
                locale === 'es' ? 'Interfaz de Herramienta Calculadora de Fecha de Parto' : 'Due Date Calculator Tool Interface',
@@ -101,7 +105,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/due-date-calculator' : `/${locale}/due-date-calculator`),
       languages: {
-        'zh-TW': getFullUrl('/due-date-calculator'),
+        'zh-TW': getFullUrl('/tw/due-date-calculator'),
+        'zh-CN': getFullUrl('/cn/due-date-calculator'),
         'en': getFullUrl('/en/due-date-calculator'),
         'ja': getFullUrl('/jp/due-date-calculator'),
         'es': getFullUrl('/es/due-date-calculator'),
@@ -137,12 +142,12 @@ export default async function DueDateCalculatorLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.zh;
-  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = metaTranslations.meta.title[locale as keyof typeof metaTranslations.meta.title] || metaTranslations.meta.title.tw;
+  const description = metaTranslations.meta.description[locale as keyof typeof metaTranslations.meta.description] || metaTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/due-date-calculator', title, locale);
@@ -161,7 +166,8 @@ export default async function DueDateCalculatorLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/due-date-calculator',
-    locale === 'zh' ? '懷孕預產期計算工具' :
+    locale === 'tw' ? '懷孕預產期計算工具' :
+    locale === 'cn' ? '怀孕预产期计算工具' :
     locale === 'en' ? 'Pregnancy Due Date Calculator Tool' :
     locale === 'jp' ? '妊娠出産予定日計算ツール' :
     locale === 'es' ? 'Herramienta Calculadora de Fecha de Parto del Embarazo' : 'Pregnancy Due Date Calculator Tool',

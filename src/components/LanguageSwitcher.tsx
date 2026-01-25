@@ -18,14 +18,16 @@ export default function LanguageSwitcher({ className = '', currentLocale }: Lang
   
   // 語言顯示名稱和代碼
   const languageNames: Record<string, string> = {
-    zh: '中文',
+    tw: '繁體中文',
+    cn: '简体中文',
     en: 'English',
     jp: '日本語',
     es: 'Español',
   };
-  
+
   const languageCodes: Record<string, string> = {
-    zh: '中文',
+    tw: '繁中',
+    cn: '简中',
     en: 'EN',
     jp: '日本語',
     es: 'ES',

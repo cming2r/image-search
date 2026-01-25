@@ -10,7 +10,8 @@ import {
 import { menuScannerTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['揪團訂餐', '菜單掃描器', 'AI菜單識別', '團購訂餐', '辦公室訂餐', 'DiiN'],
+  tw: ['揪團訂餐', '菜單掃描器', 'AI菜單識別', '團購訂餐', '辦公室訂餐', 'DiiN'],
+  cn: ['揪团订餐', '菜单扫描器', 'AI菜单识别', '团购订餐', '办公室订餐', 'DiiN'],
   en: ['group order', 'menu scanner', 'AI menu recognition', 'team ordering', 'office food order', 'DiiN'],
   jp: ['グループ注文', 'メニュースキャナー', 'AIメニュー認識', 'チーム注文', 'オフィス注文', 'DiiN'],
   es: ['pedido grupal', 'escáner de menú', 'reconocimiento de menú AI', 'pedidos de equipo', 'pedidos de oficina', 'DiiN']
@@ -18,7 +19,7 @@ const keywordsList = {
 
 // 多語言FAQ數據
 const faqsData = {
-  zh: [
+  tw: [
     {
       '@type': 'Question',
       name: '什麼是 DiiN 揪團訂餐助手？',
@@ -49,6 +50,40 @@ const faqsData = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: '是的，DiiN 提供免費使用。您可以直接訪問 diin.cc 開始使用揪團訂餐功能。'
+      }
+    }
+  ],
+  cn: [
+    {
+      '@type': 'Question',
+      name: '什么是 DiiN 揪团订餐助手？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'DiiN 是一款 AI 驱动的团队订餐助手，让办公室揪团订餐变得简单。只需上传菜单照片，AI 自动识别菜品和价格，然后分享链接给同事收集订单，系统会自动统计汇总。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'DiiN 支持哪些菜单类型？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'DiiN 支持各种餐厅和饮品店的菜单，包括中式餐厅、手摇饮料店、便当店、西餐厅等。只要是清晰的菜单照片，AI 都能识别。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '如何分享订单链接？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '创建订单后，系统会生成一个专属链接。您可以直接复制链接，透过 Slack、Teams、WhatsApp、LINE 或任何通讯软件分享给同事。'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'DiiN 是免费的吗？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '是的，DiiN 提供免费使用。您可以直接访问 diin.cc 开始使用揪团订餐功能。'
       }
     }
   ],
@@ -161,7 +196,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -173,11 +209,12 @@ const imageUrl = getFullUrl('/images/og-menu-scanner.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = menuScannerTranslations.meta.title[locale as keyof typeof menuScannerTranslations.meta.title] || menuScannerTranslations.meta.title.zh;
-  const description = menuScannerTranslations.meta.description[locale as keyof typeof menuScannerTranslations.meta.description] || menuScannerTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = menuScannerTranslations.meta.title[locale as keyof typeof menuScannerTranslations.meta.title] || menuScannerTranslations.meta.title.tw;
+  const description = menuScannerTranslations.meta.description[locale as keyof typeof menuScannerTranslations.meta.description] || menuScannerTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
 
-  const ogTitle = locale === 'zh' ? '揪團訂餐助手 - DiiN' :
+  const ogTitle = locale === 'tw' ? '揪團訂餐助手 - DiiN' :
+                  locale === 'cn' ? '揪团订餐助手 - DiiN' :
                   locale === 'en' ? 'Group Order Assistant - DiiN' :
                   locale === 'jp' ? 'グループ注文アシスタント - DiiN' :
                   'Asistente de Pedidos Grupales - DiiN';
@@ -196,7 +233,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '揪團訂餐助手 DiiN 介面' :
+          alt: locale === 'tw' ? '揪團訂餐助手 DiiN 介面' :
                locale === 'en' ? 'DiiN Group Order Assistant Interface' :
                locale === 'jp' ? 'DiiN グループ注文アシスタント インターフェース' :
                'Interfaz del Asistente de Pedidos Grupales DiiN',
@@ -217,7 +254,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/blog/menu-scanner' : `/${locale}/menu-scanner`),
       languages: {
-        'zh-TW': getFullUrl('/zh/menu-scanner'),
+        'zh-TW': getFullUrl('/tw/menu-scanner'),
+        'zh-CN': getFullUrl('/cn/menu-scanner'),
         'en': getFullUrl('/blog/menu-scanner'),
         'ja': getFullUrl('/jp/menu-scanner'),
         'es': getFullUrl('/es/menu-scanner'),
@@ -241,11 +279,11 @@ export default async function MenuScannerLayout({
   const { locale = 'en' } = await params;
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
 
-  const title = menuScannerTranslations.meta.title[locale as keyof typeof menuScannerTranslations.meta.title] || menuScannerTranslations.meta.title.zh;
-  const description = menuScannerTranslations.meta.description[locale as keyof typeof menuScannerTranslations.meta.description] || menuScannerTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = menuScannerTranslations.meta.title[locale as keyof typeof menuScannerTranslations.meta.title] || menuScannerTranslations.meta.title.tw;
+  const description = menuScannerTranslations.meta.description[locale as keyof typeof menuScannerTranslations.meta.description] || menuScannerTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
 
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
 
   const breadcrumbSchema = generateBreadcrumbSchema('/blog/menu-scanner', title, locale);
   const faqSchema = generateFAQSchema(faqItems);
@@ -263,7 +301,8 @@ export default async function MenuScannerLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/blog/menu-scanner',
-    locale === 'zh' ? '揪團訂餐助手 - AI菜單掃描器' :
+    locale === 'tw' ? '揪團訂餐助手 - AI菜單掃描器' :
+    locale === 'cn' ? '揪团订餐助手 - AI菜单扫描器' :
     locale === 'en' ? 'Group Order Assistant - AI Menu Scanner' :
     locale === 'jp' ? 'グループ注文アシスタント - AIメニュースキャナー' :
     'Asistente de Pedidos Grupales - Escáner de Menú AI',

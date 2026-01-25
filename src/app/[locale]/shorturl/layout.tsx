@@ -9,14 +9,15 @@ import {
 import { shorturlTranslations } from './components/meta-translations';
 
 const keywordsList = {
-  zh: ['短網址', '縮短網址', '短連結產生器', 'URL縮短工具'],
+  tw: ['短網址', '縮短網址', '短連結產生器', 'URL縮短工具'],
+  cn: ['短网址', '缩短网址', '短链接生成器', 'URL缩短工具'],
   en: ['url shortener', 'short link', 'link shortener', 'short url generator'],
   jp: ['URL短縮', '短縮リンク', 'リンク短縮ツール', 'URL短縮ジェネレーター'],
   es: ['acortador de url', 'enlace corto', 'acortador de enlaces', 'generador de url corta']
 };
 
 // 從meta-translations轉換FAQ數據格式以符合結構化數據需求
-const convertFaqForSchema = (faqData: typeof shorturlTranslations.faq.questions.zh) => {
+const convertFaqForSchema = (faqData: typeof shorturlTranslations.faq.questions.tw) => {
   return faqData.map(item => ({
     '@type': 'Question',
     name: item.question,
@@ -29,7 +30,8 @@ const convertFaqForSchema = (faqData: typeof shorturlTranslations.faq.questions.
 
 // 多語言FAQ數據（基於meta-translations）
 const faqsData = {
-  zh: convertFaqForSchema(shorturlTranslations.faq.questions.zh),
+  tw: convertFaqForSchema(shorturlTranslations.faq.questions.tw),
+  cn: convertFaqForSchema(shorturlTranslations.faq.questions.cn),
   en: convertFaqForSchema(shorturlTranslations.faq.questions.en),
   jp: convertFaqForSchema(shorturlTranslations.faq.questions.jp),
   es: convertFaqForSchema(shorturlTranslations.faq.questions.es)
@@ -40,7 +42,8 @@ const { created: datePublished, modified: dateModified } = getPageDates('src/app
 
 // 語言對應表，將locale映射為HTML語言代碼
 const langMap = {
-  'zh': 'zh-TW',
+  'tw': 'zh-TW',
+  'cn': 'zh-CN',
   'en': 'en',
   'jp': 'ja',
   'es': 'es'
@@ -52,12 +55,12 @@ const imageUrl = getFullUrl('/images/og-image.png');
 // 生成多語言元數據配置
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params;
-  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
-  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.tw;
+  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // OpenGraph 標題根據語言不同
-  const ogTitle = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
+  const ogTitle = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.tw;
 
   return {
     metadataBase: new URL(getBaseUrl()),
@@ -74,7 +77,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: locale === 'zh' ? '短網址產生器工具界面' : 
+          alt: locale === 'tw' ? '短網址產生器工具界面' :
+               locale === 'cn' ? '短网址生成器工具界面' :
                locale === 'en' ? 'URL Shortener Tool Interface' :
                locale === 'es' ? 'Interfaz de Herramienta Acortadora de URL' :
                'URL短縮ツールインターフェース',
@@ -97,7 +101,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: getFullUrl(locale === 'en' ? '/shorturl' : `/${locale}/shorturl`),
       languages: {
-        'zh-TW': getFullUrl('/shorturl'),
+        'zh-TW': getFullUrl('/tw/shorturl'),
+        'zh-CN': getFullUrl('/cn/shorturl'),
         'en': getFullUrl('/en/shorturl'),
         'ja': getFullUrl('/jp/shorturl'),
         'es': getFullUrl('/es/shorturl'),
@@ -133,12 +138,12 @@ export default async function ShortUrlLayout({
   const language = langMap[locale as keyof typeof langMap] || 'zh-TW';
   
   // 根據當前語言取得相應標題與描述
-  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.zh;
-  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.zh;
-  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.zh;
+  const title = shorturlTranslations.meta.title[locale as keyof typeof shorturlTranslations.meta.title] || shorturlTranslations.meta.title.tw;
+  const description = shorturlTranslations.meta.description[locale as keyof typeof shorturlTranslations.meta.description] || shorturlTranslations.meta.description.tw;
+  const keywords = keywordsList[locale as keyof typeof keywordsList] || keywordsList.tw;
   
   // 根據語言選擇正確的FAQ資料
-  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.zh;
+  const faqItems = faqsData[locale as keyof typeof faqsData] || faqsData.tw;
   
   // 生成多語言結構化數據
   const breadcrumbSchema = generateBreadcrumbSchema('/shorturl', title, locale);
@@ -157,7 +162,8 @@ export default async function ShortUrlLayout({
   );
   const webApplicationSchema = generateWebApplicationSchema(
     '/shorturl',
-    locale === 'zh' ? '短網址產生器工具' :
+    locale === 'tw' ? '短網址產生器工具' :
+    locale === 'cn' ? '短网址生成器工具' :
     locale === 'en' ? 'URL Shortener Tool' :
     locale === 'es' ? 'Herramienta Acortadora de URL' :
     'URL短縮ツール',

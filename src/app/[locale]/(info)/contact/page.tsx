@@ -18,14 +18,16 @@ export default function Contact() {
   const locale = (params?.locale as string) || 'en';
   
   // Determine the current locale
-  const isZhLocale = locale === 'zh';
+  const isTwLocale = locale === 'tw';
+  const isCnLocale = locale === 'cn';
   const isEnLocale = locale === 'en';
   const isJpLocale = locale === 'jp';
   const isEsLocale = locale === 'es';
-  
+
   // Get content based on locale
-  const getContent = (zhText: string, enText: string, jpText: string, esText: string) => {
-    if (isZhLocale) return zhText;
+  const getContent = (twText: string, cnText: string, enText: string, jpText: string, esText: string) => {
+    if (isTwLocale) return twText;
+    if (isCnLocale) return cnText;
     if (isEnLocale) return enText;
     if (isJpLocale) return jpText;
     if (isEsLocale) return esText;
@@ -34,45 +36,50 @@ export default function Contact() {
   
   // Form translations
   const formLabels = {
-    name: getContent('您的名字', 'Your Name', 'お名前', 'Su Nombre'),
-    email: getContent('電子郵件', 'Email Address', 'メールアドレス', 'Dirección de Email'),
-    message: getContent('訊息內容', 'Message', 'メッセージ', 'Mensaje'),
-    submit: getContent('送出', 'Submit', '送信', 'Enviar'),
-    submitting: getContent('送出中...', 'Submitting...', '送信中...', 'Enviando...')
+    name: getContent('您的名字', '您的名字', 'Your Name', 'お名前', 'Su Nombre'),
+    email: getContent('電子郵件', '电子邮件', 'Email Address', 'メールアドレス', 'Dirección de Email'),
+    message: getContent('訊息內容', '讯息内容', 'Message', 'メッセージ', 'Mensaje'),
+    submit: getContent('送出', '送出', 'Submit', '送信', 'Enviar'),
+    submitting: getContent('送出中...', '送出中...', 'Submitting...', '送信中...', 'Enviando...')
   };
-  
+
   const validationMessages = {
     requiredFields: getContent(
       '請填寫所有必填欄位',
+      '请填写所有必填栏位',
       'Please fill in all required fields',
       'すべての必須フィールドにご記入ください',
       'Por favor complete todos los campos requeridos'
     ),
     invalidEmail: getContent(
       '請輸入有效的電子郵件地址',
+      '请输入有效的电子邮件地址',
       'Please enter a valid email address',
       '有効なメールアドレスを入力してください',
       'Por favor ingrese una dirección de email válida'
     ),
     generalError: getContent(
       '提交表單時發生錯誤，請稍後再試',
+      '提交表单时发生错误，请稍后再试',
       'An error occurred while submitting the form. Please try again later.',
       'フォームの送信中にエラーが発生しました。後でもう一度お試しください。',
       'Ocurrió un error al enviar el formulario. Por favor intente nuevamente más tarde.'
     )
   };
-  
+
   const successMessage = getContent(
     '感謝您的訊息！我們會盡快回覆您。',
+    '感谢您的讯息！我们会尽快回复您。',
     'Thank you for your message! We will get back to you soon.',
     'メッセージをお送りいただきありがとうございます！早急にご返信いたします。',
     '¡Gracias por su mensaje! Le responderemos pronto.'
   );
-  
+
   const pageContent = {
-    title: getContent('聯絡我們', 'Contact Us', 'お問い合わせ', 'Contáctanos'),
+    title: getContent('聯絡我們', '联络我们', 'Contact Us', 'お問い合わせ', 'Contáctanos'),
     description: getContent(
       '有任何問題、建議或回饋嗎？請填寫以下表單與我們聯絡，我們會盡快回覆您。',
+      '有任何问题、建议或回馈吗？请填写以下表单与我们联络，我们会尽快回复您。',
       'Have questions, suggestions, or feedback? Please fill out the form below to get in touch with us, and we\'ll get back to you as soon as possible.',
       'ご質問、ご提案、またはフィードバックがありますか？以下のフォームにご記入いただき、お問い合わせください。できるだけ早くご返信いたします。',
       '¿Tiene preguntas, sugerencias o comentarios? Por favor complete el formulario a continuación para contactarnos, y le responderemos lo antes posible.'

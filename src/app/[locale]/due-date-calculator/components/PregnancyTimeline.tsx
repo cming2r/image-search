@@ -9,68 +9,79 @@ interface PregnancyTimelineProps {
 
 const timelineTranslations = {
   weeks: {
-    zh: "週",
+    tw: "週",
+    cn: "周",
     en: "weeks",
     jp: "週",
     es: "semanas"
   },
   firstTrimester: {
-    zh: "第一孕期",
+    tw: "第一孕期",
+    cn: "第一孕期",
     en: "First Trimester",
     jp: "第1三半期",
     es: "Primer Trimestre"
   },
   secondTrimester: {
-    zh: "第二孕期",
+    tw: "第二孕期",
+    cn: "第二孕期",
     en: "Second Trimester",
     jp: "第2三半期",
     es: "Segundo Trimestre"
   },
   thirdTrimester: {
-    zh: "第三孕期",
+    tw: "第三孕期",
+    cn: "第三孕期",
     en: "Third Trimester",
     jp: "第3三半期",
     es: "Tercer Trimestre"
   },
   title: {
-    zh: "懷孕週期發展時程表",
+    tw: "懷孕週期發展時程表",
+    cn: "怀孕周期发展时程表",
     en: "Pregnancy Development Timeline",
     jp: "妊娠発達タイムライン",
     es: "Cronología del Desarrollo del Embarazo"
   },
   milestones: {
     heartbeat: {
-      zh: "心跳開始",
+      tw: "心跳開始",
+      cn: "心跳开始",
       en: "Heartbeat Begins",
       jp: "心拍開始",
       es: "Comienza el Latido"
     },
     organsDeveloped: {
-      zh: "器官發育完成",
+      tw: "器官發育完成",
+      cn: "器官发育完成",
       en: "Organs Developed",
       jp: "器官発達完了",
       es: "Órganos Desarrollados"
     },
     feelMovement: {
-      zh: "胎動感受",
+      tw: "胎動感受",
+      cn: "胎动感受",
       en: "Feel Movement",
       jp: "胎動感じる",
       es: "Sentir Movimiento"
     },
     genderVisible: {
-      zh: "性別辨識",
+      tw: "性別辨識",
+      cn: "性别辨识",
       en: "Gender Visible",
       jp: "性別判別可能",
       es: "Género Visible"
     },
     lungsMature: {
-      zh: "肺部成熟",
+      tw: "肺部成熟",
+      cn: "肺部成熟",
       en: "Lungs Mature",
       jp: "肺成熟",
       es: "Pulmones Maduros"
     },
     positionFixed: {
-      zh: "胎位定位",
+      tw: "胎位定位",
+      cn: "胎位定位",
       en: "Position Fixed",
       jp: "胎位固定",
       es: "Posición Fija"
@@ -81,7 +92,7 @@ const timelineTranslations = {
 export default function PregnancyTimeline({ currentWeeks }: PregnancyTimelineProps) {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp' | 'es';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
   
   const weekMarkerLineRef = useRef<SVGLineElement>(null);
   const weekMarkerCircleRef = useRef<SVGCircleElement>(null);

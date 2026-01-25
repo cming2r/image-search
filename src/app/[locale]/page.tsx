@@ -56,7 +56,53 @@ type LocaleContent = {
 
 // 定義各語言的內容
 const localeContents: Record<string, LocaleContent> = {
-  'zh': {
+  'cn': {
+    title: 'fyimg - 免费在线工具',
+    description: 'fyimg网站提供图片搜索、日期计算器、预产期计算以及交换礼物抽签等多种免费实用工具，帮助您提高工作与生活效率。',
+    subtitle: '提供各种实用工具，让您的工作和生活更加便利高效',
+    keywords: '以图搜图, 日期计算器, 预产期计算器, 交换礼物抽签, 在线工具',
+    homeTitle: 'fyimg | 免费在线工具',
+    homeSubtitle: '提供各种实用工具，让您的工作和生活更加便利高效',
+    breadcrumbName: '首页',
+    cardImageSearch: {
+      title: '图片搜索',
+      description: '通过上传图片或输入URL，一键使用Google、Bing、Yandex等搜索引擎进行反向图片搜索。支持手机与iPhone使用。',
+      startUsing: '开始使用'
+    },
+    cardDateCalculator: {
+      title: '日期计算器',
+      description: '计算两个日期之间的差距、日历天数计算，以及从指定日期加减天数。适用于项目管理与工期规划。',
+      startUsing: '开始使用'
+    },
+    cardDueDateCalculator: {
+      title: '预产期计算器',
+      description: '根据最后一次月经日期，计算预产期和怀孕周数。提供孕期照护要点，帮助准妈妈平安度过怀孕过程。',
+      startUsing: '开始使用'
+    },
+    cardGiftExchange: {
+      title: '交换礼物抽签',
+      description: '输入参与者名单，一键随机分配送礼对象，支持排除特定配对，适合公司、朋友聚会使用的抽签工具。',
+      startUsing: '开始使用'
+    },
+    whyChoose: {
+      title: '为什么选择 fyimg 工具',
+      free: {
+        title: '完全免费',
+        description: '所有工具无需付费，无需注册即可使用'
+      },
+      secure: {
+        title: '隐私保护',
+        description: '不保存敏感资料，无追踪，保护用户隐私'
+      },
+      mobile: {
+        title: '支持手机',
+        description: '所有工具完美支持手机与平板设备'
+      }
+    },
+    commitment: 'fyimg 致力于提供简单易用且实用的在线工具，让您的工作和生活更加便利。我们不断优化和开发新功能，为用户提供最佳体验。',
+    contactSuggestion: '有任何建议？请联络我们 →'
+  },
+  'tw': {
     title: 'fyimg - 免費線上工具',
     description: 'fyimg網站提供圖片搜尋、日期計算器、預產期計算以及交換禮物抽籤等多種免費實用工具，幫助您提高工作與生活效率。',
     subtitle: '提供各種實用工具，讓您的工作和生活更加便利高效',
@@ -249,7 +295,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const content = localeContents[locale] || localeContents.en;
   
   // 設置 OpenGraph 語言格式
-  const ogLocale = locale === 'zh' ? 'zh_TW' : locale === 'jp' ? 'ja_JP' : locale === 'es' ? 'es_ES' : 'en_US';
+  const ogLocale = locale === 'tw' ? 'zh_TW' : locale === 'cn' ? 'zh_CN' : locale === 'jp' ? 'ja_JP' : locale === 'es' ? 'es_ES' : 'en_US';
   
   const imageUrl = getFullUrl('/og-image.png');
   
@@ -292,7 +338,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const content = localeContents[locale] || localeContents.en;
   
   // 生成結構化數據
-  const language = locale === 'zh' ? 'zh-TW' : locale === 'jp' ? 'ja' : locale === 'es' ? 'es' : 'en';
+  const language = locale === 'tw' ? 'zh-TW' : locale === 'cn' ? 'zh-CN' : locale === 'jp' ? 'ja' : locale === 'es' ? 'es' : 'en';
   const imageUrl = getFullUrl('/og-image.png');
   const { created, modified } = getPageDates('src/app/[locale]/page.tsx');
 

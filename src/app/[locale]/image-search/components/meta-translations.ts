@@ -1,13 +1,15 @@
 export const imageSearchTranslations = {
   meta: {
     title: {
-      zh: "以圖搜圖 - 圖片搜尋工具",
+      tw: "以圖搜圖 - 圖片搜尋工具",
+      cn: "以图搜图 - 图片搜索工具",
       en: "Reverse Image Search Tool",
       jp: "画像検索ツール",
       es: "Herramienta de Búsqueda de Imagen Inversa"
     },
     description: {
-      zh: "輸入圖片網址或上傳圖片，使用各大搜尋引擎查找相似圖片",
+      tw: "輸入圖片網址或上傳圖片，使用各大搜尋引擎查找相似圖片",
+      cn: "输入图片网址或上传图片，使用各大搜索引擎查找相似图片",
       en: "Enter image URL or upload an image, search for similar images using major search engines",
       jp: "画像URLを入力するか画像をアップロードして、主要検索エンジンで類似画像を検索",
       es: "Ingresa la URL de una imagen o sube una imagen, busca imágenes similares usando los principales motores de búsqueda"
@@ -15,13 +17,14 @@ export const imageSearchTranslations = {
   },
   faq: {
     title: {
-      zh: "以圖搜圖常見問題",
+      tw: "以圖搜圖常見問題",
+      cn: "以图搜图常见问题",
       en: "Frequently Asked Questions About Reverse Image Search",
       jp: "画像検索についてよくある質問",
       es: "Preguntas Frecuentes sobre Búsqueda de Imagen Inversa"
     },
     questions: {
-      zh: [
+      tw: [
         {
           question: "為什麼有時搜尋結果不準確？",
           answer: "以圖搜圖的準確性取決於多種因素，包括圖片品質、搜尋引擎的資料庫覆蓋範圍、圖片的獨特性等。如果您的圖片解析度較低、經過裁剪或修改，或是非常常見的圖片類型（如藍天、草地等），搜尋準確率可能會降低。為獲得最佳結果，建議使用清晰、完整的原始圖片，並嘗試多個搜尋引擎進行對比，因為不同引擎的演算法和資料庫有所不同。"
@@ -41,6 +44,28 @@ export const imageSearchTranslations = {
         {
           question: "上傳的圖片會如何處理？是否會保存？",
           answer: "我們非常重視使用者隱私。當您上傳圖片時，系統會暫時儲存該圖片以生成可搜尋的URL，但所有圖片資料會在24小時內自動刪除。我們不會永久保存您的圖片，也不會將其用於任何其他目的。上傳的圖片僅用於提供搜尋服務，且只有您可以透過生成的URL存取它。"
+        }
+      ],
+      cn: [
+        {
+          question: "为什么有时搜索结果不准确？",
+          answer: "以图搜图的准确性取决于多种因素，包括图片品质、搜索引擎的数据库覆盖范围、图片的独特性等。如果您的图片分辨率较低、经过裁剪或修改，或是非常常见的图片类型（如蓝天、草地等），搜索准确率可能会降低。为获得最佳结果，建议使用清晰、完整的原始图片，并尝试多个搜索引擎进行对比，因为不同引擎的算法和数据库有所不同。"
+        },
+        {
+          question: "手机上如何使用以图搜图功能？",
+          answer: "我们的工具完全支持移动设备使用。在手机上，您可以点击「上传图片」后从相册选择照片，或直接拍摄新照片上传。对于iOS设备，您也可以直接从照片应用分享图片到我们的网站。Android使用者可以长按图片后选择分享到浏览器打开本工具。此外，如果您已将图片复制到剪贴板，也可以直接在上传区域长按并选择「粘贴」。"
+        },
+        {
+          question: "如何选择最适合的搜索引擎？",
+          answer: "不同搜索引擎各有专长：Google Lens适合识别物体、商品和地标；Bing擅长寻找高分辨率图像和桌布；Yandex在识别人脸和追踪修改过的图片方面表现出色；SauceNAO则专门针对动漫、漫画和插画领域。建议根据您的具体需求选择相应引擎，或者同时使用多个引擎获取最全面的结果。对于重要搜索，我们推荐至少使用Google和Yandex两个引擎进行比较。"
+        },
+        {
+          question: "使用以图搜图有法律风险吗？",
+          answer: "使用者需要注意使用方式和目的，搜索受版权保护的图片用于个人参考和研究通常属于合理使用范畴。然而，如果您打算商业使用搜索到的图片，请确保获得适当的授权或选择免版权图片。此外，请尊重他人隐私，避免使用此工具进行侵犯他人隐私或违反当地法律的活动。我们的工具仅提供搜索服务，使用者需自行负责确保其使用方式符合相关法律法规。"
+        },
+        {
+          question: "上传的图片会如何处理？是否会保存？",
+          answer: "我们非常重视使用者隐私。当您上传图片时，系统会暂时储存该图片以生成可搜索的URL，但所有图片数据会在24小时内自动删除。我们不会永久保存您的图片，也不会将其用于任何其他目的。上传的图片仅用于提供搜索服务，且只有您可以通过生成的URL访问它。"
         }
       ],
       en: [

@@ -73,89 +73,104 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 定義所有語言和對應的 hreflang
   const LANGUAGES: LanguageConfig[] = [
     { code: '', hreflang: 'en' }, // 英文（根路徑）
-    { code: 'zh', hreflang: 'zh' }, // 中文
+    { code: 'tw', hreflang: 'zh-TW' }, // 繁體中文
+    { code: 'cn', hreflang: 'zh-CN' }, // 簡體中文
     { code: 'es', hreflang: 'es' }, // 西班牙文
     { code: 'jp', hreflang: 'ja' }, // 日文
   ];
 
   // 定義所有需要包含在sitemap中的基礎路由及其配置
   const ROUTES: RouteConfig[] = [
-    { 
-      path: '/', 
+    {
+      path: '/',
       name: '首頁',
       priority: 1.0,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja'] // 支持所有語言
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja'] // 支持所有語言
     },
-    { 
-      path: '/image-search', 
+    {
+      path: '/image-search',
       name: '圖片搜尋',
       priority: 0.9,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/date', 
+    {
+      path: '/date',
       name: '日期計算器',
       priority: 0.8,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/due-date-calculator', 
+    {
+      path: '/due-date-calculator',
       name: '預產期計算器',
       priority: 0.8,
       changeFrequency: 'weekly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/gift-exchange', 
+    {
+      path: '/gift-exchange',
       name: '禮物交換',
       priority: 0.7,
-      changeFrequency: 'weekly', 
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/shorturl', 
+    {
+      path: '/shorturl',
       name: '短網址',
       priority: 0.7,
-      changeFrequency: 'weekly', 
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/image-url', 
+    {
+      path: '/image-url',
       name: '圖片網址',
       priority: 0.7,
-      changeFrequency: 'weekly', 
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/file-url', 
+    {
+      path: '/file-url',
       name: '檔案網址',
       priority: 0.7,
-      changeFrequency: 'weekly', 
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/contact', 
+    {
+      path: '/video-url',
+      name: '影片網址',
+      priority: 0.7,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
+    },
+    {
+      path: '/color-picker',
+      name: '顏色選擇器',
+      priority: 0.7,
+      changeFrequency: 'weekly',
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
+    },
+    {
+      path: '/contact',
       name: '聯繫我們',
       priority: 0.5,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/privacy-policy', 
+    {
+      path: '/privacy-policy',
       name: '隱私政策',
       priority: 0.3,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
-    { 
-      path: '/terms', 
+    {
+      path: '/terms',
       name: '服務條款',
       priority: 0.3,
       changeFrequency: 'monthly',
-      supportedLanguages: ['zh', 'en', 'es', 'ja']
+      supportedLanguages: ['zh-TW', 'zh-CN', 'en', 'es', 'ja']
     },
   ];
 

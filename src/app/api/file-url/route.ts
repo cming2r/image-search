@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 檢查檔案類型 - 支援更多格式
+    // 檢查檔案類型 - 支援文件、音訊、影片、壓縮檔（圖片請使用 image-url）
     const allowedTypes = [
       // 文件格式
       'application/pdf',
@@ -50,8 +50,6 @@ export async function POST(request: NextRequest) {
       'application/vnd.ms-powerpoint',
       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       'application/vnd.oasis.opendocument.presentation',
-      // 圖片
-      'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/webp', 'image/svg+xml', 'image/tiff',
       // 音訊
       'audio/mpeg', 'audio/wav', 'audio/aac', 'audio/flac', 'audio/ogg', 'audio/m4a', 'audio/mp4',
       // 影片
@@ -61,6 +59,14 @@ export async function POST(request: NextRequest) {
       'application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed',
       'application/x-tar', 'application/gzip'
     ];
+
+    // 檢查是否為圖片類型，提示使用 image-url
+    if (mimeType.startsWith('image/')) {
+      return NextResponse.json(
+        { success: false, error: 'For images, please use the Image URL feature instead' },
+        { status: 400 }
+      );
+    }
     
     if (!allowedTypes.includes(mimeType)) {
       return NextResponse.json(

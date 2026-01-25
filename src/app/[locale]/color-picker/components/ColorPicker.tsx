@@ -5,84 +5,116 @@ import { useParams } from 'next/navigation';
 
 const colorPickerTranslations = {
   title: {
-    zh: "顏色選擇器",
+    tw: "顏色選擇器",
+    cn: "颜色选择器",
     en: "Color Picker",
-    jp: "カラーピッカー"
+    jp: "カラーピッカー",
+    es: "Selector de Color"
   },
   uploadImage: {
-    zh: "上傳圖片",
+    tw: "上傳圖片",
+    cn: "上传图片",
     en: "Upload Image",
-    jp: "画像をアップロード"
+    jp: "画像をアップロード",
+    es: "Subir Imagen"
   },
   clickToExtract: {
-    zh: "點擊圖片提取顏色",
+    tw: "點擊圖片提取顏色",
+    cn: "点击图片提取颜色",
     en: "Click image to extract color",
-    jp: "画像をクリックして色を抽出"
+    jp: "画像をクリックして色を抽出",
+    es: "Haga clic en la imagen para extraer el color"
   },
   dragDropImage: {
-    zh: "拖拽圖片到這裡或點擊上傳",
+    tw: "拖拽圖片到這裡或點擊上傳",
+    cn: "拖拽图片到这里或点击上传",
     en: "Drag & drop image here or click to upload",
-    jp: "ここに画像をドラッグ＆ドロップまたはクリックしてアップロード"
+    jp: "ここに画像をドラッグ＆ドロップまたはクリックしてアップロード",
+    es: "Arrastre y suelte la imagen aquí o haga clic para subir"
   },
   hexInput: {
-    zh: "十六進制顏色",
+    tw: "十六進制顏色",
+    cn: "十六进制颜色",
     en: "Hex Color",
-    jp: "16進数カラー"
+    jp: "16進数カラー",
+    es: "Color Hex"
   },
   rgbInput: {
-    zh: "RGB 顏色",
+    tw: "RGB 顏色",
+    cn: "RGB 颜色",
     en: "RGB Color",
-    jp: "RGBカラー"
+    jp: "RGBカラー",
+    es: "Color RGB"
   },
   hslInput: {
-    zh: "HSL 顏色",
+    tw: "HSL 顏色",
+    cn: "HSL 颜色",
     en: "HSL Color",
-    jp: "HSLカラー"
+    jp: "HSLカラー",
+    es: "Color HSL"
   },
   colorPreview: {
-    zh: "顏色預覽",
+    tw: "顏色預覽",
+    cn: "颜色预览",
     en: "Color Preview",
-    jp: "カラープレビュー"
+    jp: "カラープレビュー",
+    es: "Vista Previa del Color"
   },
   copySuccess: {
-    zh: "已複製到剪貼簿",
+    tw: "已複製到剪貼簿",
+    cn: "已复制到剪贴板",
     en: "Copied to clipboard",
-    jp: "クリップボードにコピーしました"
+    jp: "クリップボードにコピーしました",
+    es: "Copiado al portapapeles"
   },
   invalidColor: {
-    zh: "無效的顏色格式",
+    tw: "無效的顏色格式",
+    cn: "无效的颜色格式",
     en: "Invalid color format",
-    jp: "無効なカラーフォーマット"
+    jp: "無効なカラーフォーマット",
+    es: "Formato de color no válido"
   },
   red: {
-    zh: "紅",
+    tw: "紅",
+    cn: "红",
     en: "Red",
-    jp: "赤"
+    jp: "赤",
+    es: "Rojo"
   },
   green: {
-    zh: "綠",
+    tw: "綠",
+    cn: "绿",
     en: "Green",
-    jp: "緑"
+    jp: "緑",
+    es: "Verde"
   },
   blue: {
-    zh: "藍",
+    tw: "藍",
+    cn: "蓝",
     en: "Blue",
-    jp: "青"
+    jp: "青",
+    es: "Azul"
   },
   hue: {
-    zh: "色相",
+    tw: "色相",
+    cn: "色相",
     en: "Hue",
-    jp: "色相"
+    jp: "色相",
+    es: "Tono"
   },
   saturation: {
-    zh: "飽和度",
+    tw: "飽和度",
+    cn: "饱和度",
     en: "Saturation",
-    jp: "彩度"
+    jp: "彩度",
+    es: "Saturación"
   },
   lightness: {
-    zh: "亮度",
+    tw: "亮度",
+    cn: "亮度",
     en: "Lightness",
-    jp: "明度"
+    jp: "明度",
+    es: "Luminosidad"
   }
 };
 
@@ -95,7 +127,7 @@ interface ColorValues {
 const ColorPicker: FC = () => {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const lang = locale as 'zh' | 'en' | 'jp';
+  const lang = locale as 'tw' | 'cn' | 'en' | 'jp' | 'es';
 
   const [color, setColor] = useState<ColorValues>({
     hex: '#ff0000',
