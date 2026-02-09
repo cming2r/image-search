@@ -6,6 +6,17 @@ import QRCode from 'qrcode';
 import { Upload, ImageIcon, Copy, Check, ExternalLink, QrCode, Download, Lock, Clock, Clipboard } from 'lucide-react';
 import Toast from '@/components/Toast';
 
+function addLocaleToUrl(url: string, locale: string): string {
+  if (locale === 'en') return url;
+  try {
+    const urlObj = new URL(url);
+    urlObj.pathname = `/${locale}${urlObj.pathname}`;
+    return urlObj.toString();
+  } catch {
+    return url;
+  }
+}
+
 const uiTranslations = {
   uploadTitle: {
     tw: '上傳圖片',
@@ -375,7 +386,9 @@ export default function ImageUrlUpload({ locale }: ImageUrlUploadProps) {
 
       const completeData = await completeResponse.json();
       if (completeData.success) {
-        setResult(completeData.data);
+        const data = completeData.data;
+        data.shortUrl = addLocaleToUrl(data.shortUrl, locale);
+        setResult(data);
         // 先關閉進度中的 toast，然後顯示成功 toast
         setToast({message: '', isVisible: false, type: 'info'});
         setTimeout(() => {

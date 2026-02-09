@@ -6,6 +6,17 @@ import Image from 'next/image';
 import QRCode from 'qrcode';
 import { Download, ExternalLink, Copy, QrCode, Check, Lock, Clock } from 'lucide-react';
 
+function addLocaleToUrl(url: string, locale: string): string {
+  if (locale === 'en') return url;
+  try {
+    const urlObj = new URL(url);
+    urlObj.pathname = `/${locale}${urlObj.pathname}`;
+    return urlObj.toString();
+  } catch {
+    return url;
+  }
+}
+
 const translations = {
   urlLabel: {
     tw: '輸入您的長網址 *',
@@ -242,8 +253,9 @@ export default function ShortUrl() {
       const data = await response.json();
 
       if (data.success) {
-        setShortUrl(data.data.shortUrl);
-        setResult(data.data);
+        const localizedUrl = addLocaleToUrl(data.data.shortUrl, locale);
+        setShortUrl(localizedUrl);
+        setResult({ ...data.data, shortUrl: localizedUrl });
       } else {
         setError(data.error || translations.errorMessages.shortenFailed[lang]);
       }
