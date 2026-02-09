@@ -269,7 +269,7 @@ export default function GiftExchangeWheel() {
 
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg shadow-xs p-6">
       <div className="mb-6">
         <h2 className="text-xl font-medium mb-4">{giftExchangeTranslations.wheel.participantsLabel[lang]}</h2>
         
@@ -287,11 +287,11 @@ export default function GiftExchangeWheel() {
               }
             }}
             placeholder={giftExchangeTranslations.wheel.participantsPlaceholder[lang]}
-            className="flex-1 px-3 py-2 border rounded"
+            className="flex-1 px-3 py-2 border rounded-sm"
           />
           <button 
             onClick={addParticipant}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700"
           >
             {giftExchangeTranslations.wheel.addButton[lang]}
           </button>
@@ -311,12 +311,12 @@ export default function GiftExchangeWheel() {
               }
             }}
             placeholder="人數"
-            className="w-24 px-3 py-2 border rounded text-center"
+            className="w-24 px-3 py-2 border rounded-sm text-center"
             title="輸入人數 (預設 6 人)"
           />
           <button 
             onClick={quickAddParticipants}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            className="bg-green-600 text-white px-4 py-2 rounded-sm hover:bg-green-700"
           >
             {giftExchangeTranslations.wheel.quickAdd[lang]}
           </button>
@@ -329,7 +329,7 @@ export default function GiftExchangeWheel() {
             {participants.length > 0 && (
               <button
                 onClick={() => updateParticipants([])}
-                className="text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded border border-red-200 hover:border-red-400"
+                className="text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded-sm border border-red-200 hover:border-red-400"
               >
                 {giftExchangeTranslations.wheel.clearAll[lang]}
               </button>

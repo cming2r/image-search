@@ -369,7 +369,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
   return (
     <>
       {/* 如何使用此工具 */}
-      <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-12 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{content.howToUse.title[lang]}</h2>
         <div className="space-y-4">
           <ol className="list-decimal list-inside space-y-2">
@@ -395,7 +395,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       {/* 什麼是日期計算器 */}
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{content.whatIs.title[lang]}</h2>
         <div className="space-y-3">
           {content.whatIs.content.map((paragraph, index) => (
@@ -427,12 +427,12 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       {/* 常見問題 */}
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{metaTranslations.faq.title[lang]}</h2>
         
         <div className="space-y-6">
           {metaTranslations.faq.questions[lang].map((faq, index) => (
-            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
               <p className="mt-2">{faq.answer}</p>
             </div>
@@ -441,7 +441,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       {/* 為什麼選擇我們 */}
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs mb-8">
         <h2 className="text-xl font-bold mb-3">{content.whyChooseUs.title[lang]}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -518,7 +518,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
           </div>
         </div>
         
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg text-center">
+        <div className="mt-6 p-4 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg text-center">
           <p className="text-lg font-medium text-indigo-700">
             {content.whyChooseUs.callToAction.title[lang]}
           </p>
@@ -529,7 +529,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
       {/* 深入了解：日曆天計算原理 */}
-      <div className="mt-8 bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+      <div className="mt-8 bg-gray-50 p-6 rounded-lg shadow-xs mb-8">
         <h2 className="text-xl font-bold mb-3">{content.calendarDays.title[lang]}</h2>
         <p className="mb-4">{content.calendarDays.intro[lang]}</p>
         
@@ -724,7 +724,7 @@ function CalendarDaysContent({ locale }: { locale: string }) {
         <h3 className="font-semibold text-gray-800 mb-3">{calendarContent.definition.title[lang]}</h3>
         <p className="mb-2">{calendarContent.definition.p1[lang]}</p>
         <p className="mb-3">{calendarContent.definition.p2[lang]}</p>
-        <div className="bg-gray-100 p-3 rounded">
+        <div className="bg-gray-100 p-3 rounded-sm">
           {calendarContent.definition.examples.map((example, index) => (
             <p key={index} className="text-sm text-gray-700 mb-1">{example[lang]}</p>
           ))}
@@ -754,7 +754,7 @@ function CalendarDaysContent({ locale }: { locale: string }) {
         <div className="space-y-3 mb-4">
           {calendarContent.considerations.items.map((item, index) => (
             <div key={index} className="flex">
-              <div className="flex-shrink-0 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center mr-3 mt-0.5">
+              <div className="shrink-0 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center mr-3 mt-0.5">
                 <span className="text-white text-xs font-bold">{index + 1}</span>
               </div>
               <div>
@@ -764,7 +764,7 @@ function CalendarDaysContent({ locale }: { locale: string }) {
             </div>
           ))}
         </div>
-        <div className="bg-blue-50 p-3 rounded">
+        <div className="bg-blue-50 p-3 rounded-sm">
           <p className="text-blue-800 text-sm">{calendarContent.considerations.conclusion[lang]}</p>
         </div>
       </div>

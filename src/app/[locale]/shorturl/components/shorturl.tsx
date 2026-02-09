@@ -385,7 +385,7 @@ export default function ShortUrl() {
     <div className="max-w-3xl mx-auto">
       {!shortUrl && (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-white p-6 rounded-lg shadow-xs">
             <div className="space-y-4">
               <div>
                 <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
@@ -397,7 +397,7 @@ export default function ShortUrl() {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder={translations.urlPlaceholder[lang]}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -416,7 +416,7 @@ export default function ShortUrl() {
                     onChange={(e) => setPassword(e.target.value.slice(0, 4))}
                     maxLength={4}
                     placeholder={translations.passwordPlaceholder[lang]}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white"
                   />
                 </div>
                 
@@ -429,7 +429,7 @@ export default function ShortUrl() {
                   <select
                     value={expiresIn}
                     onChange={(e) => setExpiresIn(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white appearance-none cursor-pointer"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white appearance-none cursor-pointer"
                   >
                     {expirationOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -461,7 +461,7 @@ export default function ShortUrl() {
       {shortUrl && (
         <div className="space-y-6">
           {/* 顯示原始長網址及資訊 */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-white p-6 rounded-lg shadow-xs">
             <h3 className="text-lg font-medium text-gray-900 mb-3">{translations.originalUrlTitle[lang]}</h3>
             <div className="flex items-center space-x-2 mb-4">
               <input
@@ -496,7 +496,7 @@ export default function ShortUrl() {
           </div>
           
           {/* 顯示短網址 */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-white p-6 rounded-lg shadow-xs">
             <h3 className="text-lg font-medium text-gray-900 mb-3">{translations.resultTitle[lang]}</h3>
             <div className="flex items-center space-x-2">
               <input
@@ -556,7 +556,7 @@ export default function ShortUrl() {
                 </h4>
                 
                 <div className="flex justify-center">
-                  <div className="bg-white p-4 rounded-lg shadow-sm border relative">
+                  <div className="bg-white p-4 rounded-lg shadow-xs border relative">
                     {qrLoading && (
                       <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
                         <div className="flex items-center">
@@ -596,7 +596,7 @@ export default function ShortUrl() {
                       type="checkbox"
                       checked={includeUrl}
                       onChange={(e) => handleIncludeUrlChange(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="ml-2 text-sm text-gray-700">
                       {locale === 'tw' ? '包含 URL' : 

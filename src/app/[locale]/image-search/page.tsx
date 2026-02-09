@@ -16,7 +16,7 @@ export default function ImageSearch() {
   return (
     <>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-6">
             <h1>{imageSearchTranslations.meta.title[lang]}</h1>
@@ -26,10 +26,10 @@ export default function ImageSearch() {
           </div>
 
           <Suspense fallback={
-            <div className="bg-white rounded-lg shadow-sm p-6 text-center">
+            <div className="bg-white rounded-lg shadow-xs p-6 text-center">
               <div className="animate-pulse">
-                <div className="h-8 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
-                <div className="h-32 bg-gray-200 rounded mb-4"></div>
+                <div className="h-8 bg-gray-200 rounded-sm w-3/4 mx-auto mb-4"></div>
+                <div className="h-32 bg-gray-200 rounded-sm mb-4"></div>
               </div>
             </div>
           }>

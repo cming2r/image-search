@@ -722,7 +722,7 @@ export default function ArticleContent({ locale, currentWeeks }: ArticleContentP
 
         <div className="space-y-6">
           {metaTranslations.faq.questions[faqLang].map((faq, index) => (
-            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
               <p className="mt-2">
                 {faq.answer}

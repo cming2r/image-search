@@ -274,7 +274,7 @@ export default function DateCalculator() {
                 lang={langMap[locale] || 'en'}
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="text-lg flex-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                className="text-lg flex-1 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-blue-500 text-center"
                 style={dateInputStyle}
               />
               <button
@@ -342,7 +342,7 @@ export default function DateCalculator() {
               </button>
               {showTooltip && (
                 <div 
-                  className="absolute left-0 top-6 z-10 bg-gray-800 text-white text-xs rounded-md p-2 whitespace-pre-line shadow-lg min-w-[200px] select-text"
+                  className="absolute left-0 top-6 z-10 bg-gray-800 text-white text-xs rounded-md p-2 whitespace-pre-line shadow-lg min-w-50 select-text"
                   onMouseEnter={() => {
                     if (tooltipTimeout) {
                       clearTimeout(tooltipTimeout);
@@ -378,7 +378,7 @@ export default function DateCalculator() {
                 step="1"
                 value={daysInput}
                 onChange={handleDaysChange}
-                className="text-lg w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                className="text-lg w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-blue-500 text-center"
               />
             </div>
             <div className='w-12'></div>
@@ -420,7 +420,7 @@ export default function DateCalculator() {
                 lang={langMap[locale] || 'en'}
                 value={startDate2}
                 onChange={(e) => setStartDate2(e.target.value)}
-                className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-blue-500 text-center"
                 style={dateInputStyle}
               />
               <button
@@ -488,7 +488,7 @@ export default function DateCalculator() {
               </button>
               {showTooltipDiff && (
                 <div 
-                  className="absolute left-0 top-6 z-10 bg-gray-800 text-white text-xs rounded-md p-2 whitespace-pre-line shadow-lg min-w-[200px] select-text"
+                  className="absolute left-0 top-6 z-10 bg-gray-800 text-white text-xs rounded-md p-2 whitespace-pre-line shadow-lg min-w-50 select-text"
                   onMouseEnter={() => {
                     if (tooltipTimeoutDiff) {
                       clearTimeout(tooltipTimeoutDiff);
@@ -522,7 +522,7 @@ export default function DateCalculator() {
                 lang={langMap[locale] || 'en'}
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-center"
+                className="text-lg flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-blue-500 text-center"
                 style={dateInputStyle}
               />
               <button

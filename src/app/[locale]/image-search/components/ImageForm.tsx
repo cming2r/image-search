@@ -460,7 +460,7 @@ const ImageForm: FC = () => {
   }, [searchParams, lang, isValidImageUrl]);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg shadow-xs p-6">
       {!uploadedImageUrl ? (
         // 未上傳圖片時顯示輸入區域
         <div className="space-y-8">
@@ -497,7 +497,7 @@ const ImageForm: FC = () => {
                              'Error al pegar, asegúrese de que el portapapeles tenga una imagen');
                   }
                 }}
-                className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex items-center px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 border border-gray-800 rounded-md transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500"
               >
                 <Clipboard className="h-4 w-4 mr-1.5" />
                 {lang === 'tw' ? '貼上' :
@@ -599,7 +599,7 @@ const ImageForm: FC = () => {
                       value={imageUrl}
                       onChange={handleUrlInput}
                       placeholder={formTranslations.imageUrlPlaceholder[lang]}
-                      className={`block w-full text-gray-700 border ${error ? 'border-red-500' : 'border-gray-300'} rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                      className={`block w-full text-gray-700 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-sm py-3 px-4 focus:outline-hidden focus:ring-2 focus:ring-blue-500`}
                     />
                     <p className="text-gray-500 text-base mt-1">
                       {formTranslations.imageUrlHint[lang]}
@@ -608,7 +608,7 @@ const ImageForm: FC = () => {
                   <div className="flex space-x-3">
                     <button
                       type="submit"
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors flex items-center"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors flex items-center"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
@@ -628,12 +628,12 @@ const ImageForm: FC = () => {
             {formTranslations.imagePreview[lang]}
           </h2>
           <div className="w-full max-w-md mb-6">
-            <div className="border rounded p-4 bg-gray-50 flex justify-center relative">
+            <div className="border rounded-sm p-4 bg-gray-50 flex justify-center relative">
               {/* 右上角的叉叉按鈕 - 更明顯的版本但保持原位置 */}
               <button
                 type="button"
                 onClick={handleReset}
-                className="absolute top-2 right-2 z-10 bg-red-500 rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="absolute top-2 right-2 z-10 bg-red-500 rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors focus:outline-hidden focus:ring-2 focus:ring-red-400"
                 aria-label="Close"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -657,7 +657,7 @@ const ImageForm: FC = () => {
 
       {/* 錯誤訊息 */}
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mt-4 mb-4">
+        <div className="bg-red-100 text-red-700 p-3 rounded-sm mt-4 mb-4">
           {error}
         </div>
       )}

@@ -449,7 +449,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
   return (
     <>
-      <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-12 bg-white p-6 rounded-lg shadow-xs">
         <h2>{videoUrlContentTranslations.howToUse.title[lang]}</h2>
         <ol className="ml-6 list-decimal space-y-2 mt-4">
           {videoUrlContentTranslations.howToUse.steps[lang].map((step: string, index: number) => (
@@ -459,7 +459,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
         <div className="bg-blue-50 p-3 rounded-lg mt-4">
           <p className="text-blue-700 font-medium flex items-start">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             {videoUrlContentTranslations.howToUse.tip[lang]}<br />
@@ -468,7 +468,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2>{videoUrlContentTranslations.whatIs.title[lang]}</h2>
         <div className="space-y-4">
           {videoUrlContentTranslations.whatIs.content[lang].map((paragraph: string, index: number) => (
@@ -479,11 +479,11 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2>{videoUrlContentTranslations.features.title[lang]}</h2>
         
         <div className="space-y-6">
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-blue-700 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -499,7 +499,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-green-700 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -515,7 +515,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-purple-700 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -533,7 +533,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2>{videoUrlContentTranslations.useCases.title[lang]}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -612,12 +612,12 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2>{lang === 'tw' ? '常見問題' : lang === 'cn' ? '常见问题' : lang === 'en' ? 'FAQ' : lang === 'jp' ? 'よくある質問' : 'Preguntas Frecuentes'}</h2>
 
         <div className="space-y-6">
           {videoUrlTranslations.faq.questions[faqLang].map((item: FAQItem, index: number) => (
-            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">
                 {item.answer}
@@ -627,7 +627,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs mb-8">
         <h2>{videoUrlContentTranslations.whyChooseUs.title[lang]}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -696,7 +696,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
           </div>
         </div>
         
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg text-center">
+        <div className="mt-6 p-4 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg text-center">
           <p className="text-lg font-medium text-indigo-700">
             {videoUrlContentTranslations.whyChooseUs.callToAction.title[lang]}
           </p>

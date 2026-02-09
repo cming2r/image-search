@@ -471,13 +471,13 @@ export default function DueDateCalculator() {
                     </svg>
                   </button>
                 </div>
-                <span id="calendarMonthDisplay" className="font-medium text-center min-w-[120px]"></span>
+                <span id="calendarMonthDisplay" className="font-medium text-center min-w-30"></span>
                 <div className="justify-self-end flex gap-1">
                   <button 
                     id="goToLMP"
                     onClick={handleGoToLMP}
                     aria-label="Go to Last Menstrual Period Date"
-                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
+                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded-sm text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                   >
                     LMP
                   </button>
@@ -485,7 +485,7 @@ export default function DueDateCalculator() {
                     id="goToToday"
                     onClick={handleGoToToday}
                     aria-label="Go to Today"
-                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
+                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded-sm text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                   >
                     {calculatorTranslations.today[lang]}
                   </button>
@@ -493,14 +493,14 @@ export default function DueDateCalculator() {
                     id="goToEDC"
                     onClick={handleGoToEDC}
                     aria-label="Go to Estimated Due Date"
-                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
+                    className="py-1 px-2 bg-gray-100 border border-gray-200 rounded-sm text-xs font-medium text-gray-900 transition-all hover:bg-gray-200"
                   >
                     EDD
                   </button>
                 </div>
               </div>
               
-              <div id="calendar" className="grid grid-cols-7 text-center min-h-[300px]"></div>
+              <div id="calendar" className="grid grid-cols-7 text-center min-h-75"></div>
             </div>
           </div>
         </div>

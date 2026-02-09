@@ -290,7 +290,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
           <button
             onClick={quickResult}
             disabled={spinning || disabled}
-            className={`h-9 px-4 min-w-[120px] text-sm rounded-lg ${
+            className={`h-9 px-4 min-w-30 text-sm rounded-lg ${
               spinning || disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
@@ -324,7 +324,7 @@ export default function WheelCanvas({ items, onSpin }: WheelCanvasProps) {
               }
             }}
             disabled={spinning || disabled}
-            className={`h-9 px-3 min-w-[120px] text-sm rounded-lg border cursor-pointer ${
+            className={`h-9 px-3 min-w-30 text-sm rounded-lg border cursor-pointer ${
               spinning || disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'
             }`}
           >

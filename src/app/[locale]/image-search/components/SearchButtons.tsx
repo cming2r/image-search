@@ -177,7 +177,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
               onClick={handleDisabledClick}
               role="button"
               aria-disabled="true"
-              className={`w-full md:w-auto md:flex-1 ${engine.bgColor} opacity-50 text-white px-4 py-3 rounded flex items-center justify-center cursor-not-allowed mb-3 md:mb-0`}
+              className={`w-full md:w-auto md:flex-1 ${engine.bgColor} opacity-50 text-white px-4 py-3 rounded-sm flex items-center justify-center cursor-not-allowed mb-3 md:mb-0`}
             >
               {engine.icon}
               {engine.name}
@@ -239,7 +239,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
                 handleSearch(engine.url, engine.name);
               }
             }}
-            className={`block w-full md:w-auto md:flex-1 ${engine.bgColor} ${engine.hoverColor} text-white px-4 py-3 rounded flex items-center justify-center transition-colors mb-3 md:mb-0`}
+            className={`block w-full md:w-auto md:flex-1 ${engine.bgColor} ${engine.hoverColor} text-white px-4 py-3 rounded-sm flex items-center justify-center transition-colors mb-3 md:mb-0`}
           >
             {engine.icon}
             {engine.name}
@@ -253,7 +253,7 @@ const SearchButtons: FC<SearchButtonProps> = ({ imageUrl, onReset }) => {
           <button
             type="button"
             onClick={onReset}
-            className="bg-gray-700 hover:bg-gray-400 text-white font-medium py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors"
+            className="bg-gray-700 hover:bg-gray-400 text-white font-medium py-2 px-6 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors"
           >
             {locale === 'tw' ? '重置' : locale === 'cn' ? '重置' : locale === 'jp' ? 'リセット' : locale === 'es' ? 'Reiniciar' : 'Reset'}
           </button>

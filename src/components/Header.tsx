@@ -221,11 +221,11 @@ const Header: FC = () => {
   }, []);
   
   return (
-    <header className="bg-white shadow-sm block relative z-50">
+    <header className="bg-white shadow-xs block relative z-50">
       <div className="container mx-auto px-4 py-4 block">
         <div className="flex justify-between items-center max-w-5xl mx-auto w-full">
           {/* 左側 Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <Link
               href={`/${locale === 'en' ? '' : locale}`}
               className="text-2xl font-bold text-blue-600 flex items-center tracking-wider"
@@ -236,7 +236,7 @@ const Header: FC = () => {
           </div>
           
           {/* 中間的導航菜單 */}
-          <nav className="hidden lg:flex items-center justify-center flex-grow mx-8">
+          <nav className="hidden lg:flex items-center justify-center grow mx-8">
             <div className="flex space-x-8">
               <Link href={`/${locale === 'en' ? '' : locale + '/'}image-search`}
                 className="text-lg text-gray-600 hover:text-blue-600 transition-colors flex items-center"
@@ -285,7 +285,7 @@ const Header: FC = () => {
                   aria-haspopup="true"
                 >
                   {getTranslation('tools')}
-                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white">
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-red-500 text-white">
                     NEW
                   </span>
                   <ChevronDown className="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" />
@@ -310,7 +310,7 @@ const Header: FC = () => {
                     role="menuitem"
                   >
                     {getTranslation('menuScanner')}
-                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white animate-pulse">
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-red-500 text-white animate-pulse">
                       NEW
                     </span>
                   </a>
@@ -505,7 +505,7 @@ const Header: FC = () => {
                 <div className="flex w-full items-center justify-between">
                   <Link
                     href={`/${locale === 'en' ? '' : locale + '/'}date`}
-                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    className="grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('calculator')}
@@ -546,11 +546,11 @@ const Header: FC = () => {
                     href={getExternalUrl('https://diin.cc', locale)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 flex items-center"
+                    className="grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 flex items-center"
                     onClick={closeMenu}
                   >
                     {getTranslation('tools')}
-                    <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white">
+                    <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-red-500 text-white">
                       NEW
                     </span>
                   </a>
@@ -583,7 +583,7 @@ const Header: FC = () => {
                     onClick={closeMenu}
                   >
                     {getTranslation('menuScanner')}
-                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-500 text-white animate-pulse">
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-red-500 text-white animate-pulse">
                       NEW
                     </span>
                   </a>
@@ -593,7 +593,7 @@ const Header: FC = () => {
                 <div className="flex w-full items-center justify-between">
                   <Link
                     href={`/${locale === 'en' ? '' : locale + '/'}shorturl`}
-                    className="flex-grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                    className="grow px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     onClick={closeMenu}
                   >
                     {getTranslation('urlShortener')}

@@ -15,7 +15,7 @@ export default function ColorPickerPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-4xl mx-auto">
           <div className="text-center mb-6">
             <h1>{colorPickerTranslations.meta.title[lang]}</h1>

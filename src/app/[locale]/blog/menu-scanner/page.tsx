@@ -21,9 +21,9 @@ export default function MenuScannerPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow">
+      <main className="grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <section className="bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-3xl md:text-5xl font-bold mb-6">
@@ -56,7 +56,7 @@ export default function MenuScannerPage() {
             <div className="max-w-5xl mx-auto">
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Feature 1 */}
-                <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-xl p-8 shadow-xs hover:shadow-md transition-shadow">
                   <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                     <Camera className="h-7 w-7 text-blue-600" />
                   </div>
@@ -69,7 +69,7 @@ export default function MenuScannerPage() {
                 </div>
 
                 {/* Feature 2 */}
-                <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-xl p-8 shadow-xs hover:shadow-md transition-shadow">
                   <div className="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-6">
                     <Share2 className="h-7 w-7 text-green-600" />
                   </div>
@@ -82,7 +82,7 @@ export default function MenuScannerPage() {
                 </div>
 
                 {/* Feature 3 */}
-                <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-xl p-8 shadow-xs hover:shadow-md transition-shadow">
                   <div className="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
                     <BarChart3 className="h-7 w-7 text-purple-600" />
                   </div>
@@ -95,7 +95,7 @@ export default function MenuScannerPage() {
                 </div>
 
                 {/* Feature 4 */}
-                <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-xl p-8 shadow-xs hover:shadow-md transition-shadow">
                   <div className="w-14 h-14 bg-orange-100 rounded-lg flex items-center justify-center mb-6">
                     <Settings className="h-7 w-7 text-orange-600" />
                   </div>
@@ -187,7 +187,7 @@ export default function MenuScannerPage() {
                 {useCases.map((useCase, index) => {
                   const Icon = useCaseIcons[index];
                   return (
-                    <div key={useCase} className="bg-white rounded-xl p-6 text-center shadow-sm">
+                    <div key={useCase} className="bg-white rounded-xl p-6 text-center shadow-xs">
                       <Icon className="h-10 w-10 text-blue-600 mx-auto mb-4" />
                       <p className="text-gray-700 font-medium">{t(useCase)}</p>
                     </div>
@@ -199,7 +199,7 @@ export default function MenuScannerPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+        <section className="py-16 bg-linear-to-r from-blue-600 to-indigo-700 text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl md:text-3xl font-bold mb-8">

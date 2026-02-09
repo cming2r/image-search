@@ -212,7 +212,7 @@ export default function LoginPage() {
             {countdown === null && loginError.includes('管理員權限') && (
               <button
                 onClick={handleLogout}
-                className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                className="mt-2 px-4 py-2 bg-red-600 text-white rounded-sm hover:bg-red-700"
               >
                 立即登出
               </button>
@@ -224,7 +224,7 @@ export default function LoginPage() {
                 </div>
                 <button
                   onClick={handleLogoutAndRedirect}
-                  className="mt-2 px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                  className="mt-2 px-4 py-2 bg-yellow-600 text-white rounded-sm hover:bg-yellow-700"
                 >
                   立即返回首頁
                 </button>
@@ -236,7 +236,7 @@ export default function LoginPage() {
         <button
           onClick={handleLogin}
           disabled={isLoading || countdown !== null}
-          className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-md shadow-xs bg-white hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <span className="flex items-center">

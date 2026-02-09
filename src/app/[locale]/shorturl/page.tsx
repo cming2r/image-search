@@ -15,7 +15,7 @@ export default function ShortUrlPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-6">
             <h1>{shorturlTranslations.meta.title[lang]}</h1>

@@ -441,7 +441,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
   return (
     <>
-      <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-12 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{imageSearchContentTranslations.howToUse.title[lang]}</h2>
         <ol className="ml-6 list-decimal space-y-2 mt-4">
           {imageSearchContentTranslations.howToUse.steps[lang].map((step, index) => (
@@ -451,7 +451,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
         <div className="bg-blue-50 p-3 rounded-lg mt-4">
           <p className="text-blue-700 font-medium flex items-start">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             {imageSearchContentTranslations.howToUse.tip[lang]}<br />
@@ -460,7 +460,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{imageSearchContentTranslations.whatIs.title[lang]}</h2>
         <div className="space-y-4">
           {imageSearchContentTranslations.whatIs.content[lang].map((paragraph, index) => (
@@ -471,11 +471,11 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{imageSearchContentTranslations.searchEngines.title[lang]}</h2>
         
         <div className="space-y-6">
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-blue-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.google.title[lang]}
               <a 
@@ -499,7 +499,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-teal-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.bing.title[lang]}
               <a 
@@ -523,7 +523,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-red-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.yandex.title[lang]}
               <a 
@@ -547,7 +547,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-purple-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.sauceNAO.title[lang]}
               <a 
@@ -571,7 +571,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-fuchsia-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.traceMoe.title[lang]}
               <a 
@@ -595,7 +595,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
             <h3 className="text-lg font-medium text-gray-700 flex items-center">
               {imageSearchContentTranslations.searchEngines.tineye.title[lang]}
               <a 
@@ -617,7 +617,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
                 </p>
               ))}
               <p className="text-red-600 font-medium mt-2 flex items-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-1 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-1 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <span>{imageSearchContentTranslations.searchEngines.tineye.note[lang]}</span>
@@ -628,12 +628,12 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
       </div>
 
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{imageSearchTranslations.faq.title[faqLang]}</h2>
 
         <div className="space-y-6">
           {imageSearchTranslations.faq.questions[faqLang].map((item, index) => (
-            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{item.question}</h3>
               <p className="mt-2">
                 {item.answer}
@@ -643,7 +643,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs mb-8">
         <h2 className="text-xl font-bold mb-3">{imageSearchContentTranslations.whyChooseUs.title[lang]}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -720,7 +720,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
           </div>
         </div>
         
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg text-center">
+        <div className="mt-6 p-4 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg text-center">
           <p className="text-lg font-medium text-indigo-700">
             {imageSearchContentTranslations.whyChooseUs.callToAction.title[lang]}
           </p>

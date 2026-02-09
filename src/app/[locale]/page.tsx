@@ -402,12 +402,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="border-t border-gray-200 shadow-inner py-1 bg-gradient-to-b from-gray-50 to-white"></div>
+                <div className="border-t border-gray-200 shadow-inner py-1 bg-linear-to-b from-gray-50 to-white"></div>
                 <div className="p-6 flex flex-col h-64">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                     {content.cardImageSearch.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 flex-grow min-h-[4.5rem]">
+                  <p className="text-gray-600 mb-4 grow min-h-18">
                     {content.cardImageSearch.description}
                   </p>
                   <div className="text-center">
@@ -431,12 +431,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="border-t border-gray-200 shadow-inner py-1 bg-gradient-to-b from-gray-50 to-white"></div>
+                <div className="border-t border-gray-200 shadow-inner py-1 bg-linear-to-b from-gray-50 to-white"></div>
                 <div className="p-6 flex flex-col h-64">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors duration-300">
                     {content.cardDateCalculator.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 flex-grow min-h-[4.5rem]">
+                  <p className="text-gray-600 mb-4 grow min-h-18">
                     {content.cardDateCalculator.description}
                   </p>
                   <div className="text-center">
@@ -460,12 +460,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="border-t border-gray-200 shadow-inner py-1 bg-gradient-to-b from-gray-50 to-white"></div>
+                <div className="border-t border-gray-200 shadow-inner py-1 bg-linear-to-b from-gray-50 to-white"></div>
                 <div className="p-6 flex flex-col h-64">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors duration-300">
                     {content.cardDueDateCalculator.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 flex-grow min-h-[4.5rem]">
+                  <p className="text-gray-600 mb-4 grow min-h-18">
                     {content.cardDueDateCalculator.description}
                   </p>
                   <div className="text-center">
@@ -489,12 +489,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="border-t border-gray-200 shadow-inner py-1 bg-gradient-to-b from-gray-50 to-white"></div>
+                <div className="border-t border-gray-200 shadow-inner py-1 bg-linear-to-b from-gray-50 to-white"></div>
                 <div className="p-6 flex flex-col h-64">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-red-600 transition-colors duration-300">
                     {content.cardGiftExchange.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 flex-grow min-h-[4.5rem]">
+                  <p className="text-gray-600 mb-4 grow min-h-18">
                     {content.cardGiftExchange.description}
                   </p>
                   <div className="text-center">

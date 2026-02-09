@@ -15,7 +15,7 @@ export default function VideoUrlPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <h1>

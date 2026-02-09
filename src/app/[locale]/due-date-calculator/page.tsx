@@ -54,7 +54,7 @@ export default function DueDatePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           {/* 標題區 */}
           <div className="title-container mb-6">

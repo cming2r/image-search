@@ -19,7 +19,7 @@ export default function Terms() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow w-full">
+      <main className="grow w-full">
         <div className="container mx-auto max-w-4xl px-4 py-8">
           <h1 className="text-3xl font-bold mb-8">
             {isTwLocale ? "使用條款" :

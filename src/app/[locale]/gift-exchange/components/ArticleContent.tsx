@@ -385,7 +385,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
 
   return (
     <>
-      <div className="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-12 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{content.howToUse.title[lang]}</h2>
         <div className="space-y-4">
           <ol className="list-decimal list-inside space-y-2">
@@ -412,7 +412,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{content.whatIs.title[lang]}</h2>
         <div className="space-y-3">
           {content.whatIs.content.map((paragraph, index) => (
@@ -447,12 +447,12 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs">
         <h2 className="text-xl font-bold mb-3">{giftExchangeTranslations.faq.title[faqLang]}</h2>
 
         <div className="space-y-6">
           {giftExchangeTranslations.faq.questions[faqLang].map((faq, index) => (
-            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white border border-gray-100 rounded-lg p-4 shadow-xs hover:shadow-md transition-shadow">
               <h3 className="text-lg font-medium text-blue-700">{faq.question}</h3>
               <p className="mt-2">
                 {faq.answer}
@@ -462,7 +462,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm mb-8">
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-xs mb-8">
         <h2 className="text-xl font-bold mb-3">{content.whyChooseUs.title[lang]}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -539,7 +539,7 @@ export default function ArticleContent({ locale }: ArticleContentProps) {
           </div>
         </div>
         
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg text-center">
+        <div className="mt-6 p-4 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg text-center">
           <p className="text-lg font-medium text-indigo-700">
             {content.whyChooseUs.callToAction.title[lang]}
           </p>

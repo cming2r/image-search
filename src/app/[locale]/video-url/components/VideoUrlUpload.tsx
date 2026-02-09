@@ -612,7 +612,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
     <div>
       {!result ? (
         // 未上傳成功時顯示上傳區域
-        <div className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
+        <div className="space-y-6 bg-white p-6 rounded-lg shadow-xs">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-medium text-gray-800 flex items-center">
               <Upload className="h-5 w-5 mr-2" />
@@ -623,7 +623,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
 
           {/* File Upload Area */}
           <div
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer min-h-[200px] flex flex-col justify-center ${
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer min-h-50 flex flex-col justify-center ${
               isDragOver
                 ? 'border-blue-400 bg-blue-50'
                 : 'border-gray-300 hover:border-gray-400 bg-white'
@@ -669,7 +669,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
           </div>
 
           {/* 選項設置區域 - 現代化設計 */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mt-4 shadow-sm">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 mt-4 shadow-xs">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* 密碼保護選項 */}
@@ -685,7 +685,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                     onChange={(e) => setPassword(e.target.value.slice(0, 4))}
                     maxLength={4}
                     placeholder={t.passwordPlaceholder[lang]}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
                   />
                 </div>
               </div>
@@ -700,7 +700,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                   <select
                     value={expiresIn}
                     onChange={(e) => setExpiresIn(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white appearance-none cursor-pointer"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white appearance-none cursor-pointer"
                   >
                     {expirationOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -718,7 +718,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                 <div className="flex justify-center">
                   <button
                     onClick={() => handleUpload(file)}
-                    className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center"
+                    className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center"
                   >
                     <Upload className="h-5 w-5 mr-2" />
                     {t.uploadButton[lang]}
@@ -740,7 +740,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
         <div className="space-y-6">
           {/* Video Info Section */}
           {result && (
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="bg-white p-6 rounded-lg shadow-xs">
               <h3 className="text-lg font-medium text-gray-900 mb-3">影片資訊</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -775,7 +775,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
           )}
           
           {/* Short URL Section */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-white p-6 rounded-lg shadow-xs">
             <h3 className="text-lg font-medium text-gray-900 mb-3">{t.shortUrl[lang]}</h3>
             <div className="flex items-center space-x-2 mb-4">
               <input
@@ -835,7 +835,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                 </h4>
                 
                 <div className="flex justify-center">
-                  <div className="bg-white p-4 rounded-lg shadow-sm border relative">
+                  <div className="bg-white p-4 rounded-lg shadow-xs border relative">
                     {/* Loading overlay */}
                     {qrLoading && (
                       <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
@@ -875,7 +875,7 @@ export default function VideoUrlUpload({ locale }: VideoUrlUploadProps) {
                       type="checkbox"
                       checked={includeUrl}
                       onChange={(e) => handleIncludeUrlChange(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="ml-2 text-sm text-gray-700">
                       {lang === 'tw' ? '包含 URL' : 

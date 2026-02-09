@@ -410,7 +410,7 @@ const ColorPicker: FC = () => {
       {/* Color Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Hex Input */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {colorPickerTranslations.hexInput[lang]}
           </label>
@@ -423,14 +423,14 @@ const ColorPicker: FC = () => {
           />
           <button
             onClick={() => copyToClipboard(color.hex, 'HEX')}
-            className="mt-2 w-full bg-blue-500 text-white py-1 px-3 rounded text-sm hover:bg-blue-600 transition-colors"
+            className="mt-2 w-full bg-blue-500 text-white py-1 px-3 rounded-sm text-sm hover:bg-blue-600 transition-colors"
           >
             複製 HEX
           </button>
         </div>
 
         {/* RGB Input */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {colorPickerTranslations.rgbInput[lang]}
           </label>
@@ -441,7 +441,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.rgb.r}
                 onChange={(e) => handleRgbChange('r', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="255"
               />
@@ -452,7 +452,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.rgb.g}
                 onChange={(e) => handleRgbChange('g', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="255"
               />
@@ -463,7 +463,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.rgb.b}
                 onChange={(e) => handleRgbChange('b', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="255"
               />
@@ -471,14 +471,14 @@ const ColorPicker: FC = () => {
           </div>
           <button
             onClick={() => copyToClipboard(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`, 'RGB')}
-            className="mt-2 w-full bg-green-500 text-white py-1 px-3 rounded text-sm hover:bg-green-600 transition-colors"
+            className="mt-2 w-full bg-green-500 text-white py-1 px-3 rounded-sm text-sm hover:bg-green-600 transition-colors"
           >
             複製 RGB
           </button>
         </div>
 
         {/* HSL Input */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {colorPickerTranslations.hslInput[lang]}
           </label>
@@ -489,7 +489,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.hsl.h}
                 onChange={(e) => handleHslChange('h', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="360"
               />
@@ -500,7 +500,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.hsl.s}
                 onChange={(e) => handleHslChange('s', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="100"
               />
@@ -511,7 +511,7 @@ const ColorPicker: FC = () => {
                 type="number"
                 value={color.hsl.l}
                 onChange={(e) => handleHslChange('l', parseInt(e.target.value) || 0)}
-                className="flex-1 p-1 border border-gray-300 rounded text-sm"
+                className="flex-1 p-1 border border-gray-300 rounded-sm text-sm"
                 min="0"
                 max="100"
               />
@@ -519,7 +519,7 @@ const ColorPicker: FC = () => {
           </div>
           <button
             onClick={() => copyToClipboard(`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`, 'HSL')}
-            className="mt-2 w-full bg-purple-500 text-white py-1 px-3 rounded text-sm hover:bg-purple-600 transition-colors"
+            className="mt-2 w-full bg-purple-500 text-white py-1 px-3 rounded-sm text-sm hover:bg-purple-600 transition-colors"
           >
             複製 HSL
           </button>

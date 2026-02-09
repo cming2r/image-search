@@ -261,7 +261,7 @@ export default function AdminPage() {
         <button
           key="first"
           onClick={() => setCurrentPage(1)}
-          className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+          className="px-3 py-1 rounded-sm border border-gray-300 hover:bg-gray-100"
         >
           1
         </button>
@@ -309,7 +309,7 @@ export default function AdminPage() {
         <button
           key="last"
           onClick={() => setCurrentPage(totalPages)}
-          className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+          className="px-3 py-1 rounded-sm border border-gray-300 hover:bg-gray-100"
         >
           {totalPages}
         </button>
@@ -331,7 +331,7 @@ export default function AdminPage() {
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 rounded-sm border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             上一頁
           </button>
@@ -339,7 +339,7 @@ export default function AdminPage() {
           <button
             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 rounded-sm border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             下一頁
           </button>
@@ -376,7 +376,7 @@ export default function AdminPage() {
   
   // 已登入且是管理員，顯示管理頁面
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
         <div>
           <h2 className="text-lg leading-6 font-medium text-gray-900">
@@ -389,7 +389,7 @@ export default function AdminPage() {
         
         <button
           onClick={handleLogout}
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-xs text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
         >
           登出
         </button>
@@ -482,7 +482,7 @@ export default function AdminPage() {
                     </button>
                     <button
                       onClick={() => setShowImages(!showImages)}
-                      className="px-2 py-1 text-xs bg-blue-500 text-white hover:bg-blue-600 rounded transition-colors"
+                      className="px-2 py-1 text-xs bg-blue-500 text-white hover:bg-blue-600 rounded-sm transition-colors"
                       title={showImages ? '顯示IP地址' : '顯示圖片預覽'}
                     >
                       {showImages ? '顯示IP' : '顯示圖片'}
@@ -558,7 +558,7 @@ export default function AdminPage() {
                             <img 
                               src={search.image_url} 
                               alt="搜尋圖片" 
-                              className="max-w-full max-h-full object-contain rounded border border-gray-200"
+                              className="max-w-full max-h-full object-contain rounded-sm border border-gray-200"
                               onError={(e) => {
                                 // 圖片載入失敗時顯示替代文字
                                 const target = e.target as HTMLImageElement;

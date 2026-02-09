@@ -288,7 +288,7 @@ export default function GiftExchangeEvent() {
     return (
       <>
         <Header />
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <main className="grow container mx-auto px-4 py-8">
           <div className="text-center">
             {eventTranslations.event.loadingData[lang]}
           </div>
@@ -302,7 +302,7 @@ export default function GiftExchangeEvent() {
     return (
       <>
         <Header />
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <main className="grow container mx-auto px-4 py-8">
           <div className="text-center text-red-500">{error || eventTranslations.event.noDataError[lang]}</div>
         </main>
         <Footer />
@@ -322,7 +322,7 @@ export default function GiftExchangeEvent() {
         position="top-center"
         duration={2000}
       />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="grow container mx-auto px-4 py-8">
         <section className="max-w-3xl mx-auto">
           <div className="text-center mb-6">
             <h1>{eventTranslations.title[lang]}</h1>
@@ -380,7 +380,7 @@ export default function GiftExchangeEvent() {
           </div>
 
           {/* 轉盤區域 */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="bg-white rounded-lg shadow-xs p-6 mb-6">
             <h2 className="text-xl font-medium mb-4">{eventTranslations.event.wheelSection[lang]}</h2>
             
             <div className="mb-4">
@@ -511,7 +511,7 @@ export default function GiftExchangeEvent() {
                 
                 {/* 最終結果窗格 - 完成所有抽籤時展示 */}
                 {eventData?.results && eventData.participant_names.length === eventData.results.length && (
-                  <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg shadow-sm">
+                  <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg shadow-xs">
                     <h3 className="text-lg font-medium mb-3 text-green-700">{eventTranslations.event.drawingComplete[lang]}</h3>
                     <div className="space-y-3">
                       {eventData.results.map((result, index) => {
@@ -533,7 +533,7 @@ export default function GiftExchangeEvent() {
                 
                 {/* 進行中結果窗格 - 尚未完成所有抽籤時顯示 */}
                 {eventData?.results && eventData.results.length > 0 && eventData.participant_names.length > eventData.results.length && (
-                  <div className="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                  <div className="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 className="text-lg font-medium mb-3">{eventTranslations.event.drawingRecord[lang]} ({eventData.results.length}/{eventData.participant_names.length})</h3>
                     <div className="space-y-2">
                       {eventData.results.map((result, index) => {
